@@ -174,11 +174,11 @@ class LoginController
         }
 
         //二次验证
-        try {
-            aj_captcha_check_two($captchaType, $captchaVerification);
-        } catch (\Throwable $e) {
-            return app('json')->fail($e->getMessage());
-        }
+        // try {
+        //     aj_captcha_check_two($captchaType, $captchaVerification);
+        // } catch (\Throwable $e) {
+        //     return app('json')->fail($e->getMessage());
+        // }
 
         try {
             validate(RegisterValidates::class)->scene('code')->check(['phone' => $phone]);
@@ -275,7 +275,7 @@ class LoginController
      */
     public function mobile(Request $request)
     {
-        [$phone, $captcha, $spread, $agent_id] = $request->postMore([['phone', ''], ['captcha', ''], ['spread', 0], ['agent_id', 0]], true);
+        [$phone, $captcha, $key, $spread, $agent_id] = $request->postMore([['phone', ''], ['captcha', ''], ['key', ''], ['spread', 0], ['agent_id', 0]], true);
 
         //验证手机号
         try {
@@ -284,18 +284,15 @@ class LoginController
             return app('json')->fail($e->getError());
         }
 
-        //验证验证码
-        $verifyCode = CacheService::get('code_' . $phone);
-        if (!$verifyCode)
-            return app('json')->fail('请先获取验证码');
-        $verifyCode = substr($verifyCode, 0, 6);
-        if ($verifyCode != $captcha) {
+        if (!$key) {
+            return app('json')->fail('验证码已失效，请刷新验证码');
+        }
+        if (!$this->checkCaptcha($key, (string)$captcha)) {
             return app('json')->fail('验证码错误');
         }
         $user_type = $request->getFromType() ? $request->getFromType() : 'h5';
         $token = $this->services->mobile($phone, $spread, $user_type, $agent_id);
         if ($token) {
-            CacheService::delete('code_' . $phone);
             return app('json')->success('登录成功', $token);
         } else {
             return app('json')->fail('退出成功');

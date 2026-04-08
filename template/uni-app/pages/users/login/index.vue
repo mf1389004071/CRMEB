@@ -36,10 +36,10 @@
 				<view class="item">
 					<view class="acea-row row-middle">
 						<image src="../static/code_2.png" style="width: 28rpx; height: 32rpx"></image>
-						<input type="text" :placeholder="$t(`填写验证码`)" :maxlength="6" class="codeIput" v-model="captcha" />
-						<button class="code" :disabled="disabled" :class="disabled === true ? 'on' : ''" @click="code">
-							{{ text }}
-						</button>
+						<input type="text" :placeholder="$t(`填写图片验证码`)" :maxlength="6" class="codeIput" v-model="captcha" />
+						<view class="code" @click="again">
+							<img :src="codeUrl" style="height: 50px; width: 120px;" />
+						</view>
 					</view>
 				</view>
 				<!-- 	<view class="item" v-if="isShowCode">
@@ -102,12 +102,11 @@
 </template>
 <script>
 import dayjs from '@/plugin/dayjs/dayjs.min.js';
-import sendVerifyCode from '@/mixins/SendVerifyCode';
 import { loginH5, loginMobile, registerVerify, register, getCodeApi, getUserInfo, appleLogin } from '@/api/user';
 import attrs, { required, alpha_num, chs_phone } from '@/utils/validate';
 import { getLogo } from '@/api/public';
 // import cookie from "@/utils/store/cookie";
-import { VUE_APP_API_URL } from '@/utils';
+import { HTTP_REQUEST_URL } from '@/config/app';
 // #ifdef APP-PLUS
 import { wechatAppAuth } from '@/api/api.js';
 // #endif
@@ -121,7 +120,7 @@ export default {
 	components: {
 		Verify
 	},
-	mixins: [sendVerifyCode, colors],
+	mixins: [colors],
 	data: function () {
 		return {
 			copyRight: '',
@@ -172,8 +171,8 @@ export default {
 		}
 	},
 	mounted() {
-		// this.getCode();
 		this.getLogoImage();
+		this.initCaptcha();
 	},
 	methods: {
 		ChangeIsDefault(e) {
@@ -375,7 +374,19 @@ export default {
 				});
 		},
 		again() {
-			this.codeUrl = VUE_APP_API_URL + '/sms_captcha?' + 'key=' + this.keyCode + Date.parse(new Date());
+			if (!this.keyCode) return;
+			this.codeUrl = HTTP_REQUEST_URL + '/api/sms_captcha?key=' + this.keyCode + '&_t=' + Date.now();
+		},
+		initCaptcha() {
+			getCodeApi()
+				.then((res) => {
+					this.keyCode = res.data.key || '';
+					this.again();
+				})
+				.catch(() => {
+					this.keyCode = '';
+					this.codeUrl = '';
+				});
 		},
 		success(data) {
 			this.$refs.verify.hide();
@@ -452,6 +463,7 @@ export default {
 				}
 				loginMobile({
 					phone: that.account,
+					key: that.keyCode,
 					captcha: that.captcha,
 					spread: that.$Cache.get('spread'),
 					agent_id: that.$Cache.get('agent_id') || 0
@@ -477,6 +489,7 @@ export default {
 					})
 					.catch((res) => {
 						this.keyLock = true;
+						this.initCaptcha();
 						that.$util.Tips({
 							title: res
 						});
