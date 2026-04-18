@@ -26,7 +26,7 @@ return [
     // 需要自动创建配置文件
     'config'      => ['route'],
     // 需要自动创建的多语言配置文件
-    'lang'      => ['zh-CN','en-US'],
+    'lang'      => ['zh-CN','en-US','vi_vn'],
     // 需要自动创建的模板
 //    'view'       => ['index/index'],
 ];
