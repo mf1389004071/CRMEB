@@ -16,6 +16,10 @@ import util from 'utils/util'
 import configs from './config/app.js'
 import socket from './libs/new_chat.js'
 import i18n from './utils/lang.js';
+import navigationBarI18n from '@/mixins/navigationBarI18n.js';
+
+Vue.mixin(navigationBarI18n);
+
 Vue.prototype.$util = util;
 Vue.prototype.$config = configs;
 Vue.prototype.$Cache = Cache;
