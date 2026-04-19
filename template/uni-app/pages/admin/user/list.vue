@@ -7,7 +7,7 @@
         class="sysTitle acea-row row-center-wrapper"
         :style="{ height: getHeight.barHeight + 'px' }"
       >
-        <view>用户管理</view>
+        <view>{{$t('用户管理')}}</view>
         <text class="iconfont icon-ic_leftarrow" @click="goarrow"></text>
       </view>
     </view>
@@ -28,7 +28,7 @@
           @confirm="searchSubmit"
         />
       </view>
-      <!-- <view @click="manageTap" v-if="administer">取消</view>
+      <!-- <view @click="manageTap" v-if="administer">{{$t('取消')}}</view>
       <view class="edit acea-row row-center-wrapper" @click="manageTap" v-else>
         <text class="iconfont icon-ic_batch"></text>
       </view> -->
@@ -94,10 +94,10 @@
               <view class="phone">{{ item.phone }}</view>
               <view class="info acea-row row-middle">
                 <view
-                  >积分：<text>{{ item.integral }}</text></view
+                  >{{$t('积分')}}：<text>{{ item.integral }}</text></view
                 >
                 <view
-                  >余额：<text>{{ item.now_money }}</text></view
+                  >{{$t('余额')}}：<text>{{ item.now_money }}</text></view
                 >
               </view>
             </view>
@@ -128,7 +128,7 @@
           activeBackgroundColor="#2A7EFB"
           activeBorderColor="#2A7EFB"
         />
-        <text class="checkAll">全选({{ getIds().length }})</text>
+        <text class="checkAll">{{$t('全选')}}({{ getIds().length }})</text>
       </checkbox-group>
       <view class="acea-row row-middle">
         <view class="bnt acea-row row-center-wrapper">
@@ -137,14 +137,14 @@
             :range="groupArray"
             range-key="group_name"
           >
-            <view>修改分组</view>
+            <view>{{$t('修改分组')}}</view>
           </picker>
         </view>
         <view class="bnt acea-row row-center-wrapper" @click="editLabels"
-          >添加标签</view
+          >{{$t('添加标签')}}</view
         >
         <view class="bnt acea-row row-center-wrapper" @click="sendCoupon"
-          >发送优惠券</view
+          >{{$t('发送优惠券')}}</view
         >
       </view>
     </view>

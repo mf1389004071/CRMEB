@@ -29,7 +29,7 @@
 							<view class="bnt bg-color-red" @click="goDetail(item.order_id)">
 								{{ $t(`查看详情`) }}
 							</view>
-							<!-- <view class="bnt bg-color-red" v-else @click="goList">重开一个</view> -->
+							<!-- <view class="bnt bg-color-red" v-else @click="goList">{{$t('重开一个')}}</view> -->
 						</view>
 					</view>
 				</view>

@@ -1,14 +1,14 @@
 <template>
 	<base-drawer mode="bottom" :visible="visible" background-color="transparent" mask maskClosable @close="closeDrawer">
 		<view class="edit-balance rd-t-40rpx">
-			<view class="title">修改{{type? $t('积分') : $t('余额')}}
+			<view class="title">{{$t('修改')}}{{type? $t('积分') : $t('余额')}}
 			  <view class="close acea-row row-center-wrapper" @tap="closeDrawer">
 				  <text class="iconfont icon-iconfontguanbi"></text>
 			  </view>
 			</view>
 			<view class="list">
 				<view class="item acea-row row-between-wrapper">
-					<view>修改{{type? $t('积分') : $t('余额')}}</view>
+					<view>{{$t('修改')}}{{type? $t('积分') : $t('余额')}}</view>
 					<view class="acea-row row-middle">
 						<view class="itemn acea-row row-middle" :class="current == index?'on':''" v-for="(item, index) in navList" :key="index" @click="navTap(index)">
 							<text class="iconfont" :class="current == index?'icon-ic_Selected':'icon-ic_unselect'"></text>
@@ -25,8 +25,8 @@
 				</view>
 			</view>
 			<view class="footer acea-row row-between-wrapper">
-				<view class="bnt acea-row row-center-wrapper" @click="closeDrawer">取消</view>
-				<view class="bnt on acea-row row-center-wrapper" @click="define">确定</view>
+				<view class="bnt acea-row row-center-wrapper" @click="closeDrawer">{{$t('取消')}}</view>
+				<view class="bnt on acea-row row-center-wrapper" @click="define">{{$t('确定')}}</view>
 			</view>
 		</view>
 	</base-drawer>	

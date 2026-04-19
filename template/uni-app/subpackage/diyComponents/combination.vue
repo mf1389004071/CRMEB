@@ -80,10 +80,10 @@
                       <text
                         class="tuan-num text--w111-fff flex-center"
                         v-if="checkboxInfo.includes(1)"
-                        >{{ item.people }}{{ $t(`人团`) }}</text
+                        >{{ item.people }}{{ $t('人团') }}</text
                       >
                       <text class="complete flex-center" :style="[pinkNumStyle]"
-                        >已拼{{ item.pink_count || 0 }}份</text
+                        >{{$t('已拼')}}{{ item.pink_count || 0 }}{{ $t('份') }}</text
                       >
                     </view>
                   </view>

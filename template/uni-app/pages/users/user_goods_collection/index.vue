@@ -12,7 +12,7 @@
 						<view class='pictrue' @click="jump(item)">
 							<image :src="item.image"></image>
 							<view class="invalid acea-row row-center-wrapper" v-if="!item.is_show">
-								已下架
+								{{$t('已下架')}}
 							</view>
 						</view>
 					</view>
@@ -20,7 +20,7 @@
 						<view class='name line2'>{{item.store_name}}</view>
 						<view class='acea-row row-between-wrapper'>
 							<view class='money font-color'>{{$t(`￥`)}}{{item.price}}</view>
-							<!-- <view class='delete' @click.stop='delCollection(item.pid,index)'>删除</view> -->
+							<!-- <view class='delete' @click.stop='delCollection(item.pid,index)'>{{$t('删除')}}</view> -->
 						</view>
 					</view>
 				</view>

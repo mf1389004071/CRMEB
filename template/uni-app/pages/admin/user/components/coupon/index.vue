@@ -1,7 +1,7 @@
 <template>
 	<base-drawer mode="bottom" :visible="visible" background-color="transparent" mask maskClosable @close="closeDrawer">
 		<view class="coupon rd-t-40rpx">
-			<view class="title">优惠券
+			<view class="title">{{$t('优惠券')}}</view>
 			  <view class="close acea-row row-center-wrapper" @tap="closeDrawer">
 				  <text class="iconfont icon-iconfontguanbi"></text>
 			  </view>
@@ -16,19 +16,19 @@
 					<view class="item acea-row row-middle" v-for="(item,index) in couponList" :key="index">
 						<view class="bg">
 							<view class="price">¥<text class="num">{{item.coupon_price}}</text></view>
-							<view class="reduction">满{{item.use_min_price}}可用</view>
+							<view class="reduction">{{$t('满')}}{{item.use_min_price}}{{$t('可用')}}</view>
 						</view>
 						<view class="text">
 							<view class="name line1">{{item.coupon_title}}</view>
-							<view class="type" v-if="item.type === 0">通用优惠券</view>
-							<view class="type" v-if="item.type === 1">品类优惠券</view>
-							<view class="type" v-if="item.type === 2">商品优惠券</view>
-							<view class="time" v-if="item.coupon_time">有效期：{{item.coupon_time}}天</view>
-							<view class="time" v-else>有效期：{{ item.start_use_time | dateFormat }}{{ item.start_use_time ? '-' : '' }}{{ item.end_use_time | dateFormat }}</view>
+							<view class="type" v-if="item.type === 0">{{$t('通用优惠券')}}</view>
+							<view class="type" v-if="item.type === 1">{{$t('品类优惠券')}}</view>
+							<view class="type" v-if="item.type === 2">{{$t('商品优惠券')}}</view>
+							<view class="time" v-if="item.coupon_time">{{$t('有效期')}}：{{item.coupon_time}}{{$t('天')}}</view>
+							<view class="time" v-else>{{$t('有效期')}}：{{ item.start_use_time | dateFormat }}{{ item.start_use_time ? '-' : '' }}{{ item.end_use_time | dateFormat }}</view>
 						</view>
-						<view v-if="num !=2" class="bnt acea-row row-center-wrapper" @click="send(item)">发送</view>
+						<view v-if="num !=2" class="bnt acea-row row-center-wrapper" @click="send(item)">{{$t('发送')}}</view>
 					</view>
-					<view class="tips">没有更多了～</view>
+					<view class="tips">{{$t('没有更多了～')}}</view>
 				</scroll-view>
 			</view>
 			<view class="empty-box" v-else>

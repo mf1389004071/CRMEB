@@ -147,7 +147,7 @@
 		<view class="footer acea-row row-between-wrapper">
 			<!-- <button open-type="contact" hover-class='none' class='item'>
 				<view class='iconfont icon-kefu'></view>
-				<view>客服</view>
+				<view>{{$t('客服')}}</view>
 			</button> -->
 
 			<navigator hover-class="none" open-type="switchTab" class="item" url="/pages/index/index">

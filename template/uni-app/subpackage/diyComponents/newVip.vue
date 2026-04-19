@@ -170,7 +170,7 @@
                         ><text class="number">{{
                           parseFloat(item.coupon_price) / 10
                         }}</text
-                        >折</view
+                        >{{ $t('折') }}</view
                       >
                     </view>
                   </view>
@@ -179,32 +179,32 @@
                   >
                     <view class="name" :style="[couponTypeStyle]">
                       <text v-if="item.coupon_type == 1">{{
-                        $t(`品类券`)
+                        $t('品类券')
                       }}</text>
                       <text v-else-if="item.coupon_type == 2">{{
-                        $t(`商品券`)
+                        $t('商品券')
                       }}</text>
                       <text v-else-if="item.coupon_type == 3">{{
-                        $t(`品牌券`)
+                        $t('品牌券')
                       }}</text>
-                      <text v-else>{{ $t(`通用券`) }}</text>
+                      <text v-else>{{ $t('通用券') }}</text>
                     </view>
                     <view v-if="item.use_min_price" class="info"
                       >{{ $t(`满`) }}{{ item.use_min_price
-                      }}{{ $t(`可用`) }}</view
+                      }}{{ $t('可用') }}</view
                     >
-                    <view v-else class="info">{{ $t(`无门槛券`) }}</view>
+                    <view v-else class="info">{{ $t('无门槛券') }}</view>
                   </view>
                 </view>
               </view>
             </scroll-view>
             <view class="station" :style="[stationStyle]">
               <view class="money"
-                >{{ $t(`¥`) }}<text class="number">{{ totalPrice }}</text></view
+                >{{ $t('¥') }}<text class="number">{{ totalPrice }}</text></view
               >
-              <view class="info">{{ $t(`新人专享优惠券`) }}</view>
+              <view class="info">{{ $t('新人专享优惠券') }}</view>
               <view class="button" :style="[buttonStyle]" @click="goUser">{{
-                $t(`一键领取`)
+                $t('一键领取')
               }}</view>
             </view>
           </view>
@@ -213,7 +213,7 @@
           class="product"
           v-if="productList.length && dataConfig.checkboxInfo.type.includes(2)"
         >
-          <view class="title">{{ $t(`新人商品专区`) }}</view>
+          <view class="title">{{ $t('新人商品专区') }}</view>
           <view class="content">
             <scroll-view scroll-x="true">
               <view class="list acea-row">
@@ -232,7 +232,7 @@
                   ></easy-loadimage>
                   <view class="name line1">{{ item.store_name }}</view>
                   <view class="money" :style="[productMoneyStyle]"
-                    >{{ $t(`¥`)
+                    >{{ $t('¥')
                     }}<text class="number">{{ item.price }}</text></view
                   >
                 </view>

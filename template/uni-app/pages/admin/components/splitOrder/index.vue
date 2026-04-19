@@ -4,7 +4,7 @@
 		<view class="all" v-if="select_all">
 			<checkbox-group @change="checkboxAllChange">
 				<checkbox value="all" :checked="isAllSelect" />
-				<text class='checkAll'>全选</text>
+				<text class='checkAll'>{{$t('全选')}}</text>
 			</checkbox-group>
 		</view>
 		<checkbox-group @change="checkboxChange">

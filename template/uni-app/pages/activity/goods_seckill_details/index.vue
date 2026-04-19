@@ -100,8 +100,8 @@
                     style="margin-top: 4rpx"
                   ></countDown>
                 </view>
-                <!-- <view class="timeState" wx:if="{{status == 0}}">已结束</view>
-						  <view class="timeState" wx:if="{{status == 2}}">即将开始</view> -->
+                <!-- <view class="timeState" wx:if="{{status == 0}}">{{$t('已结束')}}</view>
+						  <view class="timeState" wx:if="{{status == 2}}">{{$t('即将开始')}}</view> -->
                 <!-- <view class='iconfont icon-jiantou'></view> -->
               </view>
             </view>
@@ -116,7 +116,7 @@
               ></view>
             </view>
             <view class="label acea-row row-middle">
-              <!-- <view class='stock'>库存：{{storeInfo.stock}}{{storeInfo.unit_name}}</view> -->
+              <!-- <view class='stock'>{{$t('库存')}}：{{storeInfo.stock}}{{storeInfo.unit_name}}</view> -->
               <view class="stock"
                 >{{ $t(`累计销售`) }}：{{ storeInfo.total ? storeInfo.total : 0
                 }}{{ $t(storeInfo.unit_name) || "" }}</view

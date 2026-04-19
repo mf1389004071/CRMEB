@@ -118,7 +118,7 @@
     <app-update ref="appUpdate" :force="true" :tabbar="false"></app-update>
     <!-- #endif -->
     <view v-if="isPreview" class="exit-preview" @click="exitPreview">
-      退出预览
+      {{$t('退出预览')}}
     </view>
   </view>
 </template>

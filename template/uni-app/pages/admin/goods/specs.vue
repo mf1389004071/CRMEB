@@ -25,17 +25,17 @@
         <!-- #endif -->
         <view class="listCon">
           <!-- <view class="item acea-row row-middle">
-						<view class="name">商品图</view>
+						<view class="name">{{$t('商品图')}}</view>
 						<view class="pictrue">
 							<image :src="item.image" mode="aspectFill"></image>
 						</view>
 					</view> -->
           <view class="item acea-row row-middle">
-            <view class="name">规格名称</view>
+            <view class="name">{{$t('规格名称')}}</view>
             <view class="info">{{ item.suk }}</view>
           </view>
           <view class="item acea-row row-middle">
-            <view class="name">售价</view>
+            <view class="name">{{$t('售价')}}</view>
             <input
               type="digit"
               :disabled="administer"
@@ -46,7 +46,7 @@
             />
           </view>
           <view class="item acea-row row-middle">
-            <view class="name">成本价</view>
+            <view class="name">{{$t('成本价')}}</view>
             <input
               type="digit"
               :disabled="administer"
@@ -56,7 +56,7 @@
             />
           </view>
           <view class="item acea-row row-middle">
-            <view class="name">原价</view>
+            <view class="name">{{$t('原价')}}</view>
             <input
               type="digit"
               :disabled="administer"
@@ -66,7 +66,7 @@
             />
           </view>
           <view class="item acea-row row-middle">
-            <view class="name">库存</view>
+            <view class="name">{{$t('库存')}}</view>
             <input
               type="number"
               :disabled="administer"

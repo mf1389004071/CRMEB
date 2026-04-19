@@ -23,7 +23,7 @@
 				<view class="item-ft acea-row row-between-wrapper">
 					<view>{{ item.is_invoice ? $t(`已开票`) : $t(`未开票`) }}</view>
 					<view class="acea-row row-center-wrapper">
-						<view class="link mr20" @click="getInvoiceLink(item.id)" v-if="item.is_invoice == 1 && item.unique_num != '' && item.red_invoice_num == ''">复制</view>
+						<view class="link mr20" @click="getInvoiceLink(item.id)" v-if="item.is_invoice == 1 && item.unique_num != '' && item.red_invoice_num == ''">{{$t('复制')}}</view>
 						<navigator class="link" :url="`/pages/users/user_invoice_order/index?order_id=${item.order.order_id}`">{{ $t(`查看详情`) }}</navigator>
 					</view>
 				</view>

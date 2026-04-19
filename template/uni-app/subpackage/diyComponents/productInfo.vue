@@ -127,8 +127,8 @@
                 @click="showSpecModal"
               >
                 <view>
-                  <view>{{ skuList.length }}款</view>
-                  <view>可选</view>
+                  <view>{{ skuList.length }}{{ $t('款') }}</view>
+                  <view>{{ $t('可选') }}</view>
                 </view>
                 <text class="iconfont icon-jiantou"></text>
               </view>
@@ -171,8 +171,8 @@
                 @click="showSpecModal"
               >
                 <view>
-                  <view>{{ skuList.length }}款</view>
-                  <view>可选</view>
+                  <view>{{ skuList.length }}{{ $t('款') }}</view>
+                  <view>{{ $t('可选') }}</view>
                 </view>
                 <text class="iconfont icon-jiantou"></text>
               </view>
@@ -209,7 +209,7 @@
                 :style="{ color: specTextColor }"
                 @click="showSpecModal"
               >
-                <text>共{{ skuList.length }}款</text>
+                <text>{{ $t('共') }}{{ skuList.length }}{{ $t('款') }}</text>
                 <text class="iconfont icon-jiantou"></text>
               </view>
             </view>
@@ -232,7 +232,7 @@
                   class="main-price-wrap"
                   :style="{ color: finalPriceColor }"
                 >
-                  <view class="label">到手价</view>
+                  <view class="label">{{ $t('到手价') }}</view>
                   <view class="symbol">¥</view>
                   <view
                     class="price"
@@ -248,7 +248,7 @@
                   class="ot-price-wrap"
                   :style="{ color: sellingPriceColor }"
                 >
-                  <text class="label">售价</text>
+                  <text class="label">{{ $t('售价') }}</text>
                   <text class="price">¥{{ displayInfo.ot_price }}</text>
                 </view>
                 <view
@@ -282,17 +282,17 @@
               <text
                 v-if="item.checkList.includes(0)"
                 :style="{ color: originalPriceColor }"
-                >原价: ¥{{ displayInfo.ot_price }}</text
+                >{{ $t('原价') }}: ¥{{ displayInfo.ot_price }}</text
               >
               <text
                 v-if="item.checkList.includes(1)"
                 :style="{ color: stockColor }"
-                >库存: {{ displayInfo.stock }}</text
+                >{{ $t('库存') }}: {{ displayInfo.stock }}</text
               >
               <text
                 v-if="item.checkList.includes(2)"
                 :style="{ color: salesColor }"
-                >销量: {{ displayInfo.fsales }}{{ displayInfo.unit_name }}</text
+                >{{ $t('销量') }}: {{ displayInfo.fsales }}{{ displayInfo.unit_name }}</text
               >
             </view>
 
@@ -360,8 +360,8 @@
               </scroll-view>
               <view class="total-count" @click="showSpecModal">
                 <view>
-                  <view>{{ skuList.length }}款</view>
-                  <view>可选</view>
+                  <view>{{ skuList.length }}{{ $t('款') }}</view>
+                  <view>{{ $t('可选') }}</view>
                 </view>
                 <text class="iconfont icon-jiantou"></text>
               </view>

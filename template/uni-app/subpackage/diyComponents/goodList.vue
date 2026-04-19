@@ -144,7 +144,7 @@
                     <text
                       class="fs-22 text--w111-999 pl-16"
                       v-if="checkboxInfo.includes(4)"
-                      >评分{{ item.star || 0 }}</text
+                      >{{ $t('评分') }}{{ item.star || 0 }}</text
                     >
                   </view>
                   <view

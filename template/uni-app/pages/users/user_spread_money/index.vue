@@ -34,12 +34,12 @@
 												>
 													{{ child.extract_status == 1 ? $t('成功') : child.extract_status == 0 ? $t('提现中') : $t('失败') }}
 												</view>
-												<view v-if="type == 2 && child.is_frozen == 1" class="extract-tag bg-ing">冻结中</view>
+												<view v-if="type == 2 && child.is_frozen == 1" class="extract-tag bg-ing">{{$t('冻结中')}}</view>
 												{{ type == 1 ? $t(child.mark) : $t(child.title) }}
 											</view>
 											<view>{{ child.add_time }}</view>
-											<view class="fail-msg" v-if="child.fail_msg">{{ $t(`原因`) }}：{{ child.fail_msg }}</view>
-											<view class="fail-msg" v-if="type == 2 && child.is_frozen == 1">佣金冻结中，解冻时间：{{ child.frozen_time }}</view>
+											<view class="fail-msg" v-if="child.fail_msg">{{ $t('原因') }}：{{ child.fail_msg }}</view>
+											<view class="fail-msg" v-if="type == 2 && child.is_frozen == 1">{{$t('佣金冻结中')}}, {{$t('解冻时间')}}：{{ child.frozen_time }}</view>
 										</view>
 										<view class="acea-row row-column items-end">
 											<view class="num font-color" v-if="child.pm == 1">+{{ child.number }}</view>
@@ -49,7 +49,7 @@
 													class="w-100 h-48 rd-30rpx flex-center mt-16 bg-color fs-26 text--w111-fff"
 													@tap="jumpPath('/pages/users/user_spread_money/receiving?type=1&id=' + child.wechat_order_id)"
 												>
-													收款
+												{{$t('收款')}}
 												</view>
 											</template>
 										</view>
@@ -64,7 +64,7 @@
 					{{ loadTitle }}
 				</view>
 				<view v-if="recordList.length < 1 && page > 1">
-					<emptyPage :title="$t(`暂无数据~`)"></emptyPage>
+					<emptyPage :title="$t('暂无数据~')"></emptyPage>
 				</view>
 			</view>
 		</view>

@@ -34,37 +34,37 @@
 							</picker>
 						</view>
 						<view class="tab acea-row">
-							<view class="box" :class="detailtabs== 'today' ? 'on':''" @click="detailtab('today')">今日</view>
-							<view class="box" :class="detailtabs== 'yesterday' ? 'on':''" @click="detailtab('yesterday')">昨日</view>
-							<view class="box" :class="detailtabs== 'month' ? 'on':''" @click="detailtab('month')">本月</view>
+							<view class="box" :class="detailtabs== 'today' ? 'on':''" @click="detailtab('today')">{{$t('今日')}}</view>
+							<view class="box" :class="detailtabs== 'yesterday' ? 'on':''" @click="detailtab('yesterday')">{{$t('昨日')}}</view>
+							<view class="box" :class="detailtabs== 'month' ? 'on':''" @click="detailtab('month')">{{$t('本月')}}</view>
 						</view>
 					</view>
 					<Loading :loaded="loaded" :loading="loading"></Loading>
 					<view class="list acea-row" v-if="!loading">
 						<view class="item">
 							<view class="num">{{ census.unsend || 0 }}</view>
-							<view>待配送</view>
+							<view>{{$t('待配送')}}</view>
 						</view>
 						<view class="item">
 							<view class="num">{{ census.send || 0 }}</view>
-							<view>已配送</view>
+							<view>{{$t('已配送')}}</view>
 						</view>
 						<view class="item">
 							<view class="num">{{ census.send_price || 0 }}</view>
-							<view>配送金额</view>
+							<view>{{$t('配送金额')}}</view>
 						</view>
 					</view>
 				</view>
 				<view class="public-wrapper">
 					<view class="title">
 						<view class="uni-list-cell-db" @click="hiddened">
-							详细数据
+							{{$t('详细数据')}}
 						</view>
 					</view>
 					<view class="nav acea-row row-between-wrapper">
-						<view class="data">日期</view>
-						<view class="browse">订单数</view>
-						<view class="turnover">配送金额</view>
+						<view class="data">{{$t('日期')}}</view>
+						<view class="browse">{{$t('订单数')}}</view>
+						<view class="turnover">{{$t('配送金额')}}</view>
 					</view>
 					<Loading :loaded="loaded" :loading="loading"></Loading>
 					<view v-if="list.length" class="conter">
@@ -75,7 +75,7 @@
 						</view>
 					</view>
 					<view v-else class="unconter">
-						<view v-if="!loading">暂无数据</view>
+						<view v-if="!loading">{{$t('暂无数据')}}</view>
 					</view>
 				</view>
 			</view>
@@ -84,18 +84,18 @@
 					<view class="item" :class="{ active: type == 1 }">
 						<view class="text-box"></view>
 						<view class="item-box"></view>
-						<view class="inner acea-row row-center row-middle" @click="tab('1')">待配送({{ count.unsend }})</view>
+						<view class="inner acea-row row-center row-middle" @click="tab('1')">{{$t('待配送')}}({{ count.unsend }}){{$t('件')}}</view>
 					</view>
 					<view class="item" :class="{ active: type == 2 }">
 						<view class="text-box"></view>
 						<view class="item-box"></view>
-						<view class="inner acea-row row-center row-middle" @click="tab('2')">已配送({{ count.send }})</view>
+						<view class="inner acea-row row-center row-middle" @click="tab('2')">{{$t('已配送')}}({{ count.send }}){{$t('件')}}</view>
 					</view>
 				</view>
 				<view class="content">
 					<view class="item" v-for="(item,index) in orderlist" :key="index" @click="jump(item.id)">
 						<view class="item-top acea-row row-between row-middle">
-							<view class="">订单号：{{ item.order_id }}</view>
+							<view class="">{{$t('订单号')}}：{{ item.order_id }}</view>
 							<view style="color: #FF7E00;">{{type == 1?$t('待配送'):$t('已配送')}}</view>
 						</view>
 						<view class="item-center acea-row">
@@ -113,11 +113,11 @@
 							</view>
 							<view class="money-section">
 								<baseMoney :money="item.pay_price" symbolSize="20" integerSize="32" decimalSize="20"></baseMoney>
-								<view class="num">共{{ item.total_num }}件</view>
+								<view class="num">{{ $t('共') }} {{ item.total_num }} {{ $t('件') }}</view>
 							</view>
 						</view>
 						<view class="item-bottom acea-row">
-							<view>配送地址：</view>
+							<view>{{$t('配送地址')}}：</view>
 							<view class="info">{{ item.user_address }}</view>
 						</view>
 						<!-- <view class="content_box" v-for="(val, key) in item._info" :key="key">
@@ -127,13 +127,13 @@
 									<view class="textbox"><text class="icon-color" v-if="val.cart_info.is_gift">[赠品]</text>{{ val.cart_info.productInfo.store_name }}</view>
 									<view>x {{ val.cart_info.cart_num }}</view>
 								</view>
-								<p class="attribute">属性：{{ val.cart_info.productInfo.attrInfo.suk }}</p>
-								<p>¥ {{ val.cart_info.productInfo.attrInfo.price }} </p>
+								<p class="attribute">{{ $t('属性') }}：{{ val.cart_info.productInfo.attrInfo.suk }}</p>
+								<p>{{ $t('¥') }} {{ val.cart_info.productInfo.attrInfo.price }} </p>
 							</view>
 						</view> -->
 						<!-- <view class="content_bottom">
 							<view></view>
-							<view>共{{ item.total_num }}件商品，订单实付：<span class="money">￥{{ item.pay_price }}</span></view>
+							<view>{{ $t('共') }} {{ item.total_num }} {{ $t('件商品') }}，{{ $t('订单实付') }}：<span class="money">￥{{ item.pay_price }}</span></view>
 						</view> -->
 					</view>
 					<emptyPage v-if="!orderlist.length && !loading" :title="$t('暂无数据～')" src="/statics/images/noOrder.gif"></emptyPage>
@@ -146,12 +146,12 @@
 				<view class="tab acea-row row-column row-center row-middle" :class="footer == 'list'?'on':''" @click="footerTab('list')">
 					<image v-if="footer == 'list'" :src="imgHost+'/statics/images/admin-order-menu2.png'" class="image"></image>
 					<image v-else :src="imgHost+'/statics/images/admin-order-menu1.png'" class="image"></image>
-					<view class="font">订单列表</view>
+					<view class="font">{{$t('订单列表')}}</view>
 				</view>
 				<view class="tab acea-row row-column row-center row-middle" :class="footer == 'tongji'?'on':''" @click="footerTab('tongji')">
 					<image v-if="footer == 'tongji'" :src="imgHost+'/statics/images/admin-order-menu4.png'" class="image"></image>
 					<image v-else :src="imgHost+'/statics/images/admin-order-menu3.png'" class="image"></image>
-					<view class="font">数据统计</view>
+					<view class="font">{{$t('数据统计')}}</view>
 				</view>
 			</view>
 			<view class="safe-area-inset-bottom"></view>

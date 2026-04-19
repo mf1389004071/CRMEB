@@ -3,10 +3,10 @@
     <view class="shoppingCart copy-data">
       <view class="nav acea-row row-between-wrapper">
         <view
-          >订单号：<text class="num">{{ list.order_id }}</text></view
+          >{{$t('订单号')}}：<text class="num">{{ list.order_id }}</text></view
         >
         <!-- <navigator class="btn" :url="'/pages/admin/writeRecordList/index?id='+id" hover-class="none">
-					核销记录<text class="iconfont icon-ic_rightarrow"></text>
+						{{$t('核销记录')}}<text class="iconfont icon-ic_rightarrow"></text>
 				</navigator> -->
       </view>
       <view class="content">
@@ -46,7 +46,7 @@
                         {{ item.cart_info.productInfo.store_name }}
                       </view>
                       <view v-if="item.is_writeoff == 1" class="txt"
-                        >已核销</view
+                        >{{$t('已核销')}}</view
                       >
                       <view
                         v-if="
@@ -55,7 +55,7 @@
                             lists.cart_info[index].cart_num
                         "
                         class="txt bluecol"
-                        >未核销</view
+                        >{{$t('未核销')}}</view
                       >
                       <view
                         v-if="
@@ -65,20 +65,20 @@
                         "
                         class="txt orangcol"
                       >
-                        已核销{{
+                        {{$t('已核销')}}{{
                           parseInt(
                             lists.cart_info[index].cart_num -
                               lists.cart_info[index].surplus_num,
                           )
-                        }}件</view
+                        }} {{$t('件')}}</view
                       >
                     </view>
                     <view class="infor line1">
-                      属性：{{ item.cart_info.productInfo.attrInfo.suk }}</view
+                      {{$t('属性')}}：{{ item.cart_info.productInfo.attrInfo.suk }}</view
                     >
                     <view class="money he row-middle">
                       <view
-                        >￥{{
+                        >{{$t('￥')}}{{
                           item.cart_info.productInfo.attrInfo
                             ? item.cart_info.productInfo.attrInfo.price
                             : item.cart_info.productInfo.price

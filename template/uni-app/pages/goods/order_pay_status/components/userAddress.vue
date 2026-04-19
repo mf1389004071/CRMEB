@@ -34,10 +34,10 @@
 					</view>
 					<button class='keepBnt' form-type="submit">{{$t(`提交`)}}</button>
 					<!-- #ifdef MP -->
-					<!-- <view class="wechatAddress" v-if="!id" @click="getWxAddress">导入微信地址</view> -->
-					<!-- #endif -->
+					<!-- <view class="wechatAddress" v-if="!id" @click="getWxAddress">{{$t('导入微信地址')}}</view> -->
+					<!-- #endif -->	
 					<!-- #ifdef H5 -->
-					<!-- <view class="wechatAddress" v-if="this.$wechat.isWeixin() && !id" @click="getAddress">导入微信地址</view> -->
+					<!-- <view class="wechatAddress" v-if="this.$wechat.isWeixin() && !id" @click="getAddress">{{$t('导入微信地址')}}</view> -->
 					<!-- #endif -->
 				</view>
 			</form>

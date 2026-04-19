@@ -19,7 +19,7 @@
           ></image>
         </view>
         <view class="text">
-          <view v-if="!isLogin" class="name">{{ $t(`请点击登录`) }}</view>
+          <view v-if="!isLogin" class="name">{{ $t('请点击登录') }}</view>
           <view v-else class="name acea-row row-middle">
             <view class="nameCon line1">{{ diyInfo.nickname }}</view>
             <view
@@ -63,7 +63,7 @@
               @click.stop="handleMenu(1)"
             >
               <view class="num">{{ diyInfo.integral || 0 }}</view>
-              <view>{{ $t(`积分`) }}</view>
+              <view>{{ $t('积分') }}</view>
             </view>
             <view
               class="item"
@@ -71,7 +71,7 @@
               @click.stop="handleMenu(2)"
             >
               <view class="num">{{ diyInfo.now_money || 0 }}</view>
-              <view>{{ $t(`余额`) }}</view>
+              <view>{{ $t('余额') }}</view>
             </view>
             <view
               class="item"
@@ -79,7 +79,7 @@
               @click.stop="handleMenu(0)"
             >
               <view class="num">{{ diyInfo.couponCount || 0 }}</view>
-              <view>{{ $t(`优惠券`) }}</view>
+              <view>{{ $t('优惠券') }}</view>
             </view>
             <view
               class="item"
@@ -87,7 +87,7 @@
               @click.stop="handleMenu(4)"
             >
               <view class="num">{{ diyInfo.collectCount || 0 }}</view>
-              <view>{{ $t(`收藏`) }}</view>
+              <view>{{ $t('收藏') }}</view>
             </view>
             <view
               class="item"
@@ -95,7 +95,7 @@
               @click.stop="handleMenu(5)"
             >
               <view class="num">{{ diyInfo.visit_num || 0 }}</view>
-              <view>{{ $t(`浏览`) }}</view>
+              <view>{{ $t('浏览') }}</view>
             </view>
           </template>
         </view>
@@ -110,7 +110,7 @@
           @click.stop="handleMenu(1)"
         >
           <view class="num">{{ diyInfo.integral || 0 }}</view>
-          <view>{{ $t(`积分`) }}</view>
+          <view>{{ $t('积分') }}</view>
         </view>
         <view
           v-if="checkType.indexOf(2) != -1"
@@ -118,7 +118,7 @@
           @click.stop="handleMenu(2)"
         >
           <view class="num">{{ diyInfo.now_money || 0 }}</view>
-          <view>{{ $t(`余额`) }}</view>
+          <view>{{ $t('余额') }}</view>
         </view>
         <view
           v-if="checkType.indexOf(0) != -1"
@@ -126,7 +126,7 @@
           @click.stop="handleMenu(0)"
         >
           <view class="num">{{ diyInfo.coupon_num || 0 }}</view>
-          <view>{{ $t(`优惠券`) }}</view>
+          <view>{{ $t('优惠券') }}</view>
         </view>
         <view
           v-if="checkType.indexOf(4) != -1"
@@ -134,7 +134,7 @@
           @click.stop="handleMenu(4)"
         >
           <view class="num">{{ diyInfo.collectCount || 0 }}</view>
-          <view>{{ $t(`收藏`) }}</view>
+          <view>{{ $t('收藏') }}</view>
         </view>
         <view
           v-if="checkType.indexOf(5) != -1"
@@ -142,7 +142,7 @@
           @click.stop="handleMenu(5)"
         >
           <view class="num">{{ diyInfo.visit_num || 0 }}</view>
-          <view>{{ $t(`浏览`) }}</view>
+          <view>{{ $t('浏览') }}</view>
         </view>
       </view>
       <!-- <view class="codePopup" :style="colorStyle" v-show="isCode">
@@ -157,7 +157,7 @@
 					<w-qrcode :options="config.qrc" @generate="hello"></w-qrcode>
 				</view>
 				<view class="codeNum">{{config.bar.code}}</view>
-				<view class="tip">如遇到扫码失败请将屏幕调至最亮重新扫码</view>
+				<view class="tip">{{ $t('如遇到扫码失败请将屏幕调至最亮重新扫码') }}</view>
 			</view>
 			<view class="iconfont icon-guanbi2" @click="closeCode"></view>
 		</view> -->

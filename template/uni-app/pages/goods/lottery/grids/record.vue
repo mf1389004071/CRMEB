@@ -43,7 +43,7 @@
 						<view v-if="item.deliver_info.deliver_number" class="copy copy-data"
 							:data-clipboard-text="item.deliver_info.deliver_number">{{ $t(`复制`) }}</view>
 						<!-- #endif -->
-						<!-- <view v-if="item.deliver_info.deliver_number" class='copy' @tap='copyOrderId(item.deliver_info.deliver_number)'>复制</view> -->
+						<!-- <view v-if="item.deliver_info.deliver_number" class='copy' @tap='copyOrderId(item.deliver_info.deliver_number)'>{{$t('复制')}}</view> -->
 					</view>
 				</view>
 			</view>

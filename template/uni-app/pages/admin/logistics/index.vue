@@ -9,7 +9,7 @@
 		<view class="relative px-20 z-20 express_box">
 			<view class="h-66 rd-t-24rpx light px-24 flex-between-center fs-20">
 				<text>{{orderInfo.delivery_name}} {{orderInfo.delivery_id}}</text>
-				<text class="inline-block copy_btn fs-22 text--w111-333" @tap="copyOrderId">复制单号</text>
+				<text class="inline-block copy_btn fs-22 text--w111-333" @tap="copyOrderId">{{$t('复制单号')}}</text>
 			</view>
 			<view class="rd-b-24rpx bg--w111-fff flex-between-center">
 				<view class="w-316 h-142 flex-col flex-center">
@@ -27,7 +27,7 @@
 			<view class="bg--w111-fff rd-16rpx pt-32 pr-24 pl-24 pb-32">
 				<view class="flex-between-center">
 					<view class="fs-32 fw-500 text--w111-333">
-						<text>物流详情</text>
+						<text>{{$t('物流详情')}}</text>
 					</view>
 				</view>
 				<view class="logisticsCon mt-50 relative" v-if="expressList.length">
@@ -41,7 +41,7 @@
 						</view>
 					</view>
 					<view class="more-text fs-24" @tap="checkShowMore">
-						<text>{{showMore ? $t('收起') : $t('查看更多物流信息')}}</text>
+						<text>{{showMore ? $t('收起') : $t('查看更多物流详情')}}</text>
 						<text class="iconfont fs-24 pl-8" :class="showMore ? 'icon-ic_uparrow' : 'icon-ic_downarrow'"></text>
 					</view>
 				</view>

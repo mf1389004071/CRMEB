@@ -9,24 +9,24 @@
   >
     <view class="edit-balance rd-t-40rpx">
       <view class="title"
-        >赠送会员
+        >{{$t('赠送会员')}}
         <view class="close acea-row row-center-wrapper" @tap="closeDrawer">
           <text class="iconfont icon-iconfontguanbi"></text>
         </view>
       </view>
       <view class="list">
         <view class="item acea-row row-between-wrapper">
-          <view>会员到期日</view>
+          <view>{{$t('会员到期日')}}</view>
           <view class="time">{{
             userInfo.svip_overdue_time || $t('已过期/暂未开通')
           }}</view>
         </view>
         <view class="item acea-row row-between-wrapper">
-          <view>剩余天数</view>
+          <view>{{$t('剩余天数')}}</view>
           <view class="time">{{ userInfo.svip_over_day }}</view>
         </view>
         <view class="item acea-row row-between-wrapper">
-          <view>调整时长(天)</view>
+          <view>{{$t('调整时长')}}({{$t('天')}})</view>
           <view class="acea-row row-middle">
             <input
               type="numeric"
@@ -40,10 +40,10 @@
       </view>
       <view class="footer acea-row row-between-wrapper">
         <view class="bnt acea-row row-center-wrapper" @click="closeDrawer"
-          >取消</view
+          >{{$t('取消')}}</view
         >
         <view class="bnt on acea-row row-center-wrapper" @click="define"
-          >确定</view
+          >{{$t('确定')}}</view
         >
       </view>
     </view>

@@ -12,7 +12,7 @@
       <view class="icon" @click="home" v-else>
         <image src="../static/home.png"></image>
       </view>
-      {{ $t(`商城登录`) }}
+      {{ $t('商城登录') }}
     </view>
     <!-- #endif -->
     <view class="merchant-msg">
@@ -25,7 +25,7 @@
       <view class="btn-wrapper">
         <!-- #ifdef H5 -->
         <button hover-class="none" @click="wechatLogin" class="bg-theme btn1">
-          {{ $t(`微信登录`) }}
+          {{ $t('微信登录') }}
         </button>
         <!-- #endif -->
         <!-- #ifdef MP -->
@@ -36,14 +36,14 @@
             open-type="getPhoneNumber"
             @getphonenumber="getphonenumber"
           >
-            {{ $t(`授权登录`) }}
+            {{ $t('授权登录') }}
           </button>
           <button
             class="bg-theme btn1"
             v-else-if="!bindPhone"
             @click="getAuthLogin"
           >
-            {{ $t(`授权登录`) }}
+            {{ $t('授权登录') }}
           </button>
         </template>
         <button
@@ -52,9 +52,9 @@
           @click="phoneLogin"
           class="btn2"
         >
-          {{ $t(`手机号登录`) }}
+          {{ $t('手机号登录') }}
         </button>
-        <view class="cancel-login" @click="onReject">取消登录</view>
+        <view class="cancel-login" @click="onReject">{{$t('取消登录')}}</view>
         <!-- #endif -->
       </view>
     </view>
@@ -65,13 +65,13 @@
           @animationend="inAnimation = false"
           :checked="protocol ? true : false"
         />
-        <text @click.stop="ChangeIsDefault">{{ $t(`已阅读并同意`) }}</text>
+        <text @click.stop="ChangeIsDefault">{{ $t('已阅读并同意') }}</text>
         <text class="main-color" @click.stop="privacy(4)">{{
-          $t(`《用户协议》`)
+          $t('《用户协议》')
         }}</text>
-        {{ $t(`与`)
+        {{ $t('与')
         }}<text class="main-color" @click.stop="privacy(3)">{{
-          $t(`《隐私协议》`)
+          $t('《隐私协议》')
         }}</text>
       </checkbox-group>
     </view>

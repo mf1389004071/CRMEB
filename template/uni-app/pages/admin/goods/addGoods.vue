@@ -3,21 +3,21 @@
 		<!-- <NavBar :titleText=$t('添加商品') textSize="34rpx" iconColor="#333333" textColor="#333333" isScrolling showBack></NavBar> -->
 		<view class="p-20">
 			<view class="w-full bg--w111-fff rd-16rpx pt-32 pr-30 pb-32 pl-30">
-				<view class="fs-30 fw-500 lh-42rpx">商品信息</view>
+				<view class="fs-30 fw-500 lh-42rpx">{{$t('商品信息')}}</view>
 				<view class="mt-30 flex-between-center">
-					<text class="fs-30 lh-42rpx">商品名称</text>
+					<text class="fs-30 lh-42rpx">{{$t('商品名称')}}</text>
 					<text class="text-24 text--w111-666">{{setFormData.store_name.length}}/40</text>
 				</view>
 				<view class="w-full bg--w111-f5f5f5 rd-12rpx p-20 mt-12">
 					<textarea v-model="setFormData.store_name"
 					:maxlength="40"
-					placeholder="$t('请填写商品名称')" placeholder-class="text--w111-ccc"
+					:placeholder="$t('请填写商品名称')" placeholder-class="text--w111-ccc"
 					class="fs-30" auto-height />
 				</view>
 				<view class="mt-40">
-					<text class="fs-30 lh-42rpx">商品图片</text>
+					<text class="fs-30 lh-42rpx">{{$t('商品图片')}}</text>
 				</view>
-				<view class="fs-22 text--w111-999 mt-12">建议：图片尺寸为750*750px，最多上传9张</view>
+				<view class="fs-22 text--w111-999 mt-12">{{$t('建议')}}：{{$t('图片尺寸为750*750px，最多上传9张')}}</view>
 				<view class="grid-column-4 grid-gap-8rpx mt-20">
 					<view class="relative h-156" v-for="(item,index) in setFormData.slider_image" :key="index">
 						<image :src="item" mode="aspectFill" class="w-full h-156 rd-12rpx"></image>
@@ -34,7 +34,7 @@
 			</view>
 			<view class="w-full bg--w111-fff rd-16rpx mt-22 px-30">
 				<view class="h-106 flex-between-center bb-e" @click="selectCate">
-					<text class="fs-30 lh-42rpx">{{$t('商品分类')}}</text>
+					<text class="fs-30 lh-42rpx">{{$t('请选择分类')}}</text>
 					<view class="flex-y-center">
 						<text class="fs-30 text--w111-333 pr-12" v-if="setFormData.cate_id.length">{{$t('已选择')}}</text>
 						<text class="fs-30 text--w111-999 pr-12" v-else>{{$t('请选择分类')}}</text>
@@ -42,7 +42,7 @@
 					</view>
 				</view>
 				<view class="h-106 flex-between-center bb-e">
-					<text class="fs-30 lh-42rpx">{{$t('单位')}}</text>
+					<text class="fs-30 lh-42rpx">{{$t('请填写单位')}}</text>
 					<view class="flex-1 flex justify-end text-right">
 						<input type="text" maxlength="1" v-model="setFormData.unit_name"  :placeholder="$t('请填写商品单位')" placeholder-class="text--w111-999 fs-30" class="fs-32 fs-30" />
 					</view>
@@ -51,49 +51,49 @@
 			<view class="w-full bg--w111-fff rd-16rpx mt-22 pt-32 pr-30 pl-30">
 				<view class="fs-30 fw-500 lh-42rpx">{{$t('规格设置')}}</view>
 				<view class="h-106 flex-between-center bb-e">
-					<text class="fs-30 lh-42rpx">{{$t('售价')}}</text>
+					<text class="fs-30 lh-42rpx">{{$t('请输入售价')}}</text>
 					<view class="flex-1 flex justify-end text-right">
 						<input type="digit" v-model="setFormData.attr.price" :placeholder="$t('请输入售价')" placeholder-class=" text--w111-999" class="fs-32" />
 					</view>
 				</view>
 				<view class="h-106 flex-between-center bb-e">
-					<text class="fs-30 lh-42rpx">成本价</text>
+					<text class="fs-30 lh-42rpx">{{$t('请输入成本价')}}</text>
 					<view class="flex-1 flex justify-end text-right">
 						<input type="digit" v-model="setFormData.attr.cost" :placeholder="$t('请输入成本价')" placeholder-class=" text--w111-999" class="fs-32" />
 					</view>
 				</view>
 				<view class="h-106 flex-between-center bb-e">
-					<text class="fs-30 lh-42rpx">{{$t('划线价')}}</text>
+					<text class="fs-30 lh-42rpx">{{$t('请输入划线价')}}</text>
 					<view class="flex-1 flex justify-end text-right">
 						<input type="digit" v-model="setFormData.attr.ot_price"  :placeholder="$t('请输入划线价')" placeholder-class=" text--w111-999" class="fs-32" />
 					</view>
 				</view>
 				<view class="h-106 flex-between-center bb-e">
-					<text class="fs-30 lh-42rpx">{{$t('库存')}}</text>
+					<text class="fs-30 lh-42rpx">{{$t('请输入库存')}}</text>
 					<view class="flex-1 flex justify-end text-right">
 						<input type="number" v-model="setFormData.attr.stock" :placeholder="$t('请输入库存')" placeholder-class=" text--w111-999" class="fs-32" />
 					</view>
 				</view>
 				<view class="h-106 flex-between-center bb-e" v-show="isMore">
-					<text class="fs-30 lh-42rpx">{{$t('商品编码')}}</text>
+					<text class="fs-30 lh-42rpx">{{$t('请输入商品编码')}}</text>
 					<view class="flex-1 flex justify-end text-right">
 						<input type="number" v-model="setFormData.attr.bar_code" :placeholder="$t('请输入规格编码')" placeholder-class=" text--w111-999" class="fs-32" />
 					</view>
 				</view>
 				<view class="h-106 flex-between-center bb-e" v-show="isMore">
-					<text class="fs-30 lh-42rpx">{{$t('条形码')}}</text>
+					<text class="fs-30 lh-42rpx">{{$t('请输入条形码')}}</text>
 					<view class="flex-1 flex justify-end text-right">
 						<input type="number" v-model="setFormData.attr.bar_code_number" :placeholder="$t('请输入条形码')" placeholder-class=" text--w111-999" class="fs-32" />
 					</view>
 				</view>
 				<view class="h-106 flex-between-center bb-e" v-show="isMore">
-					<text class="fs-30 lh-42rpx">{{$t('重量')}}</text>
+					<text class="fs-30 lh-42rpx">{{$t('请输入重量')}}</text>
 					<view class="flex-1 flex justify-end text-right">
 						<input type="number" v-model="setFormData.attr.weight" :placeholder="$t('请输入重量')" placeholder-class=" text--w111-999" class="fs-32" />
 					</view>
 				</view>
 				<view class="h-106 flex-between-center bb-e" v-show="isMore">
-					<text class="fs-30 lh-42rpx">{{$t('体积')}}</text>
+					<text class="fs-30 lh-42rpx">{{$t('请输入体积')}}</text>
 					<view class="flex-1 flex justify-end text-right">
 						<input type="number" v-model="setFormData.attr.volume" :placeholder="$t('请输入体积')" placeholder-class=" text--w111-999" class="fs-32" />
 					</view>
@@ -105,7 +105,7 @@
 			</view>
 			<view class="w-full bg--w111-fff rd-16rpx mt-22 pt-32 pr-30 pl-30 pb-32">
 				<view class="fs-30 lh-42rpx">{{$t('商品详情')}}</view>
-				<view class="fs-22 text--w111-999 mt-12">建议：图片尺寸为750*750px，最多上传10张</view>
+				<view class="fs-22 text--w111-999 mt-12">{{$t('建议')}}：{{$t('图片尺寸为750*750px，最多上传10张')}}</view>
 				<view class="grid-column-4 grid-gap-8rpx mt-20">
 					<view class="relative h-156" v-for="(item,index) in contentPicture" :key="index">
 						<image :src="item" mode="aspectFill" class="w-full h-156 rd-12rpx"></image>
@@ -123,7 +123,7 @@
 			<view class="w-full bg--w111-fff rd-16rpx mt-22 pt-32 pr-30 pl-30">
 				<view class="fs-30 lh-42rpx fw-500">{{$t('其他设置')}}</view>
 				<view class="h-106 flex-between-center">
-					<view class="fs-30 lh-42rpx">{{$t('配送方式')}}</view>
+					<view class="fs-30 lh-42rpx">{{$t('请选择配送方式')}}</view>
 					<view class="flex-y-center">
 						<checkbox-group class="flex-y-center" @change="deliveryWayChange">
 							<label class="ml-48" v-for="(val, i) in deliveryFreeList" :key="val.value">
@@ -136,7 +136,7 @@
 					</view>
 				</view>
 				<view class="h-106 flex-between-center" v-show="setFormData.logistics.includes('1')">
-					<view class="fs-30 lh-42rpx">{{$t('运费设置')}}</view>
+					<view class="fs-30 lh-42rpx">{{$t('请选择运费设置')}}</view>
 					<radio-group class="flex-y-center" @change="feightChange">
 						<label class="flex-y-center fs-30">
 							<view>
@@ -154,7 +154,7 @@
 				</view>
 				<view v-show="setFormData.logistics.includes('1')">
 					<view class="h-106 flex-between-center" v-if="setFormData.freight == 2">
-						<text class="fs-30 lh-42rpx">{{$t('固定邮费')}}</text>
+						<text class="fs-30 lh-42rpx">{{$t('请输入固定邮费')}}</text>
 						<view class="flex-1 flex justify-end text-right">
 							<input type="digit" v-model="setFormData.postage" :placeholder="$t('请输入金额')" placeholder-class=" text--w111-999" class="fs-32" />
 						</view>

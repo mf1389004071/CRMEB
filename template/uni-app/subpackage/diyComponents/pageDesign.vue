@@ -10,7 +10,7 @@
         <view
           class="myApplet w-324 h-62 text-center rd-12rpx lh-62rpx fs-24 bg--w111-fff text-w111-303133"
         >
-          点击添加到我的小程序
+        {{$t('点击添加到我的小程序')}}
           <text
             class="iconfont icon-ic_close2 text--w111-ccc ml-16"
             @click="myApplet = false"

@@ -2,7 +2,7 @@
 	<view :class="mode=='pop'?'masks':''" v-show="showBox">
 		<view :class="mode=='pop'?'verifybox':''" :style="{'max-width':parseInt(imgSize.width)+30+'px'}">
 			<view class="verifybox-top" v-if="mode=='pop'">
-				请完成安全验证
+				{{$t('请完成安全验证')}}
 				<text class="verifybox-close" @click="clickShow = false">
 					<text class="iconfont icon-close"></text>
 				</text>

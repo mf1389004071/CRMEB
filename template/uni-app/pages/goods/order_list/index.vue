@@ -39,9 +39,9 @@
 					<view @click="goOrderDetails(item.order_id)">
 						<view class="acea-row row-middle gift" v-if="item.is_gift == 1">
 							<text class="iconfont icon-ic_gift2 mr-16"></text>
-							<view v-if="item.gift_uid === 0">礼物未赠送</view>
-							<view v-else-if="item.uid === uid">送给 {{ item.gift_user_info.gift_nickname }} 的礼物</view>
-							<view v-else-if="item.gift_uid === uid">收到 {{ item.nickname }} 的礼物</view>
+							<view v-if="item.gift_uid === 0">{{$t('礼物未赠送')}}</view>
+							<view v-else-if="item.uid === uid">{{$t('送给')}} {{ item.gift_user_info.gift_nickname }} {{$t('的礼物')}}</view>
+							<view v-else-if="item.gift_uid === uid">{{$t('收到')}} {{ item.nickname }} {{$t('的礼物')}}</view>
 						</view>
 						<view class="title acea-row row-between-wrapper">
 							<view class="acea-row row-middle">
@@ -111,11 +111,11 @@
 						<view class="bnt bg-color" v-if="item._status._type == 0 && item.is_cancel == 0" @click="goPay(item.pay_price, item.order_id)">{{ $t(`立即付款`) }}</view>
 						
 						<!-- <view class="bnt bg-color" v-else-if="item._status._type == 3"
-							@click="goOrderDetails(item.order_id)">去评价</view> -->
+							@click="goOrderDetails(item.order_id)">{{$t('去评价')}}</view> -->
 						<!-- <view class="bnt bg-color"
 							v-else-if="item.seckill_id < 1 && item.bargain_id < 1 && item.combination_id < 1 && item._status._type == 4"
 							@click="goOrderDetails(item.order_id)">
-							再次购买
+								{{$t('再次购买')}}
 						</view> -->
 						
 						

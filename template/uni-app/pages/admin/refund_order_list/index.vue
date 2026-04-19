@@ -16,19 +16,19 @@
 		<view class="nav acea-row row-around row-middle" id="nav" :style="{
 			top: getHeight.barTop + getHeight.barHeight + 'px'}">
 			<view class="item" :class="state == 1 ? 'on' : ''" @click="changeStatus(1)">
-				待审核
+				{{$t('待审核')}}
 				<image src="../static/adorn.png" v-if="state == 1"></image>
 			</view>
 			<view class="item" :class="state == 2 ? 'on' : ''" @click="changeStatus(2)">
-				待退货
+				{{$t('待退货')}}
 				<image src="../static/adorn.png" v-if="state == 2"></image>
 			</view>
 			<view class="item" :class="state == 3 ? 'on' : ''" @click="changeStatus(3)">
-				待收货
+				{{$t('待收货')}}
 				<image src="../static/adorn.png" v-if="state == 3"></image>
 			</view>
 			<view class="item" :class="state == 4 ? 'on' : ''" @click="changeStatus(4)">
-				已完成
+				{{$t('已完成')}}
 				<image src="../static/adorn.png" v-if="state == 4"></image>
 			</view>
 		</view>
@@ -36,13 +36,13 @@
 			<view class="item" v-for="(item, index) in list" :key="index">
 				<view class="order-num acea-row row-between-wrapper" @click="toDetail(item)">
 					<view>
-						<view>售后单号：{{ item.order_id }}</view>
+						<view>{{$t('售后单号')}}：{{ item.order_id }}</view>
 					</view>
-					<view class="state" v-if="[0, 1, 2].includes(item.refund_type)">待审核</view>
+					<view class="state" v-if="[0, 1, 2].includes(item.refund_type)">{{$t('待审核')}}</view>
 					<view class="state" v-if="[4, 5].includes(item.refund_type)">
-						待退货
+						{{$t('待退货')}}
 					</view>
-					<view class="state" v-if="[3, 6].includes(item.refund_type)">已完成</view>
+					<view class="state" v-if="[3, 6].includes(item.refund_type)">{{$t('已完成')}}</view>
 				</view>
 				<view class="pos-order-goods">
 					<view class="goods acea-row" @click="toDetail(item)">
@@ -70,39 +70,39 @@
 						<view class="money">
 							<!-- <view class="x-money">￥{{ item.pay_price }}</view> -->
 							<BaseMoney :money="item.pay_price" symbolSize="20" integerSize="32" decimalSize="20"></BaseMoney>
-							<view class="num">共{{ item.total_num }}件</view>
+							<view class="num">{{$t('共')}}{{ item.total_num }} {{$t('件')}}</view>
 							<!-- 	<view class="y-money">
 								￥{{ val.cart_info.productInfo.ot_price }}
 							</view> -->
-							<!-- <view class="info" v-if="val.cart_info.refund_num && item._status._type !=-2">{{val.cart_info.refund_num}}件退款中</view> -->
+							<!-- <view class="info" v-if="val.cart_info.refund_num && item._status._type !=-2">{{val.cart_info.refund_num}}{{$t('件退款中')}}</view> -->
 						</view>
 					</view>
 				</view>
 				<!-- <view class="public-total">
-					共{{ item.total_num }}件商品，实付款
-					<span class="money">￥{{ item.pay_price }}</span> ( 邮费 ¥{{
+					{{$t('共')}}{{ item.total_num }} {{$t('件商品')}}，{{$t('实付款')}}
+					<span class="money">{{$t('￥')}}{{ item.pay_price }}</span> ( {{$t('邮费')}} {{$t('￥')}}{{
 	            item.pay_postage
 	          }}
 					)
 				</view> -->
 				<view class="operation acea-row row-between-wrapper">
 					<view v-if="item.refund_type == 1" class="more acea-row row-middle">
-						<text class="iconfont icon-ic_returnmoney"></text>仅退款
+						<text class="iconfont icon-ic_returnmoney"></text>{{$t('仅退款')}}
 					</view>
 					<view v-else-if="item.refund_type == 2" class="more acea-row row-middle">
-						<text class="iconfont icon-ic_returnofgoods"></text>退货退款
+						<text class="iconfont icon-ic_returnofgoods"></text>{{$t('退货退款')}}
 					</view>
 					<view v-else></view>
 					<view class="acea-row row-middle">
-						<view class="btn" @click="modify(item, 1)">订单备注</view>
+						<view class="btn" @click="modify(item, 1)">{{$t('订单备注')}}</view>
 						<view class="btn on" @click="modify(item,'2',1)" v-if="item.refund_type == 1">
-							退款审核
+							{{$t('退款审核')}}
 						</view>
 						<view class="btn on" @click="modify(item,'2',0)" v-if="item.refund_type == 2">
-							退款审核
+							{{$t('退款审核')}}
 						</view>
-						<view class="btn" v-if="item.refund_type == 5" @click="goLogistics(item)">查看物流</view>
-						<view class="btn on" v-if="item.refund_type == 5" @click="modify(item, 2, 1)">确认收货</view>
+						<view class="btn" v-if="item.refund_type == 5" @click="goLogistics(item)">{{$t('查看物流')}}</view>
+						<view class="btn on" v-if="item.refund_type == 5" @click="modify(item, 2, 1)">{{$t('确认收货')}}</view>
 					</view>
 				</view>
 			</view>
@@ -115,7 +115,7 @@
 		<view class="filter-popup" :class="{ on: filterShow }">
 			<view class="content">
 				<view class="item">
-					<view class="title">按退货类型</view>
+					<view class="title">{{$t('按退货类型')}}</view>
 					<view class="acea-row list">
 						<view class="cell" v-for="(item, index) in dateList" :key="index" :class="{ on: item.val == apply_type }" @click="dateChange(item.val)">{{ item.label }}</view>
 					</view>

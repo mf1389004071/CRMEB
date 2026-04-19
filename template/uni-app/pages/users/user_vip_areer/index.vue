@@ -2,7 +2,7 @@
 	<view>
 		<view class="detailed">
 			<!-- <view class="public_title acea-row row-middle">
-				<view class="icons"></view>经验值明细
+				<view class="icons"></view>{{$t('经验值明细')}}
 			</view> -->
 			<view v-if="expList.length" class="list">
 				<view class="item acea-row row-between-wrapper" v-for="(item,index) in expList">
@@ -16,7 +16,7 @@
 			</view>
 			<view v-if="!expList.length && !loading" class="empty">
 				<image class="image" :src="imgHost + '/statics/images/empty-box.png'"></image>
-				<view>{{$t(`暂无经验记录`)}}</view>
+				<view>{{$t('暂无经验记录')}}</view>
 			</view>
 		</view>
 		<view class='loadingicon acea-row row-center-wrapper' v-if="expList.length">

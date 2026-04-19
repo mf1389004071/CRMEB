@@ -3,7 +3,7 @@
 			<view class='merchantsSettled'>
 				<image mode="widthFix" class="merchantBg" :src="headerBg" alt="">
 					<!-- <view class="application-record" @click="jumpToList">
-						申请记录
+						{{$t('申请记录')}}
 						<text class="iconfont icon-xiangyou"></text>
 					</view> -->
 					<view class='list' v-if="isAgent">

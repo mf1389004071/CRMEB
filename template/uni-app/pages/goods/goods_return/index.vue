@@ -41,7 +41,7 @@
 							</view>
 						</picker>
 						<view class="" v-else>
-							仅退款
+						{{$t('仅退款')}}
 						</view>
 					</view>
 					<view class='item acea-row row-between-wrapper'>

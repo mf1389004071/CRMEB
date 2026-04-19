@@ -20,9 +20,9 @@
 											</view>
 										</view>
 									</view>
-									<!-- 		<view v-if="item.grade === levelInfo.grade" class="state">当前等级</view>
+									<!-- 		<view v-if="item.grade === levelInfo.grade" class="state">{{$t('当前等级')}}</view>
 									<view v-else-if="item.grade > levelInfo.grade" class="state">
-										暂未解锁
+										{{$t('暂未解锁')}}
 									</view> -->
 									<view v-if="item.grade > (levelInfo.grade || 0)" class="state">
 										<image class="lock" src="../static/lock.png" mode=""></image>

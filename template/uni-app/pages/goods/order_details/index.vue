@@ -523,13 +523,13 @@
 		<!-- 		<view class="refund-input" :class="refund_close ? 'on' : ''">
 			<view class="input-msg">
 				<text class='iconfont icon-guanbi5' @tap='refund_close = false'></text>
-				<view class="refund-input-title">填写物流单号
+				<view class="refund-input-title">{{$t('填写物流单号')}}
 				</view>
 				<view class="refund-input-sty">
-					<input type="text" v-model="express_num" placeholder="请输入物流单号" />
+					<input type="text" v-model="express_num" :placeholder="$t('请输入物流单号')" />
 				</view>
 				<view class="refund-bth">
-					<view class="submit-refund" @click="refundSubmit()">提交</view>
+					<view class="submit-refund" @click="refundSubmit()">{{$t('提交')}}</view>
 				</view>
 			</view>
 		</view> -->

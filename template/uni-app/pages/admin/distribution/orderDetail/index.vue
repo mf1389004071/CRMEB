@@ -44,7 +44,7 @@
               >{{ orderInfo.nickname }} {{ orderInfo.user_phone }}</view
             >
             <view class="acea-row row-between-wrapper">
-              地址：{{ orderInfo.user_address }}
+              {{$t('地址')}}：{{ orderInfo.user_address }}
             </view>
           </view>
           <view class="btn" @click.stop="makePhone(orderInfo.user_phone)">
@@ -69,7 +69,7 @@
         </view>
       </view>
       <view class="goods-section">
-        <view class="">订单号：{{ orderInfo.order_id }}</view>
+        <view class="">{{$t('订单号')}}：{{ orderInfo.order_id }}</view>
         <view
           class="goods acea-row"
           v-for="(item, index) in orderInfo.cartInfo"
@@ -84,7 +84,7 @@
               <view class="attr line1">{{
                 item.productInfo.attrInfo.suk
               }}</view>
-              <view class="label">7天无理由退换货·放心购</view>
+              <view class="label">{{$t('7天无理由退换货·放心购')}}</view>
             </view>
           </view>
           <view class="money">
@@ -94,7 +94,7 @@
               integerSize="32"
               decimalSize="20"
             ></baseMoney>
-            <view class="num">共{{ item.cart_num }}件</view>
+            <view class="num">{{$t('共')}} {{ item.cart_num }} {{$t('件')}}</view>
           </view>
         </view>
         <view class="giveGoods">
@@ -113,7 +113,7 @@
               </view>
               <view class="texts">
                 <view class="name line1"
-                  >[赠品]{{ item.productInfo.store_name }}</view
+                  >[{{$t('赠品')}}]{{ item.productInfo.store_name }}</view
                 >
                 <view class="limit line1" v-if="item.productInfo.attrInfo">{{
                   item.productInfo.attrInfo.suk
@@ -133,7 +133,7 @@
                 <text class="iconfont icon-pc-youhuiquan"></text>
               </view>
               <view class="texts">
-                <view class="line1">[赠品]{{ item.coupon_title }}</view>
+                <view class="line1">[{{$t('赠品')}}]{{ item.coupon_title }}</view>
               </view>
             </view>
           </view>
@@ -147,7 +147,7 @@
               </view>
               <view class="texts">
                 <view class="line1"
-                  >[赠品]{{ giveData.give_integral }}积分</view
+                  >[{{$t('赠品')}}]{{ giveData.give_integral }} {{$t('积分')}}</view
                 >
               </view>
             </view>
@@ -157,39 +157,39 @@
 
       <view class="detail-section">
         <view class="item acea-row row-between">
-          <view>订单编号</view>
+          <view>{{$t('订单编号')}}</view>
           <view class="conter acea-row row-middle row-right">
             {{ orderInfo.order_id }}
             <span class="copy copy-data" @click="copyNum(orderInfo.order_id)"
-              >复制</span
+              >{{$t('复制')}}</span
             >
           </view>
         </view>
         <view class="item acea-row row-between">
-          <view>支付方式</view>
+          <view>{{$t('支付方式')}}</view>
           <view class="conter">{{ payType }}</view>
         </view>
         <view class="item acea-row row-between">
-          <view>支付时间</view>
+          <view>{{$t('支付时间')}}</view>
           <view class="conter">{{ orderInfo._pay_time }}</view>
         </view>
         <view class="item acea-row row-between">
-          <view>下单时间</view>
+          <view>{{$t('下单时间')}}</view>
           <view class="conter">{{ orderInfo._add_time }}</view>
         </view>
         <view class="item acea-row row-between" v-if="orderInfo._status">
-          <view>配送方式</view>
+          <view>{{$t('配送方式')}}</view>
           <view class="conter">{{ orderInfo._status._deliveryType }}</view>
         </view>
         <view class="item acea-row row-between">
-          <view>买家留言</view>
+          <view>{{$t('买家留言')}}</view>
           <view class="conter">{{ orderInfo.mark }}</view>
         </view>
       </view>
       <customForm :customForm="orderInfo.custom_form"></customForm>
       <view class="wrapper topnone">
         <view class="item acea-row row-between">
-          <view>商品总价：</view>
+          <view>{{$t('商品总价')}}：</view>
           <view class="conter"
             >￥{{
               (
@@ -203,28 +203,28 @@
           class="item acea-row row-between"
           v-if="orderInfo.coupon_price > 0"
         >
-          <view>优惠券抵扣：</view>
+          <view>{{$t('优惠券抵扣')}}：</view>
           <view class="conter">-￥{{ orderInfo.coupon_price }}</view>
         </view>
         <view
           v-if="orderInfo.pay_postage > 0"
           class="item acea-row row-between"
         >
-          <view>运费：</view>
+          <view>{{$t('运费')}}：</view>
           <view class="conter">￥{{ orderInfo.pay_postage }}</view>
         </view>
         <view
           class="item acea-row row-between"
           v-if="orderInfo.deduction_price > 0"
         >
-          <view>积分抵扣金额：</view>
+          <view>{{$t('积分抵扣金额')}}：</view>
           <view class="conter">-￥{{ orderInfo.deduction_price }}</view>
         </view>
         <view
           class="item acea-row row-between"
           v-if="orderInfo.vip_true_price > 0"
         >
-          <view>会员商品优惠：</view>
+          <view>{{$t('会员商品优惠')}}：</view>
           <view class="conter">-￥{{ orderInfo.vip_true_price }}</view>
         </view>
         <view
@@ -239,7 +239,7 @@
           >
         </view>
         <view class="actualPay acea-row row-right">
-          实付款：
+          {{$t('实付款')}}：
           <!-- <span class="money">￥{{ orderInfo.pay_price }}</span> -->
           <baseMoney
             :money="orderInfo.pay_price"

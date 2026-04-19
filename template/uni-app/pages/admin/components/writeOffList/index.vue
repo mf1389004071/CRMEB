@@ -18,13 +18,13 @@
 											<view class='line1'>
 												{{ item.cart_info.productInfo.store_name }}
 											</view>
-											<view v-if="item.is_writeoff == 1" class="txt">已核销</view>
-											<view v-if="item.is_writeoff == 0 && item.surplus_num == item.cart_num" class="txt bluecol">未核销</view>
+											<view v-if="item.is_writeoff == 1" class="txt">{{$t('已核销')}}</view>
+											<view v-if="item.is_writeoff == 0 && item.surplus_num == item.cart_num" class="txt bluecol">{{$t('未核销')}}</view>
 											<view v-if="item.is_writeoff == 0 && item.surplus_num != item.cart_num" class="txt orangcol">
-												已核销{{item.cart_num - item.surplus_num}}件</view>
+												{{$t('已核销')}}{{item.cart_num - item.surplus_num}}{{$t('件')}}</view>
 										</view>
 										<view class='infor line1'>
-											属性：{{ item.cart_info.productInfo.attrInfo.suk }}</view>
+											{{$t('属性')}}：{{ item.cart_info.productInfo.attrInfo.suk }}</view>
 										<view class='money he row-middle'>
 											<view>￥{{ item.cart_info.productInfo.attrInfo?item.cart_info.productInfo.attrInfo.price:item.cart_info.productInfo.price }}</view>
 											<view v-if="item.is_writeoff == 1" class="txt">
@@ -69,7 +69,7 @@
 						<div class="xuan" @click="checkAll" v-model="checked">
 							<view class="iconfont" :class="checked?'icon-a-ic_CompleteSelect':'icon-ic_unselect'"></view>
 						</div>
-						<text class='checkAll'>全选</text>
+						<text class='checkAll'>{{$t('全选')}}</text>
 					</view>
 				</view>
 				<view>
@@ -81,19 +81,19 @@
 			<view class="box">
 				<view class="small_box">
 					<view class="content">
-						<view class="font">核销成功</view>
-						<view v-if="list.total_num == parseInt(list.writeoff_count)+writeOffNum" class="small_font">当前订单已完成核销</view>
-						<view v-else class="small_font">该订单仍有其他待核销商品</view>
+						<view class="font">{{$t('核销成功')}}</view>
+						<view v-if="list.total_num == parseInt(list.writeoff_count)+writeOffNum" class="small_font">{{$t('当前订单已完成核销')}}</view>
+						<view v-else class="small_font">{{$t('该订单仍有其他待核销商品')}}</view>
 					</view>
 					<view class="acea-row btn-box">
-						<view v-if="lets == 1 && list.total_num == parseInt(list.writeoff_count)+writeOffNum" class="btn" @click="ok(1)">知道了</view>
+						<view v-if="lets == 1 && list.total_num == parseInt(list.writeoff_count)+writeOffNum" class="btn" @click="ok(1)">{{$t('知道了')}}</view>
 						<navigator v-if="lets > 1 && list.total_num != parseInt(list.writeoff_count)+writeOffNum" :url='"/pages/admin/distribution/scanning/index?code="+attr.code' hover-class='none'
-							open-type="redirect" class="btn">返回列表</navigator>
+							open-type="redirect" class="btn">{{$t('返回列表')}}</navigator>
 						<navigator v-if="(lets > 1 && list.total_num == parseInt(list.writeoff_count)+writeOffNum)||(lets==1&&list.total_num != parseInt(list.writeoff_count)+writeOffNum)"
-							url="/pages/admin/distribution/index" hover-class='none' open-type="redirect" class="btn">返回首页</navigator>
-						<view v-if="list.total_num != parseInt(list.writeoff_count)+writeOffNum" class="btn on" @click="ok(0)">继续核销</view>
+							url="/pages/admin/distribution/index" hover-class='none' open-type="redirect" class="btn">{{$t('返回首页')}}</navigator>
+						<view v-if="list.total_num != parseInt(list.writeoff_count)+writeOffNum" class="btn on" @click="ok(0)">{{$t('继续核销')}}</view>
 						<navigator v-if="lets > 1 && list.total_num == parseInt(list.writeoff_count)+writeOffNum" :url='"/pages/admin/distribution/scanning/index?code="+attr.code' open-type="redirect"
-							hover-class='none' class="btn">核销其他订单</navigator>
+							hover-class='none' class="btn">{{$t('核销其他订单')}}</navigator>
 					</view>
 				</view>
 			</view>

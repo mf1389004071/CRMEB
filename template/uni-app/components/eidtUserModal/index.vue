@@ -4,7 +4,7 @@
 			<view class="iconfont icon-guanbi" @click="closeAttr"></view>
 			<view class="mp-data">
 				<image :src="mpData.siteLogo" mode=""></image>
-				<text class="mp-name">{{mpData.siteName}} 申请</text>
+				<text class="mp-name">{{mpData.siteName}} {{$t('申请')}}</text>
 			</view>
 			<view class="trip-msg">
 				<view class="title">

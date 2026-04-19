@@ -2,7 +2,7 @@
   <view class="deliver-goods">
     <header class="header">
       <view class="order-num">
-        <view class="num line1">订单号：{{ order_id }}</view>
+        <view class="num line1">{{$t('订单号')}}：{{ order_id }}</view>
       </view>
       <view class="address">
         <view class="name">
@@ -10,7 +10,7 @@
           {{ delivery.real_name }}
           <text class="phone">{{ delivery.user_phone }}</text>
         </view>
-        <view>地址：{{ delivery.user_address }}</view>
+        <view>{{$t('地址')}}：{{ delivery.user_address }}</view>
       </view>
       <view class="line">
         <image src="@/static/images/line.jpg" />
@@ -18,7 +18,7 @@
     </header>
     <view class="wrapper">
       <view class="item acea-row row-between-wrapper">
-        <view>发货方式</view>
+        <view>{{$t('发货方式')}}</view>
         <view class="mode acea-row row-middle row-right">
           <template v-for="(item, index) in types">
             <view
@@ -45,7 +45,7 @@
             class="item acea-row row-middle"
             v-if="delivery.config_export_open == 1"
           >
-            <view>发货类型</view>
+            <view>{{$t('发货类型')}}</view>
             <view class="mode acea-row row-middle row-right">
               <view
                 class="goods"
@@ -68,7 +68,7 @@
           </view>
           <block v-if="curExpress == 1">
             <view class="item acea-row row-middle">
-              <view>快递公司</view>
+              <view>{{$t('快递公司')}}</view>
               <view class="select-box">
                 <picker
                   class="pickerBox"
@@ -83,10 +83,10 @@
               <text class="iconfont icon-ic_rightarrow"></text>
             </view>
             <view class="item acea-row row-middle">
-              <view>快递单号</view>
+              <view>{{$t('快递单号')}}</view>
               <input
                 type="text"
-                placeholder="请输入"
+                :placeholder="$t('请输入')"
                 v-model="delivery_id"
                 class="mode"
               />
@@ -103,43 +103,43 @@
             </view>
             <view class="item">
               <view class="trip" v-if="curExpress == 1"
-                >顺丰请输入单号 :收件人或寄件人手机号后四位</view
+                >{{$t('顺丰请输入单号')}} :{{$t('收件人或寄件人手机号后四位')}}</view
               >
               <view class="trip" v-if="curExpress == 1"
-                >例如：SF000000000000:3941</view
+                >{{$t('例如')}}：SF000000000000:3941</view
               >
             </view>
           </block>
           <block v-if="curExpress == 2">
             <view class="item acea-row row-between-wrapper">
-              <view>寄件人姓名</view>
+              <view>{{$t('寄件人姓名')}}</view>
               <input
                 type="text"
-                placeholder="填写寄件人姓名"
+                :placeholder="$t('填写寄件人姓名')"
                 v-model="to_name"
                 class="mode"
               />
             </view>
             <view class="item acea-row row-between-wrapper">
-              <view>寄件人电话</view>
+              <view>{{$t('寄件人电话')}}</view>
               <input
                 type="text"
-                placeholder="填写寄件人电话"
+                :placeholder="$t('填写寄件人电话')"
                 v-model="to_tel"
                 class="mode"
               />
             </view>
             <view class="item acea-row row-between-wrapper">
-              <view>寄件人地址</view>
+              <view>{{$t('寄件人地址')}}</view>
               <input
                 type="text"
-                placeholder="填写寄件人地址"
+                :placeholder="$t('填写寄件人地址')"
                 v-model="to_addr"
                 class="mode"
               />
             </view>
             <view class="item acea-row row-between-wrapper">
-              <view>快递公司</view>
+              <view>{{$t('快递公司')}}</view>
               <view class="select-box">
                 <picker
                   class="pickerBox"
@@ -157,7 +157,7 @@
               class="item acea-row row-between-wrapper"
               v-if="expTemp.length > 0"
             >
-              <view>电子面单</view>
+              <view>{{$t('电子面单')}}</view>
               <view class="picker-add">
                 <picker
                   class="pickerBox"
@@ -168,7 +168,7 @@
                 >
                   <view class="uni-input">{{ expTemp[expIndex].title }}</view>
                 </picker>
-                <view class="look" @click="previewImage">预览</view>
+                <view class="look" @click="previewImage">{{$t('预览')}}</view>
               </view>
             </view>
           </block>
@@ -177,7 +177,7 @@
 
       <view class="list" v-show="active === 1">
         <view class="item acea-row row-between-wrapper">
-          <view>送货人</view>
+          <view>{{$t('送货人')}}</view>
           <view class="select-box" v-if="postPeople.length > 0">
             <picker
               class="pickerBox"
@@ -199,7 +199,7 @@
           class="item acea-row row-between-wrapper"
           v-if="postPeople[postIndex]"
         >
-          <view>手机号</view>
+          <view>{{$t('手机号')}}</view>
           <view class="select-box acea-row row-middle row-right">{{
             postPeople[postIndex].phone
           }}</view>
@@ -210,14 +210,14 @@
         v-model="fictitious_content"
         class="textarea"
         @blur="bindTextAreaBlur"
-        placeholder="备注"
+        :placeholder="$t('备注')"
         :maxlength="500"
         auto-height
       />
     </view>
     <!-- <view class="split-wrapper" v-if="totalNum > 1">
       <view class="split-switch acea-row row-between-wrapper">
-        <view>分单发货</view>
+        <view>{{$t('分单发货')}}</view>
         <view
           class="switch"
           :class="{ on: curGoods }"
@@ -233,7 +233,7 @@
     </view> -->
     <view class="height-add"></view>
     <view class="confirm-wrapper">
-      <view class="confirm" @click="saveInfo">确认提交</view>
+      <view class="confirm" @click="saveInfo">{{$t('确认提交')}}</view>
     </view>
   </view>
 </template>

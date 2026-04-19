@@ -560,13 +560,13 @@
         <template v-if="memberStyleConfig == 3">
           <view class="member-style-4" :style="[cardStyle, memberTopStyle]">
             <view class="left-box">
-              <view class="label">可提现(元)</view>
+              <view class="label">{{$t('可提现(元)')}}</view>
               <view class="value">{{ withdrawAmount }}</view>
             </view>
             <view
               class="right-box"
               @click="goLink('/pages/users/user_cash/index')"
-              >立即提现</view
+              >{{$t('立即提现')}}</view
             >
           </view>
         </template>

@@ -23,7 +23,7 @@
 					</view>
 				</form>
 				<!-- <navigator class="forgetPwd" hover-class="none" url="/pages/users/retrievePassword/index">
-					<span class="iconfont icon-wenti"></span>忘记密码
+					<span class="iconfont icon-wenti"></span>{{$t('忘记密码')}}
 				</navigator> -->
 			</view>
 			<view class="list" v-if="current !== 0 || appLoginStatus || appleLoginStatus">

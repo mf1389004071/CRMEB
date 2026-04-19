@@ -12,7 +12,7 @@
 			<view class="header">
 				<view class="state">{{ title }}</view>
 				<view class="data">
-					订单号：{{ orderInfo.store_order_sn }}
+					{{$t('订单号')}}：{{ orderInfo.store_order_sn }}
 				</view>
 			</view>
 			<view class="remarks acea-row row-middle  h-100" v-if="goname != 'looks'" @click="modify('1')">
@@ -37,7 +37,7 @@
 			<!-- 拆单时 -->
 			<view v-for="(j, indexw) in orderInfo.split" :key="indexw" v-if="orderInfo.split && orderInfo.split.length">
 				<view class="splitTitle acea-row row-between-wrapper">
-					<view>订单包裹{{indexw + 1}}</view>
+					<view>{{$t('订单包裹')}}{{indexw + 1}}</view>
 					<view class="title">{{j._status._title}}</view>
 				</view>
 				<view class="pos-order-goods">
@@ -76,14 +76,14 @@
 					<view class="money">
 						<!-- <view class="x-money">￥{{ item.productInfo.attrInfo?item.productInfo.attrInfo.price:item.productInfo.price }}</view> -->
 						<BaseMoney :money="item.productInfo.attrInfo?item.productInfo.attrInfo.price :item.productInfo.price" symbolSize="20" integerSize="32" decimalSize="20"></BaseMoney>
-						<view class="num">共{{ item.cart_num }}件</view>
+						<view class="num">{{$t('共')}} {{ item.cart_num }} {{$t('件')}}</view>
 						<view class="acea-row row-right">
-							<view class="writeOff" v-if="item.refund_num  && orderInfo.refund_type != 6">{{item.refund_num}}件退款中</view>
+							<view class="writeOff" v-if="item.refund_num  && orderInfo.refund_type != 6">{{item.refund_num}} {{$t('件退款中')}}</view>
 							<view class="writeOff" v-if="orderInfo._status._type==2 && orderInfo.delivery_type == 'send'">
 								<text v-if="item.refund_num">，</text>
-								<text class="on" v-if="item.is_writeoff">已核销</text>
-								<text v-if="!item.is_writeoff && item.surplus_num<item.cart_num">已核销{{parseInt(item.cart_num)-parseInt(item.surplus_num)}}件</text>
-								<text v-if="!item.is_writeoff && item.surplus_num==item.cart_num">未核销</text>
+								<text class="on" v-if="item.is_writeoff">{{$t('已核销')}}</text>
+								<text v-if="!item.is_writeoff && item.surplus_num<item.cart_num">{{$t('已核销')}}{{parseInt(item.cart_num)-parseInt(item.surplus_num)}} {{$t('件')}}</text>
+								<text v-if="!item.is_writeoff && item.surplus_num==item.cart_num">{{$t('未核销')}}</text>
 							</view>
 						</view>
 					</view>
@@ -118,15 +118,15 @@
 								<text class="iconfont icon-pc-jifen"></text>
 							</view>
 							<view class="texts">
-								<view class="line1">[赠品]{{giveData.give_integral}}积分</view>
+								<view class="line1">[赠品]{{giveData.give_integral}} {{$t('积分')}}</view>
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
 			<!-- <view class="public-total" v-if="!orderInfo.split || !orderInfo.split.length">
-				共{{ orderInfo.total_num }}件商品，实付款
-				<span class="money">￥{{ orderInfo.pay_price }}</span> ( 邮费 ¥{{
+				{{$t('共')}} {{ orderInfo.total_num }} {{$t('件商品')}}， {{$t('实付款')}}
+				<span class="money">{{$t('￥')}}{{ orderInfo.pay_price }}</span> ( {{$t('邮费')}} {{$t('￥')}}{{
 		    orderInfo.pay_postage
 		  }}
 				)
@@ -134,62 +134,62 @@
 			<!-- 结束 -->
 			<view class='wrapper'>
 				<view class='item acea-row row-between'>
-					<view>退款原因</view>
+					<view>{{$t('退款原因')}}</view>
 					<view class='conter'>{{orderInfo.refund_reason}}</view>
 				</view>
 				<view class='item acea-row row-between'>
-					<view>退款金额</view>
+					<view>{{$t('退款金额')}}</view>
 					<view class='conter'>¥{{orderInfo.refund_price}}</view>
 				</view>
 				<view class='item acea-row row-between'>
-					<view>申请件数</view>
+					<view>{{$t('申请件数')}}</view>
 					<view class='conter'>{{orderInfo.refund_num}}</view>
 				</view>
 			</view>
 			<customForm :customForm="orderInfo.custom_form"></customForm>
 			<view class="wrapper">
 				<view class="item acea-row row-between">
-					<view>订单编号：</view>
+					<view>{{$t('订单编号')}}：</view>
 					<view class="conter acea-row row-middle row-right">
 						{{ orderInfo.store_order_sn}}
-						<text class="copy copy-data" @click="copyNum(orderInfo.store_order_sn)">复制</text>
+						<text class="copy copy-data" @click="copyNum(orderInfo.store_order_sn)">{{$t('复制')}}</text>
 					</view>
 				</view>
 				<view class="item acea-row row-between">
-					<view>申请时间</view>
+					<view>{{$t('申请时间')}}</view>
 					<view class="conter">{{ orderInfo.add_time_y }} {{ orderInfo.add_time_h }}</view>
 				</view>
 				<view class="item acea-row row-between" v-show="[1,2,4,5].includes(orderInfo.refund_type)">
-					<view>售后类型</view>
-					<view class="conter" v-if="orderInfo.refund_type == 1">仅退款</view>
-					<view class="conter" v-if="[2,4,5].includes(orderInfo.refund_type)">退货退款</view>
+					<view>{{$t('售后类型')}}</view>
+					<view class="conter" v-if="orderInfo.refund_type == 1">{{$t('仅退款')}}</view>
+					<view class="conter" v-if="[2,4,5].includes(orderInfo.refund_type)">{{$t('退货退款')}}</view>
 				</view>
 				<view class="item acea-row row-between">
-					<view>售后单号</view>
+					<view>{{$t('售后单号')}}</view>
 					<view class="conter">
 						{{ orderInfo.order_id }}
-						<text class="copy copy-data" @click="copyNum(orderInfo.order_id)">复制</text>
+						<text class="copy copy-data" @click="copyNum(orderInfo.order_id)">{{$t('复制')}}</text>
 					</view>
 				</view>
 				<view class="item acea-row row-between" v-if="orderInfo.refund_type == 5">
-					<view>物流单号</view>
+					<view>{{$t('物流单号')}}</view>
 					<view class="conter">{{ orderInfo.refund_express }}</view>
 				</view>
 				<view class="item acea-row row-between">
-					<view>备注说明</view>
+					<view>{{$t('备注说明')}}</view>
 					<view class="conter">{{ orderInfo.mark }}</view>
 				</view>
 				<!-- <view class="item acea-row row-between" v-if="orderInfo.mark">
-					<view v-if="statusType == -3">退款留言：</view>
-					<view v-else>买家留言：</view>
+					<view v-if="statusType == -3">{{$t('退款留言')}}：</view>
+					<view v-else>{{$t('买家留言')}}：</view>
 					<view class="conter">{{ orderInfo.mark }}</view>
 				</view>
 				<view class="item acea-row row-between" v-if="orderInfo.refund_goods_explain">
-					<view>退货留言：</view>
+					<view>{{$t('退货留言')}}：</view>
 					<view class='conter'>{{orderInfo.refund_goods_explain}}</view>
 				</view> -->
 				<view class="item acea-row row-between" v-if="orderInfo.refund_img && orderInfo.refund_img.length">
-					<view>退款凭证：</view>
+					<view>{{$t('退款凭证')}}：</view>
 					<view class="conter">
 						<view class="pictrue" v-for="(item,index) in orderInfo.refund_img" :key="index">
 							<image :src="item" mode="aspectFill" @click='getpreviewImage(index,1)'></image>
@@ -197,7 +197,7 @@
 					</view>
 				</view>
 				<view class="item acea-row row-between" v-if="orderInfo.refund_goods_img && orderInfo.refund_goods_img.length">
-					<view>退货凭证：</view>
+					<view>{{$t('退货凭证')}}：</view>
 					<view class="conter">
 						<view class="pictrue" v-for="(item,index) in orderInfo.refund_goods_img" :key="index">
 							<image :src="item" mode="aspectFill" @click='getpreviewImage(index,0)'></image>
@@ -209,52 +209,52 @@
 		    orderInfo.delivery_type != 'fictitious' && orderInfo._status._type === 2 && (!orderInfo.split || !orderInfo.split.length)
 		  ">
 				<view class="item acea-row row-between">
-					<view>配送方式：</view>
+					<view>{{$t('配送方式')}}：</view>
 					<view class="conter" v-if="orderInfo.delivery_type === 'express'">
-						快递
+						{{$t('快递')}}
 					</view>
-					<view class="conter" v-if="orderInfo.delivery_type === 'send'">送货</view>
+					<view class="conter" v-if="orderInfo.delivery_type === 'send'">{{$t('送货')}}</view>
 				</view>
 				<view class="item acea-row row-between">
-					<view v-if="orderInfo.delivery_type === 'express'">快递公司：</view>
-					<view v-if="orderInfo.delivery_type === 'send'">送货人：</view>
+					<view v-if="orderInfo.delivery_type === 'express'">{{$t('快递公司')}}：</view>
+					<view v-if="orderInfo.delivery_type === 'send'">{{$t('送货人')}}：</view>
 					<view class="conter">{{ orderInfo.delivery_name }}</view>
 				</view>
 				<view class="item acea-row row-between">
-					<view v-if="orderInfo.delivery_type === 'express'">快递单号：</view>
-					<view v-if="orderInfo.delivery_type === 'send'">送货人电话：</view>
+					<view v-if="orderInfo.delivery_type === 'express'">{{$t('快递单号')}}：</view>
+					<view v-if="orderInfo.delivery_type === 'send'">{{$t('送货人电话')}}：</view>
 					<view class="conter">
 						{{ orderInfo.delivery_id}}
-						<span class="copy copy-data" @click="copyNum(orderInfo.delivery_id)">复制</span>
+						<span class="copy copy-data" @click="copyNum(orderInfo.delivery_id)">{{$t('复制')}}</span>
 					</view>
 				</view>
 			</view>
 			<view class="wrapper" v-if="orderInfo.refund_type == 5">
 				<view class='item acea-row row-between'>
-					<view>退货方式</view>
-					<view class='conter'>快递退回</view>
+					<view>{{$t('退货方式')}}</view>
+					<view class='conter'>{{$t('快递退回')}}</view>
 				</view>
 				<view class="item acea-row row-between" v-if="orderInfo.refund_express_name">
-					<view>物流公司</view>
+					<view>{{$t('物流公司')}}</view>
 					<view class="conter">{{ orderInfo.refund_express_name }}</view>
 				</view>
 				<view class='item acea-row row-between' v-if="orderInfo.refund_express">
-					<view>物流单号</view>
+					<view>{{$t('物流单号')}}</view>
 					<view class='conter'>{{ orderInfo.refund_express }}</view>
 				</view>
 				<view class="item acea-row row-between" v-if="orderInfo.refund_phone">
-					<view>联系电话</view>
+					<view>{{$t('联系电话')}}</view>
 					<view class="conter">{{ orderInfo.refund_phone }}</view>
 				</view>
 			</view>
 			<view class="height-add"></view>
 			<view class="footer acea-row row-right row-middle" v-if="goname != 'looks'">
 				<view class="more"></view>
-				<view class="btn cancel" @click="modify('1')">订单备注</view>
-				<view class="btn delivery" v-if="orderInfo.refund_type == 1" @click="modify('2',1)">退款审核</view>
-				<view class="btn delivery" v-if="orderInfo.refund_type == 2" @click="modify('2',0)">退款审核</view>
-				<view class="btn" v-if="orderInfo.refund_type == 5" @click="goLogistics(orderInfo)">查看物流</view>
-				<view class="btn delivery" v-if="orderInfo.refund_type == 5" @click="modify('2',1)">确认收货</view>
+				<view class="btn cancel" @click="modify('1')">{{$t('订单备注')}}</view>
+				<view class="btn delivery" v-if="orderInfo.refund_type == 1" @click="modify('2',1)">{{$t('退款审核')}}</view>
+				<view class="btn delivery" v-if="orderInfo.refund_type == 2" @click="modify('2',0)">{{$t('退款审核')}}</view>
+				<view class="btn" v-if="orderInfo.refund_type == 5" @click="goLogistics(orderInfo)">{{$t('查看物流')}}</view>
+				<view class="btn delivery" v-if="orderInfo.refund_type == 5" @click="modify('2',1)">{{$t('确认收货')}}</view>
 			</view>
 			<PriceChange :change="change" :orderInfo="orderInfo" :isRefund="isRefund" @closechange="changeclose" @savePrice="savePrice" :status="status">
 			</PriceChange>

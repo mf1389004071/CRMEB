@@ -12,30 +12,30 @@
 		<view :style="{ height: navHeight + 'px' }" v-if="isFixed"></view>
 		<view class="nav acea-row row-around row-middle" :class="{ fixed: isFixed }" :style="{ top: isFixed?(getHeight.barTop+getHeight.barHeight)+'px':0 }" id="nav">
 			<view class="item" :class="state == -1 ? 'on' : ''" @click="changeStatus(-1)">
-				全部
+				{{$t('全部')}}
 				<image src="../static/adorn.png" v-if="state == -1"></image>
 			</view>
 			<view class="item" :class="state == 0 ? 'on' : ''" @click="changeStatus(0)">
-				待付款
+				{{$t('待付款')}}
 				<image src="../static/adorn.png" v-if="state == 0"></image>
 			</view>
 			<view class="item" :class="state == 1 ? 'on' : ''" @click="changeStatus(1)">
-				待发货/核销
+				{{$t('待发货/核销')}}
 				<image src="../static/adorn.png" v-if="state == 1"></image>
 			</view>
 			<view class="item" :class="state == 2 ? 'on' : ''" @click="changeStatus(2)">
-				待收货
+				{{$t('待收货')}}
 				<image src="../static/adorn.png" v-if="state == 2"></image>
 			</view>
 			<view class="item" :class="state == 3 ? 'on' : ''" @click="changeStatus(3)">
-				待评价
+				{{$t('待评价')}}
 				<image src="../static/adorn.png" v-if="state == 3"></image>
 			</view>
 			<!-- <view class="item" :class="where.status == 4 ? 'on' : ''" @click="changeStatus(4)">
-				已完成
+				{{$t('已完成')}}
 			</view>
 			<view class="item" :class="where.status == -3 ? 'on' : ''" @click="changeStatus(-3)">
-				退款
+				{{$t('退款')}}
 			</view> -->
 		</view>
 		<view class="list" v-if="list.length">
@@ -45,7 +45,7 @@
 						<!-- <countDown v-if="item.status == 0 && item.paid == 0 && item.pay_type != 'offline'" tipText="剩余：" dayText=" " hourText="小时" minuteText="分钟" secondText=" " dotColor="#FF7E00"
 							colors="#FF7E00" :datatime="item.stop_time" :isSecond="false">
 						</countDown> -->
-						<view>订单号：{{ item.order_id }}</view>
+						<view>{{$t('订单号')}}：{{ item.order_id }}</view>
 					</view>
 					<view class="state" :class="(item.refund_status==0 && where.status != 0 && item.refund.length)?'on':''">
 						{{item.refund_status==1?$t('退款中'):item.refund_status==2?$t('已退款'):item.refund_status==3?$t('拒绝退款'):item.status_name.status_name}}
@@ -78,7 +78,7 @@
 						<view class="money">
 							<!-- <view class="x-money">￥{{ item.pay_price }}</view> -->
 							<BaseMoney :money="item.pay_price" symbolSize="20" integerSize="32" decimalSize="20"></BaseMoney>
-							<view class="num">共{{ item.total_num }}件</view>
+							<view class="num">{{$t('共')}} {{ item.total_num }} {{$t('件')}}</view>
 						</view>
 					</view>
 				</view>
@@ -86,24 +86,24 @@
 					<view class="more">
 					</view>
 					<view class="acea-row row-middle">
-						<view class="bnt" @click="modify(item, 1)">订单备注</view>
+						<view class="bnt" @click="modify(item, 1)">{{$t('订单备注')}}</view>
 						<view class="bnt" :class="openErp?'on':''" @click="modify(item, 0)" v-if="item._status == 1 && item.is_cancel == 0">
-							一键改价
+							{{$t('一键改价')}}
 						</view>
 						<view class="bnt primary" :class="openErp?'on':''" v-if="item.status == 0 && item.paid == 0 && item.is_cancel == 0" @click="confirmPay(item)">
-							确认付款
+							{{$t('确认付款')}}
 						</view>
 						<view class="bnt primary" :class="openErp?'on':''"
 							v-if="item._status == 2 && item.shipping_type == 1 && (item.pink_id == 0 || (item.pink_id > 0 && item.pinkStatus == 2))"
-							@click="goDelivery(item)">发送货
+							@click="goDelivery(item)">{{$t('发送货')}}
 						</view>
 						<navigator class="bnt primary" :url="'/pages/admin/logistics/index?orderId='+item.order_id" 
-							v-if="item._status == 4 && item.delivery_type == 'express'">查看物流
+							v-if="item._status == 4 && item.delivery_type == 'express'">{{$t('查看物流')}}
 						</navigator>
 						<view class="bnt primary" v-if="item.shipping_type == 2 &&
                 (item.status == 0 || item.status == 5) &&
                 item.paid == 1 &&
-                item.refund_status === 0" @click="verify(item)">订单核销</view>
+                item.refund_status === 0" @click="verify(item)">{{$t('订单核销')}}</view>
 					</view>
 				</view>
 			</view>
@@ -124,13 +124,13 @@
 			</view>
 			<view class="content">
 				<view class="item">
-					<view class="title">按下单时间</view>
+					<view class="title">{{$t('按下单时间')}}</view>
 					<view class="acea-row list">
 						<view class="cell" v-for="(item, index) in dateList" :key="index" :class="{ on: item.val == dateSelected }" @click="dateChange(item.val)">{{ item.label }}</view>
 					</view>
 				</view>
 				<view class="item">
-					<view class="title">按支付方式</view>
+					<view class="title">{{$t('按支付方式')}}</view>
 					<view class="acea-row list">
 						<view class="cell" v-for="(item, index) in payList" :key="index" :class="{ on: item.val == where.pay_type }" @click="payChange(item.val)">{{ item.label }}</view>
 					</view>
@@ -139,11 +139,11 @@
 		</view>
 		<view v-if="confirmShow" class="mask"></view>
 		<view v-if="confirmShow" class="confirm-popup">
-			<view class="title">确认付款</view>
-			<view class="info">确认该订单用户已付款</view>
+			<view class="title">{{$t('确认付款')}}</view>
+			<view class="info">{{$t('确认该订单用户已付款')}}</view>
 			<view class="acea-row btn-box">
-				<view class="btn" @click="confirmShow = false">取消</view>
-				<view class="btn primary" @click="offlinePay">确认</view>
+				<view class="btn" @click="confirmShow = false">{{$t('取消')}}</view>
+				<view class="btn primary" @click="offlinePay">{{$t('确认')}}</view>
 			</view>
 		</view>
 		<view class="footerH"></view>

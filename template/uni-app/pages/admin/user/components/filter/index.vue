@@ -5,7 +5,7 @@
 			<view class="accountTitle">
 				<view :style="{height:getHeight.barTop+'px'}"></view>
 				<view class="sysTitle acea-row row-center-wrapper" :style="{height:getHeight.barHeight+'px'}">
-					<view>筛选</view>
+					<view>{{$t('筛选')}}</view>
 				</view>
 			</view>
 			<view :style="{height:(getHeight.barTop+getHeight.barHeight)+'px'}"></view>
@@ -13,12 +13,12 @@
 			:style="'height: calc(100% - '+(getHeight.barTop+getHeight.barHeight*2+150)+'rpx - constant(safe-area-inset-bottom));height: calc(100% - '+(getHeight.barTop+getHeight.barHeight*2+150)+'rpx - env(safe-area-inset-bottom))'">
 			<!-- #endif -->
 			<!-- #ifndef MP -->
-			<view class="header">筛选</view>
+			<view class="header">{{$t('筛选')}}</view>
 			<view class="list">
 			<!-- #endif -->
 			  <scroll-view scroll-y="true" style="height: 100%">
 				<view class="item">
-					<view class="title">分组</view>
+					<view class="title">{{$t('分组')}}</view>
 					<view class="listn acea-row row-middle">
 						<view class="name acea-row row-center-wrapper" :class="{on:groupIds == item.id}" v-for="(item,groupIndex) in groupArray" :key="groupIndex" @click="selectGroup(item)">
 							<text class="line1">{{item.group_name}}</text>
@@ -26,7 +26,7 @@
 					</view>
 				</view>
 				<view class="item">
-					<view class="title">等级</view>
+					<view class="title">{{$t('等级')}}</view>
 					<view class="listn acea-row row-middle">
 						<view class="name acea-row row-center-wrapper" :class="{on:levelIds == item.id}" v-for="(item,levelIndex) in levelArray" :key="levelIndex" @click="selectLevel(item)">
 							<text class="line1">{{item.name}}</text>
@@ -34,7 +34,7 @@
 					</view>
 				</view>
 				<view class="item">
-					<view class="title">标签</view>
+					<view class="title">{{$t('标签')}}</view>
 					<view v-for="(item, index) in labelList" :key="index">
 						<view class="titlen" v-if="item.label && item.label.length">{{item.name}}</view>
 						<view class="listn acea-row row-middle" v-if="item.label && item.label.length">
@@ -47,8 +47,8 @@
 			  </scroll-view>
 			</view>
 			<view class="footer acea-row row-between-wrapper">
-				<view class="bnt acea-row row-center-wrapper" @tap="reset">重置</view>
-				<view class="bnt on acea-row row-center-wrapper" @tap="define">确定</view>
+				<view class="bnt acea-row row-center-wrapper" @tap="reset">{{$t('重置')}}</view>
+				<view class="bnt on acea-row row-center-wrapper" @tap="define">{{$t('确定')}}</view>
 			</view>
 		</view>
 	</base-drawer>

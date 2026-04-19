@@ -6,7 +6,7 @@
   >
     <template v-if="!posterImageStatus">
       <text class="iconfont icon-cha2 close" @click="posterImageClose"></text>
-      <view class="from">赠送给好友一份礼物</view>
+      <view class="from">{{$t('赠送给好友一份礼物')}}</view>
       <view class="message">{{ giftData.message }}</view>
       <view class="aleart-body">
         <image class="goods-img" :src="giftData.image" mode=""></image>

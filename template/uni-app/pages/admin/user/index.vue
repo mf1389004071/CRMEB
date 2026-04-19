@@ -7,7 +7,7 @@
         class="sysTitle acea-row row-center-wrapper"
         :style="{ height: getHeight.barHeight + 'px' }"
       >
-        <view>用户详情</view>
+        <view>{{$t('用户详情')}}</view>
         <text class="iconfont icon-ic_leftarrow" @click="goarrow"></text>
       </view>
     </view>
@@ -44,12 +44,12 @@
       </view>
       <view class="bottom acea-row row-middle">
         <view class="item"
-          >消费金额<text class="num">{{
+          >{{$t('消费金额')}}<text class="num">{{
             infoData.order_total_price
           }}</text></view
         >
         <view class="item"
-          >消费笔数<text class="num">{{
+          >{{$t('消费笔数')}}<text class="num">{{
             infoData.order_total_count
           }}</text></view
         >
@@ -57,7 +57,7 @@
     </view>
     <view class="list">
       <view class="title acea-row row-between-wrapper">
-        <view class="name">用户信息</view>
+        <view class="name">{{$t('用户信息')}}</view>
         <view class="tip" @click="openTap"
           >{{ isShow ? $t('展开') : $t('收起')
           }}<text
@@ -67,7 +67,7 @@
         ></view>
       </view>
       <view class="item acea-row row-between-wrapper">
-        <view>分组</view>
+        <view>{{$t('分组')}}</view>
         <view>
           <picker
             @change="bindPickerChange"
@@ -77,7 +77,7 @@
           >
             <view class="acea-row row-middle">
               <view v-if="groupArray.length">
-                <text class="not" v-if="groupIndex == -1">无</text>
+                <text class="not" v-if="groupIndex == -1">{{$t('无')}}</text>
                 <text v-else>{{ groupArray[groupIndex].group_name }}</text>
               </view>
               <text class="iconfont icon-ic_rightarrow"></text>
@@ -86,7 +86,7 @@
         </view>
       </view>
       <view class="item acea-row row-between-wrapper">
-        <view>等级</view>
+        <view>{{$t('等级')}}</view>
         <view>
           <picker
             @change="bindLevelChange"
@@ -96,7 +96,7 @@
           >
             <view class="acea-row row-middle">
               <view v-if="levelArray.length">
-                <text class="not" v-if="levelIndex == -1">无</text>
+                <text class="not" v-if="levelIndex == -1">{{$t('无')}}</text>
                 <text v-else>{{ levelArray[levelIndex].name }}</text>
               </view>
               <text class="iconfont icon-ic_rightarrow"></text>
@@ -106,9 +106,9 @@
       </view>
       <view class="item">
         <view class="acea-row row-between-wrapper">
-          <view>标签</view>
+          <view>{{$t('标签')}}</view>
           <view class="add" @click="editLabels"
-            ><text class="iconfont icon-ic_increase"></text>添加标签</view
+            ><text class="iconfont icon-ic_increase"></text>{{$t('添加标签')}}</view
           >
         </view>
         <view
@@ -128,45 +128,45 @@
           class="item acea-row row-between-wrapper"
           v-if="infoData.real_name"
         >
-          <view>姓名</view>
+          <view>{{$t('姓名')}}</view>
           <view class="info">{{ infoData.real_name }}</view>
         </view>
         <view
           class="item acea-row row-between-wrapper"
           v-if="infoData.birthday"
         >
-          <view>出生年月</view>
+          <view>{{$t('出生年月')}}</view>
           <view class="info">{{ infoData.birthday }}</view>
         </view>
         <view class="item acea-row row-between-wrapper" v-if="infoData.card_id">
-          <view>身份证号</view>
+          <view>{{$t('身份证号')}}</view>
           <view class="info">{{ infoData.card_id }}</view>
         </view>
         <view class="item acea-row row-between" v-if="infoData.addres">
-          <view>地址</view>
+          <view>{{$t('地址')}}</view>
           <view class="info">{{ infoData.addres }}</view>
         </view>
         <view
           class="item acea-row row-between-wrapper"
           v-if="infoData._add_time"
         >
-          <view>注册时间</view>
+          <view>{{$t('注册时间')}}</view>
           <view class="info">{{ infoData._add_time }}</view>
         </view>
       </view>
     </view>
     <view class="property">
-      <view class="title">资产信息</view>
+      <view class="title">{{$t('资产信息')}}</view>
       <view class="info acea-row">
         <view class="item" @click="balanceTap(1)">
-          <view>积分</view>
+          <view>{{$t('积分')}}</view>
           <view class="bottom acea-row row-between-wrapper">
             <view class="num">{{ infoData.integral }}</view>
             <view class="iconfont icon-ic_edit"></view>
           </view>
         </view>
         <view class="item" @click="balanceTap(0)">
-          <view>余额</view>
+          <view>{{$t('余额')}}</view>
           <view class="bottom acea-row row-between-wrapper">
             <view class="num">{{ infoData.now_money }}</view>
             <view class="iconfont icon-ic_edit"></view>
@@ -176,24 +176,24 @@
       <view class="info acea-row">
         <view class="item">
           <view class="acea-row row-between-wrapper">
-            <view>优惠券</view>
+            <view>{{$t('优惠券')}}</view>
             <view
               class="iconfont icon-ic_rightarrow"
               @click="couponSeeTap"
             ></view>
           </view>
           <view class="bottom acea-row row-between-wrapper">
-            <view class="num">{{ infoData.coupon_num }}张</view>
-            <view class="give" @click="couponTap">赠送</view>
+            <view class="num">{{ infoData.coupon_num }} {{$t('张')}}</view>
+            <view class="give" @click="couponTap">{{$t('赠送')}}</view>
           </view>
         </view>
         <view class="item" @click="memberTap">
-          <view>会员</view>
+          <view>{{$t('会员')}}</view>
           <view class="bottom acea-row row-between-wrapper">
             <view class="num" v-if="infoData.svip_over_day">{{
               $t('剩余') + infoData.svip_over_day + $t('天')
             }}</view>
-            <view class="num" v-else>已过期/暂未开通</view>
+            <view class="num" v-else>{{$t('已过期/暂未开通')}}</view>
             <view class="iconfont icon-ic_edit"></view>
           </view>
         </view>

@@ -14,12 +14,12 @@
 			<view class="wrapper">
 				<view class="sgin-num">
 					<view class="text">
-						<text>已连续签到</text>
+						<text>{{$t('已连续签到')}}</text>
 						<text class="num">{{ continuousSignDays }}</text>
-						<text>天</text>
+						<text>{{$t('天')}}</text>
 					</view>
 					<view class="tip" v-if="signRemindSwitch == 1">
-						<text class="mr16">签到提醒</text>
+						<text class="mr16">{{$t('签到提醒')}}</text>
 						<switch :checked="remindStatus" color="#FFCC33" @change="changeRemind" />
 					</view>
 				</view>
@@ -58,22 +58,22 @@
 				</form>
 				<view class="tip" v-if="nextContinuousDays > 0">
 					<img :src="`${imgHost}/statics/images/sgin_icon_4.png`" alt="" />
-					再连续签到{{ nextContinuousDays }}天，可额外获得惊喜礼包
+					{{$t('再连续签到')}}{{ nextContinuousDays }} {{$t('天')}}, {{$t('可额外获得惊喜礼包')}}
 				</view>
 				<view class="lock"></view>
 			</view>
 			<view class="wrapper wrapper2">
-				<view class="tip">{{ $t(`已累计签到`) }}</view>
+				<view class="tip">{{ $t('已累计签到') }}</view>
 				<view class="list2 acea-row row-center row-bottom">
 					<view class="item">{{ signCount[0] || 0 }}</view>
 					<view class="item">{{ signCount[1] || 0 }}</view>
 					<view class="item">{{ signCount[2] || 0 }}</view>
 					<view class="item">{{ signCount[3] || 0 }}</view>
-					<view class="data">{{ $t(`天`) }}</view>
+					<view class="data">{{ $t('天') }}</view>
 				</view>
 				<view class="tip2" v-if="nextCumulativeDays > 0">
 					<img :src="`${imgHost}/statics/images/sgin_icon_4.png`" alt="" />
-					{{ $t(`再累计签到`) }}{{ nextCumulativeDays }}{{ $t(`天，可额外获得惊喜礼包`) }}
+					{{ $t('再累计签到') }}{{ nextCumulativeDays }}{{ $t('天') }}, {{ $t('可额外获得惊喜礼包') }}
 				</view>
 				<view class="list3" v-if="signList.length">
 					<view class="item acea-row" v-for="(item, index) in signList" :key="index">
@@ -84,7 +84,7 @@
 						<view class="num">+{{ item.number }}</view>
 					</view>
 					<view class="loading" @click="goSignList" v-if="signList.length >= 8">
-						{{ $t(`点击加载更多`) }}
+						{{ $t('点击加载更多') }}
 						<text class="iconfont icon-xiangyou"></text>
 					</view>
 				</view>
@@ -95,9 +95,9 @@
 					<view class="signHeight">
 						<image src="../static/signH.png"></image>
 					</view>
-					<view class="state">{{ $t(`签到成功`) }}</view>
-					<view class="integral">{{ $t(`获得`) }}{{ integral }}{{ $t(`积分`) }}</view>
-					<view class="signTipBnt" @click="close">{{ $t(`好的`) }}</view>
+					<view class="state">{{ $t('签到成功') }}</view>
+					<view class="integral">{{ $t('获得') }}{{ integral }}{{ $t('积分') }}</view>
+					<view class="signTipBnt" @click="close">{{ $t('好的') }}</view>
 				</view>
 			</view>
 			<view class="mask" @touchmove.stop.prevent="false" :hidden="active == false"></view>

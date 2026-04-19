@@ -111,7 +111,7 @@
             :style="{ height: statusBarHeight + 'px' }"
             v-if="!special"
           ></view>
-          <view class="fs-28">精选类目</view>
+          <view class="fs-28">{{$t('精选类目')}}</view>
           <view class="cate_count grid-column-4 grid-gap-16rpx mt-32">
             <view
               class="category_item"

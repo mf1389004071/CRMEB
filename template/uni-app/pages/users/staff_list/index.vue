@@ -68,7 +68,7 @@
 					<input type="number" v-model="agent_percent" :placeholder="$t(`请输入百分比`)" />
 				</view>
 				<view class="refund-bth">
-					<!-- <view class="close-refund" @click="refund_close = false">取消</view> -->
+					<!-- <view class="close-refund" @click="refund_close = false">{{$t('取消')}}</view> -->
 					<view class="submit-refund" @click="refundSubmit()">{{ $t(`提交`) }}</view>
 				</view>
 			</view>

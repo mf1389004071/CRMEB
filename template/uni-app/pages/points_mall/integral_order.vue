@@ -11,7 +11,7 @@
 							<text class='default font-num'
 								v-if="addressInfo.is_default">{{$t(`[默认]`)}}</text>{{addressInfo.province}}{{addressInfo.city}}{{addressInfo.district}}{{addressInfo.detail}}
 						</view>
-						<!-- <view class='setaddress'>设置收货地址</view> -->
+						<!-- <view class='setaddress'>{{$t('设置收货地址')}}</view> -->
 					</view>
 					<view class='addressCon' v-else>
 						<view class='setaddress'>{{$t(`设置收货地址`)}}</view>

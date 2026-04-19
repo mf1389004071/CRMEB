@@ -3,7 +3,7 @@
 		<image class="top-bg" src="../static/receive-gift-bag.png" mode=""></image>
 		<image class="top-bow" src="../static/bow.png" mode=""></image>
 		<view class="aleart">
-			<view class="from">{{ nickname }} 送给您的一份礼物</view>
+			<view class="from">{{ nickname }} {{$t('送给您的一份礼物')}}</view>
 			<view class="message">{{ gift_mark }}</view>
 			<view class="aleart-body">
 				<image class="goods-img" :src="image" mode=""></image>

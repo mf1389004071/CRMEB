@@ -68,69 +68,69 @@
 								</template>
 								<view class="level">{{ $t(item.name) }}</view>
 								<view v-if="item.grade < levelInfo.grade" class="pass">{{ $t(`已解锁更高等级`) }}</view>
-								<!-- <view v-if="!levelInfo.grade || item.grade > levelInfo.grade" class='lock'><text class='iconfont icon-quanxianguanlisuozi'></text>暂未解锁该等级</view> -->
+								<!-- <view v-if="!levelInfo.grade || item.grade > levelInfo.grade" class='lock'><text class='iconfont icon-quanxianguanlisuozi'></text>{{$t('暂未解锁该等级')}}</view> -->
 							</view>
 						</swiper-item>
 					</block>
 				</swiper>
 				<view class="right-section">
 					<view class="section-hd acea-row row-between-wrapper">
-						<view>{{ $t(`我的成长特权`) }}</view>
+						<view>{{ $t('我的成长特权') }}</view>
 						<navigator v-if="is_open_member" class="svip" url="/pages/annex/vip_paid/index">{{ $t(`立即升级`) }}</navigator>
 					</view>
 					<view class="section-bd acea-row">
 						<view class="item">
 							<image class="image" src="../static/1.png"></image>
-							<view class="">{{ $t(`购物折扣`) }}</view>
+							<view class="">{{ $t('购物折扣') }}</view>
 						</view>
 						<view class="item">
 							<image class="image" src="../static/2.png"></image>
-							<view class="">{{ $t(`专属徽章`) }}</view>
+							<view class="">{{ $t('专属徽章') }}</view>
 						</view>
 						<view class="item">
 							<image class="image" src="../static/3.png"></image>
-							<view class="">{{ $t(`经验累积`) }}</view>
+							<view class="">{{ $t('经验累积') }}</view>
 						</view>
 						<view class="item">
 							<image class="image" src="../static/4.png"></image>
-							<view class="">{{ $t(`尊享客服`) }}</view>
+							<view class="">{{ $t('尊享客服') }}</view>
 						</view>
 					</view>
 				</view>
 			</view>
 			<view class="skill-section">
-				<view class="section-hd">{{ $t(`快速升级技巧`) }}</view>
+				<view class="section-hd">{{ $t('快速升级技巧') }}</view>
 				<view class="section-bd">
 					<view class="item acea-row row-middle">
 						<view class="text">
 							<view class="title">
-								{{ $t(`签到`) }}
-								<text class="mark">{{ $t(`可获得`) }}{{ taskInfo.sign || '' }}{{ $t(`点经验`) }}</text>
+								{{ $t('签到') }}
+								<text class="mark">{{ $t('可获得') }}{{ taskInfo.sign || '' }}{{ $t('点经验') }}</text>
 							</view>
-							<view class="info">{{ $t(`每日签到可获得经验值，已签到`) }}{{ taskInfo.sign_count || '' }}{{ $t(`天`) }}</view>
+							<view class="info">{{ $t('每日签到可获得经验值，已签到') }}{{ taskInfo.sign_count || '' }}{{ $t('天') }}</view>
 						</view>
-						<navigator class="link" url="/pages/users/user_sgin/index" hover-class="none">{{ $t(`去签到`) }}</navigator>
+						<navigator class="link" url="/pages/users/user_sgin/index" hover-class="none">{{ $t('去签到') }}</navigator>
 					</view>
 					<view class="item acea-row row-middle">
 						<view class="text">
 							<view class="title">
-								{{ $t(`购买商品`) }}
-								<text class="mark">+{{ taskInfo.order || '' }}{{ $t(`点经验/元`) }}</text>
+								{{ $t('购买商品') }}
+								<text class="mark">+{{ taskInfo.order || '' }}{{ $t('点经验/元') }}</text>
 							</view>
-							<view class="info">{{ $t(`购买商品可获得对应的经验值`) }}</view>
+							<view class="info">{{ $t('购买商品可获得对应的经验值') }}</view>
 						</view>
-						<navigator class="link" open-type="switchTab" url="/pages/goods_cate/goods_cate" hover-class="none">{{ $t(`去购买`) }}</navigator>
+						<navigator class="link" open-type="switchTab" url="/pages/goods_cate/goods_cate" hover-class="none">{{ $t('去购买') }}</navigator>
 					</view>
 					<view class="item acea-row row-middle">
 						<view class="text">
 							<view class="title">
-								{{ $t(`邀请好友`) }}
-								<text class="mark">+{{ taskInfo.invite || '' }}{{ $t(`点经验/人`) }}</text>
+								{{ $t('邀请好友') }}
+								<text class="mark">+{{ taskInfo.invite || '' }}{{ $t('点经验/人') }}</text>
 							</view>
-							<view class="info">{{ $t(`邀请好友注册商城可获得经验值`) }}</view>
+							<view class="info">{{ $t('邀请好友注册商城可获得经验值') }}</view>
 						</view>
 						<navigator class="link" url="/pages/users/user_spread_code/index" hover-class="none">
-							{{ $t(`去邀请`) }}
+							{{ $t('去邀请') }}
 						</navigator>
 					</view>
 				</view>

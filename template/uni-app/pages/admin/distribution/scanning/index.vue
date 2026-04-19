@@ -1,7 +1,7 @@
 <template>
   <view>
     <view class="scan">
-      <view class="header">请选择要核销的订单</view>
+      <view class="header">{{$t('请选择要核销的订单')}}</view>
       <view class="box">
         <view
           class="content"
@@ -15,27 +15,27 @@
               v-if="
                 (item._status == 4 || item._status == 12) && item.status == 5
               "
-              >部分核销</view
+              >{{$t('部分核销')}}</view
             >
             <view
               class="attributes blue"
               v-if="item._status == 4 && item.status == 1"
-              >未核销</view
+              >{{$t('未核销')}}</view
             >
             <view class="attributes blue" v-if="item._status == 11"
-              >未核销</view
+              >{{$t('未核销')}}</view
             >
-            <view class="attributes blue" v-if="item._status == 5">已核销</view>
-            <!-- <navigator class="btn" url="/pages/admin/writeRecordList/index" hover-class="none">核销记录<text class="iconfont icon-ic_rightarrow"></text></navigator> -->
-            <!-- <view class="btn" @click.stop="goRecord(item.id)">核销记录<text class="iconfont icon-ic_rightarrow"></text></view> -->
+            <view class="attributes blue" v-if="item._status == 5">{{$t('已核销')}}</view>
+            <!-- <navigator class="btn" url="/pages/admin/writeRecordList/index" hover-class="none">{{$t('核销记录')}}<text class="iconfont icon-ic_rightarrow"></text></navigator> -->
+            <!-- <view class="btn" @click.stop="goRecord(item.id)">{{$t('核销记录')}}<text class="iconfont icon-ic_rightarrow"></text></view> -->
           </view>
           <view class="content_box acea-row">
             <image :src="item.image" mode=""></image>
             <view class="content_box_title acea-row row-column row-between">
-              <p class="textbox">订单号：{{ item.order_id }}</p>
-              <p class="attribute">下单时间：{{ item.add_time }}</p>
+              <p class="textbox">{{$t('订单号')}}：{{ item.order_id }}</p>
+              <p class="attribute">{{$t('下单时间')}}：{{ item.add_time }}</p>
               <view class="txt">
-                <p class="attribute">订单实付：¥{{ item.pay_price }}</p>
+                <p class="attribute">{{$t('订单实付')}}：¥{{ item.pay_price }}</p>
               </view>
             </view>
           </view>
@@ -45,7 +45,7 @@
     <view class="mask" v-if="popupShow" @click="closePopup"></view>
     <view class="popup acea-row row-column on" v-if="popupShow">
       <view class="popup-hd">
-        商品核销
+        {{$t('商品核销')}}
         <view class="btn" @click="closePopup">
           <text class="iconfont icon-ic_close"></text>
         </view>
@@ -68,7 +68,7 @@
           </view>
           <view class="acea-row btn-box">
             <view v-if="!isAll" class="btn" @click="ok(1)">{{$t('返回列表')}}</view>
-            <!-- <navigator v-if="!isAll" :url='"/pages/admin/distribution/scanning/index?code="+attr.code' hover-class='none' open-type="redirect" class="btn btn_no">返回列表</navigator> -->
+            <!-- <navigator v-if="!isAll" :url='"/pages/admin/distribution/scanning/index?code="+attr.code' hover-class='none' open-type="redirect" class="btn btn_no">{{$t('返回列表')}}</navigator> -->
             <navigator
               v-if="isAll"
               url="/pages/admin/work/index"
@@ -78,7 +78,7 @@
             >
             <view v-if="!isAll" class="btn on" @click="ok(2)">{{$t('继续核销')}}</view>
             <view v-if="isAll" class="btn on" @click="ok(3)">{{$t('核销其他订单')}}</view>
-            <!-- <navigator v-if="isAll" :url='"/pages/admin/distribution/scanning/index?code="' open-type="redirect" hover-class='none' class="btn on">核销其他订单</navigator> -->
+            <!-- <navigator v-if="isAll" :url='"/pages/admin/distribution/scanning/index?code="' open-type="redirect" hover-class='none' class="btn on">{{$t('核销其他订单')}}</navigator> -->
           </view>
         </view>
       </view>

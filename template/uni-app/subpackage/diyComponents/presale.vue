@@ -132,14 +132,14 @@
                 <text
                   class="text-line fs-26 text--w111-999 pt-14 Regular"
                   :style="[otPriceColor]"
-                  >{{ $t(`¥`) }}{{ item.ot_price }}</text
+                  >{{ $t('¥') }}{{ item.ot_price }}</text
                 >
               </view>
               <view
                 class="w-144 h-56 rd-30rpx flex-center fs-24 text--w111-fff bg--w111-E93323"
                 v-if="!showBtn"
                 :style="[btnBgColor]"
-                >去预定</view
+                >{{$t('去预定')}}</view
               >
             </view>
           </view>
@@ -185,7 +185,7 @@
               class="text-line fs-24 text--w111-999 Regular lh-32rpx"
               :style="[otPriceColor]"
               v-if="checkboxInfo.includes(3)"
-              >{{ $t(`¥`) }}{{ item.ot_price }}</view
+              >{{ $t('¥') }}{{ item.ot_price }}</view
             >
           </view>
         </view>
@@ -233,7 +233,7 @@
               class="text-line fs-24 text--w111-999 Regular lh-32rpx"
               :style="[otPriceColor]"
               v-if="checkboxInfo.includes(3)"
-              >{{ $t(`¥`) }}{{ item.ot_price }}</view
+              >{{ $t('¥') }}{{ item.ot_price }}</view
             >
           </view>
         </scroll-view>
