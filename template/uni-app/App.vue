@@ -15,7 +15,6 @@ import { getLangJson, getLangVersion } from "@/api/user.js";
 import { mapGetters } from "vuex";
 import colors from "@/mixins/color.js";
 import Cache from "@/utils/cache";
-import { debug } from "util";
 import { applyTheme } from "@/utils/theme.js";
 
 export default {
@@ -32,7 +31,9 @@ export default {
     locale: "",
   },
   mixins: [colors],
-  computed: mapGetters(["isLogin", "cartNum"]),
+  computed: {
+    ...mapGetters(["isLogin", "cartNum"]),
+  },
   watch: {
     isLogin: {
       deep: true, //深度监听设置为 true
@@ -109,10 +110,24 @@ export default {
       silenceBindingSpread(this.globalData);
     }
     // #endif
+    // #ifdef H5
+    uni.$emit("i18n-missing-debug-refresh");
+    // #endif
   },
   async onLaunch(option) {
     uni.hideTabBar();
     let that = this;
+    // #ifdef H5
+    try {
+      if (
+        typeof window !== "undefined" &&
+        window.location &&
+        /[?&]i18n_debug=1(?:&|$)/.test(window.location.search || "")
+      ) {
+        uni.setStorageSync("I18N_DEBUG_TOOL", "1");
+      }
+    } catch (e) {}
+    // #endif
     basicConfig().then((res) => {
       uni.setStorageSync("BASIC_CONFIG", res.data);
     });

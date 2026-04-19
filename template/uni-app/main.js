@@ -48,6 +48,7 @@ Vue.prototype.$Debounce = Debounce
 import {
 	parseQuery
 } from "./utils";
+import I18nMissingDebugFab from '@/components/I18nMissingDebug/I18nMissingDebug.vue';
 import Auth from './libs/wechat';
 import {
 	SPREAD
@@ -112,3 +113,18 @@ const app = new Vue({
 	i18n,
 })
 app.$mount();
+// #ifdef H5
+try {
+	const i18nDebugVm = new Vue({
+		parent: app,
+		i18n,
+		render: (h) => h(I18nMissingDebugFab),
+	});
+	i18nDebugVm.$mount();
+	if (i18nDebugVm.$el && typeof document !== 'undefined' && document.body) {
+		document.body.appendChild(i18nDebugVm.$el);
+	}
+} catch (e) {
+	console.warn('[I18nMissingDebug] mount failed', e);
+}
+// #endif

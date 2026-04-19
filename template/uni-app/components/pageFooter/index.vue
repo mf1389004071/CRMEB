@@ -138,7 +138,6 @@ export default {
   watch: {
     configData: {
       handler(newVal) {
-        console.log(newVal, "newVal");
         if (newVal) {
           let configData = newVal;
           this.newData = configData;

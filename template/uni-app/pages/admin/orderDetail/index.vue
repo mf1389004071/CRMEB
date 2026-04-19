@@ -28,7 +28,7 @@
           {{$t('需付款')}}：¥{{ orderInfo.pay_price }}
           <countDown
             :isDay="false"
-            :tipText="$t('支付剩余')："
+            :tipText="$t('支付剩余')"
             dayText=" "
             :hourText="$t('时')"
             :minuteText="$t('分')"

@@ -21,42 +21,9 @@ import re
 import sys
 from pathlib import Path
 
+from i18n_lang_code_sql import emit_lang_code_sql
+
 CHINESE_RE = re.compile(r"[\u4e00-\u9fff]")
-
-
-def sql_string_literal(s: str) -> str:
-    """MySQL 字符串内单引号转义为两个单引号。"""
-    return s.replace("\\", "\\\\").replace("'", "''")
-
-
-def emit_lang_code_sql(
-    keys: set[str],
-    out_path: Path,
-    *,
-    table: str,
-    type_id: int,
-) -> int:
-    """生成写入 eb_lang_code 的幂等 INSERT（仅 is_admin=0 商城文案）。"""
-    keys_sorted = [k for k in sorted(keys) if k and CHINESE_RE.search(k)]
-    lines = [
-        "-- 由 scripts/i18n_scan_uni_app.py 生成",
-        "-- 执行前请确认：1) 表名与 .env 中 DB_PREFIX 一致；2) type_id 对应简体中文（一般为 1，以 eb_lang_type 为准）",
-        f"-- 目标表: `{table}`  type_id={type_id}  is_admin=0",
-        "START TRANSACTION;",
-        "",
-    ]
-    for k in keys_sorted:
-        esc = sql_string_literal(k)
-        lines.append(
-            f"INSERT INTO `{table}` (`type_id`, `code`, `remarks`, `lang_explain`, `is_admin`)\n"
-            f"SELECT {type_id}, '{esc}', '{esc}', '{esc}', 0\n"
-            f"FROM DUAL\n"
-            f"WHERE NOT EXISTS (SELECT 1 FROM `{table}` WHERE `type_id` = {type_id} AND `code` = '{esc}' AND `is_admin` = 0);\n"
-        )
-    lines.extend(["", "COMMIT;", ""])
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text("\n".join(lines), encoding="utf-8")
-    return len(keys_sorted)
 
 # 默认不扫描的目录名（相对 uni-app 根）
 DEFAULT_SKIP_DIRS = frozenset(
@@ -512,6 +479,7 @@ def main() -> int:
             args.emit_sql,
             table=args.sql_table,
             type_id=args.sql_type_id,
+            source_comment="scripts/i18n_scan_uni_app.py",
         )
         print(f"[sql] 已写入 {args.emit_sql}（共 {n} 条 INSERT 片段）")
 

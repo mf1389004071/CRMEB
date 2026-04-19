@@ -81,52 +81,80 @@ export default {
       };
     },
     titleWrapStyle() {
-      let borderRadius = `${this.dataConfig.fillet.val * 2}rpx`;
-      if (this.dataConfig.fillet.type) {
-        borderRadius = `${this.dataConfig.fillet.valList[0].val * 2}rpx ${
-          this.dataConfig.fillet.valList[1].val * 2
-        }rpx ${this.dataConfig.fillet.valList[3].val * 2}rpx ${
-          this.dataConfig.fillet.valList[2].val * 2
-        }rpx`;
+      const fillet = this.dataConfig.fillet;
+      let borderRadius =
+        fillet && fillet.val !== undefined ? `${fillet.val * 2}rpx` : "0rpx";
+      if (
+        fillet &&
+        fillet.type &&
+        fillet.valList &&
+        fillet.valList.length >= 4
+      ) {
+        borderRadius = `${fillet.valList[0].val * 2}rpx ${
+          fillet.valList[1].val * 2
+        }rpx ${fillet.valList[3].val * 2}rpx ${fillet.valList[2].val * 2}rpx`;
+      }
+      const mc = this.dataConfig.moduleColor;
+      let background = "transparent";
+      if (mc && mc.color && mc.color[0] && mc.color[1]) {
+        background = `linear-gradient(90deg, ${mc.color[0].item} 0%, ${mc.color[1].item} 100%)`;
       }
       return {
         "border-radius": borderRadius,
-        background: `linear-gradient(90deg, ${this.dataConfig.moduleColor.color[0].item} 0%, ${this.dataConfig.moduleColor.color[1].item} 100%)`,
+        background,
       };
     },
     titleStyle() {
+      const fs =
+        this.dataConfig.fontSize && this.dataConfig.fontSize.val !== undefined
+          ? this.dataConfig.fontSize.val
+          : 16;
+      const tc = this.dataConfig.themeColor;
       let style = {
-        "font-size": `${this.dataConfig.fontSize.val * 2}rpx`,
-        color: this.dataConfig.themeColor.color[0].item,
+        "font-size": `${fs * 2}rpx`,
+        color:
+          tc && tc.color && tc.color[0] ? tc.color[0].item : "#333333",
       };
-      switch (this.dataConfig.textStyle.tabVal) {
-        case 1:
-          style["font-style"] = "italic";
-          break;
-        case 2:
-          style["font-weight"] = "bold";
-          break;
+      const textStyle = this.dataConfig.textStyle;
+      if (textStyle) {
+        switch (textStyle.tabVal) {
+          case 1:
+            style["font-style"] = "italic";
+            break;
+          case 2:
+            style["font-weight"] = "bold";
+            break;
+        }
       }
       return style;
     },
     titleLocation() {
-      if (this.dataConfig.buttonConfig.tabVal) {
+      if (
+        this.dataConfig.buttonConfig &&
+        this.dataConfig.buttonConfig.tabVal
+      ) {
         let style = {};
-        switch (this.dataConfig.textPosition.tabVal) {
-          case 1:
-            style["justify-content"] = "center";
-            break;
-          case 2:
-            style["justify-content"] = "flex-end";
-            break;
+        const tp = this.dataConfig.textPosition;
+        if (tp) {
+          switch (tp.tabVal) {
+            case 1:
+              style["justify-content"] = "center";
+              break;
+            case 2:
+              style["justify-content"] = "flex-end";
+              break;
+          }
         }
         return style;
       }
     },
     moreStyle() {
+      const bt = this.dataConfig.buttonText;
+      const bc = this.dataConfig.buttonColor;
       return {
-        "font-size": `${this.dataConfig.buttonText.val * 2}rpx`,
-        color: this.dataConfig.buttonColor.color[0].item,
+        "font-size": `${((bt && bt.val) || 12) * 2}rpx`,
+        color:
+          bc && bc.color && bc.color[0] ? bc.color[0].item : "#999999",
       };
     },
   },

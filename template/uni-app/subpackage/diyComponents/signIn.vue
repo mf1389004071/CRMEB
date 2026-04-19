@@ -61,7 +61,7 @@
               mode="widthFix"
               class="image"
             ></image>
-            <view>{{ $t(`周`) }}{{ index | weekFormat }}</view>
+            <view>{{ weekDayLabel(index) }}</view>
           </view>
         </view>
         <view class="button" :style="[buttonStyle]" @click="goUserSgin">{{
@@ -85,11 +85,6 @@ export default {
     isSortType: {
       type: String | Number,
       default: 0,
-    },
-  },
-  filters: {
-    weekFormat: function (value) {
-      return [this.$t('一'), this.$t('二'), this.$t('三'), this.$t('四'), this.$t('五'), this.$t('六'), this.$t('日')][value];
     },
   },
   data() {
@@ -191,6 +186,11 @@ export default {
     this.getSign();
   },
   methods: {
+    weekDayLabel(index) {
+      const keys = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
+      const k = keys[index];
+      return k ? this.$t(k) : "";
+    },
     goUserSgin() {
       uni.navigateTo({
         url: "/pages/users/user_sgin/index",

@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n'
 import Cache from '@/utils/cache';
+// #ifdef H5
+import { recordMissingI18nKey } from '@/utils/i18nMissingStorage.js';
+// #endif
 
 Vue.use(VueI18n)
 
@@ -16,5 +19,11 @@ const i18n = new VueI18n({
 	fallbackLocale: 'zh-CN',
 	messages: uni.getStorageSync('localeJson'),
 	silentTranslationWarn: true, // 去除国际化警告
+	// #ifdef H5
+	missing(locale, key) {
+		recordMissingI18nKey(key);
+		return key;
+	},
+	// #endif
 })
 export default i18n
