@@ -132,7 +132,7 @@ export default {
 	methods: {
 		getInvoiceLink(id) {
 			uni.showLoading({
-				title: '复制中'
+				title: this.$t('复制中')
 			});
 			getInvoiceLink(id).then((res) => {
 				// #ifdef APP-PLUS
@@ -143,7 +143,7 @@ export default {
 					data: res.data.downloadBase64.pdfUrl,
 					success: () =>
 						uni.showToast({
-							title: '链接已复制'
+							title: this.$t('链接已复制')
 						})
 				});
 				// #endif

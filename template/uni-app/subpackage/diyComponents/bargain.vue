@@ -180,7 +180,7 @@
               decimalSize="36"
               weight
               :color="priceColor"
-              preFix="低至"
+              preFix="$t('低至')"
               preFixSize="22"
               :textColor="priceColor"
               v-if="checkboxInfo.includes(2)"

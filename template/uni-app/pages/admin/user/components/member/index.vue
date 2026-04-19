@@ -18,7 +18,7 @@
         <view class="item acea-row row-between-wrapper">
           <view>会员到期日</view>
           <view class="time">{{
-            userInfo.svip_overdue_time || "已过期/暂未开通"
+            userInfo.svip_overdue_time || $t('已过期/暂未开通')
           }}</view>
         </view>
         <view class="item acea-row row-between-wrapper">
@@ -31,7 +31,7 @@
             <input
               type="numeric"
               v-model="numeral"
-              placeholder="请输入时长"
+              :placeholder="$t('请输入时长')"
               placeholder-class="placeholder"
             />
             <text class="iconfont icon-ic_edit"></text>
@@ -73,7 +73,7 @@ export default {
     define() {
       if (this.numeral <= 0) {
         this.$util.Tips({
-          title: "请填写有效时长",
+          title: this.$t('请填写有效时长'),
         });
         return;
       }

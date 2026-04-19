@@ -62,22 +62,22 @@
       <view class="boxs">
         <view class="small_box">
           <view class="content">
-            <view class="font">核销成功</view>
-            <view v-if="isAll" class="small_font">当前订单已完成核销</view>
-            <view v-else class="small_font">该订单仍有其他待核销商品</view>
+            <view class="font">{{$t('核销成功')}}</view>
+            <view v-if="isAll" class="small_font">{{$t('当前订单已完成核销')}}</view>
+            <view v-else class="small_font">{{$t('该订单仍有其他待核销商品')}}</view>
           </view>
           <view class="acea-row btn-box">
-            <view v-if="!isAll" class="btn" @click="ok(1)">返回列表</view>
+            <view v-if="!isAll" class="btn" @click="ok(1)">{{$t('返回列表')}}</view>
             <!-- <navigator v-if="!isAll" :url='"/pages/admin/distribution/scanning/index?code="+attr.code' hover-class='none' open-type="redirect" class="btn btn_no">返回列表</navigator> -->
             <navigator
               v-if="isAll"
               url="/pages/admin/work/index"
               hover-class="none"
               class="btn btn_no"
-              >返回工作台</navigator
+              >{{$t('返回工作台')}}</navigator
             >
-            <view v-if="!isAll" class="btn on" @click="ok(2)">继续核销</view>
-            <view v-if="isAll" class="btn on" @click="ok(3)">核销其他订单</view>
+            <view v-if="!isAll" class="btn on" @click="ok(2)">{{$t('继续核销')}}</view>
+            <view v-if="isAll" class="btn on" @click="ok(3)">{{$t('核销其他订单')}}</view>
             <!-- <navigator v-if="isAll" :url='"/pages/admin/distribution/scanning/index?code="' open-type="redirect" hover-class='none' class="btn on">核销其他订单</navigator> -->
           </view>
         </view>

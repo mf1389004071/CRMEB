@@ -114,27 +114,27 @@ export default {
       orderMenu: [
         {
           img: "icon-daifukuan",
-          title: "待付款",
+          title: this.$t('待付款'),
           url: "/pages/goods/order_list/index?status=0",
         },
         {
           img: "icon-daifahuo",
-          title: "待发货",
+          title: this.$t('待发货'),
           url: "/pages/goods/order_list/index?status=1",
         },
         {
           img: "icon-daishouhuo",
-          title: "待收货",
+          title: this.$t('待收货'),
           url: "/pages/goods/order_list/index?status=2",
         },
         {
           img: "icon-daipingjia",
-          title: "待评价",
+          title: this.$t('待评价'),
           url: "/pages/goods/order_list/index?status=3",
         },
         {
           img: "icon-a-shouhoutuikuan",
-          title: "售后/退款",
+          title: this.$t('售后/退款'),
           url: "/pages/users/user_return_list/index",
         },
       ],
@@ -439,19 +439,19 @@ export default {
         that.$store.commit("SETUID", res.data.uid);
         that.orderMenu.forEach((item, index) => {
           switch (item.title) {
-            case "待付款":
+            case this.$t('待付款'):
               item.num = res.data.orderStatusNum.unpaid_count;
               break;
-            case "待发货":
+            case this.$t('待发货'):
               item.num = res.data.orderStatusNum.unshipped_count;
               break;
-            case "待收货":
+            case this.$t('待收货'):
               item.num = res.data.orderStatusNum.received_count;
               break;
-            case "待评价":
+            case this.$t('待评价'):
               item.num = res.data.orderStatusNum.evaluated_count;
               break;
-            case "售后/退款":
+            case this.$t('售后/退款'):
               item.num = res.data.orderStatusNum.refunding_count;
               break;
           }
@@ -470,19 +470,19 @@ export default {
     switchTab(order) {
       this.orderMenu.forEach((item, index) => {
         switch (item.title) {
-          case "待付款":
+          case this.$t('待付款'):
             item.img = order.dfk;
             break;
-          case "待发货":
+          case this.$t('待发货'):
             item.img = order.dfh;
             break;
-          case "待收货":
+          case this.$t('待收货'):
             item.img = order.dsh;
             break;
-          case "待评价":
+          case this.$t('待评价'):
             item.img = order.dpj;
             break;
-          case "售后/退款":
+          case this.$t('售后/退款'):
             item.img = order.sh;
             break;
         }
@@ -503,7 +503,7 @@ export default {
             el.url == "/pages/admin/order/index" ||
             el.url == "/pages/admin/order_cancellation/index" ||
             el.url == "/pages/admin/manage/index" ||
-            el.name == "客服接待"
+            el.name == this.$t('客服接待')
           ) {
             storeMenu.push(el);
           } else {

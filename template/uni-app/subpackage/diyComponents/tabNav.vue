@@ -199,7 +199,7 @@ export default {
           id: 0,
         },
         text: {
-          val: "首页",
+          val: this.$t('首页'),
         },
       });
       return tabList;
@@ -233,7 +233,7 @@ export default {
     setCategory(data) {
       data.unshift({
         id: -99,
-        cate_name: "首页",
+        cate_name: this.$t('首页'),
       });
       this.tabTitle = data;
       // #ifdef MP || APP-PLUS

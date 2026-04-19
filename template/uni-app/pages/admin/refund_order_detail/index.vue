@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- #ifdef MP || APP-PLUS -->
-		<NavBar titleText="订单详情" :iconColor="iconColor" :textColor="iconColor" :isScrolling="isScrolling" showBack></NavBar>
+		<NavBar :titleText="$t('订单详情')" :iconColor="iconColor" :textColor="iconColor" :isScrolling="isScrolling" showBack></NavBar>
 		<!-- #endif -->
 		<view class="headerBg">
 			<view :style="{ height: `${getHeight.barTop}px` }"></view>
@@ -17,7 +17,7 @@
 			</view>
 			<view class="remarks acea-row row-middle  h-100" v-if="goname != 'looks'" @click="modify('1')">
 				<text class="iconfont icon-ic_notes mr-10"></text>
-				<text class="line1" style="text-align: left;">{{ orderInfo.remark ? orderInfo.remark : '订单未备注，点击添加备注信息' }}</text>
+				<text class="line1" style="text-align: left;">{{ orderInfo.remark ? orderInfo.remark : $t('订单未备注，点击添加备注信息') }}</text>
 			</view>
 			<!-- <view class="orderingUser acea-row row-middle" v-if="orderInfo.nickname">
 				<span class="iconfont icon-yonghu2"></span>{{ orderInfo.nickname }}
@@ -457,7 +457,7 @@
 				if (that.status == 0) {
 					if (!isMoney(price)) {
 						return that.$util.Tips({
-							title: '请输入正确的金额'
+							title: this.$t('请输入正确的金额')
 						});
 					}
 					data.price = price;
@@ -465,7 +465,7 @@
 						function() {
 							that.change = false;
 							that.$util.Tips({
-								title: '改价成功',
+								title: this.$t('改价成功'),
 								icon: 'success'
 							})
 							that.getIndex();
@@ -473,7 +473,7 @@
 						function() {
 							that.change = false;
 							that.$util.Tips({
-								title: '改价失败',
+								title: this.$t('改价失败'),
 								icon: 'none'
 							})
 						}
@@ -482,7 +482,7 @@
 					if (this.isRefund) {
 						if (!isMoney(refund_price)) {
 							return that.$util.Tips({
-								title: '请输入正确的金额'
+								title: this.$t('请输入正确的金额')
 							});
 						}
 						data.price = refund_price;
@@ -516,7 +516,7 @@
 				} else {
 					if (!remark) {
 						return this.$util.Tips({
-							title: '请输入备注'
+							title: this.$t('请输入备注')
 						})
 					}
 					data.remark = remark;

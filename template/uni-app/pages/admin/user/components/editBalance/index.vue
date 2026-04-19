@@ -1,14 +1,14 @@
 <template>
 	<base-drawer mode="bottom" :visible="visible" background-color="transparent" mask maskClosable @close="closeDrawer">
 		<view class="edit-balance rd-t-40rpx">
-			<view class="title">修改{{type? '积分' : '余额'}}
+			<view class="title">修改{{type? $t('积分') : $t('余额')}}
 			  <view class="close acea-row row-center-wrapper" @tap="closeDrawer">
 				  <text class="iconfont icon-iconfontguanbi"></text>
 			  </view>
 			</view>
 			<view class="list">
 				<view class="item acea-row row-between-wrapper">
-					<view>修改{{type? '积分' : '余额'}}</view>
+					<view>修改{{type? $t('积分') : $t('余额')}}</view>
 					<view class="acea-row row-middle">
 						<view class="itemn acea-row row-middle" :class="current == index?'on':''" v-for="(item, index) in navList" :key="index" @click="navTap(index)">
 							<text class="iconfont" :class="current == index?'icon-ic_Selected':'icon-ic_unselect'"></text>
@@ -17,9 +17,9 @@
 					</view>
 				</view>
 				<view class="item acea-row row-between-wrapper">
-					<view>{{type? '积分' : '余额'}}</view>
+					<view>{{type? $t('积分') : $t('余额')}}</view>
 					<view class="acea-row row-middle">
-						<input type="number" v-model="numeral" :placeholder="type? '请填写积分' : '请填写余额'" placeholder-class="placeholder"/>
+						<input type="number" v-model="numeral" :placeholder="$t(type? '请填写积分' : '请填写余额')" placeholder-class="placeholder"/>
 						<text class="iconfont icon-ic_edit"></text>
 					</view>
 				</view>
@@ -55,9 +55,9 @@ export default {
 		type: {
 			handler(newValue, oldValue) {
 				if(newValue){
-					this.navList = ['增加积分','减少积分']
+					this.navList = [this.$t('增加积分'),this.$t('减少积分')]
 				}else{
-					this.navList = ['增加余额','减少余额']
+					this.navList = [this.$t('增加余额'),this.$t('减少余额')]
 				}
 			},
 			immediate: true
@@ -79,9 +79,9 @@ export default {
 			if(this.numeral<=0){
 				let title = '';
 				if(this.type){
-					title = '请填写你要增加或减少的余额'
+					title = this.$t('请填写你要增加或减少的余额')
 				}else{
-					title = '请填写你要增加或减少的积分'
+					title = this.$t('请填写你要增加或减少的积分')
 				}
 				this.$util.Tips({
 					title: title

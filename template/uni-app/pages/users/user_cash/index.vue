@@ -141,7 +141,7 @@
 					<form @submit="importNowMoney">
 						<view class='item acea-row row-between-wrapper'>
 							<view class='name'><text class='red'>*</text> {{$t(`提现`)}}</view>
-							<view class='input'><input @input='inputNum' placeholder='请输入提现金额' placeholder-class='placeholder'
+							<view class='input'><input @input='inputNum' :placeholder="$t('请输入提现金额')" placeholder-class='placeholder'
 									name="money" type='digit'></input></view>
 						</view>
 						<view class='tip'>
@@ -280,7 +280,7 @@
 				let that = this;
 				extractBank().then(res => {
 					let array = res.data.extractBank;
-					array.unshift('请选择银行');
+					array.unshift(this.$t('请选择银行'));
 					array.forEach((v, i) => {
 						array.splice(i, 1, that.$t(v))
 					})

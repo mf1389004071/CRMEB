@@ -79,7 +79,7 @@
 		},
 		data() {
 			return {
-				regionDval: ['浙江省', '杭州市', '滨江区'],
+				regionDval: [this.$t('浙江省'), this.$t('杭州市'), this.$t('滨江区')],
 				id: 0, //地址id
 				userAddress: {
 					is_default: false
@@ -92,7 +92,7 @@
 				multiArray: [],
 				multiIndex: [0, 0, 0],
 				cityId: 0,
-				defaultRegion: ['广东省', '广州市', '番禺区'],
+				defaultRegion: [this.$t('广东省'), this.$t('广州市'), this.$t('番禺区')],
 				defaultRegionCode: '110101',
 			};
 		},
@@ -377,7 +377,7 @@
 				if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(value.phone)) return that.$util.Tips({
 					title: that.$t(`请输入正确的手机号码`)
 				});
-				if (that.region[0] == '省') return that.$util.Tips({
+				if (that.region[0] == this.$t('省')) return that.$util.Tips({
 					title: that.$t(`请选择所在地区`)
 				});
 				if (!value.detail) return that.$util.Tips({

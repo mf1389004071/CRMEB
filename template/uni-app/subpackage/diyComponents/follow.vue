@@ -208,13 +208,13 @@ export default {
                       success: function (res) {
                         _that.closeFollowCode();
                         _that.$util.Tips({
-                          title: "保存成功",
+                          title: this.$t('保存成功'),
                           icon: "success",
                         });
                       },
                       fail: function (res) {
                         _that.$util.Tips({
-                          title: "保存失败",
+                          title: this.$t('保存失败'),
                         });
                       },
                     });
@@ -226,13 +226,13 @@ export default {
                   success: function (res) {
                     _that.closeFollowCode();
                     _that.$util.Tips({
-                      title: "保存成功",
+                      title: this.$t('保存成功'),
                       icon: "success",
                     });
                   },
                   fail: function (res) {
                     _that.$util.Tips({
-                      title: "保存失败",
+                      title: this.$t('保存失败'),
                     });
                   },
                 });
@@ -252,13 +252,13 @@ export default {
             success: function (res) {
               thatApp.posterImageClose();
               thatApp.$util.Tips({
-                title: "保存成功",
+                title: this.$t('保存成功'),
                 icon: "success",
               });
             },
             fail: function (res) {
               thatApp.$util.Tips({
-                title: "保存失败",
+                title: this.$t('保存失败'),
               });
             },
           });

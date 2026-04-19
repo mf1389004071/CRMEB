@@ -384,7 +384,7 @@ export default {
     // 超时了
     uni.$once("timeout", () => {
       uni.showLoading({
-        title: "重连中",
+        title: this.$t('重连中'),
         mask: true,
       });
       this.chatList = [];

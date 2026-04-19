@@ -2,7 +2,7 @@
   <view>
     <!-- #ifdef MP || APP-PLUS -->
     <NavBar
-      titleText="订单详情"
+      titleText="$t('订单详情')"
       :iconColor="iconColor"
       :textColor="iconColor"
       :isScrolling="isScrolling"
@@ -30,8 +30,8 @@
             :isDay="false"
             tipText="支付剩余："
             dayText=" "
-            hourText="时"
-            minuteText="分"
+            :hourText="$t('时')"
+            :minuteText="$t('分')"
             secondText=" "
             dotColor="#FFFFFF"
             colors="#FFFFFF"
@@ -57,7 +57,7 @@
       >
         <text class="iconfont icon-ic_notes"></text>
         <view class="p-20 flex-1 fs-28 flex-y-center">{{
-          orderInfo.remark || "订单未备注，点击添加备注信息"
+          orderInfo.remark || $t('订单未备注，点击添加备注信息')
         }}</view>
       </view>
       <view class="address" v-if="orderInfo.shipping_type == 1">
@@ -344,7 +344,7 @@
         <view class="item acea-row row-between">
           <view>支付状态</view>
           <view class="conter">
-            {{ orderInfo.paid == 1 ? "已支付" : "未支付" }}
+            {{ orderInfo.paid == 1 ? $t('已支付') : $t('未支付') }}
           </view>
         </view>
         <view class="item acea-row row-between">
@@ -836,7 +836,7 @@ export default {
       if (that.status == 0) {
         if (!isMoney(price)) {
           return that.$util.Tips({
-            title: "请输入正确的金额",
+            title: this.$t('请输入正确的金额'),
           });
         }
         data.price = price;
@@ -844,7 +844,7 @@ export default {
           .then((res) => {
             that.change = false;
             that.$util.Tips({
-              title: "改价成功",
+              title: this.$t('改价成功'),
               icon: "success",
             });
             that.order_id = res.data.order_id;
@@ -853,7 +853,7 @@ export default {
           .catch((err) => {
             that.change = false;
             that.$util.Tips({
-              title: "改价失败",
+              title: this.$t('改价失败'),
               icon: "none",
             });
           });
@@ -861,7 +861,7 @@ export default {
         if (this.isRefund) {
           if (!isMoney(refund_price)) {
             return that.$util.Tips({
-              title: "请输入正确的金额",
+              title: this.$t('请输入正确的金额'),
             });
           }
           data.price = refund_price;
@@ -892,7 +892,7 @@ export default {
       } else {
         if (!remark) {
           return this.$util.Tips({
-            title: "请输入备注",
+            title: this.$t('请输入备注'),
           });
         }
         data.remark = remark;

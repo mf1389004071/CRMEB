@@ -148,7 +148,7 @@
 				})
 				if(!ids.length){
 					return this.$util.Tips({
-						title: '请选择收藏商品'
+						title: this.$t('请选择收藏商品')
 					});
 				}
 				let str = ids.join(',');
@@ -169,7 +169,7 @@
 				})
 				if(!ids.length){
 					return this.$util.Tips({
-						title: '请选择删除商品'
+						title: this.$t('请选择删除商品')
 					});
 				}
 				deleteVisitList({ids}).then(res=>{

@@ -1062,7 +1062,7 @@ export default {
       //#endif
       //#ifndef MP
       this.Tips({
-        title: "h5与app端不支持跳转外部小程序",
+        title: i18n.t('h5与app端不支持跳转外部小程序'),
       });
       //#endif
     } else {

@@ -8,7 +8,7 @@
 			</view>
 			<view class="search acea-row row-middle" v-if="num !=2">
 				<text class="iconfont icon-ic_search"></text>
-				<input class="inputs" placeholder='请输入优惠券名称' placeholder-class='placeholder' confirm-type='search' name="search"
+				<input class="inputs" :placeholder="$t('请输入优惠券名称')" placeholder-class='placeholder' confirm-type='search' name="search"
 					v-model="keyword" @confirm="searchSubmit"></input>
 			</view>
 			<view class="list" v-if="couponList.length">
@@ -32,7 +32,7 @@
 				</scroll-view>
 			</view>
 			<view class="empty-box" v-else>
-				<emptyPage title="暂无优惠券～" src="/statics/images/noCoupon.png"></emptyPage>
+				<emptyPage :title="$t('暂无优惠券～')" src="/statics/images/noCoupon.png"></emptyPage>
 			</view>
 		</view>
 	</base-drawer>

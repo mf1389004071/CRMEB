@@ -198,7 +198,7 @@ export default {
 			if (!self.protocol) {
 				this.inAnimation = true;
 				return self.$util.Tips({
-					title: '请先阅读并同意协议'
+					title: this.$t('请先阅读并同意协议')
 				});
 			}
 			uni.showLoading({
@@ -288,7 +288,7 @@ export default {
 			if (!self.protocol) {
 				this.inAnimation = true;
 				return self.$util.Tips({
-					title: '请先阅读并同意协议'
+					title: this.$t('请先阅读并同意协议')
 				});
 			}
 			uni.showLoading({
@@ -406,7 +406,7 @@ export default {
 			if (!that.protocol) {
 				this.inAnimation = true;
 				return that.$util.Tips({
-					title: '请先阅读并同意协议'
+					title: this.$t('请先阅读并同意协议')
 				});
 			}
 			if (!that.account)
@@ -430,7 +430,7 @@ export default {
 			if (!that.protocol) {
 				this.inAnimation = true;
 				return that.$util.Tips({
-					title: '请先阅读并同意协议'
+					title: this.$t('请先阅读并同意协议')
 				});
 			}
 			if (!that.account)
@@ -501,7 +501,7 @@ export default {
 			if (!that.protocol) {
 				this.inAnimation = true;
 				return that.$util.Tips({
-					title: '请先阅读并同意协议'
+					title: this.$t('请先阅读并同意协议')
 				});
 			}
 			if (!that.account)
@@ -551,7 +551,7 @@ export default {
 			if (!that.protocol) {
 				this.inAnimation = true;
 				return that.$util.Tips({
-					title: '请先阅读并同意协议'
+					title: this.$t('请先阅读并同意协议')
 				});
 			}
 			if (!that.account)
@@ -591,7 +591,7 @@ export default {
 			if (!that.protocol) {
 				this.inAnimation = true;
 				return that.$util.Tips({
-					title: '请先阅读并同意协议'
+					title: this.$t('请先阅读并同意协议')
 				});
 			}
 			if (!that.account)

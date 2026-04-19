@@ -138,7 +138,8 @@
 					if (num == 1) {
 						url = '/pages/goods_details/index?id=' + item.product_id
 					} else {
-						url = '/pages/goods/goods_list/index?productId=' + item.product_id + '&title=默认'
+						url = '/pages/goods/goods_list/index?productId=' + item.product_id +
+							'&title=' + encodeURIComponent(this.$t('默认'))
 					}
 				}
 				uni.navigateTo({

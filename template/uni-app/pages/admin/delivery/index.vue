@@ -260,40 +260,40 @@ export default {
       types: [
         {
           type: "express",
-          title: "发货",
+          title: this.$t('发货'),
           key: 1,
           show: true,
         },
         {
           type: "send",
-          title: "送货",
+          title: this.$t('送货'),
           key: 2,
           show: true,
         },
         {
           type: "fictitious",
-          title: "无需物流",
+          title: this.$t('无需物流'),
           key: 3,
           show: true,
         },
       ],
       expressType: [
         {
-          title: "手动填写",
+          title: this.$t('手动填写'),
           key: 1,
         },
         {
-          title: "电子面单打印",
+          title: this.$t('电子面单打印'),
           key: 2,
         },
       ],
       orderGoods: [
         {
-          title: "开启",
+          title: this.$t('开启'),
           key: 1,
         },
         {
-          title: "关闭",
+          title: this.$t('关闭'),
           key: 0,
         },
       ],
@@ -500,7 +500,7 @@ export default {
       if (delivery_type == 1 && this.curExpress == 1) {
         if (!delivery_id) {
           return this.$util.Tips({
-            title: "请填写快递单号",
+            title: this.$t('请填写快递单号'),
           });
         }
         save.express_record_type = that.curExpress;
@@ -515,27 +515,27 @@ export default {
       if (delivery_type == 1 && this.curExpress == 2) {
         if (!that.to_name) {
           return this.$util.Tips({
-            title: "请填写寄件人姓名",
+            title: this.$t('请填写寄件人姓名'),
           });
         }
         if (!that.to_tel) {
           return this.$util.Tips({
-            title: "请填写寄件人手机号码",
+            title: this.$t('请填写寄件人手机号码'),
           });
         }
         if (!/^1[3456789]\d{9}$/.test(that.to_tel)) {
           return this.$util.Tips({
-            title: "请填写寄件人手机号码",
+            title: this.$t('请填写寄件人手机号码'),
           });
         }
         if (!that.to_addr) {
           return this.$util.Tips({
-            title: "请填写寄件人地址",
+            title: this.$t('请填写寄件人地址'),
           });
         }
         if (that.expTemp.length == 0) {
           return this.$util.Tips({
-            title: "请选择电子面单",
+            title: this.$t('请选择电子面单'),
           });
         }
         save.express_record_type = that.curExpress;
@@ -552,7 +552,7 @@ export default {
       if (delivery_type == 2) {
         if (!that.postPeople.length) {
           return this.$util.Tips({
-            title: "请在平台后台添加送货人",
+            title: this.$t('请在平台后台添加送货人'),
           });
         }
         let obj = this.postPeople[this.postIndex];
@@ -609,7 +609,7 @@ export default {
     setSplitInfo(item) {
       if (!this.cartIds.length) {
         return this.$util.Tips({
-          title: "请选择发货商品",
+          title: this.$t('请选择发货商品'),
         });
       }
       item.cart_ids = this.cartIds;

@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import i18n from "@/utils/lang.js";
 export default {
   name: "countDown",
   props: {
@@ -33,23 +34,23 @@ export default {
     //距离开始提示文字
     tipText: {
       type: String,
-      default: "倒计时",
+      default: () => i18n.t("倒计时"),
     },
     dayText: {
       type: String,
-      default: "天",
+      default: () => i18n.t("天"),
     },
     hourText: {
       type: String,
-      default: "时",
+      default: () => i18n.t("时"),
     },
     minuteText: {
       type: String,
-      default: "分",
+      default: () => i18n.t("分"),
     },
     secondText: {
       type: String,
-      default: "秒",
+      default: () => i18n.t("秒"),
     },
     datatime: {
       type: Number,

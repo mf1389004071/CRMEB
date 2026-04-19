@@ -84,7 +84,7 @@
           ></waterfallsFlow>
           <Loading :loaded="loaded" :loading="loading"></Loading>
           <view v-if="goodList.length == 0 && loaded">
-            <emptyPage title="暂无商品，去看点别的吧～"></emptyPage>
+            <emptyPage :title="$t('暂无商品，去看点别的吧～')"></emptyPage>
           </view>
         </view>
         <couponWindow
@@ -189,7 +189,7 @@ export default {
       styleConfig: [],
       loading: false,
       loadend: false,
-      loadTitle: "下拉加载更多", //提示语
+      loadTitle: this.$t('下拉加载更多'), //提示语
       page: 1,
       limit: this.$config.LIMIT,
       numConfig: 0,
@@ -312,7 +312,7 @@ export default {
         return;
       }
       uni.showModal({
-        content: "当前使用移动网络，是否继续播放视频？",
+        content: this.$t('当前使用移动网络，是否继续播放视频？'),
         success: (res) => {
           if (res.confirm) {
             // 监听
@@ -737,7 +737,7 @@ export default {
             uni.hideLoading();
             if (this.errorNetwork) {
               uni.showToast({
-                title: "请开启网络连接",
+                title: this.$t('请开启网络连接'),
                 icon: "none",
                 duration: 2000,
               });

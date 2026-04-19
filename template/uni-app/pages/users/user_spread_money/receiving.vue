@@ -89,7 +89,7 @@ export default {
 		confrimTap() {
 			if (this.infoData.state === 'FAIL')
 				return wx.showToast({
-					title: '转账已失效,请从重新发起'
+					title: this.$t('转账已失效,请从重新发起')
 				});
 			let that = this;
 			// #ifdef MP-WEIXIN
@@ -109,7 +109,7 @@ export default {
 				});
 			} else {
 				wx.showToast({
-					title: '你的微信版本过低，请更新至最新版本。'
+					title: this.$t('你的微信版本过低，请更新至最新版本。')
 				});
 			}
 			// #endif
@@ -129,7 +129,7 @@ export default {
 					});
 				} else {
 					uni.showToast({
-						title: '你的微信版本过低，请更新至最新版本。'
+						title: this.$t('你的微信版本过低，请更新至最新版本。')
 					});
 				}
 			}

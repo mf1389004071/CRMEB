@@ -79,7 +79,7 @@
 		},
 		data() {
 			return {
-				regionDval: ['浙江省', '杭州市', '滨江区'],
+				regionDval: [this.$t('浙江省'), this.$t('杭州市'), this.$t('滨江区')],
 				id: 0, //地址id
 				userAddress: {
 					is_default: false
@@ -92,7 +92,7 @@
 				multiArray: [],
 				multiIndex: [0, 0, 0],
 				cityId: 0,
-				defaultRegion: ['广东省', '广州市', '番禺区'],
+				defaultRegion: [this.$t('广东省'), this.$t('广州市'), this.$t('番禺区')],
 				defaultRegionCode: '110101',
 			};
 		},

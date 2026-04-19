@@ -1,12 +1,12 @@
 <template>
 	<view class="pos-order-list" ref="container">
 		<!-- #ifdef MP || APP-PLUS -->
-		<NavBar titleText="售后订单" bagColor="#F5F5F5" :iconColor="iconColor" :textColor="iconColor" :isScrolling="isScrolling" showBack></NavBar>
+		<NavBar :titleText="$t('售后订单')" bagColor="#F5F5F5" :iconColor="iconColor" :textColor="iconColor" :isScrolling="isScrolling" showBack></NavBar>
 		<!-- #endif -->
 		<view class="searchCon acea-row">
 			<view class="search acea-row row-middle">
 				<text class="iconfont icon-ic_search"></text>
-				<input class="inputs" placeholder='请输入订单号/售后单号/用户ID/手机号' placeholder-class='placeholder' confirm-type='search' name="search" v-model="where.keywords"
+				<input class="inputs" :placeholder="$t('请输入订单号/售后单号/用户ID/手机号')" placeholder-class='placeholder' confirm-type='search' name="search" v-model="where.keywords"
 					@confirm="searchSubmit"></input>
 			</view>
 			<!-- <view class="btn" @click="filterShow = true">
@@ -107,7 +107,7 @@
 				</view>
 			</view>
 		</view>
-		<emptyPage v-else title="暂无订单～" src="/statics/images/noOrder.gif"></emptyPage>
+		<emptyPage v-else :title="$t('暂无订单～')" src="/statics/images/noOrder.gif"></emptyPage>
 		<Loading :loaded="loaded" :loading="loading"></Loading>
 		<PriceChange :change="change" :orderInfo="orderInfo" :isRefund="isRefund" v-on:statusChange="statusChange($event)" v-on:closechange="changeclose($event)" v-on:savePrice="savePrice"
 			:status="status"></PriceChange>
@@ -186,36 +186,36 @@ import home from '@/components/home';
 				imgHost: HTTP_REQUEST_URL,
 				dateSelected: '',
 				dateList: [{
-						label: '全部',
+						label: this.$t('全部'),
 						val: '',
 					},
 					{
-						label: '退货退款',
+						label: this.$t('退货退款'),
 						val: '2',
 					},
 					{
-						label: '仅退款',
+						label: this.$t('仅退款'),
 						val: '1',
 					},
 				],
 				payList: [{
-						label: '全部',
+						label: this.$t('全部'),
 						val: '',
 					},
 					{
-						label: '微信支付',
+						label: this.$t('微信支付'),
 						val: '1'
 					},
 					{
-						label: '支付宝支付',
+						label: this.$t('支付宝支付'),
 						val: '4'
 					},
 					{
-						label: '余额抵扣',
+						label: this.$t('余额抵扣'),
 						val: '2'
 					},
 					{
-						label: '线下支付',
+						label: this.$t('线下支付'),
 						val: '3'
 					},
 				],
@@ -348,7 +348,7 @@ import home from '@/components/home';
 				if (that.status == 0) {
 					if (!isMoney(price)) {
 						return that.$util.Tips({
-							title: '请输入正确的金额'
+							title: this.$t('请输入正确的金额')
 						});
 					}
 					data.price = price;
@@ -356,7 +356,7 @@ import home from '@/components/home';
 						res => {
 							that.change = false;
 							that.$util.Tips({
-								title: '改价成功',
+								title: this.$t('改价成功'),
 								icon: 'success'
 							})
 							that.init();
@@ -364,7 +364,7 @@ import home from '@/components/home';
 						err => {
 							that.change = false;
 							that.$util.Tips({
-								title: '改价失败',
+								title: this.$t('改价失败'),
 								icon: 'none'
 							})
 						}
@@ -384,7 +384,7 @@ import home from '@/components/home';
 						// );
 						if (!isMoney(refund_price)) {
 							return that.$util.Tips({
-								title: '请输入正确的金额'
+								title: this.$t('请输入正确的金额')
 							});
 						}
 						data.price = refund_price;
@@ -423,7 +423,7 @@ import home from '@/components/home';
 				} else {
 					if (!remark) {
 						return this.$util.Tips({
-							title: '请输入备注'
+							title: this.$t('请输入备注')
 						})
 					}
 					data.remark = remark;

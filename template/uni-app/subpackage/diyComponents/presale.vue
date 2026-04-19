@@ -76,7 +76,7 @@
                     integerSize="40"
                     decimalSize="26"
                     weight
-                    preFix="预售:"
+                    preFix="$t('预售:')"
                     preFixSize="22"
                     :textColor="priceColor"
                     :color="priceColor"
@@ -175,7 +175,7 @@
                 decimalSize="36"
                 weight
                 :color="priceColor"
-                preFix="预售价"
+                preFix="$t('预售价')"
                 preFixSize="22"
                 :textColor="priceColor"
                 v-if="checkboxInfo.includes(2)"
@@ -223,7 +223,7 @@
                 decimalSize="36"
                 weight
                 :color="priceColor"
-                preFix="预售价"
+                preFix="$t('预售价')"
                 preFixSize="22"
                 :textColor="priceColor"
                 v-if="checkboxInfo.includes(2)"
@@ -261,9 +261,9 @@ export default {
   filters: {
     filterType(val) {
       let obj = {
-        1: "未开始",
-        2: "进行中",
-        3: "已结束",
+        1: this.$t('未开始'),
+        2: this.$t('进行中'),
+        3: this.$t('已结束'),
       };
       return obj[val];
     },

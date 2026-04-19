@@ -253,10 +253,10 @@ export default {
   filters: {
     typeFilter(val) {
       let obj = {
-        0: "通用券",
-        1: "品类券",
-        2: "商品券",
-        3: "品牌券",
+        0: this.$t('通用券'),
+        1: this.$t('品类券'),
+        2: this.$t('商品券'),
+        3: this.$t('品牌券'),
       };
       return obj[val];
     },
@@ -453,7 +453,7 @@ export default {
             item.is_use = true;
             that.$set(that, "couponList", that.couponList);
             that.$util.Tips({
-              title: "领取成功",
+              title: this.$t('领取成功'),
             });
           })
           .catch(function (err) {

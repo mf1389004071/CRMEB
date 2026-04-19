@@ -102,7 +102,7 @@
                   <text
                     class="fs-22 lh-30rpx pl-12"
                     :style="{ color: priceColor }"
-                    >已抢{{ item.percent + "%" }}</text
+                    >{{ $t(`已抢`) }}{{ item.percent + "%" }}</text
                   >
                 </view>
               </view>
@@ -115,7 +115,7 @@
                     decimalSize="36"
                     weight
                     :color="priceColor"
-                    preFix="秒杀价"
+                    preFix="$t('秒杀价')"
                     preFixSize="24"
                     :textColor="priceColor"
                     v-if="checkboxInfo.includes(2)"

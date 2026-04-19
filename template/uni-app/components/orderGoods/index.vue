@@ -2,7 +2,7 @@
 	<view class="orderGoods">
 		<view class='total' v-if="is_gift"><text>
 				<text class="iconfont icon-ic_gift1 mr-8"></text>
-				<text>{{ is_gift== 1 ? '送给好友' : '我的礼物'}}</text>
+				<text>{{ is_gift== 1 ? $t('送给好友') : $t('我的礼物')}}</text>
 			</text>
 		</view>
 		<view class='total' v-else-if="is_behalf"><text>

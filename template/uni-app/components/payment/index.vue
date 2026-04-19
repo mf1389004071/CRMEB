@@ -287,7 +287,7 @@
 									success: (e) => {
 										let url = '/pages/goods/order_pay_status/index?order_id=' +
 											orderId +
-											'&msg=支付成功';
+											'&msg=' + encodeURIComponent(that.$t('支付成功'));
 										uni.showToast({
 											title: that.$t(`支付成功`)
 										})

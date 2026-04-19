@@ -28,9 +28,9 @@
 								<!-- <view>×{{item.cart_num}}</view> -->
 							</view>
 							<view class='infor line1'>
-								属性：{{item.cart_info.productInfo.attrInfo.suk || '默认'}}</view>
+								{{$t('属性')}}：{{item.cart_info.productInfo.attrInfo.suk || $t('默认')}}</view>
 							<view class="acea-row row-middle money-section">
-								实付款：<view class='money'>¥{{item.cart_info.sum_true_price}}</view>
+								{{$t('实付款')}}：<view class='money'>¥{{item.cart_info.sum_true_price}}</view>
 							</view>
 						</view>
 						<view class='carnum acea-row row-center-wrapper'>

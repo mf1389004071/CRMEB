@@ -162,7 +162,7 @@
 				signRemindSwitch: 0,
 				checkSign: 0,
 				remindStatus: false,
-				weekArr: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+				weekArr: [this.$t('周一'), this.$t('周二'), this.$t('周三'), this.$t('周四'), this.$t('周五'), this.$t('周六'), this.$t('周日')]
 			};
 		},
 		computed: mapGetters(['isLogin']),
@@ -305,7 +305,7 @@
 			 *
 			 */
 			Rp: function(n) {
-				let cnum = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+				let cnum = [this.$t('零'), this.$t('一'), this.$t('二'), this.$t('三'), this.$t('四'), this.$t('五'), this.$t('六'), this.$t('七'), this.$t('八'), this.$t('九')];
 				let s = '';
 				n = '' + n; // 数字转为字符串
 				for (let i = 0; i < n.length; i++) {

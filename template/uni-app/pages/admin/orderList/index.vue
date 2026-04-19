@@ -3,7 +3,7 @@
 		<view class="searchCon acea-row">
 			<view class="search acea-row row-middle">
 				<text class="iconfont icon-ic_search"></text>
-				<input class="inputs" placeholder='请输入用户手机号/用户昵称/订单号/商品名称' placeholder-class='placeholder' confirm-type='search' name="search" v-model="where.keyword" @confirm="searchSubmit"></input>
+				<input class="inputs" :placeholder="$t('请输入用户手机号/用户昵称/订单号/商品名称')" placeholder-class='placeholder' confirm-type='search' name="search" v-model="where.keyword" @confirm="searchSubmit"></input>
 			</view>
 			<view class="btn" @click="filterShow = true">
 				<text class="iconfont icon-a-icon_filter1x"></text>
@@ -48,8 +48,8 @@
 						<view>订单号：{{ item.order_id }}</view>
 					</view>
 					<view class="state" :class="(item.refund_status==0 && where.status != 0 && item.refund.length)?'on':''">
-						{{item.refund_status==1?'退款中':item.refund_status==2?'已退款':item.refund_status==3?'拒绝退款':item.status_name.status_name}}
-						<text v-if="item.refund_status==0 && where.status != 0 && item.refund.length">{{item.is_all_refund?'，退款中':'，部分退款中'}}</text>
+						{{item.refund_status==1?$t('退款中'):item.refund_status==2?$t('已退款'):item.refund_status==3?$t('拒绝退款'):item.status_name.status_name}}
+						<text v-if="item.refund_status==0 && where.status != 0 && item.refund.length">{{item.is_all_refund?$t('，退款中'):$t('，部分退款中')}}</text>
 					</view>
 				</view>
 				<view class="pos-order-goods">
@@ -109,7 +109,7 @@
 			</view>
 		</view>
 		<view v-else class="px-20 mt-20">
-			<emptyPage title="暂无订单～" src="/statics/images/noOrder.gif"></emptyPage>
+			<emptyPage :title="$t('暂无订单～')" src="/statics/images/noOrder.gif"></emptyPage>
 		</view>
 		<Loading :loaded="loaded" :loading="loading"></Loading>
 		<PriceChange :change="change" :orderInfo="orderInfo" :isRefund="isRefund" v-on:statusChange="statusChange($event)" v-on:closechange="changeclose($event)" v-on:savePrice="savePrice"
@@ -119,7 +119,7 @@
 			<view class="search-box">
 				<view class="search acea-row row-middle">
 					<text class="iconfont icon-ic_search"></text>
-					<input class="input" placeholder='请输入要查询的订单' placeholder-class='placeholder' confirm-type='search' name="search" v-model="where.keyword" @confirm="searchSubmit"></input>
+					<input class="input" :placeholder="$t('请输入要查询的订单')" placeholder-class='placeholder' confirm-type='search' name="search" v-model="where.keyword" @confirm="searchSubmit"></input>
 				</view>
 			</view>
 			<view class="content">
@@ -224,44 +224,44 @@
 				imgHost: HTTP_REQUEST_URL,
 				dateSelected: '',
 				dateList: [{
-						label: '全部',
+						label: this.$t('全部'),
 						val: '',
 					},
 					{
-						label: '三天内',
+						label: this.$t('三天内'),
 						val: '1',
 					},
 					{
-						label: '一个月内',
+						label: this.$t('一个月内'),
 						val: '2',
 					},
 					{
-						label: '三个月内',
+						label: this.$t('三个月内'),
 						val: '3',
 					},
 					{
-						label: '半年内',
+						label: this.$t('半年内'),
 						val: '4',
 					},
 				],
 				payList: [{
-						label: '全部',
+						label: this.$t('全部'),
 						val: '',
 					},
 					{
-						label: '微信支付',
+						label: this.$t('微信支付'),
 						val: '1'
 					},
 					{
-						label: '支付宝支付',
+						label: this.$t('支付宝支付'),
 						val: '4'
 					},
 					{
-						label: '余额支付',
+						label: this.$t('余额支付'),
 						val: '2'
 					},
 					{
-						label: '线下支付',
+						label: this.$t('线下支付'),
 						val: '3'
 					},
 				],
@@ -302,8 +302,8 @@
 		methods: {
 			verify(item) {
 				uni.showModal({
-					title: '操作提示',
-					content: '是否确认核销该订单？',
+					title: this.$t('操作提示'),
+					content: this.$t('是否确认核销该订单？'),
 					success: (res) => {
 						if (res.confirm) {
 							orderVerific(item.verify_code, 1, 1)
@@ -432,7 +432,7 @@
 				if (that.status == 0) {
 					if (!isMoney(price)) {
 						return that.$util.Tips({
-							title: '请输入正确的金额'
+							title: this.$t('请输入正确的金额')
 						});
 					}
 					data.price = price;
@@ -440,7 +440,7 @@
 						res => {
 							that.change = false;
 							that.$util.Tips({
-								title: '改价成功',
+								title: this.$t('改价成功'),
 								icon: 'success'
 							})
 							that.init();
@@ -448,7 +448,7 @@
 						err => {
 							that.change = false;
 							that.$util.Tips({
-								title: '改价失败',
+								title: this.$t('改价失败'),
 								icon: 'none'
 							})
 						}
@@ -457,7 +457,7 @@
 					if (this.isRefund) {
 						if (!isMoney(refund_price)) {
 							return that.$util.Tips({
-								title: '请输入正确的金额'
+								title: this.$t('请输入正确的金额')
 							});
 						}
 						data.price = refund_price;
@@ -502,7 +502,7 @@
 				} else {
 					if (!remark) {
 						return this.$util.Tips({
-							title: '请输入备注'
+							title: this.$t('请输入备注')
 						})
 					}
 					data.remark = remark;

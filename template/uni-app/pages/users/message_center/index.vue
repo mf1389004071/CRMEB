@@ -101,24 +101,24 @@
 				finished: false,
 				tabsList: [{
 					key: 0,
-					name: '站内消息'
+					name: this.$t('站内消息')
 				}, {
 					key: 1,
-					name: '客服消息'
+					name: this.$t('客服消息')
 				}],
 				startData: {
 					clientX: 0,
 					clientY: 0
 				},
 				actions: [{
-						name: '删除',
+						name: this.$t('删除'),
 						color: '#fff',
 						fontsize: 28, //单位rpx
 						width: 70, //单位px
 						background: '#E6A23C'
 					},
 					{
-						name: '已读',
+						name: this.$t('已读'),
 						color: '#fff',
 						fontsize: 28, //单位rpx
 						width: 70, //单位px
@@ -126,7 +126,7 @@
 					},
 				],
 				actionsIsLook: [{
-					name: '删除',
+					name: this.$t('删除'),
 					color: '#fff',
 					fontsize: 28, //单位rpx
 					width: 70, //单位px
@@ -289,7 +289,7 @@
 				}
 				this.loading = true;
 				uni.showLoading({
-					title: '加载中'
+					title: this.$t('加载中')
 				});
 				serviceRecord({
 						page: this.page,

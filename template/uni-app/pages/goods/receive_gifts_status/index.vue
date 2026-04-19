@@ -6,7 +6,7 @@
 				<image v-else class="goods-img" src="../static/receive_gifts_success.png" mode=""></image>
 			</view>
 			<view class="title">
-				{{ $t(status ? '礼物领取成功' : '领取失败，礼物已失效') }}
+				{{ $t(status ? $t('礼物领取成功') : $t('领取失败，礼物已失效')) }}
 			</view>
 			<view v-if="status" class="btn" @click="goPage(0)">
 				{{ $t('查看礼物详情') }}

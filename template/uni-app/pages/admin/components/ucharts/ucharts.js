@@ -1,3 +1,4 @@
+import i18n from "@/utils/lang.js";
 'use strict';
 
 var config = {
@@ -610,19 +611,19 @@ function getCandleToolTipData(series, seriesData, calPoints, index, categories, 
 			}
 		}
 		let text1 = {
-			text: '开盘：' + item.data[0],
+			text: i18n.t('开盘：') + item.data[0],
 			color: color[0]
 		};
 		let text2 = {
-			text: '收盘：' + item.data[1],
+			text: i18n.t('收盘：') + item.data[1],
 			color: color[1]
 		};
 		let text3 = {
-			text: '最低：' + item.data[2],
+			text: i18n.t('最低：') + item.data[2],
 			color: color[2]
 		};
 		let text4 = {
-			text: '最高：' + item.data[3],
+			text: i18n.t('最高：') + item.data[3],
 			color: color[3]
 		};
 		textList.push(text1, text2, text3, text4);

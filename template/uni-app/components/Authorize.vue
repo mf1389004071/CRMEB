@@ -145,7 +145,7 @@ export default {
 				});
 		},
 		setUserInfo(e) {
-			uni.showLoading({ title: '正在登录中' });
+			uni.showLoading({ title: this.$t('正在登录中') });
 			Routine.getCode()
 				.then(code => {
 					this.getUserPhoneNumber(e.detail.encryptedData, e.detail.iv, code);

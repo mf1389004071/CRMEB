@@ -2,7 +2,7 @@
   <view>
     <!-- #ifdef MP || APP -->
     <NavBar
-      titleText="订单详情"
+      :titleText="$t('订单详情')"
       :iconColor="iconColor"
       :textColor="iconColor"
       :isScrolling="isScrolling"
@@ -381,7 +381,7 @@ export default {
     showMaoLocation: function (latitude, longitude, name, detailed_address) {
       if (!latitude || !longitude)
         return this.$util.Tips({
-          title: "缺少经纬度信息无法查看地图！",
+          title: this.$t('缺少经纬度信息无法查看地图！'),
         });
       uni.openLocation({
         latitude: parseFloat(latitude),

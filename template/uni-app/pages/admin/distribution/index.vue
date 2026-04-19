@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- #ifdef MP || APP -->
-		<NavBar titleText="配送员" :iconColor="iconColor" :textColor="iconColor" :isScrolling="isScrolling" showBack></NavBar>
+		<NavBar :titleText="$t('配送员')" :iconColor="iconColor" :textColor="iconColor" :isScrolling="isScrolling" showBack></NavBar>
 		<!-- #endif -->
 		<view class="headerBg"></view>
 		<view class="order-index">
@@ -96,7 +96,7 @@
 					<view class="item" v-for="(item,index) in orderlist" :key="index" @click="jump(item.id)">
 						<view class="item-top acea-row row-between row-middle">
 							<view class="">订单号：{{ item.order_id }}</view>
-							<view style="color: #FF7E00;">{{type == 1?'待配送':'已配送'}}</view>
+							<view style="color: #FF7E00;">{{type == 1?$t('待配送'):$t('已配送')}}</view>
 						</view>
 						<view class="item-center acea-row">
 							<scroll-view v-if="item.cart_id.length > 1" class="goods-section scroll-view" scroll-x="true">
@@ -136,7 +136,7 @@
 							<view>共{{ item.total_num }}件商品，订单实付：<span class="money">￥{{ item.pay_price }}</span></view>
 						</view> -->
 					</view>
-					<emptyPage v-if="!orderlist.length && !loading" title="暂无数据～" src="/statics/images/noOrder.gif"></emptyPage>
+					<emptyPage v-if="!orderlist.length && !loading" :title="$t('暂无数据～')" src="/statics/images/noOrder.gif"></emptyPage>
 				</view>
 				<Loading :loaded="loaded" :loading="loading"></Loading>
 			</view>
@@ -237,7 +237,7 @@
 					this.arrays = res.data.store_info.map(a => a.name);
 					let obj = {
 						id: 0,
-						name: '全部'
+						name: this.$t('全部')
 					}
 					this.array.unshift(obj);
 					this.arrays.unshift(obj.name);
@@ -332,13 +332,13 @@
 				let self = this
 				let ref = /^[0-9]*$/;
 				if (!this.verify_code) return self.$util.Tips({
-					title: '请输入核销码'
+					title: this.$t('请输入核销码')
 				});
 				if (!ref.test(this.verify_code)) return self.$util.Tips({
-					title: '请输入正确的核销码'
+					title: this.$t('请输入正确的核销码')
 				});
 				self.$util.Tips({
-					title: '查询中'
+					title: this.$t('查询中')
 				});
 				setTimeout(() => {
 					orderWriteoffInfo(2, {

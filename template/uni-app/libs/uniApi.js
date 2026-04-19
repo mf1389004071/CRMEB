@@ -1,3 +1,4 @@
+import i18n from "@/utils/lang.js";
 export function navigateTo(type, url, opt) {
 	let toUrl = url;
 	let api = 'navigateTo';
@@ -55,7 +56,7 @@ export function clearStorage() {
 	try {
 		uni.clearStorageSync();
 	} catch (e) {
-		throw new Error('处理失败');
+		throw new Error(i18n.t('处理失败'));
 	}
 }
 export function Toast(title, icon = 'none', obj = {}, duration = 800) {
@@ -69,7 +70,7 @@ export function Toast(title, icon = 'none', obj = {}, duration = 800) {
 	};
 	uni.showToast(toastData);
 }
-export function Loading(title = '正在加载...', obj = {}) {
+export function Loading(title = i18n.t('正在加载...'), obj = {}) {
 	uni.showLoading({
 		title: title,
 		mask: true,
@@ -80,16 +81,16 @@ export function hideLoading() {
 	try {
 		uni.hideLoading();
 	} catch (e) {
-		throw new Error('处理失败');
+		throw new Error(i18n.t('处理失败'));
 	}
 }
-export function Modal(title = '提示', content = '这是一个模态弹窗!', obj = {
+export function Modal(title = i18n.t('提示'), content = i18n.t('这是一个模态弹窗!'), obj = {
 	showCancel: true,
-	cancelText: '取消',
-	confirmText: '确定'
+	cancelText: i18n.t('取消'),
+	confirmText: i18n.t('确定')
 }) {
-	obj.cancelText = '确定';
-	obj.confirmText = '取消';
+	obj.cancelText = i18n.t('确定');
+	obj.confirmText = i18n.t('取消');
 	return new Promise((reslove, reject) => {
 		uni.showModal({
 			title: title,

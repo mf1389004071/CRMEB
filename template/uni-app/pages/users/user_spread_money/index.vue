@@ -32,7 +32,7 @@
 													class="extract-tag"
 													:class="{ 'bg-success': child.extract_status == 1, 'bg-ing': child.extract_status == 0, 'bg-fail': child.extract_status == -1 }"
 												>
-													{{ child.extract_status == 1 ? '成功' : child.extract_status == 0 ? '提现中' : '失败' }}
+													{{ child.extract_status == 1 ? $t('成功') : child.extract_status == 0 ? $t('提现中') : $t('失败') }}
 												</view>
 												<view v-if="type == 2 && child.is_frozen == 1" class="extract-tag bg-ing">冻结中</view>
 												{{ type == 1 ? $t(child.mark) : $t(child.title) }}
@@ -142,23 +142,23 @@ export default {
 		this.recordList = [];
 		if (type == 1) {
 			uni.setNavigationBarTitle({
-				title: '提现记录'
+				title: this.$t('提现记录')
 			});
-			this.name = '提现总额';
+			this.name = this.$t('提现总额');
 			this.recordType = 4;
 			this.getRecordList();
 			this.getRecordListCount();
 		} else if (type == 2) {
 			uni.setNavigationBarTitle({
-				title: '佣金记录'
+				title: this.$t('佣金记录')
 			});
-			this.name = '佣金明细';
+			this.name = this.$t('佣金明细');
 			this.recordType = 3;
 			this.getRecordList();
 			this.getRecordListCount();
 		} else {
 			uni.showToast({
-				title: '参数错误',
+				title: this.$t('参数错误'),
 				icon: 'none',
 				duration: 1000,
 				mask: true,

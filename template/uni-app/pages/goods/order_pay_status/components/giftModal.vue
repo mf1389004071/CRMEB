@@ -170,7 +170,7 @@ export default {
 
             const avatarSize = 22; // 头像尺寸
             const nickname = name; // 昵称
-            const title = "赠送给好友一份礼物"; // 标题文字
+            const title = this.$t('赠送给好友一份礼物'); // 标题文字
             const titleFontSize = 14; // 标题字号
             const nicknameFontSize = 14; // 昵称字号
             const padding = 10; // 元素之间的间距

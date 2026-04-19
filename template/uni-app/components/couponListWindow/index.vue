@@ -102,7 +102,7 @@
 						setCouponReceive(id).then(res => {
 							that.$emit('ChangCouponsUseState', index);
 							that.$util.Tips({
-								title: "领取成功"
+								title: this.$t('领取成功')
 							});
 							// that.$emit('ChangCoupons', list[index]);
 						}).catch(err => {

@@ -483,7 +483,7 @@ export default {
 					if (res.data.status === 'PAY_DEFICIENCY') {
 						return uni.showToast({
 							icon:'none',
-							title: this.$t(`${res.msg}`)
+							title: res.msg || this.$t(`提示`)
 						});
 					}
 					if (parseFloat(this.svip.pre_price) > 0) {

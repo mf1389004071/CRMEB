@@ -836,8 +836,8 @@ export default {
         status = true;
         // 弹出确认框
         uni.showModal({
-          title: "提示",
-          content: "确定删除吗？",
+          title: this.$t('提示'),
+          content: this.$t('确定删除吗？'),
           success: (res) => {
             if (res.confirm) {
               this.cartCount = this.cartCount - item.cart_num;

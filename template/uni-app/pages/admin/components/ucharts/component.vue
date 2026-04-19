@@ -115,7 +115,7 @@
 						min: 10,
 						max: 180,
 						format: (val) => {
-							return val.toFixed(0) + '元'
+							return val.toFixed(0) + this.$t('元')
 						}
 					},
 					width: this.cWidth * this.pixelRatio,

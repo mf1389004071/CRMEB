@@ -97,7 +97,7 @@
                       decimalSize="36"
                       weight
                       :color="priceColor"
-                      preFix="拼团价"
+                      preFix="$t('拼团价')"
                       preFixSize="24"
                       :textColor="priceColor"
                       v-if="checkboxInfo.includes(2)"

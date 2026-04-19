@@ -839,7 +839,7 @@ export default {
     getGoodsDetails() {
       let that = this;
       uni.showLoading({
-        title: "加载中",
+        title: this.$t('加载中'),
         mask: true,
       });
       getProductDetail(that.id)

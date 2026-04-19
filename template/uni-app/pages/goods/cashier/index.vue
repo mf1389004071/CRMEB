@@ -149,7 +149,7 @@
 						title: this.$t(`取消支付`)
 					}, {
 						tab: 5,
-						url: `/pages/goods/order_pay_status/index?order_id=${this.orderId}&msg=${this.$t(`取消支付`)}&type=3&totalPrice=${this.payPriceShow}&status=2`
+						url: `/pages/goods/order_pay_status/index?order_id=${this.orderId}&msg=${encodeURIComponent(this.$t(`取消支付`))}&type=3&totalPrice=${this.payPriceShow}&status=2`
 					});
 				} else {
 					if (extraData.code == 'success') {
@@ -168,12 +168,12 @@
 							title: this.$t(`取消支付`)
 						}, {
 							tab: 5,
-							url: `/pages/goods/order_pay_status/index?order_id=${this.orderId}&msg=${this.$t(`取消支付`)}&type=3&totalPrice=${this.payPriceShow}&status=2`
+							url: `/pages/goods/order_pay_status/index?order_id=${this.orderId}&msg=${encodeURIComponent(this.$t(`取消支付`))}&type=3&totalPrice=${this.payPriceShow}&status=2`
 						});
 					} else {
 						// "支付失败：" + extraData.errmsg;
 						uni.reLaunch({
-							url: `/pages/goods/order_pay_status/index?order_id=${this.orderId}&msg=${this.$t(`支付失败`)}&totalPrice=${this.payPriceShow}`
+							url: `/pages/goods/order_pay_status/index?order_id=${this.orderId}&msg=${encodeURIComponent(this.$t(`支付失败`))}&totalPrice=${this.payPriceShow}`
 						})
 					}
 				}
@@ -259,7 +259,8 @@
 			},
 			waitPay() {
 				uni.reLaunch({
-					url: '/pages/goods/order_pay_status/index?order_id=' + this.orderId + '&msg=取消支付&type=3' +
+					url: '/pages/goods/order_pay_status/index?order_id=' + this.orderId +
+						'&msg=' + encodeURIComponent(this.$t('取消支付')) + '&type=3' +
 						'&status=2&totalPrice=' + this.payPriceShow
 				})
 			},
@@ -460,7 +461,7 @@
 							}).catch(res => {
 								if (!this.$wechat.isWeixin()) {
 									uni.redirectTo({
-										url: goPages + '&msg=' + that.$t(`支付失败`) +
+										url: goPages + '&msg=' + encodeURIComponent(that.$t(`支付失败`)) +
 											'&status=2'
 										// '&msg=支付失败&status=2'
 									})

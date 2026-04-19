@@ -20,7 +20,7 @@
         <text class="iconfont icon-ic_search"></text>
         <input
           class="inputs"
-          placeholder="请输入用户昵称/ID"
+          :placeholder="$t('请输入用户昵称/ID')"
           placeholder-class="placeholder"
           confirm-type="search"
           name="search"
@@ -112,7 +112,7 @@
     </view>
     <block v-if="userLists.length == 0 && !loading">
       <emptyPage
-        title="暂无用户信息～"
+        :title="$t('暂无用户信息～')"
         src="/statics/images/empty-box.gif"
       ></emptyPage>
     </block>
@@ -253,22 +253,22 @@ export default {
       getHeight: this.$util.getWXStatusHeight(),
       editList: [
         {
-          name: "修改余额",
+          name: this.$t('修改余额'),
         },
         {
-          name: "修改积分",
+          name: this.$t('修改积分'),
         },
         {
-          name: "修改等级",
+          name: this.$t('修改等级'),
         },
         {
-          name: "赠送会员",
+          name: this.$t('赠送会员'),
         },
         {
-          name: "赠送优惠券",
+          name: this.$t('赠送优惠券'),
         },
         {
-          name: "修改分组",
+          name: this.$t('修改分组'),
         },
       ],
       administer: 0,
@@ -276,7 +276,7 @@ export default {
       userLists: [],
       visible: false,
       visibleLable: false, //标签是否显示
-      loadTitle: "加载更多",
+      loadTitle: this.$t('加载更多'),
       loading: false,
       loadend: false,
       limit: 20,
@@ -324,7 +324,7 @@ export default {
     sendCoupon() {
       if (!this.getIds().length) {
         this.$util.Tips({
-          title: "请选择商品",
+          title: this.$t('请选择商品'),
         });
         return;
       }
@@ -384,7 +384,7 @@ export default {
     bindPickerChange(e) {
       if (!this.getIds().length) {
         this.$util.Tips({
-          title: "请选择用户",
+          title: this.$t('请选择用户'),
         });
         return;
       }
@@ -417,7 +417,7 @@ export default {
     editLabels() {
       if (!this.getIds().length) {
         this.$util.Tips({
-          title: "请选择商品",
+          title: this.$t('请选择商品'),
         });
         return;
       }
@@ -470,13 +470,13 @@ export default {
           that.userLists = that.$util.SplitArray(userLists, that.userLists);
           that.$set(that, "userLists", that.userLists);
           that.loadend = loadend;
-          that.loadTitle = loadend ? "没有更多内容啦~" : "加载更多";
+          that.loadTitle = loadend ? this.$t('没有更多内容啦~') : this.$t('加载更多');
           that.page = that.page + 1;
           that.loading = false;
         })
         .catch((err) => {
           that.loading = false;
-          that.loadTitle = "加载更多";
+          that.loadTitle = this.$t('加载更多');
         });
     },
     editInfo(index) {
@@ -551,7 +551,7 @@ export default {
       if (value.length) {
         if (this.userLists.length > 100) {
           this.$util.Tips({
-            title: "每次最多只提交100条数据",
+            title: this.$t('每次最多只提交100条数据'),
           });
         }
         this.isAllSelect = true;

@@ -41,7 +41,7 @@
               :disabled="administer"
               min="0"
               v-model="item.price"
-              placeholder="请填写售价"
+              :placeholder="$t('请填写售价')"
               placeholder-class="placeholder"
             />
           </view>
@@ -51,7 +51,7 @@
               type="digit"
               :disabled="administer"
               v-model="item.cost"
-              placeholder="请填写成本价"
+              :placeholder="$t('请填写成本价')"
               placeholder-class="placeholder"
             />
           </view>
@@ -61,7 +61,7 @@
               type="digit"
               :disabled="administer"
               v-model="item.ot_price"
-              placeholder="请填写原价"
+              :placeholder="$t('请填写原价')"
               placeholder-class="placeholder"
             />
           </view>
@@ -71,7 +71,7 @@
               type="number"
               :disabled="administer"
               v-model="item.stock"
-              placeholder="请填写库存"
+              :placeholder="$t('请填写库存')"
               placeholder-class="placeholder"
             />
           </view>
@@ -81,23 +81,23 @@
     <view class="footer on acea-row row-between-wrapper" v-if="administer">
       <checkbox-group @change="checkboxAllChange">
         <checkbox value="all" :checked="isAllSelect" />
-        <text class="checkAll">全选</text>
+        <text class="checkAll">{{$t('全选')}}</text>
       </checkbox-group>
       <view class="acea-row row-middle">
         <view class="bnt acea-row row-center-wrapper" @click="manageTap"
-          >取消</view
+          >{{$t('取消')}}</view
         >
         <view class="bnt on acea-row row-center-wrapper" @click="batchEdit"
-          >批量修改</view
+          >{{$t('批量修改')}}</view
         >
       </view>
     </view>
     <view class="footer acea-row row-between-wrapper" v-else>
       <view class="bnt acea-row row-center-wrapper" @click="manageTap"
-        >批量操作</view
+        >{{$t('批量操作')}}</view
       >
       <view class="bnt on acea-row row-center-wrapper" @click="define"
-        >保存</view
+        >{{$t('保存')}}</view
       >
     </view>
     <edit-price
@@ -149,7 +149,7 @@ export default {
     batchEdit() {
       if (!this.getIds().length) {
         this.$util.Tips({
-          title: "请选择商品规格",
+          title: this.$t('请选择商品规格')
         });
         return;
       }

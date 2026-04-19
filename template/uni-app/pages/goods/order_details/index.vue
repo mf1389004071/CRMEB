@@ -446,7 +446,7 @@
 				</view>
 				<view class="actualPay acea-row row-right" v-else>
 					<view class="pay-people">
-						<image :src="orderInfo.help_info.pay_avatar" mode="代付头像"></image>
+						<image :src="orderInfo.help_info.pay_avatar" :mode="$t('代付头像')"></image>
 						<view class="pay-nickname">
 							{{ orderInfo.help_info.pay_nickname || '' }}
 						</view>
@@ -736,7 +736,7 @@ export default {
 					} else {
 						// "支付失败：" + extraData.errmsg;
 						this.$util.Tips({
-							title: this.$t(`支付失败：${extraData.errmsg}`)
+							title: this.$t(`支付失败：`) + (extraData.errmsg || '')
 						});
 					}
 				}
@@ -1008,7 +1008,7 @@ export default {
 						let giftStatus = res.data.gift_uid === this.$store.state.app.uid;
 						that.$set(that, 'is_gift', giftStatus ? 2 : 1);
 						uni.setNavigationBarTitle({
-							title: '礼物详情'
+							title: this.$t('礼物详情')
 						});
 						this.giftData = {
 							avatar: res.data.avatar,

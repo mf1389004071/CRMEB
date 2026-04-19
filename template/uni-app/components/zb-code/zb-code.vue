@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import i18n from "@/utils/lang.js";
 import QRCode from "./qrcode.js"
 let qrcode
 export default {
@@ -78,7 +79,7 @@ export default {
 		},
 		loadingText: {
 			type: String,
-			default: '二维码生成中'
+			default: () => i18n.t('二维码生成中')
 		},
 	},
 	data() {
@@ -110,7 +111,7 @@ export default {
 				});
 			} else {
 				uni.showToast({
-					title: '二维码内容不能为空',
+					title: this.$t('二维码内容不能为空'),
 					icon: 'none',
 					duration: 2000
 				});
@@ -127,7 +128,7 @@ export default {
 					filePath: that.result,
 					success: function () {
 						uni.showToast({
-							title: '二维码保存成功',
+							title: this.$t('二维码保存成功'),
 							icon: 'success',
 							duration: 2000
 						});

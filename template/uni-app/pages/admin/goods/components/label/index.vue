@@ -15,7 +15,7 @@
           class="sysTitle acea-row row-center-wrapper"
           :style="{ height: getHeight.barHeight + 'px' }"
         >
-          <view>添加标签</view>
+          <view>{{$t('添加标签')}}</view>
         </view>
       </view>
       <view
@@ -34,7 +34,7 @@
       >
         <!-- #endif -->
         <!-- #ifndef MP -->
-        <view class="header">添加标签</view>
+        <view class="header">{{$t('添加标签')}}</view>
         <view class="list" v-if="isStore">
           <!-- #endif -->
           <scroll-view scroll-y="true" style="height: 100%">
@@ -61,14 +61,14 @@
         </view>
         <view class="empty-box" v-else>
           <emptyPage
-            title="暂无标签～"
+            :title="$t('暂无标签～')"
             src="/statics/images/empty-box.png"
           ></emptyPage>
         </view>
         <view class="footer acea-row row-between-wrapper">
-          <view class="bnt acea-row row-center-wrapper" @tap="reset">重置</view>
+          <view class="bnt acea-row row-center-wrapper" @tap="reset">{{$t('重置')}}</view>
           <view class="bnt on acea-row row-center-wrapper" @tap="define"
-            >确定</view
+            >{{$t('确定')}}</view
           >
         </view>
       </view>

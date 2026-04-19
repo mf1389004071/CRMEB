@@ -20,7 +20,7 @@
         <text class="iconfont icon-ic_search"></text>
         <input
           class="inputs"
-          placeholder="请输入商品名称/ID"
+          :placeholder="$t('请输入商品名称/ID')"
           placeholder-class="placeholder"
           confirm-type="search"
           name="search"
@@ -28,7 +28,7 @@
           @confirm="searchSubmit"
         />
       </view>
-      <view @click="manageTap" v-if="administer">取消</view>
+      <view @click="manageTap" v-if="administer">{{$t('取消')}}</view>
       <view class="edit acea-row row-center-wrapper" @click="manageTap" v-else>
         <text class="iconfont icon-ic_batch"></text>
       </view>
@@ -41,8 +41,8 @@
         :key="index"
         @click="navTap(item, index)"
       >
-        {{ item.name }}
-        <image src="../static/adorn.png" v-if="current == index" />
+        {{ item.name }}{{ $t('名称') }}
+        <image :src="$t('装饰')" v-if="current == index" />
       </view>
     </view>
     <view class="list" v-if="goodsList.length">
@@ -81,8 +81,8 @@
               <view class="text">
                 <view class="name line1">{{ item.store_name }}</view>
                 <view class="info">
-                  <text>销量: {{ item.sales }}</text>
-                  <text>库存: {{ item.stock }}</text>
+                  <text>{{$t('销量')}}: {{ item.sales }}</text>
+                  <text>{{$t('库存')}}: {{ item.stock }}</text>
                 </view>
                 <baseMoney
                   :money="item.price"
@@ -98,12 +98,12 @@
                 class="bnt acea-row row-center-wrapper"
                 :class="item.is_show ? '' : 'up'"
                 @click="setShow(item, 0)"
-                >{{ item.is_show ? "下架" : "上架" }}</view
+                >{{ item.is_show ? $t('下架') : $t('上架') }}</view
               >
               <view
                 class="bnt on acea-row row-center-wrapper"
                 @tap="openDrawer(item)"
-                >编辑</view
+                >{{$t('编辑')}}</view
               >
             </view>
           </view>
@@ -112,7 +112,7 @@
     </view>
     <view class="empty-box" v-if="goodsList.length == 0 && !loading">
       <emptyPage
-        title="暂无商品～"
+        :title="$t('暂无商品～')"
         src="/statics/images/empty-box.gif"
       ></emptyPage>
     </view>
@@ -128,26 +128,26 @@
           activeBackgroundColor="#2A7EFB"
           activeBorderColor="#2A7EFB"
         />
-        <text class="checkAll">全选({{ getIds().length }})</text>
+        <text class="checkAll">{{$t('全选')}}({{ getIds().length }})</text>
       </checkbox-group>
       <view class="acea-row row-middle">
         <view class="bnt acea-row row-center-wrapper" @click="editLabels"
-          >添加标签</view
+          >{{$t('添加标签')}}</view
         >
         <view class="bnt acea-row row-center-wrapper" @click="editClass"
-          >修改分类</view
+          >{{$t('修改分类')}}</view
         >
         <view
           class="bnt acea-row row-center-wrapper"
           v-if="type == 1"
           @click="setShow('', 1, 0)"
-          >下架</view
+          >{{$t('下架')}}</view
         >
         <view
           class="bnt acea-row row-center-wrapper"
           v-else-if="type == 2"
           @click="setShow('', 1, 1)"
-          >上架</view
+          >{{$t('上架')}}</view
         >
       </view>
     </view>
@@ -216,35 +216,35 @@ export default {
       getHeight: this.$util.getWXStatusHeight(),
       navList: [
         {
-          name: "全部",
+          name: this.$t('全部'),
           type: "",
         },
         {
-          name: "出售中",
+          name: this.$t('出售中'),
           type: 1,
         },
         {
-          name: "仓库中",
+          name: this.$t('仓库中'),
           type: 2,
         },
         {
-          name: "已售罄",
+          name: this.$t('已售罄'),
           type: 4,
         },
         {
-          name: "库存警告",
+          name: this.$t('库存警告'),
           type: 5,
         },
       ],
       editList: [
         {
-          name: "修改价格/库存",
+          name: this.$t('修改价格/库存'),
         },
         {
-          name: "商品分类",
+          name: this.$t('商品分类'),
         },
         {
-          name: "商品标签",
+          name: this.$t('商品标签'),
         },
       ],
       current: 0,
@@ -255,7 +255,7 @@ export default {
       visible: false,
       visiblePrice: false, //价格库存是否显示
       visibleLable: false, //标签是否显示
-      loadTitle: "加载更多",
+      loadTitle: this.$t('加载更多'),
       loading: false,
       loadend: false,
       limit: 20,
@@ -282,7 +282,7 @@ export default {
     goDetail(item) {
       if (!item.is_show) {
         this.$util.Tips({
-          title: "商品未上架",
+          title: this.$t('商品未上架'),
         });
         return;
       }
@@ -298,7 +298,7 @@ export default {
     editClass() {
       if (!this.getIds().length) {
         this.$util.Tips({
-          title: "请选择商品",
+          title: this.$t('请选择商品'),
         });
         return;
       }
@@ -321,7 +321,7 @@ export default {
     editLabels() {
       if (!this.getIds().length) {
         this.$util.Tips({
-          title: "请选择商品",
+          title: this.$t('请选择商品'),
         });
         return;
       }
@@ -344,7 +344,7 @@ export default {
       if (num) {
         if (!this.getIds().length) {
           this.$util.Tips({
-            title: "请选择商品",
+            title: this.$t('请选择商品'),
           });
           return;
         }
@@ -405,13 +405,13 @@ export default {
           that.goodsList = that.$util.SplitArray(goodsList, that.goodsList);
           that.$set(that, "goodsList", that.goodsList);
           that.loadend = loadend;
-          that.loadTitle = loadend ? "没有更多内容啦~" : "加载更多";
+          that.loadTitle = loadend ? this.$t('没有更多内容啦~') : this.$t('加载更多');
           that.page = that.page + 1;
           that.loading = false;
         })
         .catch((err) => {
           that.loading = false;
-          that.loadTitle = "加载更多";
+          that.loadTitle = this.$t('加载更多');
         });
     },
     editInfo(index) {
@@ -492,7 +492,7 @@ export default {
       if (value.length) {
         if (this.goodsList.length > 100) {
           this.$util.Tips({
-            title: "每次最多只提交100条数据",
+            title: this.$t('每次最多只提交100条数据'),
           });
         }
         this.isAllSelect = true;

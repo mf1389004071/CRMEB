@@ -198,13 +198,13 @@
 				} else {
 					plus.runtime.openURL(vm.update_info.url, function() {
 						//调用外部浏览器打开更新地址
-						plus.nativeUI.toast("打开错误");
+						plus.nativeUI.toast(this.$t('打开错误'));
 					});
 				}
 			},
 			// 下载升级资源包
 			download_wgt() {
-				plus.nativeUI.showWaiting("下载更新文件..."); //下载更新文件...
+				plus.nativeUI.showWaiting(this.$t('下载更新文件...')); //下载更新文件...
 				let options = {
 					method: "get",
 				};
@@ -231,7 +231,7 @@
 						}
 					} else {
 						plus.nativeUI.closeWaiting();
-						plus.nativeUI.toast("下载出错");
+						plus.nativeUI.toast(this.$t('下载出错'));
 						vm.downing = false;
 						vm.downstatus = 0;
 					}
@@ -241,13 +241,13 @@
 
 			// 安装文件
 			installWgt(path) {
-				plus.nativeUI.showWaiting("安装更新文件..."); //安装更新文件...
+				plus.nativeUI.showWaiting(this.$t('安装更新文件...')); //安装更新文件...
 				plus.runtime.install(
 					path, {},
 					function() {
 						plus.nativeUI.closeWaiting();
 						// 应用资源下载完成！
-						plus.nativeUI.alert("应用资源下载完成！", function() {
+						plus.nativeUI.alert(this.$t('应用资源下载完成！'), function() {
 							plus.runtime.restart();
 						});
 					},
@@ -255,7 +255,7 @@
 					function(e) {
 						plus.nativeUI.closeWaiting();
 						// 安装更新文件失败
-						plus.nativeUI.alert("安装更新文件失败[" + e.code + "]：" + e.message);
+						plus.nativeUI.alert(this.$t('安装更新文件失败[') + e.code + "]：" + e.message);
 					}
 				);
 			},

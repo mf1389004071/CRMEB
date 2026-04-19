@@ -524,13 +524,13 @@ export default {
           let tempArr = that.$util.SplitArray(list, that.tempArr);
           that.$set(that, "tempArr", tempArr.slice(0, this.numConfig));
           that.loadend = loadend;
-          that.loadTitle = loadend ? "没有更多内容啦~" : "加载更多";
+          that.loadTitle = loadend ? this.$t('没有更多内容啦~') : this.$t('加载更多');
           that.page = that.page + 1;
           that.loading = false;
         })
         .catch((res) => {
           that.loading = false;
-          that.loadTitle = "加载更多";
+          that.loadTitle = this.$t('加载更多');
         });
     },
     // 首发新品切换

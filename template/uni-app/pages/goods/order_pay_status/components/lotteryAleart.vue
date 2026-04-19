@@ -37,10 +37,10 @@
 			aleartType(type) {
 				if (type === 2) {
 					this.aleartData = {
-						title: '中奖记录',
+						title: this.$t('中奖记录'),
 						img: this.alData.image,
 						msg: this.alData.prompt,
-						btn: '我知道了',
+						btn: this.$t('我知道了'),
 						type: this.alData.type
 					}
 				}

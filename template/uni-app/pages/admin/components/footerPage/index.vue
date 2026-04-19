@@ -33,25 +33,25 @@
 						pagePath: "/pages/admin/manage/index",
 						iconPath: require("../../static/footer1-1.png"),
 						selectedIconPath: require("../../static/footer1-2.png"),
-						text: "工作台"
+						text: this.$t('工作台')
 					},
 					{
 						pagePath: "/pages/admin/goods/index",
 						iconPath: require("../../static/footer2-1.png"),
 						selectedIconPath: require("../../static/footer2-2.png"),
-						text: "商品"
+						text: this.$t('商品')
 					},
 					{
 						pagePath: "/pages/admin/orderList/index",
 						iconPath: require("../../static/footer3-1.png"),
 						selectedIconPath: require("../../static/footer3-2.png"),
-						text: "订单"
+						text: this.$t('订单')
 					},
 					{
 						pagePath: "/pages/admin/user/list",
 						iconPath: require("../../static/footer4-1.png"),
 						selectedIconPath: require("../../static/footer4-2.png"),
-						text: "用户"
+						text: this.$t('用户')
 					}
 				]
 			}

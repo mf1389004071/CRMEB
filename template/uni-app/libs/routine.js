@@ -7,6 +7,7 @@
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
+import i18n from "@/utils/lang.js";
 
 import store from '../store';
 import {
@@ -104,7 +105,7 @@ class Routine {
 		return new Promise((resolve, reject) => {
 			uni.getUserProfile({
 				lang: 'zh_CN',
-				desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+				desc: i18n.t('用于完善会员资料'), // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
 				success(user) {
 					if (code) user.code = code;
 					resolve({

@@ -99,13 +99,13 @@
 				pageType: 1, // 0 登录 1 绑定手机
 				phone: '',
 				captcha: '',
-				text: '获取验证码',
+				text: this.$t('获取验证码'),
 				isShow: false,
 				protocol: false,
 				inAnimation: false,
 				authKey: "",
 				backUrl: "",
-				pageTitle: '绑定手机号',
+				pageTitle: this.$t('绑定手机号'),
 				configData: Cache.get('BASIC_CONFIG'),
 				canGetPrivacySetting: false,
 			}
@@ -123,7 +123,7 @@
 			this.backUrl = options.backUrl || ''
 			if (options.pageType) {
 				this.pageType = options.pageType || 1
-				this.pageTitle = options.pageType == 1 ? '绑定手机号' : '手机号登录'
+				this.pageTitle = options.pageType == 1 ? this.$t('绑定手机号') : this.$t('手机号登录')
 			}
 			let pages = getCurrentPages();
 			let prePage = pages[pages.length - 2];

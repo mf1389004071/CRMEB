@@ -89,7 +89,7 @@ export default {
   },
   filters: {
     weekFormat: function (value) {
-      return ["一", "二", "三", "四", "五", "六", "日"][value];
+      return [this.$t('一'), this.$t('二'), this.$t('三'), this.$t('四'), this.$t('五'), this.$t('六'), this.$t('日')][value];
     },
   },
   data() {

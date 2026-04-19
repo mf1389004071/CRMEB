@@ -50,6 +50,7 @@
 		getAjcaptcha,
 		ajcaptchaCheck
 	} from '@/api/api.js';
+	import i18n from '@/utils/lang.js'
 
 	export default {
 		name: 'VerifySlide',
@@ -72,7 +73,7 @@
 			},
 			explain: {
 				type: String,
-				default: '向右滑动完成验证'
+				default: () => i18n.t('向右滑动完成验证')
 			},
 			imgSize: {
 				type: Object,
@@ -264,7 +265,7 @@
 								this.refresh();
 							}, 1000);
 							this.$parent.$emit('error', this)
-							this.tipWords = "验证失败"
+							this.tipWords = this.$t('验证失败')
 							setTimeout(() => {
 								this.tipWords = ""
 							}, 1000)

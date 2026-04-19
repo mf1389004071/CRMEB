@@ -312,10 +312,10 @@ export default {
       },
       codeList: [
         {
-          name: "会员码",
+          name: this.$t('会员码'),
         },
         {
-          name: "付款码",
+          name: this.$t('付款码'),
         },
       ],
       codeIndex: 0,

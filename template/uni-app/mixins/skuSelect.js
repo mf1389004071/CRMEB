@@ -7,6 +7,7 @@
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
+import i18n from "@/utils/lang.js";
 import {
 	getCategoryList,
 	getProductslist,
@@ -222,7 +223,7 @@ export default {
 						this.$set(this.cartData, 'cartList', this.cartData.cartList);
 					}
 					return this.$util.Tips({
-						title: "该产品没有更多库存了"
+						title: i18n.t('该产品没有更多库存了')
 					});
 				} else {
 					if (!isDuo) {
@@ -285,7 +286,7 @@ export default {
 					productSelect === undefined
 				) {
 					return that.$util.Tips({
-						title: "产品库存不足，请选择其它属性"
+						title: i18n.t('产品库存不足，请选择其它属性')
 					});
 				}
 			}

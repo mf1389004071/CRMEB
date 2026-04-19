@@ -2,7 +2,7 @@
     <base-drawer mode="bottom" :visible="visible" background-color="transparent" mask maskClosable @close="closeDrawer">
         <view class="classify rd-t-40rpx">
             <view class="title">
-                修改分类
+                {{$t('修改分类')}}
                 <view class="close acea-row row-center-wrapper" @tap="closeDrawer">
                     <text class="iconfont icon-iconfontguanbi"></text>
                 </view>
@@ -10,7 +10,7 @@
             <checkbox-group @change="checkboxChange($event)" v-if="categoryList.length">
                 <view class="list acea-row">
                     <view class="item">
-                        <view class="tips">一级分类</view>
+                        <view class="tips">{{$t('一级分类')}}</view>
                         <scroll-view scroll-y="true" class="scroll-Y">
                             <view
                                 class="itemn line1"
@@ -41,7 +41,7 @@
                         </scroll-view>
                     </view>
                     <view class="item on" :class="!categoryList[currentOne].children.length ? 'on3' : ''" v-if="categoryList[currentOne]">
-                        <view class="tips">二级分类</view>
+                        <view class="tips">{{$t('二级分类')}}</view>
                         <scroll-view scroll-y="true" class="scroll-Y">
                             <view
                                 class="itemn line1"
@@ -74,11 +74,11 @@
                 </view>
             </checkbox-group>
             <view class="empty-box" v-else>
-                <emptyPage title="暂无分类～" src="/statics/images/empty-box.png"></emptyPage>
+                <emptyPage :title="$t('暂无分类～')" src="/statics/images/empty-box.png"></emptyPage>
             </view>
             <view class="footer acea-row row-between-wrapper">
-                <view class="bnt acea-row row-center-wrapper" @tap="reset">重置</view>
-                <view class="bnt on acea-row row-center-wrapper" @tap="define">确定</view>
+                <view class="bnt acea-row row-center-wrapper" @tap="reset">{{$t('重置')}}</view>
+                <view class="bnt on acea-row row-center-wrapper" @tap="define">{{$t('确定')}}</view>
             </view>
         </view>
     </base-drawer>
@@ -149,7 +149,7 @@ export default {
         define() {
             if (!this.checkedIds.length) {
                 this.$util.Tips({
-                    title: '请选择分类'
+                    title: this.$t('请选择分类')
                 });
                 return;
             }

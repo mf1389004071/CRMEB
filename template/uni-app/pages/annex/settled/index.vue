@@ -146,7 +146,7 @@
 		<view class="settlementAgreement" v-if="showProtocol">
 			<view class="setAgCount">
 				<i class="icon iconfont icon-cha" @click="showProtocol = false"></i>
-				<div class="title">{{ $t(isAgent?`代理商入驻协议`:'分销说明')}}</div>
+				<div class="title">{{ $t(isAgent?$t('代理商入驻协议'):$t('分销说明'))}}</div>
 				<view class="content">
 					<jyf-parser :html="protocol" ref="article" :tag-style="tagStyle"></jyf-parser>
 				</view>

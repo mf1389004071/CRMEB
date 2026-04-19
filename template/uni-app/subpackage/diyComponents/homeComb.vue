@@ -409,7 +409,7 @@ export default {
           id: 0,
         },
         text: {
-          val: "首页",
+          val: this.$t('首页'),
         },
       });
       return tabList;

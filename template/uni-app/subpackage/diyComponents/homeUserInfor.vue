@@ -910,7 +910,7 @@ export default {
       return { fontSize: "48rpx", color: "#ff9900" };
     },
     userName() {
-      if (!this.isLogin) return "请点击登录";
+      if (!this.isLogin) return this.$t('请点击登录');
       return (this.userInfo && this.userInfo.nickname) || "";
     },
     userSubText() {
@@ -1079,14 +1079,14 @@ export default {
     },
     dataList() {
       let list = [
-        { id: 1, name: "余额", key: "money" },
-        { id: 3, name: "优惠券", key: "coupon" },
-        { id: 2, name: "积分", key: "integral" },
-        { id: 5, name: "收藏商品", key: "collection" },
-        { id: 6, name: "浏览记录", key: "visit" },
-        { id: 8, name: "推广佣金", key: "brokerage" },
-        { id: 9, name: "推广人", key: "spreadCount" },
-        { id: 10, name: "推广订单", key: "spreadOrderCount" },
+        { id: 1, name: this.$t('余额'), key: "money" },
+        { id: 3, name: this.$t('优惠券'), key: "coupon" },
+        { id: 2, name: this.$t('积分'), key: "integral" },
+        { id: 5, name: this.$t('收藏商品'), key: "collection" },
+        { id: 6, name: this.$t('浏览记录'), key: "visit" },
+        { id: 8, name: this.$t('推广佣金'), key: "brokerage" },
+        { id: 9, name: this.$t('推广人'), key: "spreadCount" },
+        { id: 10, name: this.$t('推广订单'), key: "spreadOrderCount" },
       ];
       return list
         .filter((item) => this.checkType.indexOf(item.id) != -1)

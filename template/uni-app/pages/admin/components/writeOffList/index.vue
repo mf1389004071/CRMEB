@@ -73,7 +73,7 @@
 					</view>
 				</view>
 				<view>
-					<button class='money' type="primary" @click="verification">{{checked?'一键':'确认'}}核销({{numChecked}})</button>
+					<button class='money' type="primary" @click="verification">{{checked?$t('一键'):$t('确认')}}{{$t('核销')}}({{numChecked}})</button>
 				</view>
 			</view>
 		</view>
@@ -339,11 +339,11 @@
 				this.newList = newObj
 				if (that.checkModel.length == 0) {
 					that.$util.Tips({
-						title: '请选择商品'
+						title: this.$t('请选择商品')
 					});
 				} else {
 					uni.showLoading({
-						title: '加载中',
+						title: this.$t('加载中'),
 					});
 					let num = 0;
 					newObj.forEach((item) => {

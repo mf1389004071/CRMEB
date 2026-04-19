@@ -151,12 +151,12 @@
                 "
               ></view>
             </div>
-            <text class="checkAll">全选</text>
+            <text class="checkAll">{{$t('全选')}}</text>
           </view>
         </view>
         <view>
           <button class="money" type="primary" @click="verification">
-            {{ checked ? "一键" : "确认" }}核销({{ numChecked }})
+            {{ checked ? $t('一键') : $t('确认') }}{{$t('核销')}}({{ numChecked }})
           </button>
         </view>
       </view>
@@ -166,15 +166,15 @@
         <view class="small_box">
           <!-- <image src="../../../static/decorate.png" mode=""></image> -->
           <view class="content">
-            <view class="font">核销成功</view>
+            <view class="font">{{$t('核销成功')}}</view>
             <view
               v-if="
                 list.total_num == parseInt(list.writeoff_count) + writeOffNum
               "
               class="small_font"
-              >当前订单已完成核销</view
+              >{{$t('当前订单已完成核销')}}</view
             >
-            <view v-else class="small_font">该订单仍有其他待核销商品</view>
+            <view v-else class="small_font">{{$t('该订单仍有其他待核销商品')}}</view>
           </view>
           <view class="acea-row btn-box">
             <view
@@ -184,7 +184,7 @@
               "
               class="btn primary"
               @click="ok(1)"
-              >知道了</view
+              >{{$t('知道了')}}</view
             >
             <navigator
               v-if="
@@ -197,7 +197,7 @@
               hover-class="none"
               open-type="redirect"
               class="btn btn_no"
-              >返回列表</navigator
+              >{{$t('返回列表')}}</navigator
             >
             <navigator
               v-if="
@@ -211,7 +211,7 @@
               hover-class="none"
               open-type="redirect"
               class="btn btn_no"
-              >返回首页</navigator
+              >{{$t('返回首页')}}</navigator
             >
             <view
               v-if="
@@ -219,7 +219,7 @@
               "
               class="btn on"
               @click="ok(0)"
-              >继续核销</view
+              >{{$t('继续核销')}}</view
             >
             <navigator
               v-if="
@@ -232,7 +232,7 @@
               open-type="redirect"
               hover-class="none"
               class="btn"
-              >核销其他订单</navigator
+              >{{$t('核销其他订单')}}</navigator
             >
           </view>
         </view>
@@ -524,11 +524,11 @@ export default {
       this.newList = newObj;
       if (that.checkModel.length == 0) {
         that.$util.Tips({
-          title: "请选择商品",
+          title: this.$t('请选择商品'),
         });
       } else {
         uni.showLoading({
-          title: "加载中",
+          title: this.$t('加载中'),
         });
         let num = 0;
         newObj.forEach((item) => {

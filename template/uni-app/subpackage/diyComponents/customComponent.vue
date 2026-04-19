@@ -953,11 +953,11 @@ export default {
         if (field === "coupon_time") return dataItem.coupon_time;
         if (field === "type")
           return dataItem.type === 1
-            ? "品类券"
+            ? this.$t('品类券')
             : dataItem.type === 2
-              ? "商品券"
-              : "通用券";
-        if (field === "status") return dataItem.status === 1 ? "开启" : "关闭";
+              ? this.$t('商品券')
+              : this.$t('通用券');
+        if (field === "status") return dataItem.status === 1 ? this.$t('开启') : this.$t('关闭');
         if (field === "receive_time") return dataItem.receive_time;
         if (field === "use_time") return dataItem.use_time;
         if (field === "receive_count") return dataItem.receive_count;
@@ -1029,7 +1029,7 @@ export default {
       }
       setCouponReceive(item.id)
         .then(() => {
-          uni.showToast({ title: "领取成功", icon: "success" });
+          uni.showToast({ title: this.$t('领取成功'), icon: "success" });
         })
         .catch((err) => {
           uni.showToast({ title: err, icon: "none" });

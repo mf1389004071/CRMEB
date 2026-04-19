@@ -59,7 +59,7 @@
       <view class="title acea-row row-between-wrapper">
         <view class="name">用户信息</view>
         <view class="tip" @click="openTap"
-          >{{ isShow ? "展开" : "收起"
+          >{{ isShow ? $t('展开') : $t('收起')
           }}<text
             class="iconfont"
             :class="isShow ? 'icon-ic_downarrow' : 'icon-ic_uparrow'"
@@ -191,7 +191,7 @@
           <view>会员</view>
           <view class="bottom acea-row row-between-wrapper">
             <view class="num" v-if="infoData.svip_over_day">{{
-              "剩余" + infoData.svip_over_day + "天"
+              $t('剩余') + infoData.svip_over_day + $t('天')
             }}</view>
             <view class="num" v-else>已过期/暂未开通</view>
             <view class="iconfont icon-ic_edit"></view>

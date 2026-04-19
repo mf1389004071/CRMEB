@@ -76,6 +76,7 @@
 import VerifySlide from './verifySlider/verifySlider';
 import verifySliderPc from './verifySlider/verifySliderPc';
 import VerifyPoint from './verifyPoint/verifyPoint';
+import i18n from '@/utils/lang.js'
 
 export default {
 	name: 'Vue2Verify',
@@ -100,7 +101,7 @@ export default {
 		},
 		explain: {
 			type: String,
-			default: '向右滑动完成验证'
+			default: () => i18n.t('向右滑动完成验证')
 		},
 		imgSize: {
 			type: Object,

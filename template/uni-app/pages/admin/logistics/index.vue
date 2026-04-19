@@ -4,7 +4,7 @@
 			<view class="w-full abs-lb white_jianbian"></view>
 		</view>
 		<!-- #ifdef MP -->
-		<NavBar titleText="物流查询" :iconColor="iconColor" :textColor="iconColor" :isScrolling="isScrolling" showBack></NavBar>
+		<NavBar :titleText="$t('物流查询')" :iconColor="iconColor" :textColor="iconColor" :isScrolling="isScrolling" showBack></NavBar>
 		<!-- #endif -->
 		<view class="relative px-20 z-20 express_box">
 			<view class="h-66 rd-t-24rpx light px-24 flex-between-center fs-20">
@@ -41,11 +41,11 @@
 						</view>
 					</view>
 					<view class="more-text fs-24" @tap="checkShowMore">
-						<text>{{showMore ? '收起' : '查看更多物流信息'}}</text>
+						<text>{{showMore ? $t('收起') : $t('查看更多物流信息')}}</text>
 						<text class="iconfont fs-24 pl-8" :class="showMore ? 'icon-ic_uparrow' : 'icon-ic_downarrow'"></text>
 					</view>
 				</view>
-				<emptyPage title="暂无物流信息" src="/statics/images/noExpress.gif" v-else></emptyPage>
+				<emptyPage :title="$t('暂无物流信息')" src="/statics/images/noExpress.gif" v-else></emptyPage>
 			</view>
 			<view class="safe-area-inset-bottom"></view>
 		</view>
@@ -124,7 +124,7 @@
 		},
 		onLoad: function(options) {
 			if (!options.orderId) return this.$util.Tips({
-				title: '缺少订单号'
+				title: this.$t('缺少订单号')
 			});
 			if (typeof(options.type) == 'undefined') {
 				this.type = ''

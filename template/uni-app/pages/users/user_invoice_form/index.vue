@@ -154,7 +154,7 @@
 		onLoad(options) {
 
 			if (options.id) uni.setNavigationBarTitle({
-				title: '编辑发票'
+				title: this.$t('编辑发票')
 			})
 			for (let key in options) {
 				switch (key) {

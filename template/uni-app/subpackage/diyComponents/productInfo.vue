@@ -117,7 +117,7 @@
                           : specUnselectedTextColor,
                     }"
                   >
-                    {{ item.suk || "规格" }}
+                    {{ item.suk || $t('规格') }}
                   </view>
                 </view>
               </view>

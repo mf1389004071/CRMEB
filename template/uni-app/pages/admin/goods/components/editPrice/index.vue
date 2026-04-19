@@ -9,44 +9,44 @@
   >
     <view class="edit-price rd-t-40rpx" v-if="goodsInfo.attr_value">
       <view class="title"
-        >修改价格/库存
+        >{{$t('修改价格/库存')}}
         <view class="close acea-row row-center-wrapper" @tap="closeDrawer">
           <text class="iconfont icon-iconfontguanbi"></text>
         </view>
       </view>
       <view class="list">
         <view class="item acea-row row-between-wrapper">
-          <view>售价</view>
+          <view>{{$t('售价')}}</view>
           <input
             type="digit"
-            :placeholder="'请填写售价' + tips"
+            :placeholder="$t('请填写售价' + tips)"
             placeholder-class="placeholder"
             v-model="goodsInfo.attr_value.price"
           />
         </view>
         <view class="item acea-row row-between-wrapper">
-          <view>成本价</view>
+          <view>{{$t('成本价')}}</view>
           <input
             type="digit"
-            :placeholder="'请填写成本价' + tips"
+            :placeholder="$t('请填写成本价' + tips)"
             placeholder-class="placeholder"
             v-model="goodsInfo.attr_value.cost"
           />
         </view>
         <view class="item acea-row row-between-wrapper">
-          <view>划线</view>
+          <view>{{$t('划线')}}</view>
           <input
             type="digit"
-            :placeholder="'请填写划线' + tips"
+            :placeholder="$t('请填写划线' + tips)"
             placeholder-class="placeholder"
             v-model="goodsInfo.attr_value.ot_price"
           />
         </view>
         <view class="item acea-row row-between-wrapper">
-          <view>库存</view>
+          <view>{{$t('库存')}}</view>
           <input
             type="number"
-            :placeholder="'请填写库存' + tips"
+            :placeholder="$t('请填写库存' + tips)"
             placeholder-class="placeholder"
             v-model="goodsInfo.attr_value.stock"
           />
@@ -56,10 +56,10 @@
         v-if="goodsInfo.spec_type"
         class="bnt acea-row row-center-wrapper"
         @tap="defineSpec"
-        >确定</view
+        >{{$t('确定')}}</view
       >
       <view v-else class="bnt acea-row row-center-wrapper" @tap="define"
-        >保存</view
+        >{{$t('保存')}}</view
       >
     </view>
   </base-drawer>
@@ -88,7 +88,7 @@ export default {
     };
   },
   mounted() {
-    this.tips = this.goodsInfo.spec_type ? "(可为空)" : "";
+    this.tips = this.goodsInfo.spec_type ? this.$t('(可为空)') : "";
   },
   methods: {
     defineSpec() {
@@ -97,7 +97,7 @@ export default {
         this.$emit("successChange", info);
       } else {
         this.$util.Tips({
-          title: "修改内容至少填写一项",
+          title: this.$t('修改内容至少填写一项')
         });
       }
     },

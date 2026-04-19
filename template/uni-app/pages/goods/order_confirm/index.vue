@@ -21,7 +21,7 @@
 					@click.prevent="openList">
 					<view class="acea-row row-middle">
 						<view class="icon" :class="shippingType==1?'orange':'red'">
-							{{shippingType==0?'商城配送':'门店自提'}}
+							{{shippingType==0?$t('商城配送'):$t('门店自提')}}
 						</view>
 						<view class="text add-text line1" v-if="shippingType==0">{{$t(`由平台为您提供配送服务`)}}</view>
 						<view class="text add-text line1" v-if="shippingType==1">{{$t(`线上下单，到店自提`)}}</view>
@@ -449,7 +449,7 @@
 				system_store: {},
 				storePostage: 0,
 				advanceId: 0,
-				gift_mark: '这是送您的一份礼物~', // 礼物留言
+				gift_mark: this.$t('这是送您的一份礼物~'), // 礼物留言
 				contacts: '',
 				contactsTel: '',
 				mydata: {},
