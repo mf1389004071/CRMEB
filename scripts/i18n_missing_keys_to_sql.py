@@ -5,6 +5,7 @@
 
 示例：
   python scripts/i18n_missing_keys_to_sql.py --input keys.txt --emit-sql out.sql
+  python scripts/i18n_missing_keys_to_sql.py --input C:\data\code\crmeb\crmeb_cjx\scripts\keys.txt --emit-sql out.sql
   type keys.txt | python scripts/i18n_missing_keys_to_sql.py --input - --emit-sql out.sql
 """
 from __future__ import annotations
