@@ -13,6 +13,7 @@ namespace app\adminapi\controller\v1\order;
 
 use app\adminapi\controller\AuthController;
 use app\services\order\CodOrderServices;
+use app\services\order\CodPrintServices;
 use app\services\order\OrderAuditServices;
 use think\facade\App;
 
@@ -152,6 +153,64 @@ class CodOrder extends AuthController
     public function audit($id)
     {
         return app('json')->success(app()->make(OrderAuditServices::class)->getList((int)$id));
+    }
+
+    /**
+     * 配送单打印数据（不含送达码）
+     */
+    public function print_data()
+    {
+        [$ids, $date, $regionId, $lang] = $this->request->getMore([
+            ['ids', ''],
+            ['date', ''],
+            ['region_id', 0],
+            ['lang', 'vi-VN'],
+        ], true);
+        /** @var CodPrintServices $print */
+        $print = app()->make(CodPrintServices::class);
+        $oids = $print->resolveOrderIds(['ids' => $ids, 'date' => $date, 'region_id' => $regionId]);
+        $data = $print->printData($oids, (string)$lang);
+        $audit = app()->make(OrderAuditServices::class);
+        $operator = $this->operator();
+        foreach ($oids as $oid) {
+            $audit->record((int)$oid, OrderAuditServices::T_PRINT, '打印配送单(' . $lang . ')', $operator);
+        }
+        return app('json')->success($data);
+    }
+
+    /**
+     * 拣货汇总
+     */
+    public function pick_summary()
+    {
+        [$ids, $date, $regionId, $lang] = $this->request->getMore([
+            ['ids', ''],
+            ['date', ''],
+            ['region_id', 0],
+            ['lang', 'vi-VN'],
+        ], true);
+        /** @var CodPrintServices $print */
+        $print = app()->make(CodPrintServices::class);
+        $oids = $print->resolveOrderIds(['ids' => $ids, 'date' => $date, 'region_id' => $regionId]);
+        return app('json')->success(['order_count' => count($oids), 'list' => $print->pickSummary($oids, (string)$lang)]);
+    }
+
+    /**
+     * 导出 Excel：type=orders|pick，返回下载地址
+     */
+    public function export()
+    {
+        [$type, $ids, $date, $regionId, $lang] = $this->request->getMore([
+            ['type', 'orders'],
+            ['ids', ''],
+            ['date', ''],
+            ['region_id', 0],
+            ['lang', 'vi-VN'],
+        ], true);
+        /** @var CodPrintServices $print */
+        $print = app()->make(CodPrintServices::class);
+        $oids = $print->resolveOrderIds(['ids' => $ids, 'date' => $date, 'region_id' => $regionId]);
+        return app('json')->success(['url' => $print->export((string)$type, $oids, (string)$lang)]);
     }
 
     /**

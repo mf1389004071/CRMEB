@@ -182,6 +182,9 @@ Route::group('order/cod', function () {
     Route::post('call_mark/:id', 'v1.order.CodOrder/call_mark')->option(['real_name' => '到付订单电话确认标记']);
     Route::get('audit/:id', 'v1.order.CodOrder/audit')->option(['real_name' => '到付订单操作记录']);
     Route::get('new', 'v1.order.CodOrder/new_orders')->option(['real_name' => '到付新订单轮询']);
+    Route::get('print_data', 'v1.order.CodOrder/print_data')->option(['real_name' => '到付配送单数据']);
+    Route::get('pick_summary', 'v1.order.CodOrder/pick_summary')->option(['real_name' => '到付拣货汇总']);
+    Route::get('export', 'v1.order.CodOrder/export')->option(['real_name' => '到付订单导出']);
 })->middleware([
     \app\http\middleware\AllowOriginMiddleware::class,
     \app\adminapi\middleware\AdminAuthTokenMiddleware::class,
