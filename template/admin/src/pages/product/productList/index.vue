@@ -321,6 +321,8 @@
             <el-divider direction="vertical"></el-divider>
             <router-link :to="{ path: $routeProStr + '/product/i18n/product/' + scope.row.id }"><a>多语</a></router-link>
             <el-divider direction="vertical"></el-divider>
+            <router-link :to="{ path: $routeProStr + '/product/fresh/' + scope.row.id }"><a>生鲜</a></router-link>
+            <el-divider direction="vertical"></el-divider>
             <el-dropdown size="small">
               <span class="el-dropdown-link">更多<i class="el-icon-arrow-down el-icon--right"></i> </span>
               <el-dropdown-menu slot="dropdown">

@@ -235,7 +235,7 @@ class StoreProductDao extends BaseDao
         $where['is_show'] = 1;
         $where['is_del'] = 0;
         return $this->search($where)->with(['couponId', 'star'])
-            ->field(['id', 'image', 'store_name', 'store_info', 'cate_id', 'price', 'ot_price', 'IFNULL(sales,0) + IFNULL(ficti,0) as sales', 'unit_name', 'sort', 'activity', 'stock', 'vip_price', 'is_vip'])
+            ->field(['id', 'image', 'store_name', 'store_info', 'cate_id', 'price', 'ot_price', 'IFNULL(sales,0) + IFNULL(ficti,0) as sales', 'unit_name', 'sort', 'activity', 'stock', 'vip_price', 'is_vip', 'is_fresh', 'origin', 'need_cold_chain', 'net_weight'])
             ->when(in_array($field, ['is_best', 'is_new', 'is_benefit', 'is_hot', 'is_vip']), function ($query) use ($field) {
                 if ($field != 'is_vip') {
                     $query->where($field, 1);

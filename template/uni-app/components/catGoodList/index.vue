@@ -9,6 +9,7 @@
 				<image :src="item.image" mode="" v-else></image>
 			</view>
 			<view class="text line2">{{ item.store_name }}</view>
+			<FreshTags :item="item" />
 			<view class="bottom acea-row row-between-wrapper">
 				<view class="sales acea-row row-middle">
 					<view class="money font-color">

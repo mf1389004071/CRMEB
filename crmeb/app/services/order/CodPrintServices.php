@@ -100,10 +100,10 @@ class CodPrintServices extends BaseServices
                     'num'           => (int)$it['num'],
                     'price'         => $unitPrice,
                     'subtotal'      => $sub,
-                    'origin'        => (string)($prod['origin'] ?? ''),
+                    'origin'        => $this->fieldText((int)$it['product_id'], 'origin', $lang === 'both' ? 'vi-VN' : $lang, (string)($prod['origin'] ?? '')),
                     'need_cold_chain' => (int)($prod['need_cold_chain'] ?? 0),
-                    'cold_chain_note' => (string)($prod['cold_chain_note'] ?? ''),
-                    'shelf_life'    => (string)($prod['shelf_life_text'] ?? ''),
+                    'cold_chain_note' => $this->fieldText((int)$it['product_id'], 'cold_chain_note', $lang === 'both' ? 'vi-VN' : $lang, (string)($prod['cold_chain_note'] ?? '')),
+                    'shelf_life'    => $this->fieldText((int)$it['product_id'], 'shelf_life_text', $lang === 'both' ? 'vi-VN' : $lang, (string)($prod['shelf_life_text'] ?? '')),
                     'tax_rate'      => (string)($prod['tax_rate'] ?? '0'),
                 ];
             }
@@ -265,6 +265,21 @@ class CodPrintServices extends BaseServices
         // 无译文：用商品主表当前名称（默认语言），商品已删除才用下单快照
         $current = (string)Db::name('store_product')->where('id', $pid)->value('store_name');
         return $current !== '' ? $current : $snapshot;
+    }
+
+    /**
+     * 商品文本字段按语言取译文，无译文回落主表值
+     */
+    protected function fieldText(int $pid, string $field, string $lang, string $original): string
+    {
+        $cls = '\\app\\services\\other\\I18nContentServices';
+        if (class_exists($cls)) {
+            $val = app()->make($cls)->get('product', $pid, $field, $lang);
+            if ($val !== null && $val !== '') {
+                return $val;
+            }
+        }
+        return $original;
     }
 
     protected function normalizePrintLang(string $lang): string

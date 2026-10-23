@@ -13,6 +13,7 @@
 								<text class="tag" v-if="item.checkCoupon">{{$t(`券`)}}</text>
 								{{ item.store_name }}
 							</view>
+							<FreshTags :item="item" />
 
 							<view class="price-box">
 								<view>

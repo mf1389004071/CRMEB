@@ -29,6 +29,15 @@ export default {
   component: LayoutMain,
   children: [
     {
+      path: 'fresh/:id',
+      name: `${pre}freshAttr`,
+      meta: {
+        title: '生鲜属性',
+        auth: ['admin-product-fresh'],
+      },
+      component: () => import('@/pages/product/freshAttr/index'),
+    },
+    {
       path: 'i18n/:type/:id',
       name: `${pre}i18nEdit`,
       meta: {

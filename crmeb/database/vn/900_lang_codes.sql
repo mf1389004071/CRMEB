@@ -720,6 +720,60 @@ SELECT v.tid, v.code, v.remarks, v.explain_, v.is_admin FROM (
   SELECT @t_vi AS tid, '展示币种' AS code, '[待审]展示币种' AS remarks, 'Đơn vị tiền tệ hiển thị' AS explain_, 0 AS is_admin, '展示币种' AS zh_
   UNION ALL
   SELECT @t_en AS tid, '展示币种' AS code, '展示币种' AS remarks, 'Display currency' AS explain_, 0 AS is_admin, '展示币种' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '商品信息' AS code, '商品信息' AS remarks, '商品信息' AS explain_, 0 AS is_admin, '商品信息' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '商品信息' AS code, '[待审]商品信息' AS remarks, 'Thông tin sản phẩm' AS explain_, 0 AS is_admin, '商品信息' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '商品信息' AS code, '商品信息' AS remarks, 'Product information' AS explain_, 0 AS is_admin, '商品信息' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '产地' AS code, '产地' AS remarks, '产地' AS explain_, 0 AS is_admin, '产地' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '产地' AS code, '[待审]产地' AS remarks, 'Xuất xứ' AS explain_, 0 AS is_admin, '产地' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '产地' AS code, '产地' AS remarks, 'Origin' AS explain_, 0 AS is_admin, '产地' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '保质期' AS code, '保质期' AS remarks, '保质期' AS explain_, 0 AS is_admin, '保质期' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '保质期' AS code, '[待审]保质期' AS remarks, 'Hạn sử dụng' AS explain_, 0 AS is_admin, '保质期' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '保质期' AS code, '保质期' AS remarks, 'Shelf life' AS explain_, 0 AS is_admin, '保质期' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '天' AS code, '天' AS remarks, '天' AS explain_, 0 AS is_admin, '天' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '天' AS code, '[待审]天' AS remarks, 'ngày' AS explain_, 0 AS is_admin, '天' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '天' AS code, '天' AS remarks, 'days' AS explain_, 0 AS is_admin, '天' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '冷链' AS code, '冷链' AS remarks, '冷链' AS explain_, 0 AS is_admin, '冷链' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '冷链' AS code, '[待审]冷链' AS remarks, 'Chuỗi lạnh' AS explain_, 0 AS is_admin, '冷链' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '冷链' AS code, '冷链' AS remarks, 'Cold chain' AS explain_, 0 AS is_admin, '冷链' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '需冷链运输' AS code, '需冷链运输' AS remarks, '需冷链运输' AS explain_, 0 AS is_admin, '需冷链运输' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '需冷链运输' AS code, '[待审]需冷链运输' AS remarks, 'Cần vận chuyển lạnh' AS explain_, 0 AS is_admin, '需冷链运输' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '需冷链运输' AS code, '需冷链运输' AS remarks, 'Cold-chain delivery required' AS explain_, 0 AS is_admin, '需冷链运输' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '净含量' AS code, '净含量' AS remarks, '净含量' AS explain_, 0 AS is_admin, '净含量' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '净含量' AS code, '[待审]净含量' AS remarks, 'Khối lượng tịnh' AS explain_, 0 AS is_admin, '净含量' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '净含量' AS code, '净含量' AS remarks, 'Net content' AS explain_, 0 AS is_admin, '净含量' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '单位' AS code, '单位' AS remarks, '单位' AS explain_, 0 AS is_admin, '单位' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '单位' AS code, '[待审]单位' AS remarks, 'Đơn vị' AS explain_, 0 AS is_admin, '单位' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '单位' AS code, '单位' AS remarks, 'Unit' AS explain_, 0 AS is_admin, '单位' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '税率' AS code, '税率' AS remarks, '税率' AS explain_, 0 AS is_admin, '税率' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '税率' AS code, '[待审]税率' AS remarks, 'Thuế suất' AS explain_, 0 AS is_admin, '税率' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '税率' AS code, '税率' AS remarks, 'Tax rate' AS explain_, 0 AS is_admin, '税率' AS zh_
 ) v
 WHERE v.tid IS NOT NULL AND NOT EXISTS (SELECT 1 FROM eb_lang_code e WHERE e.type_id = v.tid AND e.code = v.code) AND NOT EXISTS (SELECT 1 FROM eb_lang_code z WHERE z.type_id = @t_zh AND z.remarks = v.zh_ AND z.code <> v.code);
 

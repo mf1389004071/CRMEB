@@ -41,6 +41,10 @@ Vue.component('skeleton', skeleton)
 Vue.component('pageLoading', pageLoading)
 Vue.component('easyLoadimage', easyLoadimage)
 Vue.component('BaseMoney', BaseMoney)
+import FreshTags from '@/components/FreshTags.vue'
+import FreshInfo from '@/components/FreshInfo.vue'
+Vue.component('FreshTags', FreshTags)
+Vue.component('FreshInfo', FreshInfo)
 Vue.component('BaseTag', BaseTag)
 Vue.component('baseDrawer', BaseDrawer)
 import ActivePermission from './libs/permission.js';

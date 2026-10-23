@@ -1255,7 +1255,7 @@ class StoreProductServices extends BaseServices
                 $queryLimit = 5000;
             }
         }
-        $list = $this->dao->getSearchList($where, $queryPage, $queryLimit, ['id,store_name,cate_id,image,IFNULL(sales, 0) + IFNULL(ficti, 0) as sales,price,stock,activity,ot_price,spec_type,recommend_image,unit_name,is_vip,vip_price,is_virtual,presale,custom_form,virtual_type,min_qty,label_list']);
+        $list = $this->dao->getSearchList($where, $queryPage, $queryLimit, ['id,store_name,cate_id,image,IFNULL(sales, 0) + IFNULL(ficti, 0) as sales,price,stock,activity,ot_price,spec_type,recommend_image,unit_name,is_vip,vip_price,is_virtual,presale,custom_form,virtual_type,min_qty,label_list,is_fresh,origin,need_cold_chain,net_weight']);
         if ($regionId > 0) {
             $list = app()->make(\app\services\product\RegionPriceServices::class)->applyToList($list, $regionId);
             if ($regionPriceSort !== '') {
@@ -1319,7 +1319,7 @@ class StoreProductServices extends BaseServices
         if (!$list || !i18n_content_active()) {
             return $list;
         }
-        return app()->make(\app\services\other\I18nContentServices::class)->apply($list, 'product', 'id', ['store_name', 'store_info', 'unit_name', 'keyword']);
+        return app()->make(\app\services\other\I18nContentServices::class)->apply($list, 'product', 'id', ['store_name', 'store_info', 'unit_name', 'keyword', 'origin']);
     }
 
     /**
@@ -1499,7 +1499,7 @@ class StoreProductServices extends BaseServices
             }
             $where['region_id'] = $regionId;
         }
-        $list = $this->dao->getSearchList($where, $page, $limit, ['id,store_name,cate_id,image,IFNULL(sales, 0) + IFNULL(ficti, 0) as sales,price,stock,activity,unit_name,presale,is_vip,vip_price']);
+        $list = $this->dao->getSearchList($where, $page, $limit, ['id,store_name,cate_id,image,IFNULL(sales, 0) + IFNULL(ficti, 0) as sales,price,stock,activity,unit_name,presale,is_vip,vip_price,is_fresh,origin,need_cold_chain,net_weight']);
         if ($regionId > 0) {
             $list = app()->make(\app\services\product\RegionPriceServices::class)->applyToList($list, $regionId);
         }
@@ -1678,6 +1678,18 @@ class StoreProductServices extends BaseServices
             $i18nSvc = app()->make(\app\services\other\I18nContentServices::class);
             $storeInfo = $i18nSvc->apply([$storeInfo], 'product', 'id', ['store_name', 'store_info', 'unit_name', 'keyword', 'description', 'origin', 'cold_chain_note', 'shelf_life_text'])[0];
         }
+        // VN: 生鲜属性块（文本类已按语言本地化；空值前端不展示）
+        $data['fresh'] = [
+            'is_fresh'      => (int)($storeInfo['is_fresh'] ?? 0),
+            'origin'        => (string)($storeInfo['origin'] ?? ''),
+            'shelf_life'    => (string)(($storeInfo['shelf_life_text'] ?? '') !== '' ? $storeInfo['shelf_life_text'] : ((int)($storeInfo['shelf_life_days'] ?? 0) > 0 ? $storeInfo['shelf_life_days'] : '')),
+            'shelf_life_days' => (int)($storeInfo['shelf_life_days'] ?? 0),
+            'need_cold_chain' => (int)($storeInfo['need_cold_chain'] ?? 0),
+            'cold_chain_note' => (string)($storeInfo['cold_chain_note'] ?? ''),
+            'net_weight'    => (string)($storeInfo['net_weight'] ?? '0'),
+            'unit_name'     => (string)($storeInfo['unit_name'] ?? ''),
+            'tax_rate'      => (string)($storeInfo['tax_rate'] ?? '0'),
+        ];
         $data['storeInfo'] = $storeInfo;
 
         /** @var MemberCardServices $memberCardService */

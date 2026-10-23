@@ -76,6 +76,8 @@
             @goActivity="goActivity"
           ></PageDesign>
         </view>
+        <!-- VN: 商品信息固定区块（产地/保质期/冷链/净含量/单位/税率），空值不显示 -->
+        <FreshInfo v-if="fresh" :fresh="fresh" />
         <view class="uni-p-b-98"></view>
       </view>
 
@@ -351,6 +353,7 @@ export default {
       replyCount: 0, //总评论数量
       reply: [], //评论列表
       storeInfo: {}, //商品详情
+      fresh: null, // VN: 生鲜属性块
       productValue: [], //系统属性
       couponList: [], //优惠券
       cart_num: 1, //购买数量
@@ -849,6 +852,7 @@ export default {
           let good_list = res.data.good_list || [];
           this.is_gift = res.data.storeInfo.is_gift;
           that.$set(that, "storeInfo", storeInfo);
+          that.$set(that, "fresh", res.data.fresh || null);
           that.$set(
             that,
             "presale_pay_status",

@@ -86,3 +86,16 @@ Route::group('setting/currency', function () {
     \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
     \app\adminapi\middleware\AdminLogMiddleware::class
 ])->option(['mark' => 'currency', 'mark_name' => '币种与汇率']);
+
+/**
+ * VN: 商品生鲜属性路由
+ */
+Route::group('product/fresh', function () {
+    Route::get(':id', 'v1.vn.ProductFresh/read')->option(['real_name' => '商品生鲜属性读取']);
+    Route::post(':id', 'v1.vn.ProductFresh/save')->option(['real_name' => '商品生鲜属性保存']);
+})->middleware([
+    \app\http\middleware\AllowOriginMiddleware::class,
+    \app\adminapi\middleware\AdminAuthTokenMiddleware::class,
+    \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
+    \app\adminapi\middleware\AdminLogMiddleware::class
+])->option(['mark' => 'productFresh', 'mark_name' => '商品生鲜属性']);

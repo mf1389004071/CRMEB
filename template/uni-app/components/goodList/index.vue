@@ -16,6 +16,7 @@
 					<view class='underline'>
 						<view class='text'>
 							<view class='line1'>{{item.store_name}}</view>
+							<FreshTags :item="item" />
 							<view class='money font-color'><text class='num'>{{ $money(item.price) }}</text></view>
 							<view class='vip-money acea-row row-middle'
 								v-if="item.is_vip && item.vip_price && item.vip_price > 0">
