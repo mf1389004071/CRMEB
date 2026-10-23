@@ -61,6 +61,18 @@ function baseRequest(url, method, data, {
 			data: data || {},
 			timeout: TIMEOUT,
 			success: (res) => {
+				// VN: 区域价开启但未选择有效区域 → 跳转选区页（data 为空，不是错误）
+				if (res.data && res.data.region_required === true) {
+					try {
+						const stack = getCurrentPages();
+						const cur = stack.length ? (stack[stack.length - 1].route || '') : '';
+						if (cur.indexOf('pages/region/select') === -1) {
+							uni.navigateTo({
+								url: '/pages/region/select'
+							});
+						}
+					} catch (e) {}
+				}
 				if (noVerify)
 					reslove(res.data, res);
 				else if (res.data.status == 200)

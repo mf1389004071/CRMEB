@@ -26,3 +26,4 @@
 /docker-compose/linux/mysql/log/
 crmeb.zip
 scripts/__pycache__/
+/crmeb/public/phpExcel/

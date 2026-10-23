@@ -29,6 +29,15 @@ export default {
   component: LayoutMain,
   children: [
     {
+      path: 'region_price/:id',
+      name: `${pre}regionPrice`,
+      meta: {
+        title: '商品区域价',
+        auth: ['admin-product-regionPrice'],
+      },
+      component: () => import('@/pages/product/regionPrice/index'),
+    },
+    {
       path: 'product_list',
       name: `${pre}productList`,
       meta: {
