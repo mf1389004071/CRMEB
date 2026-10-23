@@ -15,6 +15,7 @@ import { getLangJson, getLangVersion } from "@/api/user.js";
 import { mapGetters } from "vuex";
 import colors from "@/mixins/color.js";
 import Cache from "@/utils/cache";
+import { normalizeLang } from "@/utils/lang.js";
 import { applyTheme } from "@/utils/theme.js";
 
 export default {
@@ -151,7 +152,7 @@ export default {
       if (version != uni.getStorageSync("LANG_VERSION")) {
         getLangJson().then((res) => {
           let value = Object.keys(res.data)[0];
-          Cache.set("locale", Object.keys(res.data)[0]);
+          Cache.set("locale", normalizeLang(Object.keys(res.data)[0]));
           this.$i18n.setLocaleMessage(value, res.data[value]);
           uni.setStorageSync("localeJson", res.data);
         });

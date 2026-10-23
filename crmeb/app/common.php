@@ -1045,6 +1045,62 @@ if (!function_exists('get_thumb_water')) {
     }
 }
 
+if (!function_exists('normalize_lang_code')) {
+    /**
+     * 语言码规范化：兼容历史别名，统一为 zh-CN / vi-VN / en-US
+     * @param string $code
+     * @return string
+     */
+    function normalize_lang_code($code): string
+    {
+        $code = trim((string)$code);
+        if ($code === '') {
+            return '';
+        }
+        $key = strtolower(str_replace('_', '-', $code));
+        switch ($key) {
+            case 'vi':
+            case 'vi-vn':
+                return 'vi-VN';
+            case 'zh':
+            case 'zh-cn':
+            case 'zh-hans':
+            case 'zh-hans-cn':
+                return 'zh-CN';
+            case 'en':
+            case 'en-us':
+            case 'en-gb':
+                return 'en-US';
+        }
+        return $code;
+    }
+}
+
+if (!function_exists('current_lang_code')) {
+    /**
+     * 当前请求语言码（已规范化）：cb-lang 头 → 系统默认语言 → vi-VN
+     * @return string
+     */
+    function current_lang_code(): string
+    {
+        try {
+            $range = normalize_lang_code(app()->request->header('cb-lang'));
+            if ($range !== '') {
+                return $range;
+            }
+            $default = CacheService::remember('range_name', function () {
+                /** @var LangTypeServices $langTypeServices */
+                $langTypeServices = app()->make(LangTypeServices::class);
+                return $langTypeServices->value(['is_default' => 1], 'file_name');
+            });
+            $default = normalize_lang_code($default);
+            return $default !== '' ? $default : 'vi-VN';
+        } catch (\Throwable $e) {
+            return 'vi-VN';
+        }
+    }
+}
+
 if (!function_exists('getLang')) {
     /**
      * 多语言翻译函数：根据当前语言环境将传入的“中文语言标识”翻译成对应语言文本，并支持变量替换
@@ -1090,22 +1146,23 @@ if (!function_exists('getLang')) {
             /* --------------- 2. 确定当前语言范围（range） --------------- */
             $request = app()->request;
             // 优先取前端/接口指定的语言
+            // VN: 语言码统一规范化（zh-CN/vi-VN/en-US），默认语言 → vi-VN，不再参与 Accept-Language
+            $range = current_lang_code();
+            /* VN: 以下为原逻辑，停用保留
             $range = $request->header('cb-lang');
             if (!$range) {
-                // 未指定时，读取系统默认语言
                 $range = CacheService::remember('range_name', function () use ($langTypeServices) {
                     return $langTypeServices->value(['is_default' => 1], 'file_name');
                 });
                 if (!$range) {
-                    // 系统也未配置默认语言，则尝试使用浏览器 Accept-Language
                     if ($request->header('accept-language') !== null) {
                         $range = explode(',', $request->header('accept-language'))[0];
                     } else {
-                        // 最终兜底：简体中文
                         $range = 'zh-CN';
                     }
                 }
             }
+            */
 
             /* --------------- 3. 读取各类映射数据（带缓存） --------------- */
             // 中文 remarks => code 映射表，用于把传入的“中文标识”转成内部 code

@@ -19,7 +19,7 @@ import {
 	checkLogin
 } from '../libs/login';
 import store from '../store';
-import i18n from './lang.js';
+import i18n, { normalizeLang } from './lang.js';
 
 /**
  * 发送请求
@@ -44,7 +44,7 @@ function baseRequest(url, method, data, {
 
 	return new Promise((reslove, reject) => {
 		if (uni.getStorageSync('locale')) {
-			header['Cb-lang'] = uni.getStorageSync('locale')
+			header['Cb-lang'] = normalizeLang(uni.getStorageSync('locale'))
 		}
 		uni.request({
 			url: Url + '/api/' + url,

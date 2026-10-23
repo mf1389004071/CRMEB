@@ -179,6 +179,7 @@
 	import Routine from '@/libs/routine';
 	// #endif
 	import Cache from '@/utils/cache';
+	import { normalizeLang } from '@/utils/lang.js';
 	import colors from '@/mixins/color.js';
 	import appUpdate from "@/components/update/app-update.vue";
 	export default {
@@ -238,7 +239,8 @@
 		methods: {
 			getLangList() {
 				getLangList().then(res => {
-					this.array = res.data
+					// VN: 仅保留 zh-CN / vi-VN / en-US 三种语言
+					this.array = (res.data || []).filter(i => ['zh-CN', 'vi-VN', 'en-US'].indexOf(normalizeLang(i.value)) > -1)
 					this.setLang();
 				})
 			},
@@ -275,14 +277,14 @@
 			},
 			setLang() {
 				this.array.map((item, i) => {
-					if (this.$i18n.locale == item.value) {
+					if (normalizeLang(this.$i18n.locale) == normalizeLang(item.value)) {
 						this.setIndex = i
 					}
 				})
 			},
 			bindPickerChange(e, item) {
 				this.setIndex = e.detail.value
-				Cache.set('locale', this.array[this.setIndex].value)
+				Cache.set('locale', normalizeLang(this.array[this.setIndex].value))
 				getLangJson().then(res => {
 					uni.setStorageSync('localeJson', res.data);
 					this.$i18n.setLocaleMessage(this.array[this.setIndex].value, res.data[this.array[

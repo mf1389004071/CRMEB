@@ -654,11 +654,10 @@ class PublicController
         $langCountryServices = app()->make(LangCountryServices::class);
 
         $request = app()->request;
-        //获取接口传入的语言类型
+        // VN: 语言码规范化（cb-lang → 默认语言 → vi-VN）；以下为原逻辑，停用保留
+        /*
         if (!$range = $request->header('cb-lang')) {
-            //没有传入则使用系统默认语言显示
             if (!$range = $langTypeServices->value(['is_default' => 1], 'file_name')) {
-                //系统没有设置默认语言的话，根据浏览器语言显示，如果浏览器语言在库中找不到，则使用简体中文
                 if ($request->header('accept-language') !== null) {
                     $range = explode(',', $request->header('accept-language'))[0];
                 } else {
@@ -666,11 +665,16 @@ class PublicController
                 }
             }
         }
+        */
+        $range = current_lang_code();
         // 获取type_id
         $typeId = $langCountryServices->value(['code' => $range], 'type_id') ?: 1;
 
         // 获取缓存key
         $langData = $langTypeServices->getColumn(['status' => 1, 'is_del' => 0], 'file_name', 'id');
+        if (!isset($langData[$typeId])) {
+            $typeId = array_search('vi-VN', $langData) ?: 1;
+        }
         $langStr = 'api_lang_' . str_replace('-', '_', $langData[$typeId]);
 
         //读取当前语言的语言包
