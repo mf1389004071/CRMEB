@@ -14,6 +14,23 @@
 					</view>
 				</view>
 			</view>
+			<!-- VN: 到付订单履约进度 / 送达码 / 应收金额 -->
+			<view class="cod-panel" v-if="orderInfo.is_cod">
+				<view class="cod-steps">
+					<view class="cod-step" v-for="(s, i) in codSteps" :key="s.key" :class="{ on: i <= codStepIndex, cancel: orderInfo.is_cancel }">
+						<view class="dot"></view>
+						<view class="txt">{{ $t(s.label) }}</view>
+					</view>
+				</view>
+				<view class="cod-code" v-if="orderInfo.cod_code">
+					<view class="cod-code-tip">{{ $t(`送货员送达时请出示此码`) }}</view>
+					<view class="cod-code-num">{{ orderInfo.cod_code }}</view>
+				</view>
+				<view class="cod-amount">
+					<text>{{ $t(`应收金额(货到付款)`) }}</text>
+					<text class="num">{{ $t(`￥`) }}{{ orderInfo.cod_receivable }}</text>
+				</view>
+			</view>
 			<view class="refund-msg" v-if="[4, 5].includes(orderInfo.refund_type)">
 				<view v-if="orderInfo._status.refund_name != ''">
 					<view class="refund-msg-user">
@@ -47,7 +64,7 @@
 				<image src="@/static/images/line.jpg"></image>
 			</view>
 			<view class="mb-16" v-if="isGoodsReturn == false">
-				<view class="nav" v-if="is_gift != 2">
+				<view class="nav" v-if="is_gift != 2 && !orderInfo.is_cod">
 					<view class="navCon acea-row row-between-wrapper" v-if="!is_gift">
 						<view :class="status.type == 0 || status.type == -9 ? 'on' : ''">{{ $t(`待付款`) }}</view>
 						<view :class="status.type == 1 || status.type == 5 ? 'on' : ''">
@@ -467,8 +484,11 @@
 					<view class="more-btn" v-if="invoiceData" @click="aleartStatusChange">{{ $t(`查看发票`) }}</view>
 				</view>
 				<view class="right-btn">
-					<view class="qs-btn" v-if="status.type == 0 || status.type == -9" @click.stop="cancelOrder">
+					<view class="qs-btn" v-if="status.type == 0 || status.type == -9 || (orderInfo.is_cod && orderInfo.can_cancel)" @click.stop="cancelOrder">
 						{{ $t(`取消订单`) }}
+					</view>
+					<view class="qs-btn" v-if="orderInfo.is_cod && !orderInfo.can_cancel && !orderInfo.is_cancel && !orderInfo.paid" @click.stop="goContact">
+						{{ $t(`联系客服`) }}
 					</view>
 					<view class="bnt bg-color" v-if="status.type == 0" @tap="pay_open(orderInfo.order_id)">{{ $t(`立即付款`) }}</view>
 					<view
@@ -701,7 +721,23 @@ export default {
 			mpGiftImg: HTTP_REQUEST_URL + '/statics/images/gift_share.jpg'
 		};
 	},
-	computed: mapGetters(['isLogin']),
+	computed: {
+		...mapGetters(['isLogin']),
+		// VN: 到付订单履约步骤
+		codSteps() {
+			return [
+				{ key: 'cod_pending', label: '待确认' },
+				{ key: 'cod_stockup', label: '备货中' },
+				{ key: 'cod_delivering', label: '发货中' },
+				{ key: 'cod_delivered', label: '已送达' },
+				{ key: 'cod_finished', label: '已完成' }
+			];
+		},
+		codStepIndex() {
+			const idx = this.codSteps.findIndex((s) => s.key === this.orderInfo.fulfil_key);
+			return idx < 0 ? 0 : idx;
+		}
+	},
 	onLoad: function (options) {
 		if (options.order_id) {
 			this.$set(this, 'order_id', options.order_id);
@@ -1382,6 +1418,11 @@ export default {
 						});
 					}
 				}
+			});
+		},
+		goContact() {
+			uni.navigateTo({
+				url: '/pages/users/contact/index'
 			});
 		},
 		cancelOrder() {
@@ -2500,5 +2541,70 @@ export default {
 	position: absolute;
 	bottom: 40000rpx;
 	right: 30000rpx;
+}
+</style>
+
+<style scoped lang="scss">
+/* VN: 到付订单面板 */
+.cod-panel {
+	background: #fff;
+	margin: 16rpx 20rpx;
+	padding: 24rpx;
+	border-radius: 16rpx;
+
+	.cod-steps {
+		display: flex;
+		justify-content: space-between;
+		.cod-step {
+			flex: 1;
+			text-align: center;
+			font-size: 22rpx;
+			color: #999;
+			.dot {
+				width: 20rpx;
+				height: 20rpx;
+				border-radius: 50%;
+				background: #ddd;
+				margin: 0 auto 8rpx;
+			}
+			&.on {
+				color: #e93323;
+				.dot {
+					background: #e93323;
+				}
+			}
+			&.cancel {
+				color: #bbb;
+				.dot {
+					background: #ddd;
+				}
+			}
+		}
+	}
+	.cod-code {
+		margin-top: 24rpx;
+		text-align: center;
+		.cod-code-tip {
+			font-size: 24rpx;
+			color: #666;
+		}
+		.cod-code-num {
+			font-size: 72rpx;
+			font-weight: 700;
+			letter-spacing: 12rpx;
+			color: #e93323;
+			margin-top: 8rpx;
+		}
+	}
+	.cod-amount {
+		margin-top: 20rpx;
+		display: flex;
+		justify-content: space-between;
+		font-size: 28rpx;
+		.num {
+			font-weight: 600;
+			color: #e93323;
+		}
+	}
 }
 </style>

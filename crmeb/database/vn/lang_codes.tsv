@@ -36,3 +36,18 @@ front	商家正在备货,请耐心等待	Cửa hàng đang chuẩn bị hàng, v
 front	商品正在配送中,请保持电话畅通	Hàng đang được giao, vui lòng giữ điện thoại thông suốt	Your goods are on the way, please keep your phone available
 front	已送达,请按应付金额支付货款	Đã giao hàng, vui lòng thanh toán đúng số tiền phải trả	Delivered, please pay the amount due
 front	已送达,感谢您的支持	Đã giao hàng, cảm ơn bạn đã ủng hộ	Delivered, thank you for your support
+front	送货员送达时请出示此码	Vui lòng đưa mã này cho nhân viên giao hàng khi nhận hàng	Please show this code to the courier upon delivery
+front	应收金额(货到付款)	Số tiền phải thu (thanh toán khi nhận hàng)	Amount due (cash on delivery)
+front	联系客服	Liên hệ CSKH	Contact support
+front	已完成	Hoàn thành	Completed
+front	送达核销码或订单号	Mã xác nhận giao hàng hoặc mã đơn hàng	Delivery code or order number
+front	请输入6位核销码或订单号	Nhập mã xác nhận 6 số hoặc mã đơn hàng	Enter the 6-digit code or order number
+front	查询订单	Tra cứu đơn hàng	Look up order
+front	确认送达核销	Xác nhận đã giao hàng	Confirm delivery
+front	订单号	Mã đơn hàng	Order No.
+front	收款状态	Trạng thái thu tiền	Collection status
+front	已收款	Đã thu tiền	Collected
+front	未收款	Chưa thu tiền	Not collected
+front	核销成功	Xác nhận thành công	Verified successfully
+front	请向客户收取货款，并在后台确认收款	Vui lòng thu tiền hàng từ khách và xác nhận thu tiền trên hệ thống	Please collect payment from the customer and confirm it in the backend
+front	请输入客户出示的6位核销码	Vui lòng nhập mã 6 số khách hàng cung cấp	Please enter the 6-digit code shown by the customer

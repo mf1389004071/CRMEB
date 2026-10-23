@@ -228,6 +228,96 @@ SELECT v.tid, v.code, v.remarks, v.explain_, v.is_admin FROM (
   SELECT @t_vi AS tid, '已送达,感谢您的支持' AS code, '[待审]已送达,感谢您的支持' AS remarks, 'Đã giao hàng, cảm ơn bạn đã ủng hộ' AS explain_, 0 AS is_admin, '已送达,感谢您的支持' AS zh_
   UNION ALL
   SELECT @t_en AS tid, '已送达,感谢您的支持' AS code, '已送达,感谢您的支持' AS remarks, 'Delivered, thank you for your support' AS explain_, 0 AS is_admin, '已送达,感谢您的支持' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '送货员送达时请出示此码' AS code, '送货员送达时请出示此码' AS remarks, '送货员送达时请出示此码' AS explain_, 0 AS is_admin, '送货员送达时请出示此码' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '送货员送达时请出示此码' AS code, '[待审]送货员送达时请出示此码' AS remarks, 'Vui lòng đưa mã này cho nhân viên giao hàng khi nhận hàng' AS explain_, 0 AS is_admin, '送货员送达时请出示此码' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '送货员送达时请出示此码' AS code, '送货员送达时请出示此码' AS remarks, 'Please show this code to the courier upon delivery' AS explain_, 0 AS is_admin, '送货员送达时请出示此码' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '应收金额(货到付款)' AS code, '应收金额(货到付款)' AS remarks, '应收金额(货到付款)' AS explain_, 0 AS is_admin, '应收金额(货到付款)' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '应收金额(货到付款)' AS code, '[待审]应收金额(货到付款)' AS remarks, 'Số tiền phải thu (thanh toán khi nhận hàng)' AS explain_, 0 AS is_admin, '应收金额(货到付款)' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '应收金额(货到付款)' AS code, '应收金额(货到付款)' AS remarks, 'Amount due (cash on delivery)' AS explain_, 0 AS is_admin, '应收金额(货到付款)' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '联系客服' AS code, '联系客服' AS remarks, '联系客服' AS explain_, 0 AS is_admin, '联系客服' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '联系客服' AS code, '[待审]联系客服' AS remarks, 'Liên hệ CSKH' AS explain_, 0 AS is_admin, '联系客服' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '联系客服' AS code, '联系客服' AS remarks, 'Contact support' AS explain_, 0 AS is_admin, '联系客服' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '已完成' AS code, '已完成' AS remarks, '已完成' AS explain_, 0 AS is_admin, '已完成' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '已完成' AS code, '[待审]已完成' AS remarks, 'Hoàn thành' AS explain_, 0 AS is_admin, '已完成' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '已完成' AS code, '已完成' AS remarks, 'Completed' AS explain_, 0 AS is_admin, '已完成' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '送达核销码或订单号' AS code, '送达核销码或订单号' AS remarks, '送达核销码或订单号' AS explain_, 0 AS is_admin, '送达核销码或订单号' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '送达核销码或订单号' AS code, '[待审]送达核销码或订单号' AS remarks, 'Mã xác nhận giao hàng hoặc mã đơn hàng' AS explain_, 0 AS is_admin, '送达核销码或订单号' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '送达核销码或订单号' AS code, '送达核销码或订单号' AS remarks, 'Delivery code or order number' AS explain_, 0 AS is_admin, '送达核销码或订单号' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '请输入6位核销码或订单号' AS code, '请输入6位核销码或订单号' AS remarks, '请输入6位核销码或订单号' AS explain_, 0 AS is_admin, '请输入6位核销码或订单号' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '请输入6位核销码或订单号' AS code, '[待审]请输入6位核销码或订单号' AS remarks, 'Nhập mã xác nhận 6 số hoặc mã đơn hàng' AS explain_, 0 AS is_admin, '请输入6位核销码或订单号' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '请输入6位核销码或订单号' AS code, '请输入6位核销码或订单号' AS remarks, 'Enter the 6-digit code or order number' AS explain_, 0 AS is_admin, '请输入6位核销码或订单号' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '查询订单' AS code, '查询订单' AS remarks, '查询订单' AS explain_, 0 AS is_admin, '查询订单' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '查询订单' AS code, '[待审]查询订单' AS remarks, 'Tra cứu đơn hàng' AS explain_, 0 AS is_admin, '查询订单' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '查询订单' AS code, '查询订单' AS remarks, 'Look up order' AS explain_, 0 AS is_admin, '查询订单' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '确认送达核销' AS code, '确认送达核销' AS remarks, '确认送达核销' AS explain_, 0 AS is_admin, '确认送达核销' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '确认送达核销' AS code, '[待审]确认送达核销' AS remarks, 'Xác nhận đã giao hàng' AS explain_, 0 AS is_admin, '确认送达核销' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '确认送达核销' AS code, '确认送达核销' AS remarks, 'Confirm delivery' AS explain_, 0 AS is_admin, '确认送达核销' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '订单号' AS code, '订单号' AS remarks, '订单号' AS explain_, 0 AS is_admin, '订单号' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '订单号' AS code, '[待审]订单号' AS remarks, 'Mã đơn hàng' AS explain_, 0 AS is_admin, '订单号' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '订单号' AS code, '订单号' AS remarks, 'Order No.' AS explain_, 0 AS is_admin, '订单号' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '收款状态' AS code, '收款状态' AS remarks, '收款状态' AS explain_, 0 AS is_admin, '收款状态' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '收款状态' AS code, '[待审]收款状态' AS remarks, 'Trạng thái thu tiền' AS explain_, 0 AS is_admin, '收款状态' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '收款状态' AS code, '收款状态' AS remarks, 'Collection status' AS explain_, 0 AS is_admin, '收款状态' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '已收款' AS code, '已收款' AS remarks, '已收款' AS explain_, 0 AS is_admin, '已收款' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '已收款' AS code, '[待审]已收款' AS remarks, 'Đã thu tiền' AS explain_, 0 AS is_admin, '已收款' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '已收款' AS code, '已收款' AS remarks, 'Collected' AS explain_, 0 AS is_admin, '已收款' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '未收款' AS code, '未收款' AS remarks, '未收款' AS explain_, 0 AS is_admin, '未收款' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '未收款' AS code, '[待审]未收款' AS remarks, 'Chưa thu tiền' AS explain_, 0 AS is_admin, '未收款' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '未收款' AS code, '未收款' AS remarks, 'Not collected' AS explain_, 0 AS is_admin, '未收款' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '核销成功' AS code, '核销成功' AS remarks, '核销成功' AS explain_, 0 AS is_admin, '核销成功' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '核销成功' AS code, '[待审]核销成功' AS remarks, 'Xác nhận thành công' AS explain_, 0 AS is_admin, '核销成功' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '核销成功' AS code, '核销成功' AS remarks, 'Verified successfully' AS explain_, 0 AS is_admin, '核销成功' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '请向客户收取货款，并在后台确认收款' AS code, '请向客户收取货款，并在后台确认收款' AS remarks, '请向客户收取货款，并在后台确认收款' AS explain_, 0 AS is_admin, '请向客户收取货款，并在后台确认收款' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '请向客户收取货款，并在后台确认收款' AS code, '[待审]请向客户收取货款，并在后台确认收款' AS remarks, 'Vui lòng thu tiền hàng từ khách và xác nhận thu tiền trên hệ thống' AS explain_, 0 AS is_admin, '请向客户收取货款，并在后台确认收款' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '请向客户收取货款，并在后台确认收款' AS code, '请向客户收取货款，并在后台确认收款' AS remarks, 'Please collect payment from the customer and confirm it in the backend' AS explain_, 0 AS is_admin, '请向客户收取货款，并在后台确认收款' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '请输入客户出示的6位核销码' AS code, '请输入客户出示的6位核销码' AS remarks, '请输入客户出示的6位核销码' AS explain_, 0 AS is_admin, '请输入客户出示的6位核销码' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '请输入客户出示的6位核销码' AS code, '[待审]请输入客户出示的6位核销码' AS remarks, 'Vui lòng nhập mã 6 số khách hàng cung cấp' AS explain_, 0 AS is_admin, '请输入客户出示的6位核销码' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '请输入客户出示的6位核销码' AS code, '请输入客户出示的6位核销码' AS remarks, 'Please enter the 6-digit code shown by the customer' AS explain_, 0 AS is_admin, '请输入客户出示的6位核销码' AS zh_
 ) v
 WHERE v.tid IS NOT NULL AND NOT EXISTS (SELECT 1 FROM eb_lang_code e WHERE e.type_id = v.tid AND e.code = v.code) AND NOT EXISTS (SELECT 1 FROM eb_lang_code z WHERE z.type_id = @t_zh AND z.remarks = v.zh_ AND z.code <> v.code);
 

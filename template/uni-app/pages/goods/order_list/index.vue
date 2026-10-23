@@ -103,7 +103,7 @@
 						</view>
 					</view>
 					<view class="bottom acea-row row-right row-middle">
-						<view class="bnt cancelBnt" v-if="(item._status._type == 0 || item._status._type == 9) && item.is_cancel == 0" @click="cancelOrder(index, item.order_id)">
+						<view class="bnt cancelBnt" v-if="((item._status._type == 0 || item._status._type == 9) && item.is_cancel == 0 && !item.is_cod) || (item.is_cod && item.can_cancel)" @click="cancelOrder(index, item.order_id)">
 							{{ $t(`取消订单`) }}
 						</view>
 						<view class="bnt cancelBnt" v-if="item._status._type == 4 && item.is_cancel == 0" @click="delOrder(item.order_id, index)">{{ $t(`删除订单`) }}</view>

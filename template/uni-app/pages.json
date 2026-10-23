@@ -1233,6 +1233,12 @@
 			"root": "pages/admin",
 			"name": "adminOrder",
 			"pages": [{
+					"path": "codVerify/index",
+					"style": {
+						"navigationBarTitleText": "送达核销"
+					}
+				},
+				{
 					"path": "distribution/index",
 					"style": {
 						"navigationStyle": "custom",

@@ -8,3 +8,13 @@ export function getVnContacts() {
 		noAuth: true
 	});
 }
+
+/** 员工端：到付订单核销前查询（code 或 order_id） */
+export function codVerifyDetail(data) {
+	return request.get("admin/order/cod/detail", data);
+}
+
+/** 员工端：到付订单送达核销 */
+export function codVerify(data) {
+	return request.post("admin/order/cod/verify", data);
+}

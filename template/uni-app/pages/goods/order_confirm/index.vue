@@ -304,6 +304,7 @@
 		orderConfirm,
 		getCouponsOrderPrice,
 		orderCreate,
+		orderPay,
 		postOrderComputed,
 		checkShipping,
 		getGiftOrderDetail,
@@ -1151,6 +1152,23 @@
 			payment(data) {
 				let that = this;
 				orderCreate(that.orderKey, data).then(res => {
+					// VN: 越南模式只有货到付款，下单成功后立即以 offline 方式确认，跳订单详情（用 key 查询，pay 时 order_id 可能变化）
+					if (that.vnMode) {
+						orderPay({
+							uni: res.data.result.orderId,
+							paytype: 'offline'
+						}).then(() => {
+							uni.reLaunch({
+								url: `/pages/goods/order_details/index?order_id=${res.data.result.key || that.orderKey}`
+							});
+						}).catch(err => {
+							uni.hideLoading();
+							that.$util.Tips({
+								title: err
+							});
+						});
+						return;
+					}
 					let url = `/pages/goods/cashier/index?order_id=${res.data.result.orderId}&from_type=order`
 					uni.reLaunch({
 						url
