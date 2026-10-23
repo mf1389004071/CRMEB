@@ -11,6 +11,8 @@ class VnFx
     public static function user(int $uid = 0): int
     {
         $uid = $uid ?: self::$uid;
+        // 清缓存：重置下单限频计数等请求级状态（注意：登录 token 也在缓存中，须在签发 token 之前调用）
+        \think\facade\Cache::clear();
         if (!Db::name('user')->where('uid', $uid)->find()) {
             Db::name('user')->insert([
                 'uid' => $uid, 'account' => 'vnfx' . $uid, 'nickname' => 'VnFx' . $uid, 'phone' => '0912000' . $uid,
