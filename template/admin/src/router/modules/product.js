@@ -29,6 +29,15 @@ export default {
   component: LayoutMain,
   children: [
     {
+      path: 'i18n/:type/:id',
+      name: `${pre}i18nEdit`,
+      meta: {
+        title: '多语内容',
+        auth: ['admin-product-i18n'],
+      },
+      component: () => import('@/pages/product/i18nEdit/index'),
+    },
+    {
       path: 'region_price/:id',
       name: `${pre}regionPrice`,
       meta: {

@@ -28,6 +28,15 @@ export default {
   component: LayoutMain,
   children: [
     {
+      path: 'i18n_manage/index',
+      name: `${pre}i18nManage`,
+      meta: {
+        auth: ['admin-setting-i18n'],
+        title: '译文管理',
+      },
+      component: () => import('@/pages/setting/i18nManage/index'),
+    },
+    {
       path: 'region/index',
       name: `${pre}region`,
       meta: {

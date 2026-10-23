@@ -75,9 +75,11 @@
             </el-switch>
           </template>
         </vxe-table-column>
-        <vxe-table-column field="date" title="操作" width="120" fixed="right">
+        <vxe-table-column field="date" title="操作" width="160" fixed="right">
           <template v-slot="{ row, index }">
             <a v-db-click @click="edit(row)">编辑</a>
+            <el-divider direction="vertical"></el-divider>
+            <router-link :to="{ path: $routeProStr + '/product/i18n/category/' + row.id }"><a>多语</a></router-link>
             <el-divider direction="vertical"></el-divider>
             <a v-db-click @click="del(row, '删除商品分类', index)">删除</a>
           </template>

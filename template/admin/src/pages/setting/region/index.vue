@@ -49,8 +49,11 @@
         <el-table-column label="排序(大者靠前)" width="130">
           <template slot-scope="scope"><el-input-number size="mini" :controls="false" v-model="scope.row.sort" style="width: 80px" @change="() => saveSort(scope.row)" /></template>
         </el-table-column>
-        <el-table-column label="编辑" width="70">
-          <template slot-scope="scope"><el-button type="text" size="small" @click="openEdit(scope.row)">编辑</el-button></template>
+        <el-table-column label="编辑" width="120">
+          <template slot-scope="scope">
+            <el-button type="text" size="small" @click="openEdit(scope.row)">编辑</el-button>
+            <el-button type="text" size="small" @click="$router.push({ path: $routeProStr + '/product/i18n/city/' + scope.row.city_id })">多语</el-button>
+          </template>
         </el-table-column>
       </el-table>
       <div class="acea-row row-right page">

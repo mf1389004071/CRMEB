@@ -44,3 +44,30 @@ Route::group('product/region_price', function () {
     \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
     \app\adminapi\middleware\AdminLogMiddleware::class
 ])->option(['mark' => 'regionPrice', 'mark_name' => '商品区域价']);
+
+/**
+ * VN: 内容多语路由
+ */
+Route::group('i18n', function () {
+    Route::get('missing', 'v1.vn.I18n/missing')->option(['real_name' => '缺译文清单']);
+    Route::get('export', 'v1.vn.I18n/export')->option(['real_name' => '译文导出']);
+    Route::post('import', 'v1.vn.I18n/import')->option(['real_name' => '译文导入']);
+    Route::get(':type/:id', 'v1.vn.I18n/read')->option(['real_name' => '译文读取']);
+    Route::post(':type/:id/machine', 'v1.vn.I18n/machine')->option(['real_name' => '译文机翻']);
+    Route::post(':type/:id', 'v1.vn.I18n/write')->option(['real_name' => '译文保存']);
+})->middleware([
+    \app\http\middleware\AllowOriginMiddleware::class,
+    \app\adminapi\middleware\AdminAuthTokenMiddleware::class,
+    \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
+    \app\adminapi\middleware\AdminLogMiddleware::class
+])->option(['mark' => 'i18n', 'mark_name' => '内容多语']);
+
+Route::group('product/i18n', function () {
+    Route::get(':id', 'v1.vn.I18n/productRead')->option(['real_name' => '商品译文读取']);
+    Route::post(':id', 'v1.vn.I18n/productWrite')->option(['real_name' => '商品译文保存']);
+})->middleware([
+    \app\http\middleware\AllowOriginMiddleware::class,
+    \app\adminapi\middleware\AdminAuthTokenMiddleware::class,
+    \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
+    \app\adminapi\middleware\AdminLogMiddleware::class
+])->option(['mark' => 'productI18n', 'mark_name' => '商品多语']);
