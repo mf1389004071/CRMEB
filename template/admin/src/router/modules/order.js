@@ -33,6 +33,15 @@ export default {
       component: () => import('@/pages/order/orderList/index'),
     },
     {
+      path: 'cod/list',
+      name: `${pre}cod`,
+      meta: {
+        auth: ['admin-order-cod'],
+        title: '到付订单',
+      },
+      component: () => import('@/pages/order/codList/index'),
+    },
+    {
       path: 'offline',
       name: `${pre}offline`,
       meta: {

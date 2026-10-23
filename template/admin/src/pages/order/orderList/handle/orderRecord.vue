@@ -12,6 +12,11 @@
             <span>{{ scope.row.change_message }}</span>
           </template>
         </el-table-column>
+        <el-table-column label="操作人" min-width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.operator_name || '-' }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="操作时间" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.change_time }}</span>
