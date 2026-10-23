@@ -58,7 +58,7 @@ class CodOrderServices extends BaseServices
             'cod_delivery_code' => $this->genDeliveryCode(),
             'cod_receivable'    => $row['pay_price'],
             'lang'              => current_lang_code(),
-            'region_id'         => function_exists('current_region_id') ? (int)current_region_id() : 0,
+            'region_id'         => (int)$row['region_id'] ?: (function_exists('current_region_id') ? (int)current_region_id() : 0),
             'client_ip'         => app()->make(OrderRiskServices::class)->clientIp(),
         ];
         if (class_exists(\app\services\system\MoneyServices::class)) {

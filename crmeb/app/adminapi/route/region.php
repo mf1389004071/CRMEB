@@ -28,3 +28,19 @@ Route::group('region', function () {
     \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
     \app\adminapi\middleware\AdminLogMiddleware::class
 ])->option(['mark' => 'region', 'mark_name' => '配送区域']);
+
+/**
+ * VN: 商品区域价路由（URL 前缀 product/region_price）
+ */
+Route::group('product/region_price', function () {
+    Route::get('template', 'v1.vn.ProductRegionPrice/template')->option(['real_name' => '区域价导入模板']);
+    Route::post('import', 'v1.vn.ProductRegionPrice/import')->option(['real_name' => '区域价Excel导入']);
+    Route::get('export', 'v1.vn.ProductRegionPrice/export')->option(['real_name' => '区域价Excel导出']);
+    Route::get(':product_id', 'v1.vn.ProductRegionPrice/read')->option(['real_name' => '商品区域价读取']);
+    Route::post(':product_id', 'v1.vn.ProductRegionPrice/save')->option(['real_name' => '商品区域价保存']);
+})->middleware([
+    \app\http\middleware\AllowOriginMiddleware::class,
+    \app\adminapi\middleware\AdminAuthTokenMiddleware::class,
+    \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
+    \app\adminapi\middleware\AdminLogMiddleware::class
+])->option(['mark' => 'regionPrice', 'mark_name' => '商品区域价']);

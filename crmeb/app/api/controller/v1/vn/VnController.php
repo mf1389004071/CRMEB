@@ -21,6 +21,18 @@ use app\Request;
 class VnController
 {
     /**
+     * 清空当前用户购物车（切换配送区域时调用）
+     * @param Request $request
+     * @return mixed
+     */
+    public function clearCart(Request $request)
+    {
+        $uid = (int)$request->uid();
+        $n = \app\model\order\StoreCart::where(['uid' => $uid, 'is_new' => 0, 'is_pay' => 0])->delete();
+        return app('json')->success(['cleared' => $n]);
+    }
+
+    /**
      * 联系方式列表（组合数据 vn_contact，仅 status=1，由 sys_data 过滤）
      * @param Request $request
      * @return mixed

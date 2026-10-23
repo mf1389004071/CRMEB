@@ -59,6 +59,10 @@ class VnFx
         Db::name('store_product_attr')->insert([
             'product_id' => $pid, 'attr_name' => '规格', 'attr_values' => implode(',', array_column($skus, 'suk')), 'type' => 0,
         ]);
+        Db::name('store_product_attr_result')->insert([
+            'product_id' => $pid, 'type' => 0, 'change_time' => time(),
+            'result' => json_encode(['attr' => [['value' => '规格', 'detailValue' => '', 'attrHidden' => '', 'detail' => array_column($skus, 'suk')]], 'value' => []], JSON_UNESCAPED_UNICODE),
+        ]);
         return ['id' => $pid, 'uniques' => $uniques];
     }
 
@@ -69,6 +73,7 @@ class VnFx
         Db::name('store_product_attr_value')->where('product_id', $pid)->delete();
         Db::name('store_product_attr_result')->where('product_id', $pid)->delete();
         Db::name('store_cart')->where('product_id', $pid)->delete();
+        Db::name('store_product_region_price')->where('product_id', $pid)->delete();
     }
 
     public static function dropOrder(int $oid): void

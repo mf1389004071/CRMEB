@@ -48,6 +48,10 @@ class StoreProductController
      */
     public function lst(Request $request, StoreCategoryServices $services)
     {
+        // VN: 区域价开启但未选区域 → data 为空 + region_required=true，前端跳选区页
+        if ($regionResp = region_required_json()) {
+            return $regionResp;
+        }
         $where = $request->getMore([
             [['sid', 'd'], 0],
             [['cid', 'd'], 0],
@@ -145,6 +149,9 @@ class StoreProductController
      */
     public function product_hot(Request $request)
     {
+        if ($regionResp = region_required_json()) {
+            return $regionResp;
+        }
         $vip_user = $request->uid() ? app()->make(UserServices::class)->value(['uid' => $request->uid()], 'is_money_level') : 0;
         $list = $this->services->getProducts(['is_hot' => 1, 'is_show' => 1, 'is_del' => 0, 'vip_user' => $vip_user]);
         return app('json')->success(get_thumb_water($list, 'mid'));
@@ -161,6 +168,9 @@ class StoreProductController
      */
     public function groom_list(Request $request, $type)
     {
+        if ($regionResp = region_required_json()) {
+            return $regionResp;
+        }
         $info['banner'] = [];
         $info['list'] = [];
         if ($type == 1) {//TODO 精品推荐

@@ -8,11 +8,13 @@ use think\facade\Db;
 $B = VnFx::base();
 $uid = VnFx::user();
 $addrId = VnFx::address($uid);
-$p = VnFx::product(880101, 'E2E-Cabbage', [['suk' => 'default', 'price' => 30000, 'stock' => 10]]);
-$unique = $p['uniques']['default'];
+$p = VnFx::product(880101, 'E2E-Cabbage', [['suk' => '默认', 'price' => 99999, 'stock' => 10]]);
+$unique = $p['uniques']['默认'];
+// 区域价：Ba Đình 区 30000（主表价 99999 不应被使用）
+Db::name('store_product_region_price')->insert(['product_id' => 880101, 'unique' => $unique, 'city_id' => 911001, 'price' => 30000, 'ot_price' => 0, 'stock' => null, 'status' => 1, 'add_time' => time(), 'update_time' => time()]);
 $ut = VnFx::userToken($uid);
 $at = VnFx::adminToken();
-$hdr = ['Cb-lang: vi-VN'];
+$hdr = ['Cb-lang: vi-VN', 'Cb-region: 911001'];
 
 // 1) 加购
 $r = VnFx::http('POST', "$B/api/cart/add", $ut, ['productId' => 880101, 'cartNum' => 2, 'uniqueId' => $unique, 'new' => 1], $hdr);
@@ -83,6 +85,7 @@ t_assert($flow >= 1, 'capital flow recorded for collection');
 
 // 清理
 VnFx::dropOrder($oid);
+Db::name('store_product_region_price')->where('product_id', 880101)->delete();
 VnFx::dropProduct(880101);
 Db::name('user_address')->where('uid', $uid)->delete();
 Db::name('store_cart')->where('uid', $uid)->delete();

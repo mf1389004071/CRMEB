@@ -219,6 +219,31 @@ class UserController
         $where['uid'] = (int)$request->uid();
         $where['type'] = 'visit';
         $result = $services->getList($where, 'product_id', 'id,product_id,max(add_time) as add_time');
+        // VN: 区域价——足迹商品价格按当前区域展示，区域内不可售的不展示
+        if (region_pricing_active() && !empty($result['list'])) {
+            $rps = app()->make(\app\services\product\RegionPriceServices::class);
+            $pids = [];
+            foreach ($result['list'] as $it) {
+                $pids[] = (int)($it['product_id'] ?? $it['product']['id'] ?? 0);
+            }
+            $map = $rps->resolveProducts($pids, current_region_id());
+            $kept = [];
+            foreach ($result['list'] as $it) {
+                $pid = (int)($it['product_id'] ?? $it['product']['id'] ?? 0);
+                $skus = $map[$pid] ?? [];
+                if (!$skus) continue;
+                $min = null;
+                foreach ($skus as $sv) {
+                    if ($min === null || bccomp($sv['price'], $min['price'], 2) < 0) $min = $sv;
+                }
+                if (isset($it['product']) && is_array($it['product'])) {
+                    $it['product']['price'] = $min['price'];
+                    $it['product']['ot_price'] = $min['ot_price'];
+                }
+                $kept[] = $it;
+            }
+            $result['list'] = $kept;
+        }
         $time_data = [];
         if ($result['list']) {
             foreach ($result['list'] as $key => &$item) {

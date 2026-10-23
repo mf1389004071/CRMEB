@@ -35,3 +35,11 @@ Route::group(function () {
     ->middleware(\app\api\middleware\AuthTokenMiddleware::class, true)
     ->middleware(\app\api\middleware\CustomerMiddleware::class)
     ->option(['mark' => 'admin', 'mark_name' => '移动端订单管理']);
+
+// 登录用户（无需员工权限）
+Route::group(function () {
+    Route::post('cart/clear_all', 'v1.vn.VnController/clearCart')->option(['real_name' => '清空购物车(切换区域)']);
+})->middleware(\app\http\middleware\AllowOriginMiddleware::class)
+    ->middleware(\app\api\middleware\StationOpenMiddleware::class)
+    ->middleware(\app\api\middleware\AuthTokenMiddleware::class, true)
+    ->middleware(\app\api\middleware\RegionMiddleware::class);

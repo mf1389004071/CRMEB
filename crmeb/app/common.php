@@ -1067,6 +1067,39 @@ if (!function_exists('region_pricing_enabled')) {
     }
 }
 
+if (!function_exists('region_pricing_active')) {
+    /**
+     * 当前请求是否需要按区域价过滤：区域价开启 且 是 H5 api 应用请求（后台 adminapi/CLI 不按区域过滤）
+     * @return bool
+     */
+    function region_pricing_active(): bool
+    {
+        if (!region_pricing_enabled()) {
+            return false;
+        }
+        try {
+            return app('http')->getName() === 'api';
+        } catch (\Throwable $e) {
+            return false;
+        }
+    }
+}
+
+if (!function_exists('region_required_json')) {
+    /**
+     * 区域价开启但请求未选择有效区域时的统一响应：data 为空 + 顶层 region_required=true（不用 HTTP 错误码）
+     * 无需拦截时返回 null
+     * @return \think\Response|null
+     */
+    function region_required_json()
+    {
+        if (region_pricing_active() && current_region_id() <= 0) {
+            return \think\Response::create(['status' => 200, 'msg' => 'success', 'data' => [], 'region_required' => true], 'json');
+        }
+        return null;
+    }
+}
+
 if (!function_exists('current_region_id')) {
     /**
      * 当前请求的配送区域 city_id（Cb-region 头）。无效/未开放返回 0。

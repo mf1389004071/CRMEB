@@ -583,6 +583,9 @@ class StoreOrderRefundServices extends BaseServices
         /** @var StoreAdvanceServices $advanceServices */
         $advanceServices = app()->make(StoreAdvanceServices::class);
         $cartInfo = $cartServices->getCartInfoList(['cart_id' => $order['cart_id']], ['cart_info']);
+        // VN: 区域库存回退使用订单的 region_id 上下文（后台取消/定时取消没有区域请求头）
+        $vnOldRegion = \app\services\product\RegionPriceServices::enterRegion((int)($order['region_id'] ?? 0));
+        try {
         foreach ($cartInfo as $cart) {
             $cart['cart_info'] = is_array($cart['cart_info']) ? $cart['cart_info'] : json_decode($cart['cart_info'], true);
             //增库存减销量
@@ -597,6 +600,9 @@ class StoreOrderRefundServices extends BaseServices
             } else {
                 $res5 = $res5 && $services->incProductStock($cart_num, (int)$cart['cart_info']['productInfo']['id'], $unique);
             }
+        }
+        } finally {
+            \app\services\product\RegionPriceServices::leaveRegion($vnOldRegion);
         }
         return $res5;
     }

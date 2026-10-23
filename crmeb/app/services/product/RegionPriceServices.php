@@ -49,6 +49,21 @@ class RegionPriceServices extends BaseServices
         }
     }
 
+    /**
+     * 进入区域上下文（不使用闭包的场景），返回旧值供 leaveRegion 还原
+     */
+    public static function enterRegion(int $regionId): ?int
+    {
+        $old = self::$contextRegion;
+        self::$contextRegion = $regionId;
+        return $old;
+    }
+
+    public static function leaveRegion(?int $old): void
+    {
+        self::$contextRegion = $old;
+    }
+
     public function enabled(): bool
     {
         return region_pricing_enabled();

@@ -152,6 +152,10 @@ class StoreOrderCreateServices extends BaseServices
         if (!$cartGroup) {
             throw new ApiException('订单已过期,请刷新当前页面');
         }
+        // VN: 区域价——下单前以服务端当前区域价/库存重新校验每一行（忽略任何前端价格）
+        if (region_pricing_active()) {
+            app()->make(\app\services\product\RegionPriceServices::class)->assertCartMatches($cartGroup['cartInfo'], current_region_id());
+        }
         //下单前砍价验证
         if ($bargainId) {
             $bargainServices->checkBargainUser((int)$bargainId, $uid);
@@ -281,6 +285,8 @@ class StoreOrderCreateServices extends BaseServices
             'division_id' => $userInfo['division_id'],
             'agent_id' => $userInfo['agent_id'],
             'staff_id' => $userInfo['staff_id'],
+            // VN: 下单区域（区域价订单；回退库存时据此定位区域库存行）
+            'region_id' => region_pricing_active() ? current_region_id() : 0,
         ];
 
         if ($shippingType == 2) {

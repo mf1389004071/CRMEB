@@ -86,3 +86,8 @@ front	切换配送区域将清空购物车，是否继续？	Đổi khu vực gi
 front	配送区域	Khu vực giao hàng	Delivery region
 front	请选择配送区域	Vui lòng chọn khu vực giao hàng	Please select a delivery region
 front	选择配送区域	Chọn khu vực giao hàng	Select delivery region
+api	请先选择配送区域	Vui lòng chọn khu vực giao hàng trước	Please select a delivery region first
+api	当前区域暂不销售该商品	Khu vực hiện tại tạm thời không bán sản phẩm này	This product is not sold in the current region
+api	商品 {:name} 当前区域不可售	Sản phẩm {:name} không được bán tại khu vực hiện tại	Product {:name} is not available in the current region
+api	商品价格已变化，请重新确认订单	Giá sản phẩm đã thay đổi, vui lòng xác nhận lại đơn hàng	Product price has changed, please re-confirm the order
+api	该商品库存不足{:num}	Sản phẩm không đủ tồn kho {:num}	Insufficient stock for this product {:num}

@@ -111,6 +111,18 @@ class StoreProduct extends BaseModel
     }
 
     /**
+     * VN: 配送区域可售范围（region_id>0：当前区域祖先链上有价目，或允许全国价）
+     * @param Model $query
+     * @param $value
+     */
+    public function searchRegionIdAttr($query, $value)
+    {
+        if ((int)$value > 0) {
+            app()->make(\app\services\product\RegionPriceServices::class)->visibleScope($query, (int)$value);
+        }
+    }
+
+    /**
      * @param Model $query
      * @param $value
      */

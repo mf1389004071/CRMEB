@@ -74,27 +74,28 @@ t_assert($r['status'] == 200 && Db::name('order_blacklist')->count() === 0 + (in
 $setLimit(1);
 $uid = VnFx::user();
 $addrId = VnFx::address($uid);   // 地址手机号 0912345678
-$p = VnFx::product(880301, 'Risk-Item', [['suk' => 'default', 'price' => 10000, 'stock' => 50]]);
+$p = VnFx::product(880301, 'Risk-Item', [['suk' => '默认', 'price' => 10000, 'stock' => 50]]);
+Db::name('store_product_region_price')->insert(['product_id' => 880301, 'unique' => $p['uniques']['默认'], 'city_id' => 911001, 'price' => 10000, 'ot_price' => 0, 'stock' => null, 'status' => 1, 'add_time' => time(), 'update_time' => time()]);
 $ut = VnFx::userToken($uid);
 $mk = function () use ($B, &$ut, $p, $addrId) {
-    $r = VnFx::http('POST', "$B/api/cart/add", $ut, ['productId' => 880301, 'cartNum' => 1, 'uniqueId' => $p['uniques']['default'], 'new' => 1]);
+    $r = VnFx::http('POST', "$B/api/cart/add", $ut, ['productId' => 880301, 'cartNum' => 1, 'uniqueId' => $p['uniques']['默认'], 'new' => 1], ['Cb-region: 911001']);
     $cid = $r['data']['cartId'] ?? 0;
-    $r = VnFx::http('POST', "$B/api/order/confirm", $ut, ['cartId' => (string)$cid, 'new' => 1, 'addressId' => $addrId]);
+    $r = VnFx::http('POST', "$B/api/order/confirm", $ut, ['cartId' => (string)$cid, 'new' => 1, 'addressId' => $addrId], ['Cb-region: 911001']);
     return $r['data']['orderKey'] ?? '';
 };
 Db::name('order_blacklist')->delete(true);
 $risk->addBlacklist('phone', '0912345678', 'e2e');
 $key = $mk();
-$r = VnFx::http('POST', "$B/api/order/create/$key", $ut, ['addressId' => $addrId, 'payType' => 'offline', 'shipping_type' => 1, 'new' => 1], ['Cb-lang: vi-VN']);
+$r = VnFx::http('POST', "$B/api/order/create/$key", $ut, ['addressId' => $addrId, 'payType' => 'offline', 'shipping_type' => 1, 'new' => 1], ['Cb-lang: vi-VN', 'Cb-region: 911001']);
 t_assert($r['status'] != 200 && strpos($r['msg'], 'liên hệ') !== false, 'blacklisted phone cannot create order (vi msg): ' . ($r['msg'] ?? ''));
 Db::name('order_blacklist')->delete(true);
 \think\facade\Cache::clear();
 $ut = VnFx::userToken($uid);   // Cache::clear 同时清掉了登录态
 $key = $mk();
-$r = VnFx::http('POST', "$B/api/order/create/$key", $ut, ['addressId' => $addrId, 'payType' => 'offline', 'shipping_type' => 1, 'new' => 1]);
+$r = VnFx::http('POST', "$B/api/order/create/$key", $ut, ['addressId' => $addrId, 'payType' => 'offline', 'shipping_type' => 1, 'new' => 1], ['Cb-region: 911001']);
 t_assert($r['status'] == 200, 'first order within limit ok: ' . json_encode($r, JSON_UNESCAPED_UNICODE));
 $key2 = $mk();
-$r = VnFx::http('POST', "$B/api/order/create/$key2", $ut, ['addressId' => $addrId, 'payType' => 'offline', 'shipping_type' => 1, 'new' => 1], ['Cb-lang: vi-VN']);
+$r = VnFx::http('POST', "$B/api/order/create/$key2", $ut, ['addressId' => $addrId, 'payType' => 'offline', 'shipping_type' => 1, 'new' => 1], ['Cb-lang: vi-VN', 'Cb-region: 911001']);
 t_assert($r['status'] != 200 && strpos($r['msg'], 'thường xuyên') !== false || strpos($r['msg'] ?? '', 'quá') !== false, 'second order in the hour rejected (limit=1): ' . ($r['msg'] ?? ''));
 
 // 清理
@@ -102,6 +103,7 @@ $setLimit(5);
 foreach (Db::name('store_order')->where('uid', $uid)->column('id') as $oid) {
     VnFx::dropOrder((int)$oid);
 }
+Db::name('store_product_region_price')->where('product_id', 880301)->delete();
 VnFx::dropProduct(880301);
 Db::name('user_address')->where('uid', $uid)->delete();
 Db::name('store_cart')->where('uid', $uid)->delete();

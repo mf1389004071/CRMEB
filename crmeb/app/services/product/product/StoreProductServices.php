@@ -1237,7 +1237,35 @@ class StoreProductServices extends BaseServices
         }
         [$page, $limit] = $this->getPageValue();
         $where['vip_user'] = $uid ? app()->make(UserServices::class)->value(['uid' => $uid], 'is_money_level') : 0;
-        $list = $this->dao->getSearchList($where, $page, $limit, ['id,store_name,cate_id,image,IFNULL(sales, 0) + IFNULL(ficti, 0) as sales,price,stock,activity,ot_price,spec_type,recommend_image,unit_name,is_vip,vip_price,is_virtual,presale,custom_form,virtual_type,min_qty,label_list']);
+        // VN: 区域价——仅当前区域可售商品；价格排序在区域模式下改为内存排序后再分页（上限 5000 个商品）
+        $regionId = 0;
+        $regionPriceSort = '';
+        $queryPage = $page;
+        $queryLimit = $limit;
+        if (region_pricing_active()) {
+            $regionId = current_region_id();
+            if ($regionId <= 0) {
+                return [];
+            }
+            $where['region_id'] = $regionId;
+            if (isset($where['priceOrder']) && $where['priceOrder'] !== '') {
+                $regionPriceSort = $where['priceOrder'] === 'desc' ? 'desc' : 'asc';
+                unset($where['priceOrder']);
+                $queryPage = 1;
+                $queryLimit = 5000;
+            }
+        }
+        $list = $this->dao->getSearchList($where, $queryPage, $queryLimit, ['id,store_name,cate_id,image,IFNULL(sales, 0) + IFNULL(ficti, 0) as sales,price,stock,activity,ot_price,spec_type,recommend_image,unit_name,is_vip,vip_price,is_virtual,presale,custom_form,virtual_type,min_qty,label_list']);
+        if ($regionId > 0) {
+            $list = app()->make(\app\services\product\RegionPriceServices::class)->applyToList($list, $regionId);
+            if ($regionPriceSort !== '') {
+                usort($list, function ($a, $b) use ($regionPriceSort) {
+                    $c = bccomp((string)$a['price'], (string)$b['price'], 2);
+                    return $c !== 0 ? ($regionPriceSort === 'desc' ? -$c : $c) : ($b['id'] <=> $a['id']);
+                });
+                $list = array_slice($list, max(0, ($page - 1)) * $limit, $limit);
+            }
+        }
         /** @var MemberCardServices $memberCardService */
         $memberCardService = app()->make(MemberCardServices::class);
         $vipStatus = $memberCardService->isOpenMemberCard('vip_price');
@@ -1449,7 +1477,19 @@ class StoreProductServices extends BaseServices
             $page = 1;
             $limit = $num;
         }
+        // VN: 区域价
+        $regionId = 0;
+        if (region_pricing_active()) {
+            $regionId = current_region_id();
+            if ($regionId <= 0) {
+                return [];
+            }
+            $where['region_id'] = $regionId;
+        }
         $list = $this->dao->getSearchList($where, $page, $limit, ['id,store_name,cate_id,image,IFNULL(sales, 0) + IFNULL(ficti, 0) as sales,price,stock,activity,unit_name,presale,is_vip,vip_price']);
+        if ($regionId > 0) {
+            $list = app()->make(\app\services\product\RegionPriceServices::class)->applyToList($list, $regionId);
+        }
         $list = $this->getActivityList($list);
         return $list;
     }
@@ -1474,6 +1514,17 @@ class StoreProductServices extends BaseServices
             throw new AdminException('商品不存在');
         } else {
             $storeInfo = $storeInfo->toArray();
+        }
+        // VN: 区域价——必须已选区域且该商品在当前区域可售
+        $regionId = 0;
+        if (region_pricing_active()) {
+            $regionId = current_region_id();
+            if ($regionId <= 0) {
+                throw new ApiException('请先选择配送区域');
+            }
+            if (!app()->make(\app\services\product\RegionPriceServices::class)->productSellable($id, $regionId)) {
+                throw new ApiException('当前区域暂不销售该商品');
+            }
         }
         $siteUrl = sys_config('site_url');
         $storeInfo['image'] = set_file_url($storeInfo['image'], $siteUrl);
@@ -1541,6 +1592,21 @@ class StoreProductServices extends BaseServices
         /** @var StoreProductAttrServices $storeProductAttrServices */
         $storeProductAttrServices = app()->make(StoreProductAttrServices::class);
         list($productAttr, $productValue) = $storeProductAttrServices->getProductAttrDetail($id, $uid, $type, 0);
+        // VN: 展示价取当前区域可售规格的最小价（规格弹窗数据已由 getProductAttrDetail 覆盖为区域价）
+        if ($regionId > 0 && $productValue) {
+            $minSku = null;
+            $stockSum = 0;
+            foreach ($productValue as $sv) {
+                if ($minSku === null || bccomp((string)$sv['price'], (string)$minSku['price'], 2) < 0) {
+                    $minSku = $sv;
+                }
+                $stockSum += (int)$sv['stock'];
+            }
+            $storeInfo['price'] = $minSku['price'];
+            $storeInfo['ot_price'] = $minSku['ot_price'];
+            $storeInfo['stock'] = $stockSum;
+            $storeInfo['vip_price'] = 0;
+        }
         $attrPics = [];
         foreach ($productAttr as $attrValues) {
             foreach ($attrValues['attr_value'] as $picArr) {
@@ -1884,6 +1950,11 @@ class StoreProductServices extends BaseServices
      */
     public function getProductStock(int $productId, string $uniqueId = '')
     {
+        // VN: 区域价——库存取区域库存(若设置)，不可售返回 0
+        if ($uniqueId !== '' && region_pricing_active()) {
+            $regionInfo = app()->make(\app\services\product\RegionPriceServices::class)->resolveOne($productId, $uniqueId, current_region_id());
+            return $regionInfo ? (int)$regionInfo['stock'] : 0;
+        }
         /** @var  StoreProductAttrValueServices $StoreProductAttrValue */
         $StoreProductAttrValue = app()->make(StoreProductAttrValueServices::class);
         return $uniqueId == '' ?
@@ -1900,6 +1971,18 @@ class StoreProductServices extends BaseServices
      */
     public function decProductStock(int $num, int $productId, string $unique = '')
     {
+        // VN: 命中区域库存行时扣区域库存，主表只记销量
+        if ($unique && region_pricing_enabled()) {
+            $regionStock = app()->make(\app\services\product\RegionPriceServices::class)->decRegionStock($productId, $unique, $num);
+            if ($regionStock !== null) {
+                if (!$regionStock) {
+                    return false;
+                }
+                \think\facade\Db::name('store_product_attr_value')->where(['product_id' => $productId, 'unique' => $unique, 'type' => 0])->inc('sales', $num)->update();
+                \think\facade\Db::name('store_product')->where('id', $productId)->inc('sales', $num)->update();
+                return true;
+            }
+        }
         $res = true;
         if ($unique) {
             /** @var StoreProductAttrValueServices $skuValueServices */
@@ -1918,6 +2001,15 @@ class StoreProductServices extends BaseServices
      */
     public function incProductStock(int $num, int $productId, string $unique = '')
     {
+        // VN: 回退区域库存（区域取订单 region_id 上下文），主表回退销量
+        if ($unique && region_pricing_enabled()) {
+            $regionStock = app()->make(\app\services\product\RegionPriceServices::class)->incRegionStock($productId, $unique, $num);
+            if ($regionStock !== null) {
+                \think\facade\Db::name('store_product_attr_value')->where(['product_id' => $productId, 'unique' => $unique, 'type' => 0])->dec('sales', $num)->update();
+                \think\facade\Db::name('store_product')->where('id', $productId)->dec('sales', $num)->update();
+                return true;
+            }
+        }
         $res = true;
         if ($unique) {
             /** @var StoreProductAttrValueServices $skuValueServices */
@@ -1974,6 +2066,15 @@ class StoreProductServices extends BaseServices
             }
             [$page, $limit] = $this->getPageValue();
             $where['vip_user'] = $uid ? app()->make(UserServices::class)->value(['uid' => $uid], 'is_money_level') : 0;
+            // VN: 区域价
+            $regionId = 0;
+            if (region_pricing_active()) {
+                $regionId = current_region_id();
+                if ($regionId <= 0) {
+                    return $data;
+                }
+                $where['region_id'] = $regionId;
+            }
             foreach ($fields as $field) {
                 $list = [];
                 switch ($field) {
@@ -2014,6 +2115,9 @@ class StoreProductServices extends BaseServices
                         $list = $this->dao->getRecommendProduct($where, $field, 0, $page, $limit);
                         break;
                 }
+                if ($list && $regionId > 0) {
+                    $list = app()->make(\app\services\product\RegionPriceServices::class)->applyToList($list, $regionId);
+                }
                 if ($list) {
                     $list = get_thumb_water($list, $type);
                     $list = $this->getActivityList($list, true, $seckillIdsList, $pinkIdsList, $bargrainIdsList);
@@ -2044,7 +2148,19 @@ class StoreProductServices extends BaseServices
     {
         [$page, $limit] = $this->getPageValue();
         $where['vip_user'] = $uid ? app()->make(UserServices::class)->value(['uid' => $uid], 'is_money_level') : 0;
+        // VN: 区域价
+        $regionId = 0;
+        if (region_pricing_active()) {
+            $regionId = current_region_id();
+            if ($regionId <= 0) {
+                return [];
+            }
+            $where['region_id'] = $regionId;
+        }
         $list = $this->dao->getRecommendProduct($where, $field, $num, $page, $limit);
+        if ($list && $regionId > 0) {
+            $list = app()->make(\app\services\product\RegionPriceServices::class)->applyToList($list, $regionId);
+        }
         if ($list) {
             $list = get_thumb_water($list, $type);
             $list = $this->getActivityList($list);
@@ -2694,6 +2810,16 @@ class StoreProductServices extends BaseServices
         $productIsVip = $this->dao->value(['id' => $id], 'is_vip');
         $attrInfo = app()->make(StoreProductAttrValueServices::class)->get(['unique' => $unique, 'product_id' => $id, 'type' => 0], ['price', 'vip_price', 'ot_price']);
         $attrInfo = $attrInfo->toArray();
+        // VN: 区域价——点选规格的实时价走统一取价入口
+        if (region_pricing_active()) {
+            $regionInfo = app()->make(\app\services\product\RegionPriceServices::class)->resolveOne((int)$id, (string)$unique, current_region_id());
+            if (!$regionInfo) {
+                throw new ApiException('当前区域暂不销售该商品');
+            }
+            $attrInfo['price'] = $regionInfo['price'];
+            $attrInfo['ot_price'] = $regionInfo['ot_price'];
+            $attrInfo['vip_price'] = 0;
+        }
         $realPrice = $price = $attrInfo['price'];
         $levelPrice = bcmul($attrInfo['price'], bcdiv($levelDiscount, 100, 2), 2);
         $memberPrice = $attrInfo['vip_price'];

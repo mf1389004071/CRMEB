@@ -165,6 +165,20 @@ class StoreCartServices extends BaseServices
                 if (!$unique || !$attrInfo || $attrInfo['product_id'] != $productId) {
                     throw new ApiException('请选择有效的商品属性');
                 }
+                // VN: 区域价——加购/校验以当前区域的可售性、价格与库存为准
+                if (region_pricing_active()) {
+                    $regionId = current_region_id();
+                    if ($regionId <= 0) {
+                        throw new ApiException('请先选择配送区域');
+                    }
+                    $regionInfo = app()->make(\app\services\product\RegionPriceServices::class)->resolveOne((int)$productId, (string)$unique, $regionId);
+                    if (!$regionInfo) {
+                        throw new ApiException('当前区域暂不销售该商品');
+                    }
+                    $attrInfo['price'] = $regionInfo['price'];
+                    $attrInfo['ot_price'] = $regionInfo['ot_price'];
+                    $attrInfo['stock'] = $regionInfo['stock'];
+                }
                 $nowStock = $attrInfo['stock'];//现有库存
                 if ($cartNum > $nowStock) {
                     throw new ApiException('该商品库存不足{:num}', ['num' => $cartNum]);
@@ -620,6 +634,14 @@ class StoreCartServices extends BaseServices
 
         /** @var StoreProductServices $productServices */
         $productServices = app()->make(StoreProductServices::class);
+        // VN: 越南模式关闭会员价/等级折扣；区域价覆盖
+        if (vn_mode_enabled()) {
+            $vipStatus = false;
+            $discount = 100;
+        }
+        $regionOn = region_pricing_active();
+        $regionCityId = $regionOn ? current_region_id() : 0;
+        $regionPrice = $regionOn ? app()->make(\app\services\product\RegionPriceServices::class) : null;
         $valid = $invalid = [];
         foreach ($cartList as &$item) {
             if ($item['type'] == 0) $item['min_qty'] = $item['productInfo']['min_qty'];
@@ -643,6 +665,22 @@ class StoreCartServices extends BaseServices
                 $item['productInfo']['attrInfo'] = get_thumb_water($item['productInfo']['attrInfo']);
             }
             $item['productInfo'] = get_thumb_water($item['productInfo']);
+            // VN: 区域价——以服务端区域价覆盖规格价/划线价/库存；当前区域不可售的行标记无效不可结算
+            $regionUnsellable = false;
+            if ($regionOn && !($item['seckill_id'] || $item['bargain_id'] || $item['combination_id'] || $item['advance_id']) && !empty($item['product_attr_unique'])) {
+                $regionInfo = $regionCityId > 0 ? $regionPrice->resolveOne((int)$item['product_id'], (string)$item['product_attr_unique'], $regionCityId) : null;
+                if ($regionInfo) {
+                    $item['productInfo']['attrInfo']['price'] = $regionInfo['price'];
+                    $item['productInfo']['attrInfo']['ot_price'] = $regionInfo['ot_price'];
+                    $item['productInfo']['attrInfo']['stock'] = $regionInfo['stock'];
+                    $item['productInfo']['attrInfo']['vip_price'] = 0;
+                    $item['attrStatus'] = (bool)$regionInfo['stock'];
+                } else {
+                    $regionUnsellable = true;
+                    $item['attrStatus'] = false;
+                }
+            }
+            $item['region_unsellable'] = $regionUnsellable ? 1 : 0;
             $productInfo = $item['productInfo'];
             $item['vip_truePrice'] = 0;
             $is_activity = $item['seckill_id'] || $item['bargain_id'] || $item['combination_id'] || $item['advance_id'];
@@ -673,7 +711,7 @@ class StoreCartServices extends BaseServices
                     $item['price_type'] = 'activity';
                 }
             }
-            if (isset($item['status']) && $item['status'] == 0) {
+            if ((isset($item['status']) && $item['status'] == 0) || $regionUnsellable) {
                 $item['is_valid'] = 0;
                 $invalid[] = $item;
             } else {

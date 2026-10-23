@@ -528,6 +528,36 @@ SELECT v.tid, v.code, v.remarks, v.explain_, v.is_admin FROM (
   SELECT @t_vi AS tid, '选择配送区域' AS code, '[待审]选择配送区域' AS remarks, 'Chọn khu vực giao hàng' AS explain_, 0 AS is_admin, '选择配送区域' AS zh_
   UNION ALL
   SELECT @t_en AS tid, '选择配送区域' AS code, '选择配送区域' AS remarks, 'Select delivery region' AS explain_, 0 AS is_admin, '选择配送区域' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_c7f87c03d1' AS code, '请先选择配送区域' AS remarks, '请先选择配送区域' AS explain_, 1 AS is_admin, '请先选择配送区域' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_c7f87c03d1' AS code, '[待审]请先选择配送区域' AS remarks, 'Vui lòng chọn khu vực giao hàng trước' AS explain_, 1 AS is_admin, '请先选择配送区域' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_c7f87c03d1' AS code, '请先选择配送区域' AS remarks, 'Please select a delivery region first' AS explain_, 1 AS is_admin, '请先选择配送区域' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_c72904a3a2' AS code, '当前区域暂不销售该商品' AS remarks, '当前区域暂不销售该商品' AS explain_, 1 AS is_admin, '当前区域暂不销售该商品' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_c72904a3a2' AS code, '[待审]当前区域暂不销售该商品' AS remarks, 'Khu vực hiện tại tạm thời không bán sản phẩm này' AS explain_, 1 AS is_admin, '当前区域暂不销售该商品' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_c72904a3a2' AS code, '当前区域暂不销售该商品' AS remarks, 'This product is not sold in the current region' AS explain_, 1 AS is_admin, '当前区域暂不销售该商品' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_e8b76bc171' AS code, '商品 {:name} 当前区域不可售' AS remarks, '商品 {:name} 当前区域不可售' AS explain_, 1 AS is_admin, '商品 {:name} 当前区域不可售' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_e8b76bc171' AS code, '[待审]商品 {:name} 当前区域不可售' AS remarks, 'Sản phẩm {:name} không được bán tại khu vực hiện tại' AS explain_, 1 AS is_admin, '商品 {:name} 当前区域不可售' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_e8b76bc171' AS code, '商品 {:name} 当前区域不可售' AS remarks, 'Product {:name} is not available in the current region' AS explain_, 1 AS is_admin, '商品 {:name} 当前区域不可售' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_4894880037' AS code, '商品价格已变化，请重新确认订单' AS remarks, '商品价格已变化，请重新确认订单' AS explain_, 1 AS is_admin, '商品价格已变化，请重新确认订单' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_4894880037' AS code, '[待审]商品价格已变化，请重新确认订单' AS remarks, 'Giá sản phẩm đã thay đổi, vui lòng xác nhận lại đơn hàng' AS explain_, 1 AS is_admin, '商品价格已变化，请重新确认订单' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_4894880037' AS code, '商品价格已变化，请重新确认订单' AS remarks, 'Product price has changed, please re-confirm the order' AS explain_, 1 AS is_admin, '商品价格已变化，请重新确认订单' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_a2292c8d4f' AS code, '该商品库存不足{:num}' AS remarks, '该商品库存不足{:num}' AS explain_, 1 AS is_admin, '该商品库存不足{:num}' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_a2292c8d4f' AS code, '[待审]该商品库存不足{:num}' AS remarks, 'Sản phẩm không đủ tồn kho {:num}' AS explain_, 1 AS is_admin, '该商品库存不足{:num}' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_a2292c8d4f' AS code, '该商品库存不足{:num}' AS remarks, 'Insufficient stock for this product {:num}' AS explain_, 1 AS is_admin, '该商品库存不足{:num}' AS zh_
 ) v
 WHERE v.tid IS NOT NULL AND NOT EXISTS (SELECT 1 FROM eb_lang_code e WHERE e.type_id = v.tid AND e.code = v.code) AND NOT EXISTS (SELECT 1 FROM eb_lang_code z WHERE z.type_id = @t_zh AND z.remarks = v.zh_ AND z.code <> v.code);
 

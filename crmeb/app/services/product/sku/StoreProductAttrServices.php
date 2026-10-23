@@ -180,6 +180,21 @@ class StoreProductAttrServices extends BaseServices
                 $attrPics[$resultAttr['value']][$detail['value']] = $detail['pic'] ?? '';
             }
         }
+        // VN: 区域价——覆盖规格价格/库存，隐藏当前区域不可售规格及不再出现的规格值
+        if ($typeId == 0 && region_pricing_active()) {
+            $values = app()->make(\app\services\product\RegionPriceServices::class)->applyToAttr($id, $values, current_region_id());
+            $allowed = [];
+            foreach (array_keys($values) as $sukStr) {
+                foreach (explode(',', $sukStr) as $gi => $sv) {
+                    $allowed[$gi][$sv] = 1;
+                }
+            }
+            foreach ($attrDetail as $gi => $g) {
+                $attrDetail[$gi]['attr_values'] = array_values(array_filter($g['attr_values'], function ($val) use ($allowed, $gi) {
+                    return isset($allowed[$gi][$val]);
+                }));
+            }
+        }
         foreach ($attrDetail as $k => $v) {
             $attr = $v['attr_values'];
             //活动商品只展示参与活动sku

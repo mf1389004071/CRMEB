@@ -92,6 +92,26 @@ class StoreProductRelationServices extends BaseServices
                 unset($list[$k]);
             }
         }
+        // VN: 区域价——收藏列表价格按当前区域展示；区域内不可售的标记失效
+        if (region_pricing_active()) {
+            $rps = app()->make(\app\services\product\RegionPriceServices::class);
+            $map = $rps->resolveProducts(array_column($list, 'pid'), current_region_id());
+            foreach ($list as $k => $it) {
+                if (!isset($it['pid'])) continue;
+                $skus = $map[(int)$it['pid']] ?? [];
+                if (!$skus) {
+                    $list[$k]['is_fail'] = 1;
+                    $list[$k]['region_unsellable'] = 1;
+                    continue;
+                }
+                $min = null;
+                foreach ($skus as $sv) {
+                    if ($min === null || bccomp($sv['price'], $min['price'], 2) < 0) $min = $sv;
+                }
+                $list[$k]['price'] = $min['price'];
+                $list[$k]['ot_price'] = $min['ot_price'];
+            }
+        }
         $count = $this->dao->count($where);
         return compact('list', 'count');
     }
