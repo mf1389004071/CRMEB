@@ -16,6 +16,7 @@ import { mapGetters } from "vuex";
 import colors from "@/mixins/color.js";
 import Cache from "@/utils/cache";
 import { normalizeLang } from "@/utils/lang.js";
+import { setVnConfig } from "@/utils/vn.js";
 import { applyTheme } from "@/utils/theme.js";
 
 export default {
@@ -131,6 +132,7 @@ export default {
     // #endif
     basicConfig().then((res) => {
       uni.setStorageSync("BASIC_CONFIG", res.data);
+      setVnConfig(res.data); // VN: 越南站点开关
     });
     // #ifdef H5
     if (

@@ -207,6 +207,8 @@ class PublicController
                 }
             }
         }
+        // VN: 越南模式裁剪营销入口（可由 vn_mode_enable 关闭回滚）
+        $menusInfo = app()->make(\app\services\vn\VnSiteServices::class)->filterUserMenus(array_values($menusInfo));
         /** @var SystemConfigServices $systemConfigServices */
         $systemConfigServices = app()->make(SystemConfigServices::class);
         $bannerInfo = $systemConfigServices->getSpreadBanner() ?? [];

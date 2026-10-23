@@ -107,7 +107,7 @@
 			</view>
 			<view class='wrapper' v-if="!is_gift || is_gift == 1">
 				<view class='item acea-row row-between-wrapper' @tap='couponTap'
-					v-if="!pinkId && !BargainId && !combinationId && !seckillId&& !noCoupon && !discountId && !advanceId">
+					v-if="!vnMode && !pinkId && !BargainId && !combinationId && !seckillId&& !noCoupon && !discountId && !advanceId">
 					<view>{{$t(`优惠券`)}}</view>
 					<view class='discount'>
 						{{couponTitle}}
@@ -115,7 +115,7 @@
 					</view>
 				</view>
 				<view class='item acea-row row-between-wrapper'
-					v-if="!pinkId && !BargainId && !combinationId && !seckillId && !advanceId && integral_open">
+					v-if="!vnMode && !pinkId && !BargainId && !combinationId && !seckillId && !advanceId && integral_open">
 					<view>{{$t(`积分抵扣`)}}</view>
 					<view class='discount acea-row row-middle'>
 						<view> {{useIntegral ? $t(`剩余积分`):$t(`当前积分`)}}

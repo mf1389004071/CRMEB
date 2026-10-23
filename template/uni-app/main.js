@@ -19,6 +19,8 @@ import i18n from './utils/lang.js';
 import navigationBarI18n from '@/mixins/navigationBarI18n.js';
 
 Vue.mixin(navigationBarI18n);
+import { vnMixin } from '@/utils/vn.js';
+Vue.mixin(vnMixin);
 
 Vue.prototype.$util = util;
 Vue.prototype.$config = configs;

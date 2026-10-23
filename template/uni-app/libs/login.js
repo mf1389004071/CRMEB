@@ -10,6 +10,7 @@
 
 import store from "../store";
 import Cache from '../utils/cache';
+import { isVnMode } from '../utils/vn.js';
 import {
 	Debounce
 } from '@/utils/validate.js'
@@ -71,7 +72,7 @@ function _toLogin(push, pathLogin) {
 		Cache.set('login_back_url', path);
 	}
 	// #ifdef H5
-	if (isWeixin() && BASIC_CONFIG.wechat_status) {
+	if (!isVnMode() && isWeixin() && BASIC_CONFIG.wechat_status) { // VN: 越南模式只用账号密码登录
 		uni.navigateTo({
 			url: '/pages/users/wechat_login/index',
 		});

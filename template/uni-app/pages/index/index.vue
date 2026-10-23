@@ -672,8 +672,11 @@ export default {
       let goodsIndex = [];
       let promotionIndex = [];
       let lastArr = this.objToArr(data.value);
+      // VN: 越南模式下首页不渲染的营销装修组件（关闭 vn_mode_enable 可恢复）
+      const vnHideComps = ["seckill", "bargain", "combination", "liveBroadcast", "pointsMall", "signIn", "coupon", "newVip", "promotionList"];
       lastArr.forEach((item, index, arr) => {
         if (!item) return;
+        if (this.vnMode && vnHideComps.indexOf(item.name) > -1) return;
         if (item.name == "pageFoot") {
           this.footerConfigData = item;
         }
