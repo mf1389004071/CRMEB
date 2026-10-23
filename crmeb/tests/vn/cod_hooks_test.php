@@ -53,13 +53,14 @@ t_assert(!array_key_exists('cod_delivery_code', $out) && $out['cod_code'] === ''
 // ---- 订单所有者详情可见送达码 ----
 $request = app()->request;
 $request->macro('uid', function () { return 7; });
-$outDetail = $cod->tidyOrderFields($row, true);
+$outDetail = $cod->attachCodCode($cod->tidyOrderFields($row, true));
 t_assert(preg_match('/^[0-9]{6}$/', $outDetail['cod_code']) === 1, 'owner detail exposes cod_code');
+t_assert($cod->tidyOrderFields($row, true)['cod_code'] === '', 'tidyOrder alone (list) never exposes code');
 $request->macro('uid', function () { return 8; });
-t_assert($cod->tidyOrderFields($row, true)['cod_code'] === '', 'non-owner does not see code');
+t_assert($cod->attachCodCode($cod->tidyOrderFields($row, true))['cod_code'] === '', 'non-owner does not see code');
 $request->macro('uid', function () { return 7; });
 $request->macro('adminId', function () { return 1; });
-t_assert($cod->tidyOrderFields($row, true)['cod_code'] === '', 'admin context does not see code');
+t_assert($cod->attachCodCode($cod->tidyOrderFields($row, true))['cod_code'] === '', 'admin context does not see code');
 $request->macro('adminId', function () { return 0; });
 
 // ---- cancelOrder 守卫 ----

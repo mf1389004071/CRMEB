@@ -467,24 +467,33 @@ class CodOrderServices extends BaseServices
     }
 
     /**
-     * 到付订单附加字段：fulfil_key、can_cancel；送达码仅在“订单所有者的详情”返回（键名 cod_code），其余一律剔除
+     * 到付订单附加字段：fulfil_key、can_cancel；原始送达码列一律剔除，cod_code 默认空（仅详情接口经 attachCodCode 给所有者）
      * @param array $order
      * @param bool $detail
      * @return array
      */
     public function tidyOrderFields(array $order, bool $detail): array
     {
-        $code = $order['cod_delivery_code'] ?? '';
         unset($order['cod_delivery_code']);
         $order['fulfil_key'] = $this->fulfilKey($order);
         $order['can_cancel'] = $this->userCanCancel($order);
         $order['cod_code'] = '';
+        return $order;
+    }
+
+    /**
+     * 订单详情接口：订单所有者（H5 用户本人，非后台）在“未取消且未送达”时可见送达码
+     * @param array $order tidyOrder 之后的订单数组
+     * @return array
+     */
+    public function attachCodCode(array $order): array
+    {
         try {
             $request = app()->request;
             $isOwner = $request->hasMacro('uid') && (int)$request->uid() > 0 && (int)$request->uid() === (int)($order['uid'] ?? 0);
             $isAdmin = $request->hasMacro('adminId') && (int)$request->adminId() > 0;
-            if ($detail && $isOwner && !$isAdmin && (int)$order['is_cancel'] === 0 && (int)$order['fulfil_status'] < self::F_DELIVERED) {
-                $order['cod_code'] = $code;
+            if ($isOwner && !$isAdmin && (int)$order['is_cancel'] === 0 && (int)$order['fulfil_status'] < self::F_DELIVERED) {
+                $order['cod_code'] = (string)StoreOrder::where('id', (int)$order['id'])->value('cod_delivery_code');
             }
         } catch (\Throwable $e) {
         }

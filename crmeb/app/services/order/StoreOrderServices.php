@@ -2605,6 +2605,10 @@ HTML;
         $order['ali_pay_status'] = sys_config('ali_pay_status', '0') != '0';//支付包支付 1 开启 0 关闭
         $order['friend_pay_status'] = (int)sys_config('friend_pay_status') ?? 0;//好友代付 1 开启 0 关闭
         $orderData = $this->tidyOrder($order, true, true);
+        // VN: 仅订单详情给所有者返回送达码（列表不返回）
+        if (!empty($orderData['is_cod'])) {
+            $orderData = app()->make(\app\services\order\CodOrderServices::class)->attachCodCode($orderData);
+        }
         $vipTruePrice = $memberPrice = $levelPrice = 0;
         foreach ($orderData['cartInfo'] ?? [] as $key => $cart) {
             $vipTruePrice = bcadd((string)$vipTruePrice, (string)$cart['vip_sum_truePrice'], 2);
