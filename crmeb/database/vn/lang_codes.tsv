@@ -91,3 +91,28 @@ api	当前区域暂不销售该商品	Khu vực hiện tại tạm thời không
 api	商品 {:name} 当前区域不可售	Sản phẩm {:name} không được bán tại khu vực hiện tại	Product {:name} is not available in the current region
 api	商品价格已变化，请重新确认订单	Giá sản phẩm đã thay đổi, vui lòng xác nhận lại đơn hàng	Product price has changed, please re-confirm the order
 api	该商品库存不足{:num}	Sản phẩm không đủ tồn kho {:num}	Insufficient stock for this product {:num}
+api	收货地址不在当前配送区域	Địa chỉ nhận hàng không nằm trong khu vực giao hàng hiện tại	The delivery address is outside the current delivery region
+api	请填写收货人姓名(25字以内)	Vui lòng nhập tên người nhận (tối đa 25 ký tự)	Please enter the recipient name (max 25 characters)
+api	请填写详细地址	Vui lòng nhập địa chỉ chi tiết	Please enter the detailed address
+api	收货地址格式错误，请重新选择	Địa chỉ nhận hàng không hợp lệ, vui lòng chọn lại	Invalid delivery address, please select again
+api	地址已存在	Địa chỉ đã tồn tại	The address already exists
+api	修改失败	Sửa đổi thất bại	Update failed
+api	添加失败	Thêm thất bại	Failed to add
+api	数据不存在	Dữ liệu không tồn tại	Data does not exist
+api	地址选择有误	Địa chỉ được chọn không đúng	Wrong address selected
+api	请选择收货地址	Vui lòng chọn địa chỉ nhận hàng	Please select a delivery address
+front	请填写收货人姓名	Vui lòng nhập tên người nhận	Please enter the recipient name
+front	请填写联系电话	Vui lòng nhập số điện thoại liên hệ	Please enter the contact phone number
+front	请选择所在地区	Vui lòng chọn khu vực	Please select the region
+front	请填写详细地址	Vui lòng nhập địa chỉ chi tiết	Please enter the detailed address
+front	姓名	Họ tên	Name
+front	联系电话	Số điện thoại	Phone number
+front	所在地区	Khu vực	Region
+front	详细地址	Địa chỉ chi tiết	Detailed address
+front	立即保存	Lưu ngay	Save
+front	设置为默认地址	Đặt làm địa chỉ mặc định	Set as default address
+front	修改地址	Sửa địa chỉ	Edit address
+front	添加地址	Thêm địa chỉ	Add address
+front	保存中	Đang lưu	Saving
+front	修改成功	Sửa thành công	Updated successfully
+front	添加成功	Thêm thành công	Added successfully

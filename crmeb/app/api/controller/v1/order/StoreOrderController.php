@@ -198,7 +198,8 @@ class StoreOrderController
         // VN: 下单防刷（黑名单 + 每小时限频），受 vn_mode_enable 控制
         $riskPhone = '';
         if (vn_mode_enabled()) {
-            $riskPhone = $phone ?: (string)\think\facade\Db::name('user_address')->where(['id' => $addressId, 'uid' => $userInfo['uid']])->value('phone');
+            $riskAddr = $phone ? [] : \think\facade\Db::name('user_address')->where(['id' => $addressId, 'uid' => $userInfo['uid']])->field('phone,phone_country_code')->find();
+            $riskPhone = $phone ?: ($riskAddr ? (string)(($riskAddr['phone_country_code'] ?? '') . $riskAddr['phone']) : '');
             app()->make(\app\services\order\OrderRiskServices::class)->check($userInfo, $request->ip(), (string)$riskPhone);
         }
         $order = CacheService::lock('orderCreate' . $key, function () use ($createServices, $userInfo, $key, $addressId, $payType, $useIntegral, $couponId, $mark, $combinationId, $pinkId, $seckillId, $bargainId, $shipping_type, $real_name, $phone, $storeId, $news, $advanceId, $customForm, $invoice_id, $is_gift, $gift_mark) {

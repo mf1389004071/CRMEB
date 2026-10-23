@@ -53,7 +53,8 @@ class VnSiteServices extends BaseServices
         $cls = '\\app\\services\\user\\PhoneServices';
         if (class_exists($cls)) {
             $n = $cls::normalize($countryCode, $raw);
-            return ltrim($n['e164'], '+');
+            // 空号码/无本地号：返回空串（避免所有“无手机号”用户共用同一个账号键）
+            return $n['national'] === '' ? '' : ltrim($n['e164'], '+');
         }
         $cc = preg_replace('/\D+/', '', $countryCode);
         $num = preg_replace('/\D+/', '', $raw);

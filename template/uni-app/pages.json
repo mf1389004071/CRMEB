@@ -404,6 +404,12 @@
 			"root": "pages/users",
 			"name": "users",
 			"pages": [{
+					"path": "user_address_vn/index",
+					"style": {
+						"navigationBarTitleText": "添加地址"
+					}
+				},
+				{
 					"path": "vn_login/index",
 					"style": {
 						"navigationBarTitleText": "登录"

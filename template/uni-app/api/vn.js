@@ -51,3 +51,17 @@ export function regionInfo(data) {
 export function clearCartAll() {
 	return request.post("cart/clear_all", {});
 }
+
+/** 地址选择用：所有 is_show 子节点（不受配送白名单限制），parent_id=0 为国家层 */
+export function regionAddressChildren(data) {
+	return request.get("region/address_children", data, {
+		noAuth: true
+	});
+}
+
+/** 手机区号字典 */
+export function phoneCountries() {
+	return request.get("phone/countries", {}, {
+		noAuth: true
+	});
+}

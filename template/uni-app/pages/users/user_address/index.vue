@@ -121,6 +121,14 @@
 			}
 		},
 		onLoad(options) {
+			// VN: 越南模式使用 user_address_vn（国别/区划逐级选择 + 区号手机号），原页面保留
+			if (this.vnMode) {
+				const q = Object.keys(options || {}).map((k) => k + '=' + encodeURIComponent(options[k])).join('&');
+				uni.redirectTo({
+					url: '/pages/users/user_address_vn/index' + (q ? '?' + q : '')
+				});
+				return;
+			}
 			if (this.isLogin) {
 				this.cartId = options.cartId || '';
 				this.pinkId = options.pinkId || 0;

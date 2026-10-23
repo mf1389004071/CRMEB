@@ -272,7 +272,7 @@ class LoginController
         }
         if (md5($password) == md5('123456')) return app('json')->fail('密码太过简单，请输入较为复杂的密码');
         $norm = app()->make(\app\services\vn\VnSiteServices::class)->accountOf((string)$phoneCountryCode, (string)$account);
-        if (!preg_match('/^[0-9]{8,15}$/', $norm)) {
+        if (!check_phone_intl((string)$phoneCountryCode, (string)$account) || !preg_match('/^[0-9]{8,15}$/', $norm)) {
             return app('json')->fail('手机号格式不正确');
         }
         if (!$this->services->register($norm, $password, $spread, 'h5')) {

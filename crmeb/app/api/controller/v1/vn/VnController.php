@@ -21,6 +21,21 @@ use app\Request;
 class VnController
 {
     /**
+     * 手机区号字典（名称按当前语言）
+     * @return mixed
+     */
+    public function phoneCountries()
+    {
+        $lang = current_lang_code();
+        $out = [];
+        foreach (\app\services\user\PhoneServices::countries() as $c) {
+            $name = $lang === 'vi-VN' ? $c['name_vi'] : ($lang === 'en-US' ? $c['name_en'] : $c['name']);
+            $out[] = ['code' => $c['code'], 'country_code' => $c['country_code'], 'name' => $name ?: $c['name'], 'min_len' => (int)$c['min_len'], 'max_len' => (int)$c['max_len']];
+        }
+        return app('json')->success($out);
+    }
+
+    /**
      * 清空当前用户购物车（切换配送区域时调用）
      * @param Request $request
      * @return mixed

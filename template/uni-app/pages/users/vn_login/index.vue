@@ -42,6 +42,7 @@
 	import colors from '@/mixins/color.js';
 	import { loginH5, register, getUserInfo } from '@/api/user';
 	import { getLogo } from '@/api/public';
+	import { phoneCountries } from '@/api/vn.js';
 	import Cache from '@/utils/cache';
 
 	const BACK_URL = 'login_back_url';
@@ -75,6 +76,11 @@
 			}
 		},
 		onLoad() {
+			phoneCountries().then((res) => {
+				if (res.data && res.data.length) {
+					this.countries = res.data.map((c) => ({ code: c.code, name: c.name + ' (' + c.code + ')' }));
+				}
+			}).catch(() => {});
 			getLogo(2).then((res) => {
 				this.logoUrl = res.data.logo_url;
 			}).catch(() => {});

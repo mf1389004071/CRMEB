@@ -57,7 +57,7 @@ class UserAddressController
     public function address_list(Request $request)
     {
         $uid = (int)$request->uid();
-        return app('json')->success($this->services->getUserAddressList($uid, 'id,real_name,phone,province,city,district,detail,is_default,city_id'));
+        return app('json')->success($this->services->getUserAddressList($uid, 'id,real_name,phone,province,city,district,detail,is_default,city_id,phone_country_code,country_code,ward,post_code'));
     }
 
     /**
@@ -87,7 +87,7 @@ class UserAddressController
     public function address_default(Request $request)
     {
         $uid = (int)$request->uid();
-        $defaultAddress = $this->services->getUserDefaultAddress($uid, 'id,real_name,phone,province,city,district,detail,is_default');
+        $defaultAddress = $this->services->getUserDefaultAddress($uid, 'id,real_name,phone,province,city,district,detail,is_default,city_id,phone_country_code,country_code,ward');
         if ($defaultAddress) {
             $defaultAddress = $defaultAddress->toArray();
             return app('json')->success($defaultAddress);
@@ -102,6 +102,18 @@ class UserAddressController
      */
     public function address_edit(Request $request)
     {
+        // VN: 国别 + 国际手机号 + 区划节点（省市区文本服务端生成）
+        if (vn_mode_enabled()) {
+            $d = $request->postMore([
+                ['id', 0], ['real_name', ''], ['phone', ''], ['phone_country_code', ''], ['city_id', 0], ['address', []],
+                ['detail', ''], ['post_code', ''], ['is_default', false], ['longitude', ''], ['latitude', ''],
+            ]);
+            if (!$d['city_id'] && !empty($d['address']['city_id'])) {
+                $d['city_id'] = (int)$d['address']['city_id'];
+            }
+            $res = $this->services->editAddressVn((int)$request->uid(), $d);
+            return app('json')->success($res['type'] == 'edit' ? '修改成功' : $res['data']);
+        }
         $addressInfo = $request->postMore([
             ['address', []],
             ['is_default', false],

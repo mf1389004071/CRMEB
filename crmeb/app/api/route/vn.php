@@ -15,6 +15,7 @@ use think\facade\Route;
 // 无需登录（token 可选）
 Route::group(function () {
     Route::get('vn/contacts', 'v1.vn.VnController/contacts')->option(['real_name' => '联系方式']);
+    Route::get('phone/countries', 'v1.vn.VnController/phoneCountries')->option(['real_name' => '手机区号字典']);
     // 配送区域
     Route::get('region/children', 'v1.vn.RegionController/children')->option(['real_name' => '区域子节点']);
     Route::get('region/hot', 'v1.vn.RegionController/hot')->option(['real_name' => '热门区域']);

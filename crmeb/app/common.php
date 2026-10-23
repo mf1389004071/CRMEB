@@ -414,6 +414,22 @@ if (!function_exists('check_phone')) {
         return preg_match("/^1[3456789]\d{9}$/", $phone);
     }
 }
+if (!function_exists('check_phone_intl')) {
+    /**
+     * 国际手机号校验（旁路旧 check_phone，旧函数保留）
+     * @param string $countryCode 区号，如 +84
+     * @param string $phone 用户输入
+     * @return bool
+     */
+    function check_phone_intl($countryCode, $phone)
+    {
+        try {
+            return \app\services\user\PhoneServices::validate((string)$countryCode, (string)$phone);
+        } catch (\Throwable $e) {
+            return false;
+        }
+    }
+}
 if (!function_exists('anonymity')) {
     /**
      * 匿名处理处理用户昵称

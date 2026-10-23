@@ -96,6 +96,17 @@ class RegionServices extends BaseServices
     }
 
     /**
+     * 地址节点是否落在配送区域内（地址 city_id 的祖先链包含配送区域 city_id）
+     */
+    public function addressInRegion(int $addressCityId, int $regionId): bool
+    {
+        if ($addressCityId <= 0 || $regionId <= 0) {
+            return false;
+        }
+        return in_array($regionId, $this->chain($addressCityId), true);
+    }
+
+    /**
      * 是否开放可选的有效区域
      */
     public function isOpenId(int $cityId): bool

@@ -192,6 +192,13 @@ class StoreOrderCreateServices extends BaseServices
                 if (!$addressInfo = $addressServices->getOne(['uid' => $uid, 'id' => $addressId, 'is_del' => 0]))
                     throw new ApiException('地址选择有误');
                 $addressInfo = $addressInfo->toArray();
+                // VN: 收货地址必须落在当前配送区域内；订单手机号带区号（E.164）
+                if (region_pricing_active() && !app()->make(\app\services\vn\RegionServices::class)->addressInRegion((int)$addressInfo['city_id'], current_region_id())) {
+                    throw new ApiException('收货地址不在当前配送区域');
+                }
+                if (vn_mode_enabled() && !empty($addressInfo['phone_country_code'])) {
+                    $addressInfo['phone'] = $addressInfo['phone_country_code'] . $addressInfo['phone'];
+                }
             } else {
                 if ((!$real_name || !$phone) && $virtual_type == 0) {
                     throw new ApiException('请填写姓名和电话');

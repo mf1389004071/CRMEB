@@ -160,6 +160,97 @@ class UserAddressServices extends BaseServices
     }
 
     /**
+     * VN: 添加|修改地址（国别 + 国际手机号 + 区划节点）。省/市/区文本由服务端按 city_id 祖先链生成，不信任前端文本
+     * @param int $uid
+     * @param array $d id、real_name、phone、phone_country_code、city_id、detail、post_code、is_default、longitude、latitude
+     * @return array
+     */
+    public function editAddressVn(int $uid, array $d)
+    {
+        $realName = trim((string)($d['real_name'] ?? ''));
+        if ($realName === '' || mb_strlen($realName) > 25) {
+            throw new ApiException('请填写收货人姓名(25字以内)');
+        }
+        $detail = trim((string)($d['detail'] ?? ''));
+        if ($detail === '') {
+            throw new ApiException('请填写详细地址');
+        }
+        // 手机号：按区号字典校验并规范化（本地号不含区号与前导 0）
+        try {
+            \app\services\user\PhoneServices::validate((string)($d['phone_country_code'] ?? ''), (string)($d['phone'] ?? ''));
+        } catch (\Throwable $e) {
+            throw new ApiException('手机号格式不正确');
+        }
+        $ph = \app\services\user\PhoneServices::normalize((string)($d['phone_country_code'] ?? ''), (string)($d['phone'] ?? ''));
+        // 区划：取最细节点，按祖先链生成 省/市/区(坊) 文本
+        $cityId = (int)($d['city_id'] ?? 0);
+        /** @var \app\services\vn\RegionServices $regionServices */
+        $regionServices = app()->make(\app\services\vn\RegionServices::class);
+        $node = $regionServices->node($cityId);
+        if (!$node || (int)$node['is_show'] !== 1 || (int)$node['level'] < 1) {
+            throw new ApiException('收货地址格式错误，请重新选择');
+        }
+        $names = [0 => '', 1 => '', 2 => ''];
+        foreach (array_reverse($regionServices->chain($cityId)) as $id) {
+            $n = $regionServices->node((int)$id);
+            if ($n && (int)$n['level'] >= 0 && (int)$n['level'] <= 2) {
+                $names[(int)$n['level']] = $regionServices->localName($n);
+            }
+        }
+        $data = [
+            'real_name'          => $realName,
+            'phone'              => $ph['national'],
+            'phone_country_code' => $ph['country_code'],
+            'country_code'       => $node['country_code'],
+            'province'           => $names[0],
+            'city'               => $names[1],
+            'district'           => $names[2],
+            'ward'               => (int)$node['level'] >= 2 ? $names[2] : '',
+            'city_id'            => $cityId,
+            'detail'             => mb_substr($detail, 0, 200),
+            'post_code'          => mb_substr((string)($d['post_code'] ?? ''), 0, 16),
+            'longitude'          => (string)($d['longitude'] ?? '0') !== '' ? (string)$d['longitude'] : '0',
+            'latitude'           => (string)($d['latitude'] ?? '0') !== '' ? (string)$d['latitude'] : '0',
+            'is_default'         => !empty($d['is_default']) ? 1 : 0,
+            'uid'                => $uid,
+        ];
+        $id = (int)($d['id'] ?? 0);
+        if ($id === 0) {
+            $exists = $this->dao->getCount([
+                ['uid', '=', $uid], ['real_name', '=', $realName], ['phone', '=', $data['phone']],
+                ['detail', '=', $data['detail']], ['city_id', '=', $cityId], ['is_del', '=', 0],
+            ]);
+            if ($exists) {
+                throw new ApiException('地址已存在');
+            }
+        }
+        $old = $id ? $this->getAddress($id) : null;
+        if ($old && $old['is_del'] == 0 && (int)$old['uid'] === $uid) {
+            if (!$this->dao->update($id, $data, 'id')) {
+                throw new ApiException('修改失败');
+            }
+            if ($data['is_default']) {
+                $this->setDefault($uid, $id);
+            }
+            return ['type' => 'edit', 'msg' => '编辑地址成功', 'data' => []];
+        }
+        if ($id) {
+            throw new ApiException('数据不存在');
+        }
+        $data['add_time'] = time();
+        if (!$this->getAddresCount(['uid' => $uid])) {
+            $data['is_default'] = 1;
+        }
+        if (!$address = $this->dao->save($data)) {
+            throw new ApiException('添加失败');
+        }
+        if ($data['is_default']) {
+            $this->setDefault($uid, (int)$address->id);
+        }
+        return ['type' => 'add', 'msg' => '添加地址成功', 'data' => ['id' => $address->id]];
+    }
+
+    /**
      * 添加|修改地址
      * @param int $uid
      * @param array $addressInfo

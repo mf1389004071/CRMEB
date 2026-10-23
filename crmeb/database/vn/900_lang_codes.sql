@@ -558,6 +558,156 @@ SELECT v.tid, v.code, v.remarks, v.explain_, v.is_admin FROM (
   SELECT @t_vi AS tid, 'vn_a2292c8d4f' AS code, '[待审]该商品库存不足{:num}' AS remarks, 'Sản phẩm không đủ tồn kho {:num}' AS explain_, 1 AS is_admin, '该商品库存不足{:num}' AS zh_
   UNION ALL
   SELECT @t_en AS tid, 'vn_a2292c8d4f' AS code, '该商品库存不足{:num}' AS remarks, 'Insufficient stock for this product {:num}' AS explain_, 1 AS is_admin, '该商品库存不足{:num}' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_a05d5a7803' AS code, '收货地址不在当前配送区域' AS remarks, '收货地址不在当前配送区域' AS explain_, 1 AS is_admin, '收货地址不在当前配送区域' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_a05d5a7803' AS code, '[待审]收货地址不在当前配送区域' AS remarks, 'Địa chỉ nhận hàng không nằm trong khu vực giao hàng hiện tại' AS explain_, 1 AS is_admin, '收货地址不在当前配送区域' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_a05d5a7803' AS code, '收货地址不在当前配送区域' AS remarks, 'The delivery address is outside the current delivery region' AS explain_, 1 AS is_admin, '收货地址不在当前配送区域' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_1b59618f7b' AS code, '请填写收货人姓名(25字以内)' AS remarks, '请填写收货人姓名(25字以内)' AS explain_, 1 AS is_admin, '请填写收货人姓名(25字以内)' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_1b59618f7b' AS code, '[待审]请填写收货人姓名(25字以内)' AS remarks, 'Vui lòng nhập tên người nhận (tối đa 25 ký tự)' AS explain_, 1 AS is_admin, '请填写收货人姓名(25字以内)' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_1b59618f7b' AS code, '请填写收货人姓名(25字以内)' AS remarks, 'Please enter the recipient name (max 25 characters)' AS explain_, 1 AS is_admin, '请填写收货人姓名(25字以内)' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_aa202f3682' AS code, '请填写详细地址' AS remarks, '请填写详细地址' AS explain_, 1 AS is_admin, '请填写详细地址' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_aa202f3682' AS code, '[待审]请填写详细地址' AS remarks, 'Vui lòng nhập địa chỉ chi tiết' AS explain_, 1 AS is_admin, '请填写详细地址' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_aa202f3682' AS code, '请填写详细地址' AS remarks, 'Please enter the detailed address' AS explain_, 1 AS is_admin, '请填写详细地址' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_66a3d38465' AS code, '收货地址格式错误，请重新选择' AS remarks, '收货地址格式错误，请重新选择' AS explain_, 1 AS is_admin, '收货地址格式错误，请重新选择' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_66a3d38465' AS code, '[待审]收货地址格式错误，请重新选择' AS remarks, 'Địa chỉ nhận hàng không hợp lệ, vui lòng chọn lại' AS explain_, 1 AS is_admin, '收货地址格式错误，请重新选择' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_66a3d38465' AS code, '收货地址格式错误，请重新选择' AS remarks, 'Invalid delivery address, please select again' AS explain_, 1 AS is_admin, '收货地址格式错误，请重新选择' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_7728ac8476' AS code, '地址已存在' AS remarks, '地址已存在' AS explain_, 1 AS is_admin, '地址已存在' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_7728ac8476' AS code, '[待审]地址已存在' AS remarks, 'Địa chỉ đã tồn tại' AS explain_, 1 AS is_admin, '地址已存在' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_7728ac8476' AS code, '地址已存在' AS remarks, 'The address already exists' AS explain_, 1 AS is_admin, '地址已存在' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_5badb3ba85' AS code, '修改失败' AS remarks, '修改失败' AS explain_, 1 AS is_admin, '修改失败' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_5badb3ba85' AS code, '[待审]修改失败' AS remarks, 'Sửa đổi thất bại' AS explain_, 1 AS is_admin, '修改失败' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_5badb3ba85' AS code, '修改失败' AS remarks, 'Update failed' AS explain_, 1 AS is_admin, '修改失败' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_6452a05591' AS code, '添加失败' AS remarks, '添加失败' AS explain_, 1 AS is_admin, '添加失败' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_6452a05591' AS code, '[待审]添加失败' AS remarks, 'Thêm thất bại' AS explain_, 1 AS is_admin, '添加失败' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_6452a05591' AS code, '添加失败' AS remarks, 'Failed to add' AS explain_, 1 AS is_admin, '添加失败' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_b20188f639' AS code, '数据不存在' AS remarks, '数据不存在' AS explain_, 1 AS is_admin, '数据不存在' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_b20188f639' AS code, '[待审]数据不存在' AS remarks, 'Dữ liệu không tồn tại' AS explain_, 1 AS is_admin, '数据不存在' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_b20188f639' AS code, '数据不存在' AS remarks, 'Data does not exist' AS explain_, 1 AS is_admin, '数据不存在' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_bbf09eae46' AS code, '地址选择有误' AS remarks, '地址选择有误' AS explain_, 1 AS is_admin, '地址选择有误' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_bbf09eae46' AS code, '[待审]地址选择有误' AS remarks, 'Địa chỉ được chọn không đúng' AS explain_, 1 AS is_admin, '地址选择有误' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_bbf09eae46' AS code, '地址选择有误' AS remarks, 'Wrong address selected' AS explain_, 1 AS is_admin, '地址选择有误' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_4a04600924' AS code, '请选择收货地址' AS remarks, '请选择收货地址' AS explain_, 1 AS is_admin, '请选择收货地址' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_4a04600924' AS code, '[待审]请选择收货地址' AS remarks, 'Vui lòng chọn địa chỉ nhận hàng' AS explain_, 1 AS is_admin, '请选择收货地址' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_4a04600924' AS code, '请选择收货地址' AS remarks, 'Please select a delivery address' AS explain_, 1 AS is_admin, '请选择收货地址' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '请填写收货人姓名' AS code, '请填写收货人姓名' AS remarks, '请填写收货人姓名' AS explain_, 0 AS is_admin, '请填写收货人姓名' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '请填写收货人姓名' AS code, '[待审]请填写收货人姓名' AS remarks, 'Vui lòng nhập tên người nhận' AS explain_, 0 AS is_admin, '请填写收货人姓名' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '请填写收货人姓名' AS code, '请填写收货人姓名' AS remarks, 'Please enter the recipient name' AS explain_, 0 AS is_admin, '请填写收货人姓名' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '请填写联系电话' AS code, '请填写联系电话' AS remarks, '请填写联系电话' AS explain_, 0 AS is_admin, '请填写联系电话' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '请填写联系电话' AS code, '[待审]请填写联系电话' AS remarks, 'Vui lòng nhập số điện thoại liên hệ' AS explain_, 0 AS is_admin, '请填写联系电话' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '请填写联系电话' AS code, '请填写联系电话' AS remarks, 'Please enter the contact phone number' AS explain_, 0 AS is_admin, '请填写联系电话' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '请选择所在地区' AS code, '请选择所在地区' AS remarks, '请选择所在地区' AS explain_, 0 AS is_admin, '请选择所在地区' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '请选择所在地区' AS code, '[待审]请选择所在地区' AS remarks, 'Vui lòng chọn khu vực' AS explain_, 0 AS is_admin, '请选择所在地区' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '请选择所在地区' AS code, '请选择所在地区' AS remarks, 'Please select the region' AS explain_, 0 AS is_admin, '请选择所在地区' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '请填写详细地址' AS code, '请填写详细地址' AS remarks, '请填写详细地址' AS explain_, 0 AS is_admin, '请填写详细地址' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '请填写详细地址' AS code, '[待审]请填写详细地址' AS remarks, 'Vui lòng nhập địa chỉ chi tiết' AS explain_, 0 AS is_admin, '请填写详细地址' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '请填写详细地址' AS code, '请填写详细地址' AS remarks, 'Please enter the detailed address' AS explain_, 0 AS is_admin, '请填写详细地址' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '姓名' AS code, '姓名' AS remarks, '姓名' AS explain_, 0 AS is_admin, '姓名' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '姓名' AS code, '[待审]姓名' AS remarks, 'Họ tên' AS explain_, 0 AS is_admin, '姓名' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '姓名' AS code, '姓名' AS remarks, 'Name' AS explain_, 0 AS is_admin, '姓名' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '联系电话' AS code, '联系电话' AS remarks, '联系电话' AS explain_, 0 AS is_admin, '联系电话' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '联系电话' AS code, '[待审]联系电话' AS remarks, 'Số điện thoại' AS explain_, 0 AS is_admin, '联系电话' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '联系电话' AS code, '联系电话' AS remarks, 'Phone number' AS explain_, 0 AS is_admin, '联系电话' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '所在地区' AS code, '所在地区' AS remarks, '所在地区' AS explain_, 0 AS is_admin, '所在地区' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '所在地区' AS code, '[待审]所在地区' AS remarks, 'Khu vực' AS explain_, 0 AS is_admin, '所在地区' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '所在地区' AS code, '所在地区' AS remarks, 'Region' AS explain_, 0 AS is_admin, '所在地区' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '详细地址' AS code, '详细地址' AS remarks, '详细地址' AS explain_, 0 AS is_admin, '详细地址' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '详细地址' AS code, '[待审]详细地址' AS remarks, 'Địa chỉ chi tiết' AS explain_, 0 AS is_admin, '详细地址' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '详细地址' AS code, '详细地址' AS remarks, 'Detailed address' AS explain_, 0 AS is_admin, '详细地址' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '立即保存' AS code, '立即保存' AS remarks, '立即保存' AS explain_, 0 AS is_admin, '立即保存' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '立即保存' AS code, '[待审]立即保存' AS remarks, 'Lưu ngay' AS explain_, 0 AS is_admin, '立即保存' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '立即保存' AS code, '立即保存' AS remarks, 'Save' AS explain_, 0 AS is_admin, '立即保存' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '设置为默认地址' AS code, '设置为默认地址' AS remarks, '设置为默认地址' AS explain_, 0 AS is_admin, '设置为默认地址' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '设置为默认地址' AS code, '[待审]设置为默认地址' AS remarks, 'Đặt làm địa chỉ mặc định' AS explain_, 0 AS is_admin, '设置为默认地址' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '设置为默认地址' AS code, '设置为默认地址' AS remarks, 'Set as default address' AS explain_, 0 AS is_admin, '设置为默认地址' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '修改地址' AS code, '修改地址' AS remarks, '修改地址' AS explain_, 0 AS is_admin, '修改地址' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '修改地址' AS code, '[待审]修改地址' AS remarks, 'Sửa địa chỉ' AS explain_, 0 AS is_admin, '修改地址' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '修改地址' AS code, '修改地址' AS remarks, 'Edit address' AS explain_, 0 AS is_admin, '修改地址' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '添加地址' AS code, '添加地址' AS remarks, '添加地址' AS explain_, 0 AS is_admin, '添加地址' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '添加地址' AS code, '[待审]添加地址' AS remarks, 'Thêm địa chỉ' AS explain_, 0 AS is_admin, '添加地址' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '添加地址' AS code, '添加地址' AS remarks, 'Add address' AS explain_, 0 AS is_admin, '添加地址' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '保存中' AS code, '保存中' AS remarks, '保存中' AS explain_, 0 AS is_admin, '保存中' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '保存中' AS code, '[待审]保存中' AS remarks, 'Đang lưu' AS explain_, 0 AS is_admin, '保存中' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '保存中' AS code, '保存中' AS remarks, 'Saving' AS explain_, 0 AS is_admin, '保存中' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '修改成功' AS code, '修改成功' AS remarks, '修改成功' AS explain_, 0 AS is_admin, '修改成功' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '修改成功' AS code, '[待审]修改成功' AS remarks, 'Sửa thành công' AS explain_, 0 AS is_admin, '修改成功' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '修改成功' AS code, '修改成功' AS remarks, 'Updated successfully' AS explain_, 0 AS is_admin, '修改成功' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '添加成功' AS code, '添加成功' AS remarks, '添加成功' AS explain_, 0 AS is_admin, '添加成功' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '添加成功' AS code, '[待审]添加成功' AS remarks, 'Thêm thành công' AS explain_, 0 AS is_admin, '添加成功' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '添加成功' AS code, '添加成功' AS remarks, 'Added successfully' AS explain_, 0 AS is_admin, '添加成功' AS zh_
 ) v
 WHERE v.tid IS NOT NULL AND NOT EXISTS (SELECT 1 FROM eb_lang_code e WHERE e.type_id = v.tid AND e.code = v.code) AND NOT EXISTS (SELECT 1 FROM eb_lang_code z WHERE z.type_id = @t_zh AND z.remarks = v.zh_ AND z.code <> v.code);
 

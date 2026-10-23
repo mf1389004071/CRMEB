@@ -21,7 +21,7 @@ class VnFx
     }
 
     /** 创建收货地址，返回地址 id */
-    public static function address(int $uid, int $cityId = 0): int
+    public static function address(int $uid, int $cityId = 911001): int
     {
         Db::name('user_address')->where('uid', $uid)->delete();
         return (int)Db::name('user_address')->insertGetId([
