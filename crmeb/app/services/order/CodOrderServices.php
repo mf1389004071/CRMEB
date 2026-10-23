@@ -283,6 +283,64 @@ class CodOrderServices extends BaseServices
     }
 
     /**
+     * 到付订单状态文案（_status），退款/已取消沿用原逻辑
+     * @param array $order
+     * @param array $status tidyOrder 原有计算结果
+     * @return array
+     */
+    public function tidyStatus(array $order, array $status): array
+    {
+        if ((int)$order['is_cancel'] === 1 || (int)($order['refund_status'] ?? 0) > 0) {
+            return $status;
+        }
+        $key = $this->fulfilKey($order);
+        $paid = (int)$order['paid'] === 1;
+        switch ($key) {
+            case 'cod_pending':
+                $status = ['_type' => 1, '_title' => '待确认', '_msg' => '商家正在确认订单,请耐心等待', '_class' => 'state-nfh'];
+                break;
+            case 'cod_stockup':
+                $status = ['_type' => 1, '_title' => '备货中', '_msg' => '商家正在备货,请耐心等待', '_class' => 'state-nfh'];
+                break;
+            case 'cod_delivering':
+                $status = ['_type' => 2, '_title' => '发货中', '_msg' => '商品正在配送中,请保持电话畅通', '_class' => 'state-ysh'];
+                break;
+            case 'cod_delivered':
+                $status = ['_type' => 2, '_title' => $paid ? '已送达' : '已送达待收款', '_msg' => $paid ? '已送达,感谢您的支持' : '已送达,请按应付金额支付货款', '_class' => 'state-ysh'];
+                break;
+            case 'cod_finished':
+                $status = ['_type' => 4, '_title' => '交易完成', '_msg' => '交易完成,感谢您的支持', '_class' => 'state-ytk'];
+                break;
+        }
+        return $status;
+    }
+
+    /**
+     * 到付订单附加字段：fulfil_key、can_cancel；送达码仅在“订单所有者的详情”返回（键名 cod_code），其余一律剔除
+     * @param array $order
+     * @param bool $detail
+     * @return array
+     */
+    public function tidyOrderFields(array $order, bool $detail): array
+    {
+        $code = $order['cod_delivery_code'] ?? '';
+        unset($order['cod_delivery_code']);
+        $order['fulfil_key'] = $this->fulfilKey($order);
+        $order['can_cancel'] = $this->userCanCancel($order);
+        $order['cod_code'] = '';
+        try {
+            $request = app()->request;
+            $isOwner = $request->hasMacro('uid') && (int)$request->uid() > 0 && (int)$request->uid() === (int)($order['uid'] ?? 0);
+            $isAdmin = $request->hasMacro('adminId') && (int)$request->adminId() > 0;
+            if ($detail && $isOwner && !$isAdmin && (int)$order['is_cancel'] === 0 && (int)$order['fulfil_status'] < self::F_DELIVERED) {
+                $order['cod_code'] = $code;
+            }
+        } catch (\Throwable $e) {
+        }
+        return $order;
+    }
+
+    /**
      * 完结：fulfil=3 且 paid=1 且 status=0 → status=3
      * 一期营销(积分/佣金/经验)已关闭，不走 storeProductOrderUserTakeDelivery
      */

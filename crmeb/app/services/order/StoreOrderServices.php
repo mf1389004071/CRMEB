@@ -400,6 +400,12 @@ class StoreOrderServices extends BaseServices
                 $status['_class'] = 'state-ytk';
             }
         }
+        // VN: 到付订单优先走履约状态文案（避免落入“未支付/请在…前完成支付”分支）
+        if (!empty($order['is_cod'])) {
+            $codServices = app()->make(\app\services\order\CodOrderServices::class);
+            $status = $codServices->tidyStatus(is_object($order) ? $order->toArray() : $order, $status);
+            $order = $codServices->tidyOrderFields(is_object($order) ? $order->toArray() : $order, $detail);
+        }
         if (isset($order['pay_type']))
             $status['_payType'] = $status['_type'] == 0 ? '' : PayServices::PAY_TYPE[$order['pay_type']] ?? '其他方式';
         if (isset($order['delivery_type']))
@@ -1972,6 +1978,10 @@ HTML;
         }
         if ($order->is_cancel == 1) {
             throw new ApiException('订单已取消，请勿重复操作！');
+        }
+        // VN: 到付订单已确认备货后用户不可自行取消
+        if ($order->is_cod && !app()->make(\app\services\order\CodOrderServices::class)->userCanCancel($order->toArray())) {
+            throw new ApiException('订单已确认备货，如需取消请联系客服');
         }
         if ($order->paid) {
             throw new ApiException('订单已经支付无法取消');

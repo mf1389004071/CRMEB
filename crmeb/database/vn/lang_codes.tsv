@@ -26,3 +26,13 @@ api	订单已确认备货，如需取消请联系客服	Đơn hàng đã đượ
 api	订单不存在	Đơn hàng không tồn tại	Order does not exist
 api	取消失败	Hủy thất bại	Cancellation failed
 api	系统繁忙，请稍后重试	Hệ thống đang bận, vui lòng thử lại sau	System busy, please try again later
+front	待确认	Chờ xác nhận	Pending confirmation
+front	备货中	Đang chuẩn bị hàng	Preparing
+front	发货中	Đang giao hàng	Out for delivery
+front	已送达	Đã giao	Delivered
+front	已送达待收款	Đã giao, chờ thu tiền	Delivered, awaiting payment
+front	商家正在确认订单,请耐心等待	Cửa hàng đang xác nhận đơn hàng, vui lòng chờ	The merchant is confirming your order, please wait
+front	商家正在备货,请耐心等待	Cửa hàng đang chuẩn bị hàng, vui lòng chờ	The merchant is preparing your goods, please wait
+front	商品正在配送中,请保持电话畅通	Hàng đang được giao, vui lòng giữ điện thoại thông suốt	Your goods are on the way, please keep your phone available
+front	已送达,请按应付金额支付货款	Đã giao hàng, vui lòng thanh toán đúng số tiền phải trả	Delivered, please pay the amount due
+front	已送达,感谢您的支持	Đã giao hàng, cảm ơn bạn đã ủng hộ	Delivered, thank you for your support

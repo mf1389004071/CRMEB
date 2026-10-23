@@ -168,6 +168,66 @@ SELECT v.tid, v.code, v.remarks, v.explain_, v.is_admin FROM (
   SELECT @t_vi AS tid, 'vn_34073d594d' AS code, '[待审]系统繁忙，请稍后重试' AS remarks, 'Hệ thống đang bận, vui lòng thử lại sau' AS explain_, 1 AS is_admin, '系统繁忙，请稍后重试' AS zh_
   UNION ALL
   SELECT @t_en AS tid, 'vn_34073d594d' AS code, '系统繁忙，请稍后重试' AS remarks, 'System busy, please try again later' AS explain_, 1 AS is_admin, '系统繁忙，请稍后重试' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '待确认' AS code, '待确认' AS remarks, '待确认' AS explain_, 0 AS is_admin, '待确认' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '待确认' AS code, '[待审]待确认' AS remarks, 'Chờ xác nhận' AS explain_, 0 AS is_admin, '待确认' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '待确认' AS code, '待确认' AS remarks, 'Pending confirmation' AS explain_, 0 AS is_admin, '待确认' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '备货中' AS code, '备货中' AS remarks, '备货中' AS explain_, 0 AS is_admin, '备货中' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '备货中' AS code, '[待审]备货中' AS remarks, 'Đang chuẩn bị hàng' AS explain_, 0 AS is_admin, '备货中' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '备货中' AS code, '备货中' AS remarks, 'Preparing' AS explain_, 0 AS is_admin, '备货中' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '发货中' AS code, '发货中' AS remarks, '发货中' AS explain_, 0 AS is_admin, '发货中' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '发货中' AS code, '[待审]发货中' AS remarks, 'Đang giao hàng' AS explain_, 0 AS is_admin, '发货中' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '发货中' AS code, '发货中' AS remarks, 'Out for delivery' AS explain_, 0 AS is_admin, '发货中' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '已送达' AS code, '已送达' AS remarks, '已送达' AS explain_, 0 AS is_admin, '已送达' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '已送达' AS code, '[待审]已送达' AS remarks, 'Đã giao' AS explain_, 0 AS is_admin, '已送达' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '已送达' AS code, '已送达' AS remarks, 'Delivered' AS explain_, 0 AS is_admin, '已送达' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '已送达待收款' AS code, '已送达待收款' AS remarks, '已送达待收款' AS explain_, 0 AS is_admin, '已送达待收款' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '已送达待收款' AS code, '[待审]已送达待收款' AS remarks, 'Đã giao, chờ thu tiền' AS explain_, 0 AS is_admin, '已送达待收款' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '已送达待收款' AS code, '已送达待收款' AS remarks, 'Delivered, awaiting payment' AS explain_, 0 AS is_admin, '已送达待收款' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '商家正在确认订单,请耐心等待' AS code, '商家正在确认订单,请耐心等待' AS remarks, '商家正在确认订单,请耐心等待' AS explain_, 0 AS is_admin, '商家正在确认订单,请耐心等待' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '商家正在确认订单,请耐心等待' AS code, '[待审]商家正在确认订单,请耐心等待' AS remarks, 'Cửa hàng đang xác nhận đơn hàng, vui lòng chờ' AS explain_, 0 AS is_admin, '商家正在确认订单,请耐心等待' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '商家正在确认订单,请耐心等待' AS code, '商家正在确认订单,请耐心等待' AS remarks, 'The merchant is confirming your order, please wait' AS explain_, 0 AS is_admin, '商家正在确认订单,请耐心等待' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '商家正在备货,请耐心等待' AS code, '商家正在备货,请耐心等待' AS remarks, '商家正在备货,请耐心等待' AS explain_, 0 AS is_admin, '商家正在备货,请耐心等待' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '商家正在备货,请耐心等待' AS code, '[待审]商家正在备货,请耐心等待' AS remarks, 'Cửa hàng đang chuẩn bị hàng, vui lòng chờ' AS explain_, 0 AS is_admin, '商家正在备货,请耐心等待' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '商家正在备货,请耐心等待' AS code, '商家正在备货,请耐心等待' AS remarks, 'The merchant is preparing your goods, please wait' AS explain_, 0 AS is_admin, '商家正在备货,请耐心等待' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '商品正在配送中,请保持电话畅通' AS code, '商品正在配送中,请保持电话畅通' AS remarks, '商品正在配送中,请保持电话畅通' AS explain_, 0 AS is_admin, '商品正在配送中,请保持电话畅通' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '商品正在配送中,请保持电话畅通' AS code, '[待审]商品正在配送中,请保持电话畅通' AS remarks, 'Hàng đang được giao, vui lòng giữ điện thoại thông suốt' AS explain_, 0 AS is_admin, '商品正在配送中,请保持电话畅通' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '商品正在配送中,请保持电话畅通' AS code, '商品正在配送中,请保持电话畅通' AS remarks, 'Your goods are on the way, please keep your phone available' AS explain_, 0 AS is_admin, '商品正在配送中,请保持电话畅通' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '已送达,请按应付金额支付货款' AS code, '已送达,请按应付金额支付货款' AS remarks, '已送达,请按应付金额支付货款' AS explain_, 0 AS is_admin, '已送达,请按应付金额支付货款' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '已送达,请按应付金额支付货款' AS code, '[待审]已送达,请按应付金额支付货款' AS remarks, 'Đã giao hàng, vui lòng thanh toán đúng số tiền phải trả' AS explain_, 0 AS is_admin, '已送达,请按应付金额支付货款' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '已送达,请按应付金额支付货款' AS code, '已送达,请按应付金额支付货款' AS remarks, 'Delivered, please pay the amount due' AS explain_, 0 AS is_admin, '已送达,请按应付金额支付货款' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '已送达,感谢您的支持' AS code, '已送达,感谢您的支持' AS remarks, '已送达,感谢您的支持' AS explain_, 0 AS is_admin, '已送达,感谢您的支持' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '已送达,感谢您的支持' AS code, '[待审]已送达,感谢您的支持' AS remarks, 'Đã giao hàng, cảm ơn bạn đã ủng hộ' AS explain_, 0 AS is_admin, '已送达,感谢您的支持' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '已送达,感谢您的支持' AS code, '已送达,感谢您的支持' AS remarks, 'Delivered, thank you for your support' AS explain_, 0 AS is_admin, '已送达,感谢您的支持' AS zh_
 ) v
 WHERE v.tid IS NOT NULL AND NOT EXISTS (SELECT 1 FROM eb_lang_code e WHERE e.type_id = v.tid AND e.code = v.code) AND NOT EXISTS (SELECT 1 FROM eb_lang_code z WHERE z.type_id = @t_zh AND z.remarks = v.zh_ AND z.code <> v.code);
 

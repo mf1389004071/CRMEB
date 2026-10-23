@@ -300,6 +300,10 @@ class StoreOrderController
             case PayServices::OFFLINE_PAY:
                 if ($this->services->setOrderTypePayOffline($order['order_id'])) {
                     event('NoticeListener', [$order->toArray(), 'admin_pay_success_code']);
+                    // VN: 到付订单创建钩子（履约状态、送达码、应收快照、审计），受 vn_mode_enable 控制
+                    if (vn_mode_enabled()) {
+                        app()->make(\app\services\order\CodOrderServices::class)->onCreated($order->toArray());
+                    }
                     return app('json')->status('success', '订单创建成功');
                 } else {
                     return app('json')->status('success', '支付失败');
