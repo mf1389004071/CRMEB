@@ -763,6 +763,11 @@ class PublicController
         $data['order_notify_poll_seconds'] = (int)sys_config('order_notify_poll_seconds', 20);
         $data['default_phone_country'] = sys_config('default_phone_country', '+84');
         $data['allow_national_price'] = (int)sys_config('allow_national_price', 0) === 1;
+        // 币种与汇率（展示层换算用）
+        $data['currencies'] = array_values(array_map(function ($c) {
+            return ['code' => $c['code'], 'symbol' => $c['symbol'], 'decimal_places' => (int)$c['decimal_places'], 'thousand_sep' => $c['thousand_sep'],
+                'decimal_sep' => $c['decimal_sep'], 'rate' => $c['rate'], 'is_base' => (int)$c['is_base'], 'name_zh' => $c['name_zh'], 'name_vi' => $c['name_vi'], 'name_en' => $c['name_en']];
+        }, \app\services\system\MoneyServices::currencies(true)));
         return app('json')->success($data);
     }
 

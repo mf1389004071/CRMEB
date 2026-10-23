@@ -16,6 +16,7 @@ use think\facade\Route;
 Route::group(function () {
     Route::get('vn/contacts', 'v1.vn.VnController/contacts')->option(['real_name' => '联系方式']);
     Route::get('phone/countries', 'v1.vn.VnController/phoneCountries')->option(['real_name' => '手机区号字典']);
+    Route::get('public/currency', 'v1.vn.VnController/currency')->option(['real_name' => '币种与汇率']);
     // 配送区域
     Route::get('region/children', 'v1.vn.RegionController/children')->option(['real_name' => '区域子节点']);
     Route::get('region/hot', 'v1.vn.RegionController/hot')->option(['real_name' => '热门区域']);
@@ -41,6 +42,7 @@ Route::group(function () {
 Route::group(function () {
     Route::post('cart/clear_all', 'v1.vn.VnController/clearCart')->option(['real_name' => '清空购物车(切换区域)']);
     Route::post('user/locale', 'v1.vn.VnController/setLocale')->option(['real_name' => '保存用户语种']);
+    Route::post('user/currency', 'v1.vn.VnController/setCurrency')->option(['real_name' => '保存用户展示币种']);
 })->middleware(\app\http\middleware\AllowOriginMiddleware::class)
     ->middleware(\app\api\middleware\StationOpenMiddleware::class)
     ->middleware(\app\api\middleware\AuthTokenMiddleware::class, true)

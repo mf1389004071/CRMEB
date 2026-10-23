@@ -21,6 +21,44 @@ use app\Request;
 class VnController
 {
     /**
+     * 币种列表、汇率与本次请求的默认展示币种（本位币金额在展示层按此换算）
+     * @return mixed
+     */
+    public function currency()
+    {
+        $list = [];
+        foreach (\app\services\system\MoneyServices::currencies(true) as $c) {
+            $list[] = [
+                'code' => $c['code'], 'symbol' => $c['symbol'], 'name' => $c['name_' . substr(current_lang_code(), 0, 2)] ?? $c['name_en'],
+                'name_zh' => $c['name_zh'], 'name_vi' => $c['name_vi'], 'name_en' => $c['name_en'],
+                'decimal_places' => (int)$c['decimal_places'], 'thousand_sep' => $c['thousand_sep'], 'decimal_sep' => $c['decimal_sep'],
+                'rate' => $c['rate'], 'is_base' => (int)$c['is_base'],
+            ];
+        }
+        return app('json')->success([
+            'base'            => \app\services\system\MoneyServices::base(),
+            'default_display' => \app\services\system\MoneyServices::resolveDisplayCode(),
+            'list'            => $list,
+        ]);
+    }
+
+    /**
+     * 保存用户展示币种（需登录）
+     * @param Request $request
+     * @return mixed
+     */
+    public function setCurrency(Request $request)
+    {
+        [$code] = $request->postMore([['currency', '']], true);
+        $code = strtoupper(trim((string)$code));
+        if (!isset(\app\services\system\MoneyServices::currencies(true)[$code])) {
+            return app('json')->fail('参数错误');
+        }
+        \app\model\user\User::where('uid', (int)$request->uid())->update(['display_currency' => $code]);
+        return app('json')->success(['currency' => $code]);
+    }
+
+    /**
      * 保存用户语种（需登录）：规范化后必须在启用语言内
      * @param Request $request
      * @return mixed

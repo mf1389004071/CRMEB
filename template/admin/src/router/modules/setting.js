@@ -28,6 +28,15 @@ export default {
   component: LayoutMain,
   children: [
     {
+      path: 'currency/index',
+      name: `${pre}currency`,
+      meta: {
+        auth: ['admin-setting-currency'],
+        title: '币种与汇率',
+      },
+      component: () => import('@/pages/setting/currency/index'),
+    },
+    {
       path: 'i18n_manage/index',
       name: `${pre}i18nManage`,
       meta: {

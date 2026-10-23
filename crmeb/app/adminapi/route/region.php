@@ -71,3 +71,18 @@ Route::group('product/i18n', function () {
     \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
     \app\adminapi\middleware\AdminLogMiddleware::class
 ])->option(['mark' => 'productI18n', 'mark_name' => '商品多语']);
+
+/**
+ * VN: 币种与汇率路由
+ */
+Route::group('setting/currency', function () {
+    Route::get('', 'v1.vn.Currency/lst')->option(['real_name' => '币种列表']);
+    Route::get('logs', 'v1.vn.Currency/logs')->option(['real_name' => '汇率修改日志']);
+    Route::post('', 'v1.vn.Currency/save')->option(['real_name' => '币种保存']);
+    Route::delete(':id', 'v1.vn.Currency/delete')->option(['real_name' => '币种删除']);
+})->middleware([
+    \app\http\middleware\AllowOriginMiddleware::class,
+    \app\adminapi\middleware\AdminAuthTokenMiddleware::class,
+    \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
+    \app\adminapi\middleware\AdminLogMiddleware::class
+])->option(['mark' => 'currency', 'mark_name' => '币种与汇率']);
