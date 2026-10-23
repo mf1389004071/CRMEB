@@ -65,3 +65,7 @@ api	账号或密码错误	Tài khoản hoặc mật khẩu không đúng	Wrong a
 api	请输入账号和密码	Vui lòng nhập tài khoản và mật khẩu	Please enter account and password
 api	注册失败	Đăng ký thất bại	Registration failed
 api	注册成功	Đăng ký thành công	Registered successfully
+api	暂时无法下单，请联系客服	Hiện chưa thể đặt hàng, vui lòng liên hệ CSKH	Unable to place order at the moment, please contact customer service
+api	下单过于频繁，请稍后再试或联系客服	Bạn đặt hàng quá thường xuyên, vui lòng thử lại sau hoặc liên hệ CSKH	Too many orders placed, please try again later or contact customer service
+api	用户不存在	Người dùng không tồn tại	User does not exist
+api	参数错误	Tham số không hợp lệ	Invalid parameters

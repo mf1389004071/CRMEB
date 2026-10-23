@@ -402,6 +402,30 @@ SELECT v.tid, v.code, v.remarks, v.explain_, v.is_admin FROM (
   SELECT @t_vi AS tid, 'vn_6506a9ecaa' AS code, '[待审]注册成功' AS remarks, 'Đăng ký thành công' AS explain_, 1 AS is_admin, '注册成功' AS zh_
   UNION ALL
   SELECT @t_en AS tid, 'vn_6506a9ecaa' AS code, '注册成功' AS remarks, 'Registered successfully' AS explain_, 1 AS is_admin, '注册成功' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_88680ea43b' AS code, '暂时无法下单，请联系客服' AS remarks, '暂时无法下单，请联系客服' AS explain_, 1 AS is_admin, '暂时无法下单，请联系客服' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_88680ea43b' AS code, '[待审]暂时无法下单，请联系客服' AS remarks, 'Hiện chưa thể đặt hàng, vui lòng liên hệ CSKH' AS explain_, 1 AS is_admin, '暂时无法下单，请联系客服' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_88680ea43b' AS code, '暂时无法下单，请联系客服' AS remarks, 'Unable to place order at the moment, please contact customer service' AS explain_, 1 AS is_admin, '暂时无法下单，请联系客服' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_b517d17aeb' AS code, '下单过于频繁，请稍后再试或联系客服' AS remarks, '下单过于频繁，请稍后再试或联系客服' AS explain_, 1 AS is_admin, '下单过于频繁，请稍后再试或联系客服' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_b517d17aeb' AS code, '[待审]下单过于频繁，请稍后再试或联系客服' AS remarks, 'Bạn đặt hàng quá thường xuyên, vui lòng thử lại sau hoặc liên hệ CSKH' AS explain_, 1 AS is_admin, '下单过于频繁，请稍后再试或联系客服' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_b517d17aeb' AS code, '下单过于频繁，请稍后再试或联系客服' AS remarks, 'Too many orders placed, please try again later or contact customer service' AS explain_, 1 AS is_admin, '下单过于频繁，请稍后再试或联系客服' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_489251bfc8' AS code, '用户不存在' AS remarks, '用户不存在' AS explain_, 1 AS is_admin, '用户不存在' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_489251bfc8' AS code, '[待审]用户不存在' AS remarks, 'Người dùng không tồn tại' AS explain_, 1 AS is_admin, '用户不存在' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_489251bfc8' AS code, '用户不存在' AS remarks, 'User does not exist' AS explain_, 1 AS is_admin, '用户不存在' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_bff0e83714' AS code, '参数错误' AS remarks, '参数错误' AS explain_, 1 AS is_admin, '参数错误' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_bff0e83714' AS code, '[待审]参数错误' AS remarks, 'Tham số không hợp lệ' AS explain_, 1 AS is_admin, '参数错误' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_bff0e83714' AS code, '参数错误' AS remarks, 'Invalid parameters' AS explain_, 1 AS is_admin, '参数错误' AS zh_
 ) v
 WHERE v.tid IS NOT NULL AND NOT EXISTS (SELECT 1 FROM eb_lang_code e WHERE e.type_id = v.tid AND e.code = v.code) AND NOT EXISTS (SELECT 1 FROM eb_lang_code z WHERE z.type_id = @t_zh AND z.remarks = v.zh_ AND z.code <> v.code);
 

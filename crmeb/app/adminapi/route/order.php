@@ -169,6 +169,20 @@ Route::group('refund', function () {
 ])->option(['mark' => 'refund', 'mark_name' => '退款订单']);
 
 /**
+ * VN: 下单黑名单路由
+ */
+Route::group('order/blacklist', function () {
+    Route::get('', 'v1.order.OrderBlacklist/lst')->option(['real_name' => '下单黑名单列表']);
+    Route::post('', 'v1.order.OrderBlacklist/save')->option(['real_name' => '下单黑名单新增']);
+    Route::delete(':id', 'v1.order.OrderBlacklist/delete')->option(['real_name' => '下单黑名单删除']);
+})->middleware([
+    \app\http\middleware\AllowOriginMiddleware::class,
+    \app\adminapi\middleware\AdminAuthTokenMiddleware::class,
+    \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
+    \app\adminapi\middleware\AdminLogMiddleware::class
+])->option(['mark' => 'orderBlacklist', 'mark_name' => '下单黑名单']);
+
+/**
  * VN: 到付(货到付款)订单路由
  */
 Route::group('order/cod', function () {

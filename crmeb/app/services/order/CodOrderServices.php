@@ -59,6 +59,7 @@ class CodOrderServices extends BaseServices
             'cod_receivable'    => $row['pay_price'],
             'lang'              => current_lang_code(),
             'region_id'         => function_exists('current_region_id') ? (int)current_region_id() : 0,
+            'client_ip'         => app()->make(OrderRiskServices::class)->clientIp(),
         ];
         if (class_exists(\app\services\system\MoneyServices::class)) {
             $data = array_merge($data, \app\services\system\MoneyServices::snapshot((string)$row['pay_price']));
@@ -339,6 +340,7 @@ class CodOrderServices extends BaseServices
                 'need_call_confirm' => (int)$r['need_call_confirm'],
                 'region_id'         => (int)$r['region_id'],
                 'region_name'       => $regionNames[$r['region_id']] ?? '',
+                'client_ip'         => (string)($r['client_ip'] ?? ''),
                 'delivery_name'     => $r['delivery_name'],
                 'delivery_id'       => $r['delivery_id'],
                 'add_time'          => date('Y-m-d H:i:s', (int)$r['add_time']),

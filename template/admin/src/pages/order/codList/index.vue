@@ -41,6 +41,7 @@
         <el-button type="primary" size="small" icon="el-icon-printer" :disabled="!selection.length" @click="goPrint">批量打印配送单（{{ selection.length }}）</el-button>
         <el-button size="small" :disabled="!selection.length" @click="goPrint('pick')">批量拣货汇总</el-button>
         <el-button size="small" @click="printToday">打印今日全部</el-button>
+        <el-button size="small" @click="openBlacklist">下单黑名单</el-button>
         <el-switch v-model="soundOn" class="ml10" active-text="新订单提示音" @change="onSound" />
       </div>
       <el-tabs v-model="tab" @tab-click="onTab">
@@ -94,6 +95,13 @@
               <el-button v-if="!scope.row.paid && scope.row.fulfil_status > 0" type="text" size="small" @click="openCollect(scope.row)">确认收款</el-button>
               <el-button v-if="!scope.row.paid && scope.row.fulfil_status < 3" type="text" size="small" @click="openCancel(scope.row)">取消</el-button>
               <el-button type="text" size="small" @click="toggleCall(scope.row)">{{ scope.row.need_call_confirm ? '取消电话标记' : '电话确认' }}</el-button>
+              <el-dropdown trigger="click" @command="(c) => addBlack(scope.row, c)">
+                <el-button type="text" size="small">黑名单<i class="el-icon-arrow-down el-icon--right"></i></el-button>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item command="phone">加入手机号</el-dropdown-item>
+                  <el-dropdown-item command="ip" :disabled="!scope.row.client_ip">加入下单IP</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
             </template>
             <el-button type="text" size="small" @click="openAudit(scope.row)">操作记录</el-button>
           </template>
@@ -135,6 +143,28 @@
       <span slot="footer"><el-button @click="cancelDlg = false">取消</el-button><el-button type="danger" @click="submitCancel">确认取消</el-button></span>
     </el-dialog>
 
+    <el-dialog title="下单黑名单" :visible.sync="blackDlg" width="640px">
+      <div class="mb10">
+        <el-select v-model="blackForm.type" size="small" style="width: 100px">
+          <el-option label="手机号" value="phone" />
+          <el-option label="IP" value="ip" />
+          <el-option label="用户ID" value="uid" />
+        </el-select>
+        <el-input v-model="blackForm.value" size="small" style="width: 200px" placeholder="值" />
+        <el-input v-model="blackForm.remark" size="small" style="width: 150px" placeholder="备注" />
+        <el-button type="primary" size="small" @click="submitBlack">添加</el-button>
+      </div>
+      <el-table :data="blackList" size="small" empty-text="暂无记录">
+        <el-table-column label="类型" prop="type" width="80" />
+        <el-table-column label="值" prop="value" min-width="150" />
+        <el-table-column label="备注" prop="remark" min-width="130" />
+        <el-table-column label="时间" prop="add_time_text" width="160" />
+        <el-table-column label="操作" width="70">
+          <template slot-scope="scope"><el-button type="text" size="small" @click="delBlack(scope.row)">移除</el-button></template>
+        </el-table-column>
+      </el-table>
+    </el-dialog>
+
     <el-dialog title="操作记录" :visible.sync="auditDlg" width="640px">
       <el-table :data="audits" size="small" empty-text="暂无记录">
         <el-table-column label="时间" prop="change_time_text" width="160" />
@@ -151,7 +181,7 @@
 <script>
 import { mapState } from 'vuex';
 import { isSoundOn, setSoundOn } from '@/libs/codNotifier';
-import { codList, codConfirm, codDelivering, codDelivered, codVerify, codCollect, codCancel, codCallMark, codAudit } from '@/api/cod';
+import { orderBlacklistList, orderBlacklistAdd, orderBlacklistDel, codList, codConfirm, codDelivering, codDelivered, codVerify, codCollect, codCancel, codCallMark, codAudit } from '@/api/cod';
 
 export default {
   name: 'codList',
@@ -181,6 +211,9 @@ export default {
       collectDlg: false,
       cancelDlg: false,
       auditDlg: false,
+      blackDlg: false,
+      blackList: [],
+      blackForm: { type: 'phone', value: '', remark: '' },
       audits: [],
     };
   },
@@ -306,6 +339,32 @@ export default {
     },
     submitCancel() {
       this.run(codCancel(this.cur.id, { reason: this.form.reason })).then((ok) => ok && (this.cancelDlg = false));
+    },
+    addBlack(row, type) {
+      const value = type === 'ip' ? row.client_ip : row.user_phone;
+      this.$confirm(`将 ${type === 'ip' ? 'IP' : '手机号'} ${value} 加入下单黑名单？`, '提示', { type: 'warning' })
+        .then(() => orderBlacklistAdd({ type, value, remark: '订单 ' + row.order_id }))
+        .then((res) => this.$message.success(res.msg || '已加入'))
+        .catch((err) => err && err.msg && this.$message.error(err.msg));
+    },
+    openBlacklist() {
+      this.blackDlg = true;
+      this.loadBlack();
+    },
+    loadBlack() {
+      orderBlacklistList({ limit: 100 }).then((res) => (this.blackList = res.data.list)).catch((err) => this.$message.error(err.msg));
+    },
+    submitBlack() {
+      orderBlacklistAdd(this.blackForm)
+        .then(() => {
+          this.blackForm.value = '';
+          this.blackForm.remark = '';
+          this.loadBlack();
+        })
+        .catch((err) => this.$message.error(err.msg));
+    },
+    delBlack(row) {
+      orderBlacklistDel(row.id).then(() => this.loadBlack()).catch((err) => this.$message.error(err.msg));
     },
     toggleCall(row) {
       this.run(codCallMark(row.id, { need: row.need_call_confirm ? 0 : 1 }));
