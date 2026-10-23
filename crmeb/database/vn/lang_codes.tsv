@@ -69,3 +69,20 @@ api	暂时无法下单，请联系客服	Hiện chưa thể đặt hàng, vui l�
 api	下单过于频繁，请稍后再试或联系客服	Bạn đặt hàng quá thường xuyên, vui lòng thử lại sau hoặc liên hệ CSKH	Too many orders placed, please try again later or contact customer service
 api	用户不存在	Người dùng không tồn tại	User does not exist
 api	参数错误	Tham số không hợp lệ	Invalid parameters
+front	正在定位…	Đang định vị…	Locating…
+front	定位当前位置	Định vị vị trí hiện tại	Use my current location
+front	定位到	Đã định vị	Located
+front	点击选择	Nhấn để chọn	tap to select
+front	热门城市	Thành phố nổi bật	Popular cities
+front	全部地区	Tất cả khu vực	All regions
+front	全部	Tất cả	All
+front	选择	Chọn	Select
+front	暂无可选区域	Chưa có khu vực khả dụng	No regions available
+front	当前位置暂不在配送范围，请从下方选择	Vị trí hiện tại chưa nằm trong phạm vi giao hàng, vui lòng chọn bên dưới	Your location is outside our delivery area, please choose below
+front	定位失败，请从下方选择	Định vị thất bại, vui lòng chọn bên dưới	Location failed, please choose below
+front	无法获取位置，请从下方选择	Không thể lấy vị trí, vui lòng chọn bên dưới	Unable to get your location, please choose below
+front	该区域暂未开放	Khu vực này chưa mở	This region is not open yet
+front	切换配送区域将清空购物车，是否继续？	Đổi khu vực giao hàng sẽ làm trống giỏ hàng, bạn có muốn tiếp tục?	Changing the delivery region will clear your cart. Continue?
+front	配送区域	Khu vực giao hàng	Delivery region
+front	请选择配送区域	Vui lòng chọn khu vực giao hàng	Please select a delivery region
+front	选择配送区域	Chọn khu vực giao hàng	Select delivery region

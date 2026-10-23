@@ -18,3 +18,36 @@ export function codVerifyDetail(data) {
 export function codVerify(data) {
 	return request.post("admin/order/cod/verify", data);
 }
+
+/** 配送区域：子节点（parent_id=0 为国家层） */
+export function regionChildren(data) {
+	return request.get("region/children", data, {
+		noAuth: true
+	});
+}
+
+/** 配送区域：热门城市 */
+export function regionHot() {
+	return request.get("region/hot", {}, {
+		noAuth: true
+	});
+}
+
+/** 配送区域：经纬度定位 */
+export function regionLocate(data) {
+	return request.post("region/locate", data, {
+		noAuth: true
+	});
+}
+
+/** 配送区域：校验并返回完整链 */
+export function regionInfo(data) {
+	return request.get("region/info", data, {
+		noAuth: true
+	});
+}
+
+/** 切换区域时清空购物车 */
+export function clearCartAll() {
+	return request.post("cart/clear_all", {});
+}

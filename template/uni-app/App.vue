@@ -17,6 +17,8 @@ import colors from "@/mixins/color.js";
 import Cache from "@/utils/cache";
 import { normalizeLang } from "@/utils/lang.js";
 import { setVnConfig } from "@/utils/vn.js";
+import { getRegionId, setRegion, clearRegion, buildRegion } from "@/utils/region.js";
+import { regionInfo } from "@/api/vn.js";
 import { applyTheme } from "@/utils/theme.js";
 
 export default {
@@ -133,6 +135,16 @@ export default {
     basicConfig().then((res) => {
       uni.setStorageSync("BASIC_CONFIG", res.data);
       setVnConfig(res.data); // VN: 越南站点开关
+      // VN: 校验本地缓存的配送区域是否仍然有效（被后台关闭则清除，重新选择）
+      if (res.data && res.data.region_pricing_enable && getRegionId()) {
+        regionInfo({ city_id: getRegionId() }).then((r) => {
+          if (r.data && r.data.valid) {
+            setRegion(buildRegion(r.data.node, r.data.chain));
+          } else {
+            clearRegion();
+          }
+        }).catch(() => {});
+      }
     });
     // #ifdef H5
     if (

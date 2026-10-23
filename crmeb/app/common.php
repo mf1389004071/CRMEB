@@ -1067,6 +1067,30 @@ if (!function_exists('region_pricing_enabled')) {
     }
 }
 
+if (!function_exists('current_region_id')) {
+    /**
+     * 当前请求的配送区域 city_id（Cb-region 头）。无效/未开放返回 0。
+     * RegionMiddleware 会把结果写入 request->regionId，这里兜底自行校验。
+     * @return int
+     */
+    function current_region_id(): int
+    {
+        try {
+            $request = app()->request;
+            if (isset($request->regionId)) {
+                return (int)$request->regionId;
+            }
+            $id = (int)$request->header('cb-region');
+            if ($id > 0 && app()->make(\app\services\vn\RegionServices::class)->isOpenId($id)) {
+                return $request->regionId = $id;
+            }
+            return $request->regionId = 0;
+        } catch (\Throwable $e) {
+            return 0;
+        }
+    }
+}
+
 if (!function_exists('normalize_lang_code')) {
     /**
      * 语言码规范化：兼容历史别名，统一为 zh-CN / vi-VN / en-US

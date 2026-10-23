@@ -426,6 +426,108 @@ SELECT v.tid, v.code, v.remarks, v.explain_, v.is_admin FROM (
   SELECT @t_vi AS tid, 'vn_bff0e83714' AS code, '[待审]参数错误' AS remarks, 'Tham số không hợp lệ' AS explain_, 1 AS is_admin, '参数错误' AS zh_
   UNION ALL
   SELECT @t_en AS tid, 'vn_bff0e83714' AS code, '参数错误' AS remarks, 'Invalid parameters' AS explain_, 1 AS is_admin, '参数错误' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '正在定位…' AS code, '正在定位…' AS remarks, '正在定位…' AS explain_, 0 AS is_admin, '正在定位…' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '正在定位…' AS code, '[待审]正在定位…' AS remarks, 'Đang định vị…' AS explain_, 0 AS is_admin, '正在定位…' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '正在定位…' AS code, '正在定位…' AS remarks, 'Locating…' AS explain_, 0 AS is_admin, '正在定位…' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '定位当前位置' AS code, '定位当前位置' AS remarks, '定位当前位置' AS explain_, 0 AS is_admin, '定位当前位置' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '定位当前位置' AS code, '[待审]定位当前位置' AS remarks, 'Định vị vị trí hiện tại' AS explain_, 0 AS is_admin, '定位当前位置' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '定位当前位置' AS code, '定位当前位置' AS remarks, 'Use my current location' AS explain_, 0 AS is_admin, '定位当前位置' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '定位到' AS code, '定位到' AS remarks, '定位到' AS explain_, 0 AS is_admin, '定位到' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '定位到' AS code, '[待审]定位到' AS remarks, 'Đã định vị' AS explain_, 0 AS is_admin, '定位到' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '定位到' AS code, '定位到' AS remarks, 'Located' AS explain_, 0 AS is_admin, '定位到' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '点击选择' AS code, '点击选择' AS remarks, '点击选择' AS explain_, 0 AS is_admin, '点击选择' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '点击选择' AS code, '[待审]点击选择' AS remarks, 'Nhấn để chọn' AS explain_, 0 AS is_admin, '点击选择' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '点击选择' AS code, '点击选择' AS remarks, 'tap to select' AS explain_, 0 AS is_admin, '点击选择' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '热门城市' AS code, '热门城市' AS remarks, '热门城市' AS explain_, 0 AS is_admin, '热门城市' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '热门城市' AS code, '[待审]热门城市' AS remarks, 'Thành phố nổi bật' AS explain_, 0 AS is_admin, '热门城市' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '热门城市' AS code, '热门城市' AS remarks, 'Popular cities' AS explain_, 0 AS is_admin, '热门城市' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '全部地区' AS code, '全部地区' AS remarks, '全部地区' AS explain_, 0 AS is_admin, '全部地区' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '全部地区' AS code, '[待审]全部地区' AS remarks, 'Tất cả khu vực' AS explain_, 0 AS is_admin, '全部地区' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '全部地区' AS code, '全部地区' AS remarks, 'All regions' AS explain_, 0 AS is_admin, '全部地区' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '全部' AS code, '全部' AS remarks, '全部' AS explain_, 0 AS is_admin, '全部' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '全部' AS code, '[待审]全部' AS remarks, 'Tất cả' AS explain_, 0 AS is_admin, '全部' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '全部' AS code, '全部' AS remarks, 'All' AS explain_, 0 AS is_admin, '全部' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '选择' AS code, '选择' AS remarks, '选择' AS explain_, 0 AS is_admin, '选择' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '选择' AS code, '[待审]选择' AS remarks, 'Chọn' AS explain_, 0 AS is_admin, '选择' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '选择' AS code, '选择' AS remarks, 'Select' AS explain_, 0 AS is_admin, '选择' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '暂无可选区域' AS code, '暂无可选区域' AS remarks, '暂无可选区域' AS explain_, 0 AS is_admin, '暂无可选区域' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '暂无可选区域' AS code, '[待审]暂无可选区域' AS remarks, 'Chưa có khu vực khả dụng' AS explain_, 0 AS is_admin, '暂无可选区域' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '暂无可选区域' AS code, '暂无可选区域' AS remarks, 'No regions available' AS explain_, 0 AS is_admin, '暂无可选区域' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '当前位置暂不在配送范围，请从下方选择' AS code, '当前位置暂不在配送范围，请从下方选择' AS remarks, '当前位置暂不在配送范围，请从下方选择' AS explain_, 0 AS is_admin, '当前位置暂不在配送范围，请从下方选择' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '当前位置暂不在配送范围，请从下方选择' AS code, '[待审]当前位置暂不在配送范围，请从下方选择' AS remarks, 'Vị trí hiện tại chưa nằm trong phạm vi giao hàng, vui lòng chọn bên dưới' AS explain_, 0 AS is_admin, '当前位置暂不在配送范围，请从下方选择' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '当前位置暂不在配送范围，请从下方选择' AS code, '当前位置暂不在配送范围，请从下方选择' AS remarks, 'Your location is outside our delivery area, please choose below' AS explain_, 0 AS is_admin, '当前位置暂不在配送范围，请从下方选择' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '定位失败，请从下方选择' AS code, '定位失败，请从下方选择' AS remarks, '定位失败，请从下方选择' AS explain_, 0 AS is_admin, '定位失败，请从下方选择' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '定位失败，请从下方选择' AS code, '[待审]定位失败，请从下方选择' AS remarks, 'Định vị thất bại, vui lòng chọn bên dưới' AS explain_, 0 AS is_admin, '定位失败，请从下方选择' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '定位失败，请从下方选择' AS code, '定位失败，请从下方选择' AS remarks, 'Location failed, please choose below' AS explain_, 0 AS is_admin, '定位失败，请从下方选择' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '无法获取位置，请从下方选择' AS code, '无法获取位置，请从下方选择' AS remarks, '无法获取位置，请从下方选择' AS explain_, 0 AS is_admin, '无法获取位置，请从下方选择' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '无法获取位置，请从下方选择' AS code, '[待审]无法获取位置，请从下方选择' AS remarks, 'Không thể lấy vị trí, vui lòng chọn bên dưới' AS explain_, 0 AS is_admin, '无法获取位置，请从下方选择' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '无法获取位置，请从下方选择' AS code, '无法获取位置，请从下方选择' AS remarks, 'Unable to get your location, please choose below' AS explain_, 0 AS is_admin, '无法获取位置，请从下方选择' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '该区域暂未开放' AS code, '该区域暂未开放' AS remarks, '该区域暂未开放' AS explain_, 0 AS is_admin, '该区域暂未开放' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '该区域暂未开放' AS code, '[待审]该区域暂未开放' AS remarks, 'Khu vực này chưa mở' AS explain_, 0 AS is_admin, '该区域暂未开放' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '该区域暂未开放' AS code, '该区域暂未开放' AS remarks, 'This region is not open yet' AS explain_, 0 AS is_admin, '该区域暂未开放' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '切换配送区域将清空购物车，是否继续？' AS code, '切换配送区域将清空购物车，是否继续？' AS remarks, '切换配送区域将清空购物车，是否继续？' AS explain_, 0 AS is_admin, '切换配送区域将清空购物车，是否继续？' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '切换配送区域将清空购物车，是否继续？' AS code, '[待审]切换配送区域将清空购物车，是否继续？' AS remarks, 'Đổi khu vực giao hàng sẽ làm trống giỏ hàng, bạn có muốn tiếp tục?' AS explain_, 0 AS is_admin, '切换配送区域将清空购物车，是否继续？' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '切换配送区域将清空购物车，是否继续？' AS code, '切换配送区域将清空购物车，是否继续？' AS remarks, 'Changing the delivery region will clear your cart. Continue?' AS explain_, 0 AS is_admin, '切换配送区域将清空购物车，是否继续？' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '配送区域' AS code, '配送区域' AS remarks, '配送区域' AS explain_, 0 AS is_admin, '配送区域' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '配送区域' AS code, '[待审]配送区域' AS remarks, 'Khu vực giao hàng' AS explain_, 0 AS is_admin, '配送区域' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '配送区域' AS code, '配送区域' AS remarks, 'Delivery region' AS explain_, 0 AS is_admin, '配送区域' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '请选择配送区域' AS code, '请选择配送区域' AS remarks, '请选择配送区域' AS explain_, 0 AS is_admin, '请选择配送区域' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '请选择配送区域' AS code, '[待审]请选择配送区域' AS remarks, 'Vui lòng chọn khu vực giao hàng' AS explain_, 0 AS is_admin, '请选择配送区域' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '请选择配送区域' AS code, '请选择配送区域' AS remarks, 'Please select a delivery region' AS explain_, 0 AS is_admin, '请选择配送区域' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '选择配送区域' AS code, '选择配送区域' AS remarks, '选择配送区域' AS explain_, 0 AS is_admin, '选择配送区域' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '选择配送区域' AS code, '[待审]选择配送区域' AS remarks, 'Chọn khu vực giao hàng' AS explain_, 0 AS is_admin, '选择配送区域' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '选择配送区域' AS code, '选择配送区域' AS remarks, 'Select delivery region' AS explain_, 0 AS is_admin, '选择配送区域' AS zh_
 ) v
 WHERE v.tid IS NOT NULL AND NOT EXISTS (SELECT 1 FROM eb_lang_code e WHERE e.type_id = v.tid AND e.code = v.code) AND NOT EXISTS (SELECT 1 FROM eb_lang_code z WHERE z.type_id = @t_zh AND z.remarks = v.zh_ AND z.code <> v.code);
 

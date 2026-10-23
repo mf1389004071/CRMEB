@@ -392,6 +392,15 @@
 				}
 			]
 		}, {
+			"root": "pages/region",
+			"name": "region",
+			"pages": [{
+				"path": "select",
+				"style": {
+					"navigationBarTitleText": "选择配送区域"
+				}
+			}]
+		}, {
 			"root": "pages/users",
 			"name": "users",
 			"pages": [{

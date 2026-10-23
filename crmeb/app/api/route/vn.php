@@ -15,9 +15,16 @@ use think\facade\Route;
 // 无需登录（token 可选）
 Route::group(function () {
     Route::get('vn/contacts', 'v1.vn.VnController/contacts')->option(['real_name' => '联系方式']);
+    // 配送区域
+    Route::get('region/children', 'v1.vn.RegionController/children')->option(['real_name' => '区域子节点']);
+    Route::get('region/hot', 'v1.vn.RegionController/hot')->option(['real_name' => '热门区域']);
+    Route::post('region/locate', 'v1.vn.RegionController/locate')->option(['real_name' => '经纬度定位区域']);
+    Route::get('region/info', 'v1.vn.RegionController/info')->option(['real_name' => '区域校验与完整链']);
+    Route::get('region/address_children', 'v1.vn.RegionController/address_children')->option(['real_name' => '地址选择子节点']);
 })->middleware(\app\http\middleware\AllowOriginMiddleware::class)
     ->middleware(\app\api\middleware\StationOpenMiddleware::class)
-    ->middleware(\app\api\middleware\AuthTokenMiddleware::class, false);
+    ->middleware(\app\api\middleware\AuthTokenMiddleware::class, false)
+    ->middleware(\app\api\middleware\RegionMiddleware::class);
 
 // 员工端（配送员/核销员/订单管理员，需登录）
 Route::group(function () {

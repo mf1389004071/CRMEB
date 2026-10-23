@@ -20,6 +20,7 @@ import {
 } from '../libs/login';
 import store from '../store';
 import i18n, { normalizeLang } from './lang.js';
+import { getRegionId } from './region.js';
 
 /**
  * 发送请求
@@ -45,6 +46,13 @@ function baseRequest(url, method, data, {
 	return new Promise((reslove, reject) => {
 		if (uni.getStorageSync('locale')) {
 			header['Cb-lang'] = normalizeLang(uni.getStorageSync('locale'))
+		}
+		// VN: 配送区域头（区域价）；未选择则不带
+		const regionId = getRegionId();
+		if (regionId) {
+			header['Cb-region'] = regionId;
+		} else {
+			delete header['Cb-region'];
 		}
 		uni.request({
 			url: Url + '/api/' + url,

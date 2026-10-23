@@ -16,6 +16,8 @@
       minHeight: windowHeight + 'px',
     }"
   >
+    <!-- VN: 当前配送区域，点击进入区域选择页 -->
+    <RegionBar v-if="regionPricing" />
     <PageDesign
       :style="colorStyle"
       :diyData="currentDiyData"
@@ -147,6 +149,7 @@ import Cache from "@/utils/cache";
 import appUpdate from "@/components/update/app-update.vue";
 import { applyTheme } from "@/utils/theme.js";
 import PageDesign from "@/subpackage/diyComponents/pageDesign.vue";
+import RegionBar from "@/components/RegionBar.vue";
 
 export default {
   computed: {
@@ -175,6 +178,7 @@ export default {
   },
   mixins: [colors],
   components: {
+    RegionBar,
     PageDesign,
     Loading,
     couponWindow,

@@ -28,6 +28,15 @@ export default {
   component: LayoutMain,
   children: [
     {
+      path: 'region/index',
+      name: `${pre}region`,
+      meta: {
+        auth: ['admin-setting-region'],
+        title: '配送区域',
+      },
+      component: () => import('@/pages/setting/region/index'),
+    },
+    {
       path: 'system_role/index',
       name: `${pre}systemRole`,
       meta: {
