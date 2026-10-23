@@ -8,3 +8,21 @@ front	电话	Điện thoại	Phone
 front	邮箱	Email	Email
 front	复制成功	Sao chép thành công	Copied
 front	联系我们	Liên hệ chúng tôi	Contact us
+api	订单不是待确认状态	Đơn hàng không ở trạng thái chờ xác nhận	The order is not pending confirmation
+api	订单状态已变化，请刷新后重试	Trạng thái đơn hàng đã thay đổi, vui lòng tải lại và thử lại	The order status has changed, please refresh and try again
+api	当前状态不能开始配送	Trạng thái hiện tại không thể bắt đầu giao hàng	Delivery cannot be started in the current status
+api	核销码格式不正确	Định dạng mã xác nhận không đúng	Invalid verification code format
+api	核销码错误或订单不可核销	Mã xác nhận sai hoặc đơn hàng không thể xác nhận	Wrong verification code or the order cannot be verified
+api	订单已收款	Đơn hàng đã được thu tiền	The order has already been collected
+api	请先确认接单	Vui lòng xác nhận nhận đơn trước	Please confirm the order first
+api	实收金额不正确	Số tiền thực thu không đúng	Invalid received amount
+api	实收与应收不一致，请填写原因	Số tiền thực thu khác số phải thu, vui lòng nhập lý do	Received amount differs from receivable, please enter a reason
+api	已收款/已送达订单请走售后	Đơn hàng đã thu tiền/đã giao vui lòng xử lý qua hậu mãi	Collected/delivered orders must go through after-sales
+api	请填写取消原因	Vui lòng nhập lý do hủy	Please enter the cancellation reason
+api	当前状态不能标记送达	Trạng thái hiện tại không thể đánh dấu đã giao	Cannot mark as delivered in the current status
+api	不是到付订单	Không phải đơn thanh toán khi nhận hàng	Not a cash-on-delivery order
+api	订单已取消	Đơn hàng đã bị hủy	The order has been cancelled
+api	订单已确认备货，如需取消请联系客服	Đơn hàng đã được xác nhận chuẩn bị hàng, nếu cần hủy vui lòng liên hệ CSKH	The order is being prepared. Please contact customer service to cancel
+api	订单不存在	Đơn hàng không tồn tại	Order does not exist
+api	取消失败	Hủy thất bại	Cancellation failed
+api	系统繁忙，请稍后重试	Hệ thống đang bận, vui lòng thử lại sau	System busy, please try again later

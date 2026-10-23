@@ -45,14 +45,15 @@ def main():
         code = 'vn_' + hashlib.md5(zh.encode('utf-8')).hexdigest()[:10] if scope == 'api' else zh
         adm = 1 if scope == 'api' else 0
         for tid, rem, txt in (('@t_zh', zh, zh), ('@t_vi', '[待审]' + zh, vi), ('@t_en', zh, en)):
-            parts.append('  SELECT %s AS tid, %s AS code, %s AS remarks, %s AS explain_, %d AS is_admin'
-                         % (tid, q(code), q(rem), q(txt), adm))
+            parts.append('  SELECT %s AS tid, %s AS code, %s AS remarks, %s AS explain_, %d AS is_admin, %s AS zh_'
+                         % (tid, q(code), q(rem), q(txt), adm, q(zh)))
     if not parts:
         out = out[:-2] + ['-- 暂无词条']
     else:
         out.append('\n  UNION ALL\n'.join(parts))
         out.append(') v')
-        out.append('WHERE v.tid IS NOT NULL AND NOT EXISTS (SELECT 1 FROM eb_lang_code e WHERE e.type_id = v.tid AND e.code = v.code);')
+        out.append('WHERE v.tid IS NOT NULL AND NOT EXISTS (SELECT 1 FROM eb_lang_code e WHERE e.type_id = v.tid AND e.code = v.code) '
+                   'AND NOT EXISTS (SELECT 1 FROM eb_lang_code z WHERE z.type_id = @t_zh AND z.remarks = v.zh_ AND z.code <> v.code);')
     out += ['', '-- 使语言包缓存失效：执行后在后台“清除缓存”', '']
     open(DST, 'w', encoding='utf-8', newline='\n').write('\n'.join(out))
     print('生成 %d 条词条 -> %s' % (len(rows), os.path.normpath(DST)))
