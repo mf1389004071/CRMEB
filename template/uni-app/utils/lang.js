@@ -32,3 +32,26 @@ const i18n = new VueI18n({
 	// #endif
 })
 export default i18n
+
+// VN: 语种与服务端同步（M5-1）
+// 登录成功后调用：服务端有语种→覆盖本地并要求刷新语言包；服务端为空→把本地语种回写服务端。
+// 返回 true 表示本地语种被服务端覆盖（调用方需重新拉取语言包/刷新页面）
+export function syncLocaleAfterLogin(serverLocale, saveFn) {
+	const local = normalizeLang(Cache.has('locale') ? Cache.get('locale') : '') || 'vi-VN';
+	const server = normalizeLang(serverLocale || '');
+	if (server) {
+		if (server !== local) {
+			Cache.set('locale', server);
+			try {
+				uni.removeStorageSync('localeJson');
+				uni.removeStorageSync('LANG_VERSION');
+			} catch (e) {}
+			return true;
+		}
+		return false;
+	}
+	if (typeof saveFn === 'function') {
+		saveFn(local);
+	}
+	return false;
+}

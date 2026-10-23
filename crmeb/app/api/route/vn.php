@@ -40,6 +40,7 @@ Route::group(function () {
 // 登录用户（无需员工权限）
 Route::group(function () {
     Route::post('cart/clear_all', 'v1.vn.VnController/clearCart')->option(['real_name' => '清空购物车(切换区域)']);
+    Route::post('user/locale', 'v1.vn.VnController/setLocale')->option(['real_name' => '保存用户语种']);
 })->middleware(\app\http\middleware\AllowOriginMiddleware::class)
     ->middleware(\app\api\middleware\StationOpenMiddleware::class)
     ->middleware(\app\api\middleware\AuthTokenMiddleware::class, true)

@@ -42,7 +42,8 @@
 	import colors from '@/mixins/color.js';
 	import { loginH5, register, getUserInfo } from '@/api/user';
 	import { getLogo } from '@/api/public';
-	import { phoneCountries } from '@/api/vn.js';
+	import { phoneCountries, setUserLocale } from '@/api/vn.js';
+	import { syncLocaleAfterLogin } from '@/utils/lang.js';
 	import Cache from '@/utils/cache';
 
 	const BACK_URL = 'login_back_url';
@@ -146,6 +147,14 @@
 					return getUserInfo().then((res) => {
 						this.locking = false;
 						this.$store.commit('SETUID', res.data.uid);
+						// 语种与服务端同步：服务端有则覆盖本地（需刷新生效），无则回写
+						const changed = syncLocaleAfterLogin(res.data.locale, (l) => setUserLocale(l).catch(() => {}));
+						if (changed) {
+							// #ifdef H5
+							window.location.href = backUrl;
+							return;
+							// #endif
+						}
 						uni.reLaunch({ url: backUrl });
 					});
 				}).catch((e) => {

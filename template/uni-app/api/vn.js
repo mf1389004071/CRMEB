@@ -65,3 +65,10 @@ export function phoneCountries() {
 		noAuth: true
 	});
 }
+
+/** 保存用户语种（登录后同步到服务端） */
+export function setUserLocale(locale) {
+	return request.post("user/locale", {
+		locale
+	});
+}

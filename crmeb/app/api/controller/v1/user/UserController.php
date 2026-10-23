@@ -43,7 +43,13 @@ class UserController
     public function userInfo(Request $request)
     {
         $info = $request->user()->toArray();
-        return app('json')->success($this->services->userInfo($info));
+        $data = $this->services->userInfo($info);
+        // VN: 返回用户语种/展示币种，供前端登录后同步
+        if (is_array($data)) {
+            $data['locale'] = $info['locale'] ?? '';
+            $data['display_currency'] = $info['display_currency'] ?? '';
+        }
+        return app('json')->success($data);
     }
 
     /**

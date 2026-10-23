@@ -21,6 +21,24 @@ use app\Request;
 class VnController
 {
     /**
+     * 保存用户语种（需登录）：规范化后必须在启用语言内
+     * @param Request $request
+     * @return mixed
+     */
+    public function setLocale(Request $request)
+    {
+        [$locale] = $request->postMore([['locale', '']], true);
+        $locale = normalize_lang_code((string)$locale);
+        $enabled = \think\facade\Db::name('lang_type')->where(['status' => 1, 'is_del' => 0])->column('file_name');
+        $enabled = array_map('normalize_lang_code', $enabled);
+        if ($locale === '' || !in_array($locale, $enabled, true)) {
+            return app('json')->fail('当前语言不可用');
+        }
+        \app\model\user\User::where('uid', (int)$request->uid())->update(['locale' => $locale]);
+        return app('json')->success(['locale' => $locale]);
+    }
+
+    /**
      * 手机区号字典（名称按当前语言）
      * @return mixed
      */

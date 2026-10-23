@@ -180,6 +180,7 @@
 	// #endif
 	import Cache from '@/utils/cache';
 	import { normalizeLang } from '@/utils/lang.js';
+	import { setUserLocale } from '@/api/vn.js';
 	import colors from '@/mixins/color.js';
 	import appUpdate from "@/components/update/app-update.vue";
 	export default {
@@ -291,6 +292,14 @@
 						this.setIndex].value]);
 					this.$nextTick(e => {
 						this.$i18n.locale = this.array[this.setIndex].value;
+						// VN: 持久化到服务端并刷新页面，使文案/商品名/币种统一按新语种展示
+						if (this.vnMode) {
+							setUserLocale(normalizeLang(this.array[this.setIndex].value)).catch(() => {}).then(() => {
+								// #ifdef H5
+								window.location.reload();
+								// #endif
+							});
+						}
 					})
 				})
 			},
