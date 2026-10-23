@@ -167,3 +167,24 @@ Route::group('refund', function () {
     \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
     \app\adminapi\middleware\AdminLogMiddleware::class
 ])->option(['mark' => 'refund', 'mark_name' => '退款订单']);
+
+/**
+ * VN: 到付(货到付款)订单路由
+ */
+Route::group('order/cod', function () {
+    Route::get('list', 'v1.order.CodOrder/lst')->option(['real_name' => '到付订单列表']);
+    Route::post('confirm/:id', 'v1.order.CodOrder/confirm')->option(['real_name' => '到付订单确认接单']);
+    Route::post('delivering/:id', 'v1.order.CodOrder/delivering')->option(['real_name' => '到付订单开始配送']);
+    Route::post('delivered/:id', 'v1.order.CodOrder/delivered')->option(['real_name' => '到付订单标记已送达']);
+    Route::post('verify', 'v1.order.CodOrder/verify')->option(['real_name' => '到付订单送达核销']);
+    Route::post('collect/:id', 'v1.order.CodOrder/collect')->option(['real_name' => '到付订单确认收款']);
+    Route::post('cancel/:id', 'v1.order.CodOrder/cancel')->option(['real_name' => '到付订单取消']);
+    Route::post('call_mark/:id', 'v1.order.CodOrder/call_mark')->option(['real_name' => '到付订单电话确认标记']);
+    Route::get('audit/:id', 'v1.order.CodOrder/audit')->option(['real_name' => '到付订单操作记录']);
+    Route::get('new', 'v1.order.CodOrder/new_orders')->option(['real_name' => '到付新订单轮询']);
+})->middleware([
+    \app\http\middleware\AllowOriginMiddleware::class,
+    \app\adminapi\middleware\AdminAuthTokenMiddleware::class,
+    \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
+    \app\adminapi\middleware\AdminLogMiddleware::class
+])->option(['mark' => 'codOrder', 'mark_name' => '到付订单']);

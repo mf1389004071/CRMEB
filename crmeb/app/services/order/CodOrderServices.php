@@ -189,6 +189,13 @@ class CodOrderServices extends BaseServices
         $audit = app()->make(OrderAuditServices::class);
         $res = $this->transaction(function () use ($oid, $received, $receivable, $diff, $remark, $operator, $audit) {
             app()->make(OrderOfflineServices::class)->orderOffline($oid);
+            // orderOffline 写入的“线下付款”记录无操作人，补记
+            $op = $operator ?: $audit->operatorFromRequest();
+            \app\model\order\StoreOrderStatus::where(['oid' => $oid, 'change_type' => 'offline', 'operator_type' => ''])->update([
+                'operator_id'   => (int)($op['id'] ?? 0),
+                'operator_type' => (string)($op['type'] ?? 'system'),
+                'operator_name' => (string)($op['name'] ?? ''),
+            ]);
             StoreOrder::where('id', $oid)->update([
                 'cod_received'     => $received,
                 'cod_collector_id' => (int)($operator['id'] ?? 0),
@@ -280,6 +287,150 @@ class CodOrderServices extends BaseServices
             self::F_DELIVERED  => 'cod_delivered',
         ];
         return $map[(int)$order['fulfil_status']] ?? 'cod_pending';
+    }
+
+    /**
+     * 后台到付订单列表 + 各状态计数
+     * @param array $where fulfil_status('' 或 0-3)、region_id、date_start/date_end(Y-m-d)、keyword、paid('' 或 0/1)、is_cancel、page、limit
+     * @return array ['list'=>[], 'count'=>int, 'counts'=>[...]]
+     */
+    public function getList(array $where): array
+    {
+        $page = max(1, (int)($where['page'] ?? 1));
+        $limit = min(200, max(1, (int)($where['limit'] ?? 20)));
+        $query = $this->listQuery($where);
+        $count = (clone $query)->count();
+        $rows = $query->order('id', 'desc')->page($page, $limit)->select()->toArray();
+        $ids = array_column($rows, 'id');
+        $goods = [];
+        if ($ids) {
+            $cartRows = \think\facade\Db::name('store_order_cart_info')->whereIn('oid', $ids)->field('oid,cart_num,cart_info')->select()->toArray();
+            foreach ($cartRows as $c) {
+                $info = json_decode($c['cart_info'], true) ?: [];
+                $goods[$c['oid']][] = [
+                    'name'  => $info['productInfo']['store_name'] ?? '',
+                    'suk'   => $info['productInfo']['attrInfo']['suk'] ?? '',
+                    'num'   => (int)$c['cart_num'],
+                    'price' => $info['truePrice'] ?? ($info['productInfo']['attrInfo']['price'] ?? ''),
+                    'image' => $info['productInfo']['attrInfo']['image'] ?? ($info['productInfo']['image'] ?? ''),
+                ];
+            }
+        }
+        $regionIds = array_values(array_unique(array_filter(array_column($rows, 'region_id'))));
+        $regionNames = $regionIds ? \think\facade\Db::name('system_city')->whereIn('city_id', $regionIds)->column('merger_name', 'city_id') : [];
+        $list = [];
+        foreach ($rows as $r) {
+            $list[] = [
+                'id'                => (int)$r['id'],
+                'order_id'          => $r['order_id'],
+                'real_name'         => $r['real_name'],
+                'user_phone'        => $r['user_phone'],
+                'user_address'      => $r['user_address'],
+                'mark'              => $r['mark'],
+                'remark'            => $r['remark'],
+                'pay_price'         => $r['pay_price'],
+                'cod_receivable'    => $r['cod_receivable'],
+                'cod_received'      => $r['cod_received'],
+                'paid'              => (int)$r['paid'],
+                'status'            => (int)$r['status'],
+                'fulfil_status'     => (int)$r['fulfil_status'],
+                'fulfil_key'        => $this->fulfilKey($r),
+                'is_cancel'         => (int)$r['is_cancel'],
+                'need_call_confirm' => (int)$r['need_call_confirm'],
+                'region_id'         => (int)$r['region_id'],
+                'region_name'       => $regionNames[$r['region_id']] ?? '',
+                'delivery_name'     => $r['delivery_name'],
+                'delivery_id'       => $r['delivery_id'],
+                'add_time'          => date('Y-m-d H:i:s', (int)$r['add_time']),
+                'delivered_time'    => $r['delivered_time'] ? date('Y-m-d H:i:s', (int)$r['delivered_time']) : '',
+                'goods'             => $goods[$r['id']] ?? [],
+            ];
+        }
+        return ['list' => $list, 'count' => $count, 'counts' => $this->statusCounts()];
+    }
+
+    /**
+     * 各状态计数（不含已取消）：待确认/备货中/发货中/已送达/待收款(已送达未收款)/全部
+     * @return array
+     */
+    public function statusCounts(): array
+    {
+        $base = function () {
+            return StoreOrder::where(['is_cod' => 1, 'is_del' => 0, 'is_cancel' => 0]);
+        };
+        return [
+            'pending'    => (int)$base()->where('fulfil_status', self::F_PENDING)->count(),
+            'stockup'    => (int)$base()->where('fulfil_status', self::F_STOCKUP)->count(),
+            'delivering' => (int)$base()->where('fulfil_status', self::F_DELIVERING)->count(),
+            'delivered'  => (int)$base()->where('fulfil_status', self::F_DELIVERED)->count(),
+            'uncollected' => (int)$base()->where(['fulfil_status' => self::F_DELIVERED, 'paid' => 0])->count(),
+            'all'        => (int)$base()->count(),
+        ];
+    }
+
+    /**
+     * 新订单轮询：since_id=0 仅返回当前最大 id（避免首次刷出历史订单）
+     * @return array ['latest_id'=>int,'list'=>[...]]
+     */
+    public function newOrders(int $sinceId): array
+    {
+        $latest = (int)StoreOrder::where(['is_cod' => 1])->max('id');
+        if ($sinceId <= 0) {
+            return ['latest_id' => $latest, 'list' => []];
+        }
+        $rows = StoreOrder::where(['is_cod' => 1, 'is_del' => 0])->where('id', '>', $sinceId)->order('id', 'asc')->limit(20)->select()->toArray();
+        $regionIds = array_values(array_unique(array_filter(array_column($rows, 'region_id'))));
+        $regionNames = $regionIds ? \think\facade\Db::name('system_city')->whereIn('city_id', $regionIds)->column('merger_name', 'city_id') : [];
+        $list = [];
+        foreach ($rows as $r) {
+            $list[] = [
+                'id'          => (int)$r['id'],
+                'order_id'    => $r['order_id'],
+                'region_name' => $regionNames[$r['region_id']] ?? '',
+                'pay_price'   => $r['pay_price'],
+                'add_time'    => date('Y-m-d H:i:s', (int)$r['add_time']),
+            ];
+        }
+        $max = $rows ? (int)end($rows)['id'] : $sinceId;
+        return ['latest_id' => max($max, $sinceId), 'list' => $list];
+    }
+
+    /**
+     * 构建列表查询（打印/导出复用）
+     * @param array $where
+     * @return \think\db\Query|\think\Model
+     */
+    public function listQuery(array $where)
+    {
+        $query = StoreOrder::where(['is_cod' => 1, 'is_del' => 0]);
+        if (isset($where['fulfil_status']) && $where['fulfil_status'] !== '' && $where['fulfil_status'] !== null) {
+            $query->where('fulfil_status', (int)$where['fulfil_status']);
+            if (!isset($where['is_cancel']) || $where['is_cancel'] === '') {
+                $query->where('is_cancel', 0);
+            }
+        }
+        if (isset($where['is_cancel']) && $where['is_cancel'] !== '') {
+            $query->where('is_cancel', (int)$where['is_cancel']);
+        }
+        if (!empty($where['region_id'])) {
+            $query->where('region_id', (int)$where['region_id']);
+        }
+        if (isset($where['paid']) && $where['paid'] !== '') {
+            $query->where('paid', (int)$where['paid']);
+        }
+        if (!empty($where['date_start'])) {
+            $query->where('add_time', '>=', strtotime($where['date_start'] . ' 00:00:00'));
+        }
+        if (!empty($where['date_end'])) {
+            $query->where('add_time', '<=', strtotime($where['date_end'] . ' 23:59:59'));
+        }
+        $kw = trim((string)($where['keyword'] ?? ''));
+        if ($kw !== '') {
+            $query->where(function ($q) use ($kw) {
+                $q->whereLike('order_id', '%' . $kw . '%')->whereOr('user_phone', 'like', '%' . $kw . '%')->whereOr('real_name', 'like', '%' . $kw . '%');
+            });
+        }
+        return $query;
     }
 
     /**

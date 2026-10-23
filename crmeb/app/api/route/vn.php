@@ -18,3 +18,13 @@ Route::group(function () {
 })->middleware(\app\http\middleware\AllowOriginMiddleware::class)
     ->middleware(\app\api\middleware\StationOpenMiddleware::class)
     ->middleware(\app\api\middleware\AuthTokenMiddleware::class, false);
+
+// 员工端（配送员/核销员/订单管理员，需登录）
+Route::group(function () {
+    Route::post('admin/order/cod/verify', 'v1.admin.CodOrderController/verify')->option(['real_name' => '到付订单送达核销']);
+    Route::get('admin/order/cod/detail', 'v1.admin.CodOrderController/detail')->option(['real_name' => '到付订单核销详情']);
+})->middleware(\app\http\middleware\AllowOriginMiddleware::class)
+    ->middleware(\app\api\middleware\StationOpenMiddleware::class)
+    ->middleware(\app\api\middleware\AuthTokenMiddleware::class, true)
+    ->middleware(\app\api\middleware\CustomerMiddleware::class)
+    ->option(['mark' => 'admin', 'mark_name' => '移动端订单管理']);
