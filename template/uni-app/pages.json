@@ -395,6 +395,12 @@
 			"root": "pages/users",
 			"name": "users",
 			"pages": [{
+					"path": "contact/index",
+					"style": {
+						"navigationBarTitleText": "联系我们"
+					}
+				},
+				{
 					"path": "user_vip_areer/index",
 					"style": {
 						"navigationBarTitleText": "经验记录",
