@@ -1,7 +1,7 @@
 <?php
 // 运行：php crmeb/tests/vn/config_sql_test.php [host] [port]  —— 校验 M10-1 配置项已入库且取值可 JSON 解码
-$host = $argv[1] ?? '127.0.0.1';
-$port = (int)($argv[2] ?? 33060);
+$host = $argv[1] ?? (getenv('DATABASE_HOSTNAME') ?: '127.0.0.1');
+$port = (int)($argv[2] ?? (getenv('DATABASE_HOSTPORT') ?: 33060));
 $pdo = new PDO("mysql:host=$host;port=$port;dbname=crmeb;charset=utf8mb4", 'root', 'root');
 $keys = ['vn_mode_enable','region_pricing_enable','allow_national_price','locate_max_km','cod_auto_stock_up',
     'cod_user_cancel_before_confirm','order_notify_poll_seconds','order_rate_limit_per_hour','base_currency',
