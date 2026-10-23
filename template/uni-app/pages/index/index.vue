@@ -18,6 +18,8 @@
   >
     <!-- VN: 当前配送区域，点击进入区域选择页 -->
     <RegionBar v-if="regionPricing" />
+    <!-- VN: 8 宫格分类（图标 + 多语名称） -->
+    <CategoryGrid8 v-if="vnMode" />
     <PageDesign
       :style="colorStyle"
       :diyData="currentDiyData"
@@ -150,6 +152,7 @@ import appUpdate from "@/components/update/app-update.vue";
 import { applyTheme } from "@/utils/theme.js";
 import PageDesign from "@/subpackage/diyComponents/pageDesign.vue";
 import RegionBar from "@/components/RegionBar.vue";
+import CategoryGrid8 from "@/components/CategoryGrid8.vue";
 
 export default {
   computed: {
@@ -179,6 +182,7 @@ export default {
   mixins: [colors],
   components: {
     RegionBar,
+    CategoryGrid8,
     PageDesign,
     Loading,
     couponWindow,

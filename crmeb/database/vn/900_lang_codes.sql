@@ -774,6 +774,12 @@ SELECT v.tid, v.code, v.remarks, v.explain_, v.is_admin FROM (
   SELECT @t_vi AS tid, '税率' AS code, '[待审]税率' AS remarks, 'Thuế suất' AS explain_, 0 AS is_admin, '税率' AS zh_
   UNION ALL
   SELECT @t_en AS tid, '税率' AS code, '税率' AS remarks, 'Tax rate' AS explain_, 0 AS is_admin, '税率' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '搜索商品' AS code, '搜索商品' AS remarks, '搜索商品' AS explain_, 0 AS is_admin, '搜索商品' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '搜索商品' AS code, '[待审]搜索商品' AS remarks, 'Tìm sản phẩm' AS explain_, 0 AS is_admin, '搜索商品' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '搜索商品' AS code, '搜索商品' AS remarks, 'Search products' AS explain_, 0 AS is_admin, '搜索商品' AS zh_
 ) v
 WHERE v.tid IS NOT NULL AND NOT EXISTS (SELECT 1 FROM eb_lang_code e WHERE e.type_id = v.tid AND e.code = v.code) AND NOT EXISTS (SELECT 1 FROM eb_lang_code z WHERE z.type_id = @t_zh AND z.remarks = v.zh_ AND z.code <> v.code);
 

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi-VN">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<script>
+		var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
+			CSS.supports('top: constant(a)'))
+		document.write('<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' + (coverSupport ? ', viewport-fit=cover' : '') + '" />')
+	</script>
+	<!-- PWA（M11）：manifest + iOS 主屏幕图标/meta + 主题色 -->
+	<link rel="manifest" href="/static/pwa/manifest.webmanifest">
+	<meta name="theme-color" content="#2e9e4b">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+	<meta name="apple-mobile-web-app-title" content="菜集鲜">
+	<link rel="apple-touch-icon" href="/static/pwa/apple-touch-icon.png">
+	<link rel="icon" type="image/png" href="/static/pwa/icon-192.png">
+</head>
+
+<body>
+	<noscript>
+		<strong>Please enable JavaScript to continue.</strong>
+	</noscript>
+	<div id="app"></div>
+	<!-- built files will be auto injected -->
+	<script>
+		// 注册极简 Service Worker（仅缓存静态壳，不缓存 API）；失败不影响业务
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', function() {
+				navigator.serviceWorker.register('/static/pwa/sw.js', { scope: '/' }).catch(function() {});
+			});
+		}
+	</script>
+</body>
+
+</html>

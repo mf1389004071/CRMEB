@@ -6,6 +6,7 @@
 				<span class="pictrue_log pictrue_log_class" v-if="item.activity && item.activity.type === '1' && $permission('seckill')">{{$t(`秒杀`)}}</span>
 				<span class="pictrue_log pictrue_log_class" v-if="item.activity && item.activity.type === '2' && $permission('bargain')">{{$t(`砍价`)}}</span>
 				<span class="pictrue_log pictrue_log_class" v-if="item.activity && item.activity.type === '3' && $permission('combination')">{{$t(`拼团`)}}</span>
+				<DiscountBadge :item="item" />
 				<image :src="item.image" mode=""></image>
 			</view>
 			<view class="pictxt">
@@ -14,6 +15,7 @@
 				<view class="bottom acea-row row-between-wrapper">
 					<view class="money font-color">
 						<text>{{ $money(item.price) }}</text>
+						<text v-if="Number(item.ot_price) > Number(item.price)" style="color:#999;font-size:22rpx;text-decoration:line-through;margin-left:8rpx;font-weight:400">{{ $money(item.ot_price) }}</text>
 						<!-- <span class="vip" v-if="item.vip_price">
 							<image src="../../static/images/vip01.png"></image>
 							{{ $money(item.vip_price) }}

@@ -44,6 +44,8 @@ Vue.component('BaseMoney', BaseMoney)
 import FreshTags from '@/components/FreshTags.vue'
 import FreshInfo from '@/components/FreshInfo.vue'
 Vue.component('FreshTags', FreshTags)
+import DiscountBadge from '@/components/DiscountBadge.vue'
+Vue.component('DiscountBadge', DiscountBadge)
 Vue.component('FreshInfo', FreshInfo)
 Vue.component('BaseTag', BaseTag)
 Vue.component('baseDrawer', BaseDrawer)

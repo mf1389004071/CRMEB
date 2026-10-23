@@ -10,5 +10,7 @@ done
 if command -v node >/dev/null 2>&1; then
   out=$(node ../template/uni-app/tests/money_test.js 2>&1 | tail -3)
   if echo "$out" | grep -q "^OK"; then echo "PASS template/uni-app/tests/money_test.js: $out"; else echo "FAIL money_test.js"; echo "$out"; fail=1; fi
+  out=$(node ../template/uni-app/tests/sw_test.js 2>&1 | tail -3)
+  if echo "$out" | grep -q "^OK"; then echo "PASS template/uni-app/tests/sw_test.js: $out"; else echo "FAIL sw_test.js"; echo "$out"; fail=1; fi
 fi
 exit $fail

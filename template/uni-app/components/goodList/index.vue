@@ -5,6 +5,7 @@
 			<block v-for="(item,index) in bastList" :key="index">
 				<view @click="goDetail(item)" class='item acea-row row-between-wrapper' hover-class="none">
 					<view class='pictrue'>
+						<DiscountBadge :item="item" />
 						<image :src='item.image'></image>
 						<span class="pictrue_log pictrue_log_class"
 							v-if="item.activity && item.activity.type === '1' && $permission('seckill')">{{$t(`秒杀`)}}</span>
