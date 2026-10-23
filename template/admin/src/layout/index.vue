@@ -12,6 +12,7 @@
 import { Local } from '@/utils/storage.js';
 import { mapMutations } from 'vuex';
 import { getNewTagList } from '@/libs/util';
+import { startCodNotifier, stopCodNotifier } from '@/libs/codNotifier';
 
 export default {
   name: 'layout',
@@ -52,6 +53,11 @@ export default {
     this.headMenuNoShow = this.$route.meta.fullScreen;
     this.onLayoutResize();
     window.addEventListener('resize', this.onLayoutResize);
+    // VN: 到付新订单轮询提醒
+    startCodNotifier(this);
+  },
+  beforeDestroy() {
+    stopCodNotifier();
   },
   methods: {
     ...mapMutations(['setBreadCrumb', 'setTagNavList', 'addTag', 'setLocal', 'setHomeRoute', 'closeTag']),

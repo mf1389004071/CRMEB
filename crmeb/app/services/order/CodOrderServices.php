@@ -375,8 +375,12 @@ class CodOrderServices extends BaseServices
     public function newOrders(int $sinceId): array
     {
         $latest = (int)StoreOrder::where(['is_cod' => 1])->max('id');
+        $meta = [
+            'poll_seconds' => max(5, (int)sys_config('order_notify_poll_seconds', 20)),
+            'pending'      => (int)StoreOrder::where(['is_cod' => 1, 'is_del' => 0, 'is_cancel' => 0, 'fulfil_status' => self::F_PENDING])->count(),
+        ];
         if ($sinceId <= 0) {
-            return ['latest_id' => $latest, 'list' => []];
+            return ['latest_id' => $latest, 'list' => []] + $meta;
         }
         $rows = StoreOrder::where(['is_cod' => 1, 'is_del' => 0])->where('id', '>', $sinceId)->order('id', 'asc')->limit(20)->select()->toArray();
         $regionIds = array_values(array_unique(array_filter(array_column($rows, 'region_id'))));
@@ -392,7 +396,7 @@ class CodOrderServices extends BaseServices
             ];
         }
         $max = $rows ? (int)end($rows)['id'] : $sinceId;
-        return ['latest_id' => max($max, $sinceId), 'list' => $list];
+        return ['latest_id' => max($max, $sinceId), 'list' => $list] + $meta;
     }
 
     /**

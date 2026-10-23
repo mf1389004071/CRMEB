@@ -42,6 +42,15 @@ export default {
       component: () => import('@/pages/order/codList/index'),
     },
     {
+      path: 'cod/print',
+      name: `${pre}codPrint`,
+      meta: {
+        auth: ['admin-order-cod'],
+        title: '到付配送单打印',
+      },
+      component: () => import('@/pages/order/codPrint/index'),
+    },
+    {
       path: 'offline',
       name: `${pre}offline`,
       meta: {

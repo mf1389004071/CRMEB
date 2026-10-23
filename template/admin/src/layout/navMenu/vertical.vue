@@ -22,6 +22,7 @@
             <i class="ivu-icon" :class="val.icon ? 'el-icon-' + val.icon : ''"></i>
             <template slot="title" v-if="!val.isLink || (val.isLink && val.isIframe)">
               <span>{{ $t(val.title) }}</span>
+              <span class="cod-dot" v-if="val.title === '到付订单' && codPending > 0">{{ codPending > 99 ? '99+' : codPending }}</span>
             </template>
             <template slot="title" v-else>
               <a :href="val.isLink" target="_blank">{{ $t(val.title) }}</a>
@@ -56,6 +57,7 @@ export default {
   },
   computed: {
     ...mapState('menu', ['activePath']),
+    ...mapState('cod', { codPending: 'pending' }),
     // 设置分栏高亮风格
     setColumnsAsideStyle() {
       return this.$store.state.themeConfig.themeConfig.columnsAsideStyle;
@@ -84,6 +86,19 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+::v-deep .cod-dot {
+  display: inline-block;
+  min-width: 18px;
+  height: 18px;
+  line-height: 18px;
+  padding: 0 5px;
+  margin-left: 6px;
+  border-radius: 9px;
+  background: #f56c6c;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+}
 ::v-deep .center {
   text-align: center;
   margin-right: 0 !important;

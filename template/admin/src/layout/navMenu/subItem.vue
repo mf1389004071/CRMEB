@@ -19,6 +19,7 @@
           <template v-if="!val.isLink || (val.isLink && val.isIframe)">
             <i class="ivu-icon" :class="val.icon ? 'el-icon-' + val.icon : ''"></i>
             <span>{{ $t(val.title) }}</span>
+            <span class="cod-dot" v-if="val.title === '到付订单' && codPending > 0">{{ codPending > 99 ? '99+' : codPending }}</span>
           </template>
           <template v-else>
             <a :href="val.isLink" target="_blank">
@@ -33,8 +34,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: 'subItem',
+  computed: {
+    ...mapState('cod', { codPending: 'pending' }),
+  },
   props: {
     chil: {
       type: Array,
@@ -45,3 +50,19 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.cod-dot {
+  display: inline-block;
+  min-width: 18px;
+  height: 18px;
+  line-height: 18px;
+  padding: 0 5px;
+  margin-left: 6px;
+  border-radius: 9px;
+  background: #f56c6c;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+}
+</style>

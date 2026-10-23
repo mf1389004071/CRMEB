@@ -118,6 +118,7 @@ $r = http('GET', "$base/adminapi/order/cod/new?since_id=$latest", $adminTok);
 t_assert(count($r['data']['list']) === 1 && $r['data']['list'][0]['id'] == $c && $r['data']['latest_id'] == $c, 'new returns only newer orders');
 $r = http('GET', "$base/adminapi/order/cod/new?since_id=$c", $adminTok);
 t_assert($r['data']['list'] === [] && $r['data']['latest_id'] == $c, 'no duplicate notification');
+t_assert($r['data']['poll_seconds'] >= 5 && isset($r['data']['pending']), 'new carries poll_seconds & pending count');
 
 // ---- 员工端（配送员）核销 ----
 Db::name('delivery_service')->where('uid', 7)->delete();

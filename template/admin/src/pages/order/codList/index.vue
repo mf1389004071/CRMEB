@@ -37,6 +37,12 @@
     </el-card>
 
     <el-card :bordered="false" shadow="never" class="ivu-mt mt16">
+      <div class="mb10">
+        <el-button type="primary" size="small" icon="el-icon-printer" :disabled="!selection.length" @click="goPrint">批量打印配送单（{{ selection.length }}）</el-button>
+        <el-button size="small" :disabled="!selection.length" @click="goPrint('pick')">批量拣货汇总</el-button>
+        <el-button size="small" @click="printToday">打印今日全部</el-button>
+        <el-switch v-model="soundOn" class="ml10" active-text="新订单提示音" @change="onSound" />
+      </div>
       <el-tabs v-model="tab" @tab-click="onTab">
         <el-tab-pane v-for="t in tabs" :key="t.name" :name="t.name">
           <span slot="label">{{ t.label }}<el-badge :value="counts[t.count]" :max="999" class="cod-badge" v-if="counts[t.count]" /></span>
@@ -144,6 +150,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import { isSoundOn, setSoundOn } from '@/libs/codNotifier';
 import { codList, codConfirm, codDelivering, codDelivered, codVerify, codCollect, codCancel, codCallMark, codAudit } from '@/api/cod';
 
 export default {
@@ -160,6 +167,7 @@ export default {
         { name: 'all', label: '全部', count: 'all', filter: {} },
       ],
       counts: {},
+      soundOn: isSoundOn(),
       where: { fulfil_status: '', region_id: '', date_start: '', date_end: '', keyword: '', paid: '', page: 1, limit: 20 },
       timeVal: [],
       list: [],
@@ -218,6 +226,20 @@ export default {
           this.loading = false;
           this.$message.error(err.msg);
         });
+    },
+    onSound(v) {
+      setSoundOn(v);
+    },
+    goPrint(mode) {
+      if (!this.selection.length) return;
+      const ids = this.selection.map((r) => r.id).join(',');
+      if (this.selection.length > 100) return this.$message.warning('一次最多打印100单');
+      this.$router.push({ name: 'order_codPrint', query: { ids, mode: mode === 'pick' ? 'pick' : 'notes' } });
+    },
+    printToday() {
+      const d = new Date();
+      const p = (n) => (n < 10 ? '0' + n : n);
+      this.$router.push({ name: 'order_codPrint', query: { date: `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}` } });
     },
     onSelect(rows) {
       this.selection = rows;

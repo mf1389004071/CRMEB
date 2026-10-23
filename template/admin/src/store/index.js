@@ -34,6 +34,7 @@ import routesList from './module/routesList';
 import tagsViewRoutes from './module/tagsViewRoutes';
 import userInfos from './module/userInfos';
 import keepAliveNames from './module/keepAliveNames';
+import cod from './module/cod';
 
 Vue.use(Vuex);
 // 持久化储存
@@ -98,5 +99,6 @@ export default new Vuex.Store({
     tagsViewRoutes,
     userInfos,
     keepAliveNames,
+    cod,
   },
 });
