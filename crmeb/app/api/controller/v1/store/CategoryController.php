@@ -40,6 +40,10 @@ class CategoryController
             ['pid', 0],
         ]);
         $category = $this->services->getCategory($where);
+        // VN: 内容多语——分类名（树形）
+        if (i18n_content_active() && is_array($category)) {
+            $category = app()->make(\app\services\other\I18nContentServices::class)->applyTree($category, 'category', 'id', ['cate_name'], 'children');
+        }
         return app('json')->success($category);
     }
 
@@ -52,6 +56,8 @@ class CategoryController
     public function getCategoryVersion()
     {
         $data = $this->services->getCategoryVersion();
-        return app('json')->success(['version' => $data['version'], 'is_diy' => $data['is_diy']]);
+        // VN: 版本号带语种，保证切换语言后前端缓存的分类名随之刷新
+        $version = i18n_content_active() ? $data['version'] . '_' . current_lang_code() : $data['version'];
+        return app('json')->success(['version' => $version, 'is_diy' => $data['is_diy']]);
     }
 }

@@ -1083,6 +1083,24 @@ if (!function_exists('region_pricing_enabled')) {
     }
 }
 
+if (!function_exists('i18n_content_active')) {
+    /**
+     * 是否对本次 H5 api 请求输出做内容多语替换（越南模式 && api 应用；后台 adminapi/CLI 不替换）
+     * @return bool
+     */
+    function i18n_content_active(): bool
+    {
+        if (!vn_mode_enabled()) {
+            return false;
+        }
+        try {
+            return app('http')->getName() === 'api';
+        } catch (\Throwable $e) {
+            return false;
+        }
+    }
+}
+
 if (!function_exists('region_pricing_active')) {
     /**
      * 当前请求是否需要按区域价过滤：区域价开启 且 是 H5 api 应用请求（后台 adminapi/CLI 不按区域过滤）

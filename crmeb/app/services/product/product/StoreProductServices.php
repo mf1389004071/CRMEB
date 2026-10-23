@@ -1306,7 +1306,20 @@ class StoreProductServices extends BaseServices
         }
         $list = $this->getActivityList($list);
         $list = $this->getProduceOtherList($list, $uid, !!$where['type']);
-        return $list;
+        return $this->i18nProductList($list);
+    }
+
+    /**
+     * VN: 商品列表内容多语（名称/简介/单位/关键字），缺译文回落
+     * @param array $list
+     * @return array
+     */
+    protected function i18nProductList(array $list): array
+    {
+        if (!$list || !i18n_content_active()) {
+            return $list;
+        }
+        return app()->make(\app\services\other\I18nContentServices::class)->apply($list, 'product', 'id', ['store_name', 'store_info', 'unit_name', 'keyword']);
     }
 
     /**
@@ -1491,7 +1504,7 @@ class StoreProductServices extends BaseServices
             $list = app()->make(\app\services\product\RegionPriceServices::class)->applyToList($list, $regionId);
         }
         $list = $this->getActivityList($list);
-        return $list;
+        return $this->i18nProductList($list);
     }
 
     /**
@@ -1660,6 +1673,11 @@ class StoreProductServices extends BaseServices
         }
         $data['productAttr'] = $productAttr;
         $data['productValue'] = $productValue;
+        // VN: 内容多语——商品信息/详情富文本（规格名值已在 getProductAttrDetail 中本地化）
+        if (i18n_content_active()) {
+            $i18nSvc = app()->make(\app\services\other\I18nContentServices::class);
+            $storeInfo = $i18nSvc->apply([$storeInfo], 'product', 'id', ['store_name', 'store_info', 'unit_name', 'keyword', 'description', 'origin', 'cold_chain_note', 'shelf_life_text'])[0];
+        }
         $data['storeInfo'] = $storeInfo;
 
         /** @var MemberCardServices $memberCardService */
@@ -2121,6 +2139,7 @@ class StoreProductServices extends BaseServices
                 if ($list) {
                     $list = get_thumb_water($list, $type);
                     $list = $this->getActivityList($list, true, $seckillIdsList, $pinkIdsList, $bargrainIdsList);
+                    $list = $this->i18nProductList($list);
                     foreach ($list as &$item) {
                         if (!($vipStatus && $item['is_vip'])) {
                             $item['vip_price'] = 0;
@@ -2164,6 +2183,7 @@ class StoreProductServices extends BaseServices
         if ($list) {
             $list = get_thumb_water($list, $type);
             $list = $this->getActivityList($list);
+            $list = $this->i18nProductList($list);
             /** @var MemberCardServices $memberCardService */
             $memberCardService = app()->make(MemberCardServices::class);
             $vipStatus = $memberCardService->isOpenMemberCard('vip_price');

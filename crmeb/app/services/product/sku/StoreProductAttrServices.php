@@ -208,6 +208,10 @@ class StoreProductAttrServices extends BaseServices
                 $attrDetail[$k]['attr_value'][$kk]['pic'] = $attrPics[$v['attr_name']][$vv];
             }
         }
+        // VN: 内容多语——规格名/规格值/suk 键同步本地化（键与 attr_values 保持一致，前端据此匹配规格）
+        if ($typeId == 0 && i18n_content_active()) {
+            [$attrDetail, $values] = app()->make(\app\services\other\I18nContentServices::class)->localizeAttrDetail((int)$id, $attrDetail, $values);
+        }
         return [$attrDetail, $values];
     }
 }

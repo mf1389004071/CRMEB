@@ -262,13 +262,15 @@ class CodPrintServices extends BaseServices
                 return $val;
             }
         }
-        return $snapshot;
+        // 无译文：用商品主表当前名称（默认语言），商品已删除才用下单快照
+        $current = (string)Db::name('store_product')->where('id', $pid)->value('store_name');
+        return $current !== '' ? $current : $snapshot;
     }
 
     protected function normalizePrintLang(string $lang): string
     {
         $lang = $lang === 'both' ? 'both' : normalize_lang_code($lang);
-        return in_array($lang, ['vi-VN', 'zh-CN', 'both'], true) ? $lang : 'vi-VN';
+        return in_array($lang, ['vi-VN', 'zh-CN', 'en-US', 'both'], true) ? $lang : 'vi-VN';
     }
 
     protected function baseCurrency(): string

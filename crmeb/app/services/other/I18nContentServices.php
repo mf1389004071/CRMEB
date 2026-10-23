@@ -283,6 +283,76 @@ class I18nContentServices extends BaseServices
     }
 
     /**
+     * 规格弹窗数据本地化：规格名/规格值/suk 键同步翻译
+     * @param int $productId
+     * @param array $attrDetail [['attr_name','attr_values'=>[],'attr_value'=>[['attr',…]]], …]
+     * @param array $values [suk => 规格行]
+     * @return array [$attrDetail, $values]
+     */
+    public function localizeAttrDetail(int $productId, array $attrDetail, array $values): array
+    {
+        $groups = $this->attrMaps($productId)['groups'];
+        if (!$groups) {
+            return [$attrDetail, $values];
+        }
+        $byName = [];
+        foreach ($groups as $g) {
+            $byName[$g['orig_name']] = $g;
+        }
+        foreach ($attrDetail as $i => $d) {
+            $g = $byName[$d['attr_name']] ?? null;
+            if (!$g) {
+                continue;
+            }
+            $attrDetail[$i]['attr_name'] = $g['name'];
+            if (isset($d['attr_values']) && is_array($d['attr_values'])) {
+                $attrDetail[$i]['attr_values'] = array_map(function ($v) use ($g) {
+                    return $g['values'][$v] ?? $v;
+                }, $d['attr_values']);
+            }
+            if (isset($d['attr_value']) && is_array($d['attr_value'])) {
+                foreach ($d['attr_value'] as $k => $av) {
+                    if (isset($av['attr'])) {
+                        $attrDetail[$i]['attr_value'][$k]['attr'] = $g['values'][$av['attr']] ?? $av['attr'];
+                    }
+                }
+            }
+        }
+        $newValues = [];
+        foreach ($values as $suk => $v) {
+            $local = $this->localizeSuk($productId, (string)$suk);
+            if (isset($newValues[$local])) {   // 键冲突：放弃翻译，保持原键
+                return [$attrDetail, $values];
+            }
+            $v['suk'] = $local;
+            $newValues[$local] = $v;
+        }
+        return [$attrDetail, $newValues];
+    }
+
+    /**
+     * 购物车商品信息本地化：商品名/单位/规格名（productInfo.attrInfo.suk）
+     */
+    public function localizeCartProduct(array $productInfo, int $productId): array
+    {
+        if ($productId <= 0) {
+            return $productInfo;
+        }
+        foreach (['store_name', 'unit_name'] as $f) {
+            if (isset($productInfo[$f])) {
+                $t = $this->get('product', $productId, $f);
+                if ($t !== null && $t !== '') {
+                    $productInfo[$f] = $t;
+                }
+            }
+        }
+        if (!empty($productInfo['attrInfo']['suk']) && $productInfo['attrInfo']['suk'] !== '已失效') {
+            $productInfo['attrInfo']['suk'] = $this->localizeSuk($productId, (string)$productInfo['attrInfo']['suk'], null, (int)($productInfo['attrInfo']['id'] ?? 0));
+        }
+        return $productInfo;
+    }
+
+    /**
      * 缺译文清单：返回缺少 $lang 译文的实体 id（默认检查商品名）
      */
     public function missing(string $type, string $lang, string $field, int $limit = 200): array

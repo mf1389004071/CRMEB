@@ -639,6 +639,8 @@ class StoreCartServices extends BaseServices
             $vipStatus = false;
             $discount = 100;
         }
+        $i18nOn = i18n_content_active();
+        $i18nSvc = $i18nOn ? app()->make(\app\services\other\I18nContentServices::class) : null;
         $regionOn = region_pricing_active();
         $regionCityId = $regionOn ? current_region_id() : 0;
         $regionPrice = $regionOn ? app()->make(\app\services\product\RegionPriceServices::class) : null;
@@ -681,6 +683,10 @@ class StoreCartServices extends BaseServices
                 }
             }
             $item['region_unsellable'] = $regionUnsellable ? 1 : 0;
+            // VN: 内容多语——商品名/单位/规格名按当前语言（下单时随 cart_info 固化为订单语言快照）
+            if ($i18nOn && empty($item['seckill_id']) && empty($item['bargain_id']) && empty($item['combination_id'])) {
+                $item['productInfo'] = $i18nSvc->localizeCartProduct($item['productInfo'], (int)($item['product_id'] ?? 0));
+            }
             $productInfo = $item['productInfo'];
             $item['vip_truePrice'] = 0;
             $is_activity = $item['seckill_id'] || $item['bargain_id'] || $item['combination_id'] || $item['advance_id'];
