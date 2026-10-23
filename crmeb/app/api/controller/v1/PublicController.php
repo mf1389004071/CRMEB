@@ -753,6 +753,14 @@ class PublicController
         $data['phone_auth_switch'] = (int)in_array(2, sys_config('routine_auth_type')); //手机号登录开关
         $data['wechat_status'] = sys_config('wechat_appid') != '' && sys_config('wechat_appsecret') != ''; //公众号是否配置
         $data['site_func'] = sys_config('model_checkbox', ['seckill', 'bargain', 'combination']);
+        // VN: 越南站点公共配置
+        $data['vn_mode_enable'] = vn_mode_enabled();
+        $data['region_pricing_enable'] = region_pricing_enabled();
+        $data['base_currency'] = sys_config('base_currency', 'VND');
+        $data['default_lang'] = normalize_lang_code(sys_config('default_lang', 'vi-VN')) ?: 'vi-VN';
+        $data['order_notify_poll_seconds'] = (int)sys_config('order_notify_poll_seconds', 20);
+        $data['default_phone_country'] = sys_config('default_phone_country', '+84');
+        $data['allow_national_price'] = (int)sys_config('allow_national_price', 0) === 1;
         return app('json')->success($data);
     }
 

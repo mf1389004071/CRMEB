@@ -1045,6 +1045,28 @@ if (!function_exists('get_thumb_water')) {
     }
 }
 
+if (!function_exists('vn_mode_enabled')) {
+    /**
+     * 越南模式总开关（vn_mode_enable，默认开启）
+     * @return bool
+     */
+    function vn_mode_enabled(): bool
+    {
+        return (int)sys_config('vn_mode_enable', 1) === 1;
+    }
+}
+
+if (!function_exists('region_pricing_enabled')) {
+    /**
+     * 区域选择与区域价开关：越南模式 && region_pricing_enable
+     * @return bool
+     */
+    function region_pricing_enabled(): bool
+    {
+        return vn_mode_enabled() && (int)sys_config('region_pricing_enable', 1) === 1;
+    }
+}
+
 if (!function_exists('normalize_lang_code')) {
     /**
      * 语言码规范化：兼容历史别名，统一为 zh-CN / vi-VN / en-US
