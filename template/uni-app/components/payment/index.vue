@@ -11,15 +11,15 @@
 					<view class="text">
 						<view class="name">{{item.name}}</view>
 						<view class="info" v-if="item.value == 'yue'">
-							{{item.title}} <span class="money">{{$t(`￥`)}}{{ item.number }}</span>
+							{{item.title}} <span class="money">{{ $money(item.number) }}</span>
 						</view>
 						<view class="info" v-else>{{item.title}}</view>
 					</view>
 				</view>
 				<view class="iconfont" :class="active==index?'icon-xuanzhong11 font-num':'icon-weixuan'"></view>
 			</view>
-			<view class="payMoney">{{$t(`支付`)}}<span class="font-color">{{$t(`￥`)}}<span
-						class="money">{{totalPrice}}</span></span></view>
+			<view class="payMoney">{{$t(`支付`)}}<span class="font-color"><span
+						class="money">{{ $money(totalPrice) }}</span></span></view>
 			<view class="button bg-color acea-row row-center-wrapper" @click='goPay(number, paytype)'>{{$t(`去付款`)}}
 			</view>
 		</view>

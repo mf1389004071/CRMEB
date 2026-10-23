@@ -18,13 +18,13 @@
 						v-if="item.activity && item.activity.type === '3' && $permission('combination')">{{$t(`拼团`)}}</span>
 				</view>
 				<view class='name line2'>{{item.store_name}}</view>
-				<view class='money font-color'>{{$t(`￥`)}}<text class='num'>{{item.price}}</text></view>
+				<view class='money font-color'><text class='num'>{{ $money(item.price) }}</text></view>
 				<!-- <view class='vip-money' v-if="item.vip_price && item.vip_price > 0 && item.base">
-					{{$t(`￥`)}}{{item.vip_price}}
+					{{ $money(item.vip_price) }}
 					<image src='/static/images/jvip.png' class="jvip"></image>
 				</view>
 				<view class='vip-money' v-if="item.vip_price && item.vip_price > 0 && item.is_vip">
-					{{$t(`￥`)}}{{item.vip_price}}
+					{{ $money(item.vip_price) }}
 					<image src='/static/images/vip.png'></image>
 				</view> -->
 			</view>

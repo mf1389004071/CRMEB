@@ -191,12 +191,10 @@
         <view class="item acea-row row-between">
           <view>{{$t('商品总价')}}：</view>
           <view class="conter"
-            >￥{{
-              (
+            >{{ $money((
                 parseFloat(orderInfo.total_price) +
                 parseFloat(orderInfo.vip_true_price)
-              ).toFixed(2)
-            }}</view
+              ).toFixed(2)) }}</view
           >
         </view>
         <view
@@ -204,28 +202,28 @@
           v-if="orderInfo.coupon_price > 0"
         >
           <view>{{$t('优惠券抵扣')}}：</view>
-          <view class="conter">-￥{{ orderInfo.coupon_price }}</view>
+          <view class="conter">-{{ $money(orderInfo.coupon_price) }}</view>
         </view>
         <view
           v-if="orderInfo.pay_postage > 0"
           class="item acea-row row-between"
         >
           <view>{{$t('运费')}}：</view>
-          <view class="conter">￥{{ orderInfo.pay_postage }}</view>
+          <view class="conter">{{ $money(orderInfo.pay_postage) }}</view>
         </view>
         <view
           class="item acea-row row-between"
           v-if="orderInfo.deduction_price > 0"
         >
           <view>{{$t('积分抵扣金额')}}：</view>
-          <view class="conter">-￥{{ orderInfo.deduction_price }}</view>
+          <view class="conter">-{{ $money(orderInfo.deduction_price) }}</view>
         </view>
         <view
           class="item acea-row row-between"
           v-if="orderInfo.vip_true_price > 0"
         >
           <view>{{$t('会员商品优惠')}}：</view>
-          <view class="conter">-￥{{ orderInfo.vip_true_price }}</view>
+          <view class="conter">-{{ $money(orderInfo.vip_true_price) }}</view>
         </view>
         <view
           class="item acea-row row-between"
@@ -235,12 +233,12 @@
         >
           <view>{{ item.title }}：</view>
           <view class="conter"
-            >-￥{{ parseFloat(item.promotions_price).toFixed(2) }}</view
+            >-{{ $money(parseFloat(item.promotions_price).toFixed(2)) }}</view
           >
         </view>
         <view class="actualPay acea-row row-right">
           {{$t('实付款')}}：
-          <!-- <span class="money">￥{{ orderInfo.pay_price }}</span> -->
+          <!-- <span class="money">{{ $money(orderInfo.pay_price) }}</span> -->
           <baseMoney
             :money="orderInfo.pay_price"
             symbolSize="24"

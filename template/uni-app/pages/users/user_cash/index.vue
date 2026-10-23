@@ -36,12 +36,12 @@
 									placeholder-class='placeholder' name="money" type='digit'></input></view>
 						</view>
 						<view class='tip'>
-							{{$t(`当前可提现金额`)}}: <text class="price">{{$t(`￥`)}}{{userInfo.commissionCount}}</text>，{{$t(`冻结佣金`)}}:
-							{{$t(`￥`)}}{{userInfo.broken_commission}}
+							{{$t(`当前可提现金额`)}}: <text class="price">{{ $money(userInfo.commissionCount) }}</text>，{{$t(`冻结佣金`)}}:
+							{{ $money(userInfo.broken_commission) }}
 						</view>
 						<view class='tip'>
 							{{$t(`提现手续费: `)}}<text class="price">{{withdrawal_fee}}%</text>，{{$t(`实际到账: `)}}<text
-								class="price">{{$t(`￥`)}}{{true_money}}</text>
+								class="price">{{ $money(true_money) }}</text>
 						</view>
 						<view class='tip'>
 							{{$t(`说明: 每笔佣金的冻结期为`)}}{{userInfo.broken_day}}{{$t(`天，到期后可提现`)}}
@@ -80,12 +80,12 @@
 							</view>
 						</view>
 						<view class='tip'>
-							{{$t(`当前可提现金额`)}}: <text class="price">{{$t(`￥`)}}{{userInfo.commissionCount}}</text>，{{$t(`冻结佣金`)}}:
-							{{$t(`￥`)}}{{userInfo.broken_commission}}
+							{{$t(`当前可提现金额`)}}: <text class="price">{{ $money(userInfo.commissionCount) }}</text>，{{$t(`冻结佣金`)}}:
+							{{ $money(userInfo.broken_commission) }}
 						</view>
 						<view class='tip'>
 							{{$t(`提现手续费: `)}}<text class="price">{{withdrawal_fee}}%</text>，{{$t(`实际到账: `)}}<text
-								class="price">{{$t(`￥`)}}{{true_money}}</text>
+								class="price">{{ $money(true_money) }}</text>
 						</view>
 						<view class='tip'>
 							{{$t(`说明: 每笔佣金的冻结期为`)}}{{userInfo.broken_day}}{{$t(`天，到期后可提现`)}}
@@ -124,12 +124,12 @@
 							</view>
 						</view>
 						<view class='tip'>
-							{{$t(`当前可提现金额`)}}: <text class="price">{{$t(`￥`)}}{{userInfo.commissionCount}}</text>，{{$t(`冻结佣金`)}}:
-							{{$t(`￥`)}}{{userInfo.broken_commission}}
+							{{$t(`当前可提现金额`)}}: <text class="price">{{ $money(userInfo.commissionCount) }}</text>，{{$t(`冻结佣金`)}}:
+							{{ $money(userInfo.broken_commission) }}
 						</view>
 						<view class='tip'>
 							{{$t(`提现手续费: `)}}<text class="price">{{withdrawal_fee}}%</text>，{{$t(`实际到账: `)}}<text
-								class="price">{{$t(`￥`)}}{{true_money}}</text>
+								class="price">{{ $money(true_money) }}</text>
 						</view>
 						<view class='tip'>
 							{{$t(`说明: 每笔佣金的冻结期为`)}}{{userInfo.broken_day}}{{$t(`天，到期后可提现`)}}
@@ -145,8 +145,8 @@
 									name="money" type='digit'></input></view>
 						</view>
 						<view class='tip'>
-							{{$t(`当前可提现金额`)}}: <text class="price">{{$t(`￥`)}}{{userInfo.commissionCount}}</text>，{{$t(`冻结佣金`)}}:
-							{{$t(`￥`)}}{{userInfo.broken_commission}}
+							{{$t(`当前可提现金额`)}}: <text class="price">{{ $money(userInfo.commissionCount) }}</text>，{{$t(`冻结佣金`)}}:
+							{{ $money(userInfo.broken_commission) }}
 						</view>
 						<button formType="submit" class='bnt bg-color'>{{$t(`提现`)}}</button>
 					</form>

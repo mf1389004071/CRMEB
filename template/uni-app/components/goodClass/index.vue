@@ -12,12 +12,12 @@
 				<view class="text line2">{{item.store_name}}</view>
 				<view class="bottom acea-row row-between-wrapper">
 					<view class="money font-color">
-						<text class="sign">{{$t(`￥`)}}</text>{{item.price}}
+						<text>{{ $money(item.price) }}</text>
 						<!-- <span class="vip" v-if="item.vip_price">
 							<image src="../../static/images/vip01.png"></image>
-							￥{{item.vip_price}}
+							{{ $money(item.vip_price) }}
 						</span>
-						<text class="y_money" v-else>￥{{item.ot_price}}</text> -->
+						<text class="y_money" v-else>{{ $money(item.ot_price) }}</text> -->
 					</view>
 					<view v-if="item.stock>0">
 						<view class="iconfont icon-gouwuche6 acea-row row-center-wrapper"

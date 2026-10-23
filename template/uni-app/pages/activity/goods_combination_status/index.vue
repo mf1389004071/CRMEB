@@ -78,7 +78,7 @@
 						<div class="team" v-text="item.people + $t(`人团`)"></div>
 					</div>
 					<div class="name line1" v-text="item.title"></div>
-					<div class="money font-color-red" v-text="$t(`￥`) + item.price"></div>
+					<div class="money font-color-red" v-text="$money(item.price)"></div>
 				</div>
 			</div>
 		</div>

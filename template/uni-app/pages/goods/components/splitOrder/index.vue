@@ -26,7 +26,7 @@
 							</view>
 							<view class='infor line1'>
 								{{$t(`属性`)}}：{{item.cart_info.productInfo.attrInfo.suk || $t(`默认`)}}</view>
-							<view class='money'>{{$t(`￥`)}}{{item.cart_info.truePrice}}</view>
+							<view class='money'>{{ $money(item.cart_info.truePrice) }}</view>
 						</view>
 						<view class='carnum acea-row row-center-wrapper'>
 							<view class="reduce" :class="item.surplus_num == 1 ? 'on' : ''"

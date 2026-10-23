@@ -72,3 +72,17 @@ export function setUserLocale(locale) {
 		locale
 	});
 }
+
+/** 币种与汇率（含本次请求默认展示币种） */
+export function getCurrencyConfig() {
+	return request.get("public/currency", {}, {
+		noAuth: true
+	});
+}
+
+/** 保存用户展示币种 */
+export function setUserCurrency(currency) {
+	return request.post("user/currency", {
+		currency
+	});
+}

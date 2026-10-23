@@ -71,8 +71,8 @@
 						<view class="moneyCon acea-row row-between-wrapper">
 							<view class="price acea-row row-center-wrapper">
 								<view>
-									{{ $t(`￥`) }}
-									<text>{{ item.coupon_price }}</text>
+									
+									<text>{{ $money(item.coupon_price) }}</text>
 								</view>
 							</view>
 						</view>

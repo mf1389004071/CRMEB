@@ -68,11 +68,11 @@
 							</view>
 						</view>
 						<view class="money">
-							<!-- <view class="x-money">￥{{ item.pay_price }}</view> -->
+							<!-- <view class="x-money">{{ $money(item.pay_price) }}</view> -->
 							<BaseMoney :money="item.pay_price" symbolSize="20" integerSize="32" decimalSize="20"></BaseMoney>
 							<view class="num">{{$t('共')}}{{ item.total_num }} {{$t('件')}}</view>
 							<!-- 	<view class="y-money">
-								￥{{ val.cart_info.productInfo.ot_price }}
+								{{ $money(val.cart_info.productInfo.ot_price) }}
 							</view> -->
 							<!-- <view class="info" v-if="val.cart_info.refund_num && item._status._type !=-2">{{val.cart_info.refund_num}}{{$t('件退款中')}}</view> -->
 						</view>
@@ -80,9 +80,7 @@
 				</view>
 				<!-- <view class="public-total">
 					{{$t('共')}}{{ item.total_num }} {{$t('件商品')}}，{{$t('实付款')}}
-					<span class="money">{{$t('￥')}}{{ item.pay_price }}</span> ( {{$t('邮费')}} {{$t('￥')}}{{
-	            item.pay_postage
-	          }}
+					<span class="money">{{ $money(item.pay_price) }}</span> ( {{$t('邮费')}} {{ $money(item.pay_postage) }}
 					)
 				</view> -->
 				<view class="operation acea-row row-between-wrapper">

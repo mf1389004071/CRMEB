@@ -4,7 +4,7 @@
 			<view class="payment-top acea-row row-column row-center-wrapper">
 				<span class="name">{{$t(`我的余额`)}}</span>
 				<view class="pic">
-					<span class="pic-font"><span class="num"> {{$t(`￥`)}}</span>{{ userinfo.now_money || 0 }}</span>
+					<span class="pic-font"><text>{{ $money(userinfo.now_money || 0) }}</text></span>
 				</view>
 			</view>
 			<view class="payment">
@@ -41,8 +41,8 @@
 					<view class="tips-title">
 						<view style="font-weight: bold; font-size: 26rpx;">{{$t(`提示`)}}：</view>
 						<view style="margin-top: 10rpx;">{{$t(`当前可转入佣金为`)}} <text
-								class='font-color'>{{$t(`￥`)}}{{userinfo.commissionCount || 0}}</text>{{$t(`冻结佣金为`)}}<text
-								class='font-color'>{{$t(`￥`)}}{{userinfo.broken_commission}}</text></view>
+								class='font-color'>{{ $money(userinfo.commissionCount || 0) }}</text>{{$t(`冻结佣金为`)}}<text
+								class='font-color'>{{ $money(userinfo.broken_commission) }}</text></view>
 					</view>
 					<view class="tips-box">
 						<view class="tips mt-30">{{$t(`注意事项`)}}：</view>

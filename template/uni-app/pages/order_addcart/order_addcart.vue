@@ -77,7 +77,7 @@
                       }}</view
                     >
                     <view class="money" v-if="item.attrStatus"
-                      >{{ $t(`￥`) }}{{ item.truePrice }}</view
+                      >{{ $money(item.truePrice) }}</view
                     >
                     <view
                       class="reElection acea-row row-between-wrapper"
@@ -153,7 +153,7 @@
                     >{{ $t(`属性`) }}：{{ item.productInfo.attrInfo.suk }}</view
                   >
                   <view class="acea-row row-between-wrapper">
-                    <!-- <view>￥{{item.truePrice}}</view> -->
+                    <!-- <view>{{ $money(item.truePrice) }}</view> -->
                     <view class="end">{{ $t(`该商品已失效`) }}</view>
                   </view>
                 </view>
@@ -206,7 +206,7 @@
           </checkbox-group>
         </view>
         <view class="money acea-row row-middle" v-if="footerswitch == true">
-          <text class="font-color">{{ $t(`￥`) }}{{ selectCountPrice }}</text>
+          <text class="font-color">{{ $money(selectCountPrice) }}</text>
           <form @submit="subOrder">
             <button class="placeOrder bg-color" formType="submit">
               {{ $t(`立即下单`) }}

@@ -28,9 +28,9 @@
 											<view class='text line1'>{{child.nickname}}</view>
 										</view>
 										<view class='money' v-if="child.type == 'brokerage'">{{$t(`返佣`)}}：<text
-												class='font-color'>{{$t(`￥`)}}{{child.number}}</text></view>
+												class='font-color'>{{ $money(child.number) }}</text></view>
 										<view class='money' v-else>{{$t(`暂未返佣`)}}：<text
-												class='font-color'>{{$t(`￥`)}}{{child.number}}</text></view>
+												class='font-color'>{{ $money(child.number) }}</text></view>
 									</view>
 									<view class='bottom'>
 										<view><text class='name'>{{$t(`订单编号`)}}：</text>{{child.order_id}}</view>
@@ -48,9 +48,9 @@
 											<view class="more-record-box">
 												<view><text class='name'>{{$t(`单号`)}}：</text>{{sp.order_id}}</view>
 												<view class='money' v-if="sp.type == 'brokerage'">{{$t(`返佣`)}}：<text
-														class='font-color'>{{$t(`￥`)}}{{sp.number}}</text></view>
+														class='font-color'>{{ $money(sp.number) }}</text></view>
 												<view class='money' v-else>{{$t(`暂未返佣`)}}：<text
-														class='font-color'>{{$t(`￥`)}}{{sp.number}}</text></view>
+														class='font-color'>{{ $money(sp.number) }}</text></view>
 											</view>
 										</view>
 									</view>

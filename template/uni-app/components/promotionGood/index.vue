@@ -6,7 +6,7 @@
 					<easy-loadimage mode="widthFix" :image-src="item.image"></easy-loadimage>
 				</view>
 				<view class='money'>
-					<text class="rmb">{{$t(`￥`)}} </text><text class="price"> {{item.price}}</text>
+					<text class="price">{{ $money(item.price) }}</text>
 					<!-- <text class="ot-price">{{item.ot_price}}</text> -->
 				</view>
 			</view>

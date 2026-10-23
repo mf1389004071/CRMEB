@@ -34,7 +34,7 @@
                 color="var(--view-theme)"
               ></baseMoney>
               <!-- <text class='vip-money'
-								v-if="is_vip == 0 && attr.productSelect.vip_price">{{$t(`￥`)}}{{attr.productSelect.vip_price}}</text>
+								v-if="is_vip == 0 && attr.productSelect.vip_price">{{ $money(attr.productSelect.vip_price) }}</text>
 							<view class="vipImg" v-if="is_vip == 0 && attr.productSelect.vip_price">
 								<image src="../../static/images/svip.gif"></image>
 							</view> -->

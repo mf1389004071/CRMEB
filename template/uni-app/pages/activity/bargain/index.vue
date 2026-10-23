@@ -15,7 +15,7 @@
 							<div class="successTxt font-num" v-else-if="item.status === 3">{{$t(`砍价成功`)}}</div>
 							<div class="endTxt" v-else>{{$t(`活动已结束`)}}</div>
 							<div class="money font-num">
-								{{$t(`已砍至`)}}<span class="symbol">{{$t(`￥`)}}</span><span class="num">{{ item.residue_price }}</span>
+								{{$t(`已砍至`)}}<span class="num">{{ $money(item.residue_price) }}</span>
 							</div>
 						</div>
 					</div>

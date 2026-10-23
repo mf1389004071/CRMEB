@@ -16,8 +16,7 @@
 
 							<view class="price-box">
 								<view>
-									<text>{{$t(`￥`)}}</text>
-									{{ item.price }}
+									<text>{{ $money(item.price) }}</text>
 								</view>
 								<view class="sales">
 									{{$t(`已售`)}} {{item.sales}}

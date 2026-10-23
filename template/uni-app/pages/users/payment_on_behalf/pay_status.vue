@@ -4,7 +4,7 @@
 			<view class='iconfont icons icon-duihao2 bg-color'></view>
 			<view class='status'>{{$t(`代付成功`)}}</view>
 			<view class='wrapper'>
-				<view class='itemCom'> <text class="rmb">{{$t(`￥`)}}</text> {{resData.pay_price || 0.00}}</view>
+				<view class='itemCom'> <text>{{ $money(resData.pay_price || 0.00) }}</text></view>
 			</view>
 			<view class="head-other">
 				<view class="user-img">

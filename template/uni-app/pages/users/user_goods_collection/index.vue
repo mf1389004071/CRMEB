@@ -19,7 +19,7 @@
 					<view class='text acea-row row-column-between' @click="jump(item)">
 						<view class='name line2'>{{item.store_name}}</view>
 						<view class='acea-row row-between-wrapper'>
-							<view class='money font-color'>{{$t(`￥`)}}{{item.price}}</view>
+							<view class='money font-color'>{{ $money(item.price) }}</view>
 							<!-- <view class='delete' @click.stop='delCollection(item.pid,index)'>{{$t('删除')}}</view> -->
 						</view>
 					</view>

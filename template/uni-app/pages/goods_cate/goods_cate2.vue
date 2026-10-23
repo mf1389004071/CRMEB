@@ -88,8 +88,8 @@
 			</view>
 			<view class="money acea-row row-middle">
 				<view>
-					{{ $t(`￥`) }}
-					<text class="num">{{ totalPrice }}</text>
+					
+					<text class="num">{{ $money(totalPrice) }}</text>
 				</view>
 				<view class="bnt" @click="subOrder">{{ $t(`去付款`) }}</view>
 			</view>

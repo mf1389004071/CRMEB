@@ -55,9 +55,9 @@
 							</view>
 						</view>
 						<view class="money">
-							<view class="x-money">￥{{ item.productInfo.attrInfo?item.productInfo.attrInfo.price:item.productInfo.price }}</view>
+							<view class="x-money">{{ $money(item.productInfo.attrInfo?item.productInfo.attrInfo.price:item.productInfo.price) }}</view>
 							<view class="num">x {{ item.cart_num }}</view>
-							<!-- <view class="y-money">￥{{ item.productInfo.ot_price }}</view> -->
+							<!-- <view class="y-money">{{ $money(item.productInfo.ot_price) }}</view> -->
 						</view>
 					</navigator>
 				</view>
@@ -74,7 +74,7 @@
 						</view>
 					</view>
 					<view class="money">
-						<!-- <view class="x-money">￥{{ item.productInfo.attrInfo?item.productInfo.attrInfo.price:item.productInfo.price }}</view> -->
+						<!-- <view class="x-money">{{ $money(item.productInfo.attrInfo?item.productInfo.attrInfo.price:item.productInfo.price) }}</view> -->
 						<BaseMoney :money="item.productInfo.attrInfo?item.productInfo.attrInfo.price :item.productInfo.price" symbolSize="20" integerSize="32" decimalSize="20"></BaseMoney>
 						<view class="num">{{$t('共')}} {{ item.cart_num }} {{$t('件')}}</view>
 						<view class="acea-row row-right">
@@ -126,9 +126,7 @@
 			</view>
 			<!-- <view class="public-total" v-if="!orderInfo.split || !orderInfo.split.length">
 				{{$t('共')}} {{ orderInfo.total_num }} {{$t('件商品')}}， {{$t('实付款')}}
-				<span class="money">{{$t('￥')}}{{ orderInfo.pay_price }}</span> ( {{$t('邮费')}} {{$t('￥')}}{{
-		    orderInfo.pay_postage
-		  }}
+				<span class="money">{{ $money(orderInfo.pay_price) }}</span> ( {{$t('邮费')}} {{ $money(orderInfo.pay_postage) }}
 				)
 			</view> -->
 			<!-- 结束 -->

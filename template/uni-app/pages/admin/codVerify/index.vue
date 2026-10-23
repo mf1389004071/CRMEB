@@ -12,7 +12,7 @@
 			<view class="line"><text class="k">{{ $t(`订单号`) }}</text><text>{{ order.order_id }}</text></view>
 			<view class="line"><text class="k">{{ $t(`收货人`) }}</text><text>{{ order.real_name }} {{ order.user_phone }}</text></view>
 			<view class="line" v-if="order.user_address"><text class="k">{{ $t(`收货地址`) }}</text><text>{{ order.user_address }}</text></view>
-			<view class="line"><text class="k">{{ $t(`应收金额(货到付款)`) }}</text><text class="amount">{{ $t(`￥`) }}{{ order.cod_receivable }}</text></view>
+			<view class="line"><text class="k">{{ $t(`应收金额(货到付款)`) }}</text><text class="amount">{{ $money(order.cod_receivable) }}</text></view>
 			<view class="line"><text class="k">{{ $t(`收款状态`) }}</text><text>{{ order.paid ? $t(`已收款`) : $t(`未收款`) }}</text></view>
 		</view>
 		<view class="box done" v-if="done">

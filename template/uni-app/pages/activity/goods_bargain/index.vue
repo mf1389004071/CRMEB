@@ -19,8 +19,8 @@
 								{{ item.people }}{{ $t(`人正在参与`) }}
 							</view>
 							<view class="money">
-								{{ $t(`最低`) }} : {{ $t(`￥`) }}
-								<text class="price">{{ item.min_price }}</text>
+								{{ $t(`最低`) }} : 
+								<text class="price">{{ $money(item.min_price) }}</text>
 							</view>
 						</view>
 						<view class="cutBnt">

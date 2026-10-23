@@ -125,8 +125,8 @@
       </view>
       <view class="acea-row row-middle">
         <view class="money">
-          {{ $t(`￥`) }}
-          <text class="num">{{ totalPrice }}</text>
+          
+          <text class="num">{{ $money(totalPrice) }}</text>
         </view>
         <view class="bnt" :class="cartCount ? '' : 'on'" @click="subOrder">{{
           $t(`去付款`)

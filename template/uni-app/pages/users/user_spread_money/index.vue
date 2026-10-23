@@ -6,12 +6,12 @@
 					<view>
 						<view class="name">{{ $t(name) }}</view>
 						<view class="money" v-if="recordType == 4">
-							{{ $t(`￥`) }}
-							<text class="num">{{ extractCount }}</text>
+							
+							<text class="num">{{ $money(extractCount) }}</text>
 						</view>
 						<view class="money" v-else>
-							{{ $t(`￥`) }}
-							<text class="num">{{ recordCount }}</text>
+							
+							<text class="num">{{ $money(recordCount) }}</text>
 						</view>
 					</view>
 					<view class="iconfont icon-jinbi1"></view>

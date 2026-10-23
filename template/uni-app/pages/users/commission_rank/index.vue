@@ -26,7 +26,7 @@
 							</view>
 							<view class="text line1">{{$t(item.nickname)}}</view>
 						</view>
-						<view class="people font-color">{{$t(`￥`)}}{{item.brokerage_price}}</view>
+						<view class="people font-color">{{ $money(item.brokerage_price) }}</view>
 					</view>
 				</view>
 			</view>

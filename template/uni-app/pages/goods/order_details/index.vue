@@ -28,7 +28,7 @@
 				</view>
 				<view class="cod-amount">
 					<text>{{ $t(`应收金额(货到付款)`) }}</text>
-					<text class="num">{{ $t(`￥`) }}{{ orderInfo.cod_receivable }}</text>
+					<text class="num">{{ $money(orderInfo.cod_receivable) }}</text>
 				</view>
 			</view>
 			<view class="refund-msg" v-if="[4, 5].includes(orderInfo.refund_type)">
@@ -431,35 +431,35 @@
 			<view class="wrapper" v-if="orderInfo.total_price && (is_gift == 0 || is_gift == 1)">
 				<view class="item acea-row row-between">
 					<view>{{ $t(`商品总价`) }}：</view>
-					<view class="conter">{{ $t(`￥`) }}{{ (parseFloat(orderInfo.total_price) + parseFloat(orderInfo.vip_true_price)).toFixed(2) }}</view>
+					<view class="conter">{{ $money((parseFloat(orderInfo.total_price) + parseFloat(orderInfo.vip_true_price)).toFixed(2)) }}</view>
 				</view>
 				<view class="item acea-row row-between" v-if="orderInfo.pay_postage > 0">
 					<view>{{ $t(`配送运费`) }}：</view>
-					<view class="conter">{{ $t(`￥`) }}{{ parseFloat(orderInfo.pay_postage).toFixed(2) }}</view>
+					<view class="conter">{{ $money(parseFloat(orderInfo.pay_postage).toFixed(2)) }}</view>
 				</view>
 				<view v-if="orderInfo.levelPrice > 0" class="item acea-row row-between">
 					<view>{{ $t(`用户等级优惠`) }}：</view>
-					<view class="conter">-{{ $t(`￥`) }}{{ parseFloat(orderInfo.levelPrice).toFixed(2) }}</view>
+					<view class="conter">-{{ $money(parseFloat(orderInfo.levelPrice).toFixed(2)) }}</view>
 				</view>
 				<view v-if="orderInfo.memberPrice > 0" class="item acea-row row-between">
 					<view>{{ $t(`付费会员优惠`) }}：</view>
-					<view class="conter">-{{ $t(`￥`) }}{{ parseFloat(orderInfo.memberPrice).toFixed(2) }}</view>
+					<view class="conter">-{{ $money(parseFloat(orderInfo.memberPrice).toFixed(2)) }}</view>
 				</view>
 				<view v-if="orderInfo.gift_price > 0" class="item acea-row row-between">
 					<view>{{ $t(`礼品附加费用`) }}：</view>
-					<view class="conter">-{{ $t(`￥`) }}{{ parseFloat(orderInfo.gift_price).toFixed(2) }}</view>
+					<view class="conter">-{{ $money(parseFloat(orderInfo.gift_price).toFixed(2)) }}</view>
 				</view>
 				<view class="item acea-row row-between" v-if="orderInfo.coupon_price > 0">
 					<view>{{ $t(`优惠券抵扣`) }}：</view>
-					<view class="conter">-{{ $t(`￥`) }}{{ parseFloat(orderInfo.coupon_price).toFixed(2) }}</view>
+					<view class="conter">-{{ $money(parseFloat(orderInfo.coupon_price).toFixed(2)) }}</view>
 				</view>
 				<view class="item acea-row row-between" v-if="orderInfo.use_integral > 0">
 					<view>{{ $t(`积分抵扣`) }}：</view>
-					<view class="conter">-{{ $t(`￥`) }}{{ parseFloat(orderInfo.deduction_price).toFixed(2) }}</view>
+					<view class="conter">-{{ $money(parseFloat(orderInfo.deduction_price).toFixed(2)) }}</view>
 				</view>
 				<view class="actualPay acea-row row-right" v-if="!orderInfo.help_info.help_status">
 					{{ $t(`实付款`) }}：
-					<text class="money font-color">{{ $t(`￥`) }}{{ parseFloat(orderInfo.pay_price).toFixed(2) }}</text>
+					<text class="money font-color">{{ $money(parseFloat(orderInfo.pay_price).toFixed(2)) }}</text>
 				</view>
 				<view class="actualPay acea-row row-right" v-else>
 					<view class="pay-people">
@@ -469,7 +469,7 @@
 						</view>
 					</view>
 					{{ $t(`总代付`) }}：
-					<text class="money font-color">{{ $t(`￥`) }}{{ parseFloat(orderInfo.pay_price).toFixed(2) }}</text>
+					<text class="money font-color">{{ $money(parseFloat(orderInfo.pay_price).toFixed(2)) }}</text>
 				</view>
 			</view>
 			<view style="height: 120rpx"></view>

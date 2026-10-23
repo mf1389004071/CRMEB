@@ -78,11 +78,9 @@
                     >
                     <view class="money he row-middle">
                       <view
-                        >{{$t('￥')}}{{
-                          item.cart_info.productInfo.attrInfo
+                        >{{ $money(item.cart_info.productInfo.attrInfo
                             ? item.cart_info.productInfo.attrInfo.price
-                            : item.cart_info.productInfo.price
-                        }}</view
+                            : item.cart_info.productInfo.price) }}</view
                       >
                       <view v-if="item.is_writeoff == 1" class="txt">
                         <view class="carnum acea-row row-center-wrapper">

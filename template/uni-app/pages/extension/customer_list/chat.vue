@@ -22,11 +22,11 @@
           ></view>
           <view class="acea-row row-between">
             <view class="broadcast_details_pic">
-              {{ $t(`￥`) }}{{ productInfo.price }}
+              {{ $money(productInfo.price) }}
               <text
                 class="broadcast_details_pic_num"
                 v-if="productInfo.ot_price"
-                >{{ $t(`￥`) }}{{ productInfo.ot_price }}</text
+                >{{ $money(productInfo.ot_price) }}</text
               >
             </view>
             <view class="broadcast_details_btn" @click="sendProduct">{{
@@ -58,9 +58,9 @@
             }}</view>
             <view class="acea-row row-between">
               <view class="broadcast_details_pic">
-                {{ $t(`￥`) }}{{ orderInfo.cartInfo[0].productInfo.price }}
+                {{ $money(orderInfo.cartInfo[0].productInfo.price) }}
                 <text class="broadcast_details_pic_num"
-                  >{{ $t(`￥`) }}{{ orderInfo.cartInfo[0].costPrice }}</text
+                  >{{ $money(orderInfo.cartInfo[0].costPrice) }}</text
                 >
               </view>
               <view class="broadcast_details_btn" @click="sendOrder">{{
@@ -111,8 +111,7 @@
                 <image :src="item.productInfo.image" mode="widthFix"></image>
                 <view class="info">
                   <view class="price">
-                    <text>{{ $t(`￥`) }}</text>
-                    {{ item.productInfo.price }}
+                    <text>{{ $money(item.productInfo.price) }}</text>
                   </view>
                   <view class="name line2">{{
                     item.productInfo.store_name
@@ -137,8 +136,7 @@
                       >{{ item.orderInfo.cartInfo[0].productInfo.store_name }}
                     </view>
                     <view class="price">
-                      {{ $t(`￥`)
-                      }}{{ item.orderInfo.cartInfo[0].productInfo.price }}
+                      {{ $money(item.orderInfo.cartInfo[0].productInfo.price) }}
                     </view>
                   </view>
                 </view>

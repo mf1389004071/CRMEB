@@ -44,6 +44,7 @@
 	import { getLogo } from '@/api/public';
 	import { phoneCountries, setUserLocale } from '@/api/vn.js';
 	import { syncLocaleAfterLogin } from '@/utils/lang.js';
+	import { setDisplayCurrency } from '@/utils/money.js';
 	import Cache from '@/utils/cache';
 
 	const BACK_URL = 'login_back_url';
@@ -148,6 +149,9 @@
 						this.locking = false;
 						this.$store.commit('SETUID', res.data.uid);
 						// 语种与服务端同步：服务端有则覆盖本地（需刷新生效），无则回写
+						if (res.data.display_currency) {
+							setDisplayCurrency(res.data.display_currency);
+						}
 						const changed = syncLocaleAfterLogin(res.data.locale, (l) => setUserLocale(l).catch(() => {}));
 						if (changed) {
 							// #ifdef H5

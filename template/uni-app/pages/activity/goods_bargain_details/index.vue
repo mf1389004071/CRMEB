@@ -40,10 +40,10 @@
 					<view class="text acea-row row-column-around">
 						<view class="line2">{{ bargainInfo.title || '' }}</view>
 						<view class="money">
-							{{ $t(`当前`) }}: {{ $t(`￥`) }}
-							<text class="num">{{ bargainInfo.price || '' }}</text>
+							{{ $t(`当前`) }}: 
+							<text class="num">{{ $money(bargainInfo.price || '') }}</text>
 						</view>
-						<view class="successNum">{{ $t(`最低`) }}:{{ $t(`￥`) }}{{ bargainInfo.min_price || '' }}</view>
+						<view class="successNum">{{ $t(`最低`) }}:{{ $money(bargainInfo.min_price || '') }}</view>
 					</view>
 				</view>
 				<!-- 进度条 -->
@@ -124,7 +124,7 @@
 							</view>
 							<view class="money">
 								<text class="iconfont icon-kanjia"></text>
-								{{ $t(`砍掉`) }}{{ $t(`￥`) }}{{ item.price }}
+								{{ $t(`砍掉`) }}{{ $money(item.price) }}
 							</view>
 						</view>
 					</block>
@@ -183,7 +183,7 @@
 					<!-- #endif -->
 				</view>
 				<view v-else>
-					<view class="help" style="color: #fc4141">{{ $t(`成功帮砍`) }}{{ $t(`￥`) }}{{ userBargainPrice }}</view>
+					<view class="help" style="color: #fc4141">{{ $t(`成功帮砍`) }}{{ $money(userBargainPrice) }}</view>
 					<view class="cutOff on">{{ $t(`您也可以砍价低价拿哦，快去挑选心仪的商品吧`) }}</view>
 					<view @tap="currentBargainUser" class="tipBnt">{{ $t(`我也要参与`) }}</view>
 				</view>

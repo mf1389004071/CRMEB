@@ -232,49 +232,49 @@
 				<view class='item acea-row row-between-wrapper'>
 					<view>{{$t(`商品总价`)}}：</view>
 					<view class='money'>
-						{{$t(`￥`)}}{{allPrice || 0}}
+						{{ $money(allPrice || 0) }}
 					</view>
 				</view>
 				<view v-if="is_gift && priceGroup.giftPrice > 0" class='item acea-row row-between-wrapper'>
 					<view>{{$t(`礼品附加费`)}}：</view>
 					<view class='money'>
-						{{$t(`￥`)}}{{parseFloat(priceGroup.giftPrice)}}
+						{{ $money(parseFloat(priceGroup.giftPrice)) }}
 					</view>
 				</view>
 				<view class='item acea-row row-between-wrapper'
 					v-if="priceGroup.storePostage > 0 || priceGroup.storePostageDiscount > 0">
 					<view>{{$t(`配送运费`)}}：</view>
 					<view class='money'>
-						{{$t(`￥`)}}{{(parseFloat(priceGroup.storePostage)+parseFloat(priceGroup.storePostageDiscount)).toFixed(2)}}
+						{{ $money((parseFloat(priceGroup.storePostage)+parseFloat(priceGroup.storePostageDiscount)).toFixed(2)) }}
 					</view>
 				</view>
 				<view class='item acea-row row-between-wrapper'
 					v-if="priceGroup.levelPrice > 0 && userInfo.vip && !pinkId && !BargainId && !combinationId && !seckillId && !discountId">
 					<view>{{$t(`用户等级优惠`)}}：</view>
-					<view class='money'>-{{$t(`￥`)}}{{parseFloat(priceGroup.levelPrice).toFixed(2)}}</view>
+					<view class='money'>-{{ $money(parseFloat(priceGroup.levelPrice).toFixed(2)) }}</view>
 				</view>
 				<view class='item acea-row row-between-wrapper'
 					v-if="priceGroup.memberPrice > 0 && userInfo.vip && !pinkId && !BargainId && !combinationId && !seckillId && !discountId">
 					<view>{{$t(`付费会员优惠`)}}：</view>
-					<view class='money'>-{{$t(`￥`)}}{{parseFloat(priceGroup.memberPrice).toFixed(2)}}</view>
+					<view class='money'>-{{ $money(parseFloat(priceGroup.memberPrice).toFixed(2)) }}</view>
 				</view>
 				<view class='item acea-row row-between-wrapper' v-if="priceGroup.storePostageDiscount > 0">
 					<view>{{$t(`会员运费优惠`)}}：</view>
-					<view class='money'>-{{$t(`￥`)}}{{parseFloat(priceGroup.storePostageDiscount).toFixed(2)}}</view>
+					<view class='money'>-{{ $money(parseFloat(priceGroup.storePostageDiscount).toFixed(2)) }}</view>
 				</view>
 				<view class='item acea-row row-between-wrapper' v-if="coupon_price > 0">
 					<view>{{$t(`优惠券抵扣`)}}：</view>
-					<view class='money'>-{{$t(`￥`)}}{{parseFloat(coupon_price).toFixed(2)}}</view>
+					<view class='money'>-{{ $money(parseFloat(coupon_price).toFixed(2)) }}</view>
 				</view>
 				<view class='item acea-row row-between-wrapper' v-if="integral_price > 0">
 					<view>{{$t(`积分抵扣`)}}：</view>
-					<view class='money'>-{{$t(`￥`)}}{{parseFloat(integral_price).toFixed(2)}}</view>
+					<view class='money'>-{{ $money(parseFloat(integral_price).toFixed(2)) }}</view>
 				</view>
 			</view>
 			<view style='height:120rpx;'></view>
 			<view class='footer acea-row row-between-wrapper' v-if="!is_gift || is_gift == 1">
 				<view>{{$t(`合计`)}}:
-					<text class='font-color'>{{$t(`￥`)}}{{totalPrice || 0}}</text>
+					<text class='font-color'>{{ $money(totalPrice || 0) }}</text>
 				</view>
 				<view class='settlement' style='z-index:100' @tap.stop="Debounce(SubOrder())"
 					v-if="(valid_count>0&&!discount_id) || (valid_count==cartInfo.length&&discount_id)">{{$t(`提交订单`)}}

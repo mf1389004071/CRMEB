@@ -22,7 +22,7 @@
 					<view class="text">
 						<view class="name">{{$t(item.name)}}</view>
 						<view class="info" v-if="item.value == 'yue'">
-							{{$t(item.title)}} <span class="money">{{$t(`￥`)}}{{ item.number }}</span>
+							{{$t(item.title)}} <span class="money">{{ $money(item.number) }}</span>
 						</view>
 						<view class="info" v-else>{{$t(item.title)}}</view>
 					</view>

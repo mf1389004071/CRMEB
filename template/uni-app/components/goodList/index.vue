@@ -16,10 +16,10 @@
 					<view class='underline'>
 						<view class='text'>
 							<view class='line1'>{{item.store_name}}</view>
-							<view class='money font-color'>{{$t(`￥`)}}<text class='num'>{{item.price}}</text></view>
+							<view class='money font-color'><text class='num'>{{ $money(item.price) }}</text></view>
 							<view class='vip-money acea-row row-middle'
 								v-if="item.is_vip && item.vip_price && item.vip_price > 0">
-								{{$t(`￥`)}}{{item.vip_price || 0}}
+								{{ $money(item.vip_price || 0) }}
 								<image src='../../static/images/vip.png'></image><text class='num'>
 								{{$t(`已售`)}}{{item.sales}}{{$t(item.unit_name)}}</text>
 							</view>

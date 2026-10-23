@@ -38,7 +38,7 @@
 								<view class="progress">
 									<view class='presell_price'>
 										<text class="presell_text">{{$t(`预售价`)}}</text>
-										<text class="price">{{$t(`￥`)}} <text>{{ item.price }}</text></text>
+										<text class="price"> <text>{{ $money(item.price) }}</text></text>
 									</view>
 									<text class="iconfont icon-yushouanniu"></text>
 									<view v-if="active != 1" class='order_btn'>

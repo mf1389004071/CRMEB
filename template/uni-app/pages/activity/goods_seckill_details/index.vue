@@ -71,8 +71,8 @@
           <view class="bg-color">
             <view class="nav acea-row row-between-wrapper">
               <view class="money">
-                {{ $t(`￥`) }}
-                <text class="num">{{ storeInfo.price || "" }}</text>
+                
+                <text class="num">{{ $money(storeInfo.price || "") }}</text>
                 <text
                   v-if="
                     attribute.productAttr.length &&
@@ -83,7 +83,7 @@
                   >{{ $t(`起`) }}</text
                 >
                 <text class="y-money"
-                  >{{ $t(`￥`) }}{{ storeInfo.product_price || "" }}</text
+                  >{{ $money(storeInfo.product_price || "") }}</text
                 >
               </view>
               <view class="acea-row row-middle">

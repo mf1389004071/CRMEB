@@ -17,7 +17,7 @@
 					<view class="moneyCon acea-row row-center-wrapper">
 						<view class='money acea-row row-column row-center-wrapper'
 							:class='item.is_use >= item.receive_limit && coupon.count?"moneyGray":""'>
-							<view>{{$t(`￥`)}}<text class='num'>{{item.coupon_price}}</text></view>
+							<view><text class='num'>{{ $money(item.coupon_price) }}</text></view>
 							<view class="pic-num" v-if="item.use_min_price > 0">
 								{{$t(`满`)}}{{item.use_min_price}}{{$t(`元可用`)}}</view>
 							<view class="pic-num" v-else>{{$t(`无门槛券`)}}</view>

@@ -39,3 +39,8 @@ docker run -d --name cjx-php --add-host=host.docker.internal:host-gateway -p 808
 bash tests/vn/run.sh tests/vn/cod_order_test.php
 ```
 新增词条或配置后需清缓存：`rm -rf crmeb/runtime/cache`。词条维护：编辑 `lang_codes.tsv` 后运行 `python scripts/vn_lang_codes_to_sql.py` 生成 `900_lang_codes.sql`。
+
+## 前端金额展示约定（M6-4）
+- 页面一律使用 `$money(本位币金额)` 或 `<BaseMoney :money="本位币金额">`，**不得手写 ￥/千分位**；
+- 已用脚本把模板内 “`$t(\`￥\`)` + 金额” / “￥{{金额}}” 模式批量替换为 `$money(...)`；
+- 仍保留的少量纯符号位置（后台改价弹窗的单位标签、充值/线下收款页等已被越南模式关闭的页面）不影响主流程。

@@ -5,7 +5,7 @@
 				<view class="picTxt acea-row row-between-wrapper">
 					<view class="text">
 						<view class="name">{{ $t(`订单信息`) }}</view>
-						<view><text class="mr-40">{{ $t(`消费订单`) }}：{{ orderData.order_count || 0 }} 单 </text>{{ $t(`总消费`) }}：{{ $t(`￥`) }}{{ orderData.sum_price || 0 }}</view>
+						<view><text class="mr-40">{{ $t(`消费订单`) }}：{{ orderData.order_count || 0 }} 单 </text>{{ $t(`总消费`) }}：{{ $money(orderData.sum_price || 0) }}</view>
 					</view>
 					<view class="pictrue">
 						<image src="../static/orderTime.png"></image>
@@ -89,8 +89,8 @@
 								<text class="name line2">{{ items.productInfo.store_name }}</text>
 								<view class="money">
 									<template v-if="item.gift_uid !== uid">
-										<view v-if="items.productInfo.attrInfo">{{ $t(`￥`) }}{{ items.productInfo.attrInfo.price }}</view>
-										<view v-else>{{ $t(`￥`) }}{{ items.productInfo.price }}</view>
+										<view v-if="items.productInfo.attrInfo">{{ $money(items.productInfo.attrInfo.price) }}</view>
+										<view v-else>{{ $money(items.productInfo.price) }}</view>
 									</template>
 									<view>x{{ items.cart_num }}</view>
 									<view v-if="items.refund_num && item._status._type != -2 && item.gift_uid !== uid" class="return">{{ items.refund_num }}{{ $t(`件退款中`) }}</view>
@@ -99,7 +99,7 @@
 						</view>
 						<view class="totalPrice" v-show="item.gift_uid !== uid">
 							{{ $t(`共`) }}{{ item.total_num || 0 }}{{ $t(`件商品，总金额`) }}
-							<text class="money">{{ $t(`￥`) }}{{ item.pay_price }}</text>
+							<text class="money">{{ $money(item.pay_price) }}</text>
 						</view>
 					</view>
 					<view class="bottom acea-row row-right row-middle">

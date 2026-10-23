@@ -133,7 +133,7 @@
 						</view> -->
 						<!-- <view class="content_bottom">
 							<view></view>
-							<view>{{ $t('共') }} {{ item.total_num }} {{ $t('件商品') }}，{{ $t('订单实付') }}：<span class="money">￥{{ item.pay_price }}</span></view>
+							<view>{{ $t('共') }} {{ item.total_num }} {{ $t('件商品') }}，{{ $t('订单实付') }}：<span class="money">{{ $money(item.pay_price) }}</span></view>
 						</view> -->
 					</view>
 					<emptyPage v-if="!orderlist.length && !loading" :title="$t('暂无数据～')" src="/statics/images/noOrder.gif"></emptyPage>

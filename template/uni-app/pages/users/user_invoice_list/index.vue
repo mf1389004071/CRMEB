@@ -16,8 +16,8 @@
 						<view>{{ $t(`申请时间`) }} {{ item.add_time }}</view>
 					</view>
 					<view class="money">
-						{{ $t(`￥`) }}
-						<text class="num">{{ item.order.pay_price }}</text>
+						
+						<text class="num">{{ $money(item.order.pay_price) }}</text>
 					</view>
 				</view>
 				<view class="item-ft acea-row row-between-wrapper">

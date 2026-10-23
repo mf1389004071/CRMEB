@@ -714,6 +714,12 @@ SELECT v.tid, v.code, v.remarks, v.explain_, v.is_admin FROM (
   SELECT @t_vi AS tid, 'vn_7f4e906d34' AS code, '[待审]当前语言不可用' AS remarks, 'Ngôn ngữ hiện tại không khả dụng' AS explain_, 1 AS is_admin, '当前语言不可用' AS zh_
   UNION ALL
   SELECT @t_en AS tid, 'vn_7f4e906d34' AS code, '当前语言不可用' AS remarks, 'Current language is not available' AS explain_, 1 AS is_admin, '当前语言不可用' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '展示币种' AS code, '展示币种' AS remarks, '展示币种' AS explain_, 0 AS is_admin, '展示币种' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '展示币种' AS code, '[待审]展示币种' AS remarks, 'Đơn vị tiền tệ hiển thị' AS explain_, 0 AS is_admin, '展示币种' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '展示币种' AS code, '展示币种' AS remarks, 'Display currency' AS explain_, 0 AS is_admin, '展示币种' AS zh_
 ) v
 WHERE v.tid IS NOT NULL AND NOT EXISTS (SELECT 1 FROM eb_lang_code e WHERE e.type_id = v.tid AND e.code = v.code) AND NOT EXISTS (SELECT 1 FROM eb_lang_code z WHERE z.type_id = @t_zh AND z.remarks = v.zh_ AND z.code <> v.code);
 

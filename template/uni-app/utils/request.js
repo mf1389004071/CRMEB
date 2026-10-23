@@ -47,6 +47,13 @@ function baseRequest(url, method, data, {
 		if (uni.getStorageSync('locale')) {
 			header['Cb-lang'] = normalizeLang(uni.getStorageSync('locale'))
 		}
+		// VN: 展示币种头（订单币种快照用）；用户显式选择过才带
+		const dispCur = uni.getStorageSync('display_currency');
+		if (dispCur) {
+			header['Cb-currency'] = dispCur;
+		} else {
+			delete header['Cb-currency'];
+		}
 		// VN: 配送区域头（区域价）；未选择则不带
 		const regionId = getRegionId();
 		if (regionId) {

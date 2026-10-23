@@ -40,8 +40,7 @@
 					{{ $t(`代付金额`) }}
 				</view>
 				<view class="order-num">
-					<text class="icon">{{ $t(`￥`) }}</text>
-					{{ resData.pay_price || 0 }}
+					<text>{{ $money(resData.pay_price || 0) }}</text>
 				</view>
 			</view>
 			<!-- #ifdef APP-PLUS -->

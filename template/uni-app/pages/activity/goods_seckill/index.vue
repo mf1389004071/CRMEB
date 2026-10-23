@@ -36,9 +36,9 @@
 						<view class="text acea-row row-column-around">
 							<view class="name line2">{{ item.title }}</view>
 							<view class="money font-color">
-								{{ $t(`￥`) }}
-								<text class="num font-color">{{ item.price }}</text>
-								<text class="y_money">{{ $t(`￥`) }}{{ item.product_price }}</text>
+								
+								<text class="num font-color">{{ $money(item.price) }}</text>
+								<text class="y_money">{{ $money(item.product_price) }}</text>
 							</view>
 							<view class="limit">
 								{{ $t(`限量`) }}

@@ -13,8 +13,8 @@
 				<view class="moneyCon acea-row row-center-wrapper">
 					<view class="money" :class="item.is_use >= item.receive_limit ? 'moneyGray' : ''">
 						<view>
-							{{ $t(`￥`) }}
-							<text class="num">{{ item.coupon_price }}</text>
+							
+							<text class="num">{{ $money(item.coupon_price) }}</text>
 						</view>
 						<view class="pic-num" v-if="item.use_min_price > 0">
 							{{ $t(`满`) }} {{ item.use_min_price }}

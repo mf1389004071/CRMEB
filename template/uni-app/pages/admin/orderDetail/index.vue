@@ -142,14 +142,12 @@
             </view>
             <view class="money">
               <view class="x-money"
-                >￥{{
-                  item.productInfo.attrInfo
+                >{{ $money(item.productInfo.attrInfo
                     ? item.productInfo.attrInfo.price
-                    : item.productInfo.price
-                }}</view
+                    : item.productInfo.price) }}</view
               >
               <view class="num">x {{ item.cart_num }}</view>
-              <!-- <view class="y-money">￥{{ item.productInfo.ot_price }}</view> -->
+              <!-- <view class="y-money">{{ $money(item.productInfo.ot_price) }}</view> -->
             </view>
           </navigator>
         </view>
@@ -201,7 +199,7 @@
             </view>
           </view>
           <view class="money">
-            <!-- <view class="x-money">￥{{ item.productInfo.attrInfo?item.productInfo.attrInfo.price:item.productInfo.price }}</view> -->
+            <!-- <view class="x-money">{{ $money(item.productInfo.attrInfo?item.productInfo.attrInfo.price:item.productInfo.price) }}</view> -->
             <BaseMoney
               :money="
                 item.productInfo.attrInfo
@@ -439,15 +437,13 @@
         <view class="item acea-row row-between">
           <view>{{$t('商品总价')}}</view>
           <view class="conter" v-if="statusType == -3">
-            ￥{{ orderInfo.total_price }}</view
+            {{ $money(orderInfo.total_price) }}</view
           >
           <view class="conter" v-else>
-            ￥{{
-              (
+            {{ $money((
                 parseFloat(orderInfo.total_price) +
                 parseFloat(orderInfo.vip_true_price)
-              ).toFixed(2)
-            }}</view
+              ).toFixed(2)) }}</view
           >
         </view>
         <view
@@ -455,7 +451,7 @@
           v-if="orderInfo.pay_postage > 0"
         >
           <view>{{$t('配送运费')}}</view>
-          <view class="conter">￥{{ orderInfo.pay_postage }}</view>
+          <view class="conter">{{ $money(orderInfo.pay_postage) }}</view>
         </view>
         <view
           v-if="orderInfo.vip_true_price > 0"
@@ -463,12 +459,12 @@
         >
           <view>{{$t('会员商品优惠')}}</view>
           <view class="conter"
-            >-￥{{ parseFloat(orderInfo.vip_true_price).toFixed(2) }}</view
+            >-{{ $money(parseFloat(orderInfo.vip_true_price).toFixed(2)) }}</view
           >
         </view>
         <view class="item acea-row row-between" v-if="orderInfo.coupon_id">
           <view>{{$t('优惠券抵扣')}}</view>
-          <view class="conter">-￥{{ orderInfo.coupon_price }}</view>
+          <view class="conter">-{{ $money(orderInfo.coupon_price) }}</view>
         </view>
         <view
           class="item acea-row row-between"
@@ -476,13 +472,13 @@
         >
           <view>{{$t('积分抵扣')}}</view>
           <view class="conter"
-            >-￥{{ parseFloat(orderInfo.deduction_price).toFixed(2) }}</view
+            >-{{ $money(parseFloat(orderInfo.deduction_price).toFixed(2)) }}</view
           >
         </view>
         <view class="item acea-row row-between" v-if="orderInfo.yue_price > 0">
           <view>{{$t('余额抵扣')}}</view>
           <view class="conter"
-            >-￥{{ parseFloat(orderInfo.yue_price).toFixed(2) }}</view
+            >-{{ $money(parseFloat(orderInfo.yue_price).toFixed(2)) }}</view
           >
         </view>
         <!-- 采购优惠 channel_price -->
@@ -501,7 +497,7 @@
         >
           <view>{{ item.title }}</view>
           <view class="conter"
-            >-￥{{ parseFloat(item.promotions_price).toFixed(2) }}</view
+            >-{{ $money(parseFloat(item.promotions_price).toFixed(2)) }}</view
           >
         </view>
         <view class="actualPay acea-row row-right">

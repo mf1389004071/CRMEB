@@ -7,7 +7,7 @@
 		</view>
 		<view class='total' v-else-if="is_behalf"><text>
 				{{$t(`代付金额`)}}：
-				<text class="pay-price">￥{{pay_price || 0}}</text>
+				<text class="pay-price">{{ $money(pay_price || 0) }}</text>
 			</text>
 		</view>
 		<view class='total' v-else-if="!split && !is_behalf">{{$t(`共`)}}{{totalNmu}}{{$t(`件商品`)}}</view>
@@ -41,7 +41,7 @@
 						</view>
 						<view class='money font-color pic' v-if="item.productInfo.attrInfo">
 							<text v-show="is_gift != 2" :class="{gray:!item.is_valid}">
-								{{$t(`￥`)}}{{item.productInfo.attrInfo.price}}
+								{{ $money(item.productInfo.attrInfo.price) }}
 							</text>
 							<view class="refund" v-if="item.refund_num && statusType !=-2">{{item.refund_num}}{{$t(`件退款中`)}}
 							</view>
@@ -49,7 +49,7 @@
 							<text class="valid" v-if="!item.productInfo.store_mention && shipping_type === 1">{{$t(`不支持自提`)}}</text>
 						</view>
 						<view class='money font-color pic' v-else>
-							<text :class="{gray:!item.is_valid}">{{$t(`￥`)}}{{item.productInfo.price}}</text>
+							<text :class="{gray:!item.is_valid}">{{ $money(item.productInfo.price) }}</text>
 							<text class="valid" v-if="!item.is_valid && shipping_type === 0">{{$t(`仅支持到店`)}}</text>
 							<text class="valid" v-if="!item.productInfo.store_mention && shipping_type === 1">{{$t(`仅支持配送`)}}</text>
 						</view>

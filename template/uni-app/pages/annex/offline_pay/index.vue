@@ -8,7 +8,7 @@
 						{{ $t(`￥`) }}
 						<input v-model.number="money" class="input" name="money" type="digit" @input="inputChange" placeholder="0.00" />
 					</view>
-					<view v-if="payPrice && show" class="discount">{{ $t(`会员优惠价`) }}：{{ $t(`￥`) }}{{ payPrice || 0 }}</view>
+					<view v-if="payPrice && show" class="discount">{{ $t(`会员优惠价`) }}：{{ $money(payPrice || 0) }}</view>
 				</view>
 			</view>
 			<view class="radio-section">
@@ -18,7 +18,7 @@
 						<text class="iconfont icon-yue"></text>
 						<view class="name">
 							<text>{{ $t(`余额支付`) }}</text>
-							<text class="money">{{ $t(`可用余额`) }}:{{ $t(`￥`) }}{{ now_money || 0 }}</text>
+							<text class="money">{{ $t(`可用余额`) }}:{{ $money(now_money || 0) }}</text>
 						</view>
 						<radio value="yue" :checked="payType === 'yue'" />
 					</label>

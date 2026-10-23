@@ -3,14 +3,15 @@
 		:style="{color:color, fontFamily: SemiBold ? 'SemiBold' : 'Regular'}"
 		class="base-money">
 		<text v-show="preFix" class="preFix" :style="{'font-size': preFixSize + 'rpx','color':textColor}">{{preFix}}</text>
-		<text v-if="symbol" class="symbol" :style="{'font-size': symbolSize +'rpx'}">￥</text><text class="integer"
-			:style="{'font-size': integerSize +'rpx'}">{{ integer }}</text>
-		<text v-if="digits && ((isCoupon && decimal != '00') || !isCoupon)" class="decimal"
-			:style="{'font-size': decimalSize +'rpx'}">.{{ decimal }}</text>
+		<text v-if="symbol" class="symbol" :style="{'font-size': symbolSize +'rpx'}">{{ parts.symbol }}</text><text class="integer"
+			:style="{'font-size': integerSize +'rpx'}">{{ parts.integer }}</text>
+		<text v-if="digits && parts.decimal !== '' && ((isCoupon && !/^0+$/.test(parts.decimal)) || !isCoupon)" class="decimal"
+			:style="{'font-size': decimalSize +'rpx'}">{{ parts.decSep }}{{ parts.decimal }}</text>
 	</view>
 </template>
 
 <script>
+	import { moneyParts } from '@/utils/money.js';
 	export default {
 		name: 'BaseMoney',
 		props: {
@@ -78,26 +79,12 @@
 				default: false
 			}
 		},
-		data() {
-			return {
-				integer: 0,
-				decimal: 0
-			};
-		},
-		watch: {
-			money: {
-				handler(newValue, oldValue) {
-					let value = Number(newValue).toFixed(this.digits);
-					value = value.split('.');
-					this.integer = value[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-					if (value[1]) {
-						this.decimal = value[1];
-					}
-				},
-				immediate: true
+		// VN: 金额一律按本位币传入，由 utils/money.js 统一做币种换算/千分位/符号（不再手写 ￥ 与千分位）
+		computed: {
+			parts() {
+				return moneyParts(this.money);
 			}
-		},
-		computed:{}
+		}
 	}
 </script>
 

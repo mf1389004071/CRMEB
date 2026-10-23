@@ -104,6 +104,16 @@
 							</picker>
 						</view>
 					</view>
+					<!-- VN: 展示币种（价格/订单一律本位币，仅展示层换算） -->
+					<view class="item acea-row row-between-wrapper" v-if="vnMode && currencyOptions.length > 1">
+						<view>{{$t(`展示币种`)}}</view>
+						<view class="uni-list-cell-db">
+							<picker @change="onCurrencyChange" range-key="label" :value="currencyIndex" :range="currencyOptions">
+								<view class="uni-input input">{{currencyOptions[currencyIndex] ? currencyOptions[currencyIndex].label : ''}}<text
+										class="iconfont icon-xiangyou"></text></view>
+							</picker>
+						</view>
+					</view>
 					<view class="item acea-row row-between-wrapper">
 						<view>{{$t(`地址管理`)}}</view>
 						<navigator url="/pages/users/user_address_list/index" hover-class="none" class="input">
@@ -180,7 +190,8 @@
 	// #endif
 	import Cache from '@/utils/cache';
 	import { normalizeLang } from '@/utils/lang.js';
-	import { setUserLocale } from '@/api/vn.js';
+	import { setUserLocale, setUserCurrency } from '@/api/vn.js';
+	import { currencyList, getCurrencyState, setDisplayCurrency } from '@/utils/money.js';
 	import colors from '@/mixins/color.js';
 	import appUpdate from "@/components/update/app-update.vue";
 	export default {
@@ -211,7 +222,20 @@
 				mp_is_new: this.$Cache.get('MP_VERSION_ISNEW') || false
 			};
 		},
-		computed: mapGetters(['isLogin']),
+		computed: {
+			...mapGetters(['isLogin']),
+			// VN: 展示币种候选
+			currencyOptions() {
+				return currencyList().map((c) => ({
+					code: c.code,
+					label: c.code + ' ' + c.symbol
+				}));
+			},
+			currencyIndex() {
+				const i = this.currencyOptions.findIndex((o) => o.code === getCurrencyState().display);
+				return i > -1 ? i : 0;
+			}
+		},
 		watch: {
 			isLogin: {
 				handler: function(newV, oldV) {
@@ -282,6 +306,13 @@
 						this.setIndex = i
 					}
 				})
+			},
+			// VN: 切换展示币种 -> 本地 + 服务端
+			onCurrencyChange(e) {
+				const opt = this.currencyOptions[Number(e.detail.value)];
+				if (!opt) return;
+				setDisplayCurrency(opt.code);
+				setUserCurrency(opt.code).catch(() => {});
 			},
 			bindPickerChange(e, item) {
 				this.setIndex = e.detail.value

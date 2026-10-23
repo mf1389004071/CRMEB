@@ -12,8 +12,7 @@
 			<view class="bottom acea-row row-between-wrapper">
 				<view class="sales acea-row row-middle">
 					<view class="money font-color">
-						<text>{{ $t(`￥`) }}</text>
-						{{ item.price }}
+						<text>{{ $money(item.price) }}</text>
 					</view>
 					<view>{{ $t(`已售`) }}{{ item.sales }}</view>
 				</view>

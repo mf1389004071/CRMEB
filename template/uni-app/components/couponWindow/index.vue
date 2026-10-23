@@ -4,7 +4,7 @@
 			<image class="co-bag" :src="imgHost + '/statics/images/co-bag.png'" mode=""></image>
 			<view class='couponWinList'>
 				<view class='item acea-row row-between-wrapper' v-for="(item,index) in couponList" :key="index">
-					<view class='money font-color'>{{$t(`￥`)}}<text class='num'>{{item.coupon_price}}</text></view>
+					<view class='money font-color'><text class='num'>{{ $money(item.coupon_price) }}</text></view>
 					<view class='text'>
 						<view class='name'>{{$t(`购物满`)}}{{item.use_min_price}}{{$t(`减`)}}{{item.coupon_price}}</view>
 						<view v-if="item.coupon_time">{{$t(`领取后`)}}{{item.coupon_time}}{{$t(`天内可用`)}}</view>

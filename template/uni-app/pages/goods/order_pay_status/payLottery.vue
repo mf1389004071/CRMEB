@@ -8,7 +8,7 @@
 						{{$t(`支付成功`)}}
 					</text>
 					<text>
-						{{$t(`支付金额`)}}：{{$t(`￥`)}}{{totalPrice}}
+						{{$t(`支付金额`)}}：{{ $money(totalPrice) }}
 					</text>
 				</view>
 			</view>

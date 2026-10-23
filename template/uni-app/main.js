@@ -21,6 +21,9 @@ import navigationBarI18n from '@/mixins/navigationBarI18n.js';
 Vue.mixin(navigationBarI18n);
 import { vnMixin } from '@/utils/vn.js';
 Vue.mixin(vnMixin);
+// VN: 全局金额格式化（本位币传入，展示层换算币种/千分位/符号）
+import { formatMoney } from '@/utils/money.js';
+Vue.prototype.$money = formatMoney;
 
 Vue.prototype.$util = util;
 Vue.prototype.$config = configs;

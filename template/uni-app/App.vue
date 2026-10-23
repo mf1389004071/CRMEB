@@ -18,7 +18,8 @@ import Cache from "@/utils/cache";
 import { normalizeLang } from "@/utils/lang.js";
 import { setVnConfig } from "@/utils/vn.js";
 import { getRegionId, setRegion, clearRegion, buildRegion } from "@/utils/region.js";
-import { regionInfo } from "@/api/vn.js";
+import { regionInfo, getCurrencyConfig } from "@/api/vn.js";
+import { setCurrencyConfig } from "@/utils/money.js";
 import { applyTheme } from "@/utils/theme.js";
 
 export default {
@@ -135,6 +136,10 @@ export default {
     basicConfig().then((res) => {
       uni.setStorageSync("BASIC_CONFIG", res.data);
       setVnConfig(res.data); // VN: 越南站点开关
+      // VN: 币种与汇率（展示层换算）
+      if (res.data && res.data.vn_mode_enable) {
+        getCurrencyConfig().then((c) => setCurrencyConfig(c.data)).catch(() => {});
+      }
       // VN: 校验本地缓存的配送区域是否仍然有效（被后台关闭则清除，重新选择）
       if (res.data && res.data.region_pricing_enable && getRegionId()) {
         regionInfo({ city_id: getRegionId() }).then((r) => {

@@ -11,7 +11,7 @@
 						<view class='name line2'>{{item.productInfo.store_name}}</view>
 						<view class='money'>
 							<view>
-								{{$t(`￥`)}}{{(parseFloat(item.truePrice)+parseFloat(item.postage_price/item.cart_num)).toFixed(2)}}
+								{{ $money((parseFloat(item.truePrice)+parseFloat(item.postage_price/item.cart_num)).toFixed(2)) }}
 							</view>
 							<view class='num'>x{{item.cart_num}}</view>
 						</view>

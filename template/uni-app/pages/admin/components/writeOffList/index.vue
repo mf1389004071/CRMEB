@@ -26,7 +26,7 @@
 										<view class='infor line1'>
 											{{$t('属性')}}：{{ item.cart_info.productInfo.attrInfo.suk }}</view>
 										<view class='money he row-middle'>
-											<view>￥{{ item.cart_info.productInfo.attrInfo?item.cart_info.productInfo.attrInfo.price:item.cart_info.productInfo.price }}</view>
+											<view>{{ $money(item.cart_info.productInfo.attrInfo?item.cart_info.productInfo.attrInfo.price:item.cart_info.productInfo.price) }}</view>
 											<view v-if="item.is_writeoff == 1" class="txt">
 												<view class='carnum acea-row row-center-wrapper'>
 													<view class="reduce">

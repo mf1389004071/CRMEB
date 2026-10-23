@@ -30,11 +30,11 @@
 						</view>
 						<view class='attr line1' v-else>{{items.productInfo.store_name}}</view>
 						<view class='money'>
-							{{$t(`￥`)}}{{items.productInfo.attrInfo?items.productInfo.attrInfo.price:items.productInfo.price}}</view>
+							{{ $money(items.productInfo.attrInfo?items.productInfo.attrInfo.price:items.productInfo.price) }}</view>
 					</view>
 				</view>
 				<view class='totalSum'>{{$t(`共`)}} {{item.refund_num || 0}} {{$t(`件商品，总金额`)}} <text
-						class='font-color price'>{{$t(`￥`)}}{{item.refund_price}}</text></view>
+						class='font-color price'>{{ $money(item.refund_price) }}</text></view>
 			</view>
 		</view>
 		<view class='loadingicon acea-row row-center-wrapper' v-if="orderList.length > 0">

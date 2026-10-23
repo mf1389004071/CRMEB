@@ -18,8 +18,8 @@
 			</view>
 			<view class="acea-row row-between-wrapper info">
 				<view v-if="userInfo.is_money_level">
-					{{ $t(`已累积为您节省`) }} {{ $t(`￥`) }}
-					<text class="num">{{ userInfo.economize_money || '' }}</text>
+					{{ $t(`已累积为您节省`) }} 
+					<text class="num">{{ $money(userInfo.economize_money || '') }}</text>
 				</view>
 				<view v-else>{{ $t(`开通即享会员权益`) }}</view>
 				<view class="btn" @click="scrollToCard" v-if="!userInfo.is_ever_level">
@@ -56,11 +56,11 @@
 				<view v-for="item in memberType" :key="item.type" class="item" :class="{ on: item.mc_id === mc_id }" @click="checkType(item)">
 					<view>{{ item.title }}</view>
 					<view class="new">
-						{{ $t(`￥`) }}
-						<text class="num">{{ item.pre_price | moneyFormat }}</text>
+						
+						<text class="num">{{ $money(item.pre_price | moneyFormat) }}</text>
 					</view>
 					<view v-if="item.type === 'free'" class="info">{{ $t(`试用`) }}{{ item.vip_day }}{{ $t(`天`) }}</view>
-					<view v-else class="old">{{ $t(`￥`) }}{{ item.price | moneyFormat }}</view>
+					<view v-else class="old">{{ $money(item.price | moneyFormat) }}</view>
 				</view>
 			</scroll-view>
 			<view v-if="memberExplain" class="agree">
@@ -86,8 +86,8 @@
 			<scroll-view class="section-bd" scroll-x="true">
 				<view v-for="item in memberCoupons" :key="item.id" class="item acea-row row-center-wrapper" :class="{ gray: item.is_fail || item.status === $t(`已使用`) }">
 					<view class="money">
-						{{ $t(`￥`) }}
-						<text class="num">{{ item.coupon_price | moneyFormat }}</text>
+						
+						<text class="num">{{ $money(item.coupon_price | moneyFormat) }}</text>
 					</view>
 					<view class="text">
 						<view class="name">{{ item.coupon_title }}</view>
@@ -105,10 +105,10 @@
 					<image class="image" :src="item.image"></image>
 					<view class="name">{{ item.store_name }}</view>
 					<view class="svip-price">
-						{{ $t(`￥`) }}{{ item.vip_price }}
+						{{ $money(item.vip_price) }}
 						<image src="../../../static/images/vip.png"></image>
 					</view>
-					<view class="shop-price">{{ $t(`商城价`) }}：{{ $t(`￥`) }}{{ item.price }}</view>
+					<view class="shop-price">{{ $t(`商城价`) }}：{{ $money(item.price) }}</view>
 				</view>
 			</view>
 		</view>

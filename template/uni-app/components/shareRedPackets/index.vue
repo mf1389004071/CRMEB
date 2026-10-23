@@ -4,7 +4,7 @@
 			<image :src="imgHost + '/statics/images/red-packets.png'" />
 			<view class='text font-color'>
 				<view>{{$t(`最高返佣`)}}</view>
-				<view class='money'><text class='label'>{{$t(`￥`)}}</text>{{sharePacket.priceName}}</view>
+				<view class='money'><text>{{ $money(sharePacket.priceName) }}</text></view>
 				<view class='tip'>{{$t(`推广享佣金`)}}</view>
 				<view class='shareBut'>{{$t(`立即分享`)}}</view>
 			</view>
