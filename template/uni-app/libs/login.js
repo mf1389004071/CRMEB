@@ -72,7 +72,12 @@ function _toLogin(push, pathLogin) {
 		Cache.set('login_back_url', path);
 	}
 	// #ifdef H5
-	if (!isVnMode() && isWeixin() && BASIC_CONFIG.wechat_status) { // VN: 越南模式只用账号密码登录
+	if (isVnMode()) {
+		// VN: 区号+手机号+密码登录/注册（无验证码、无微信登录）
+		uni.navigateTo({
+			url: '/pages/users/vn_login/index'
+		});
+	} else if (isWeixin() && BASIC_CONFIG.wechat_status) { // VN: 越南模式只用账号密码登录
 		uni.navigateTo({
 			url: '/pages/users/wechat_login/index',
 		});

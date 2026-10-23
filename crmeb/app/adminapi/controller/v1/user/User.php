@@ -486,6 +486,28 @@ class User extends AuthController
     }
 
     /**
+     * VN: 重置用户密码（无短信找回时由客服在后台重置）：生成 8 位随机初始密码，仅本次响应返回一次
+     * @param $uid
+     * @return \think\Response
+     */
+    public function reset_password($uid)
+    {
+        $uid = (int)$uid;
+        if (!$uid || !$this->services->get($uid)) {
+            return app('json')->fail('用户不存在');
+        }
+        $chars = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        $pwd = '';
+        for ($i = 0; $i < 8; $i++) {
+            $pwd .= $chars[random_int(0, strlen($chars) - 1)];
+        }
+        $this->services->update($uid, ['pwd' => md5($pwd)], 'uid');
+        // 操作日志：后台中间件已记录请求；此处补充明确的重置事件（不记录明文密码）
+        \think\facade\Log::info('admin reset user password uid=' . $uid . ' admin=' . $this->adminId);
+        return app('json')->success('重置成功', ['password' => $pwd]);
+    }
+
+    /**
      * 保存新人礼
      * @return \think\Response
      * @author wuhaotian

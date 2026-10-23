@@ -48,11 +48,15 @@ class LoginController
      */
     public function login(Request $request)
     {
-        [$account, $password, $spread, $agent_id] = $request->postMore([
-            'account', 'password', 'spread', ['agent_id', 0]
+        [$account, $password, $spread, $agent_id, $phoneCountryCode] = $request->postMore([
+            'account', 'password', 'spread', ['agent_id', 0], ['phone_country_code', '']
         ], true);
         if (!$account || !$password) {
             return app('json')->fail('请输入账号和密码');
+        }
+        // VN: 账号 = 区号 + 去前导0的本地号（如 84912345678），兼容历史未带区号账号
+        if (vn_mode_enabled()) {
+            $account = $this->resolveVnAccount((string)$phoneCountryCode, (string)$account);
         }
         if (strlen(trim($password)) < 6 || strlen(trim($password)) > 32) {
             return app('json')->fail('账号密码必须是在6到32位之间');
@@ -209,6 +213,10 @@ class LoginController
      */
     public function register(Request $request)
     {
+        // VN: 越南模式注册——无短信验证码，区号+手机号+密码+昵称(可选)；以下为原逻辑，关闭 vn_mode_enable 恢复
+        if (vn_mode_enabled()) {
+            return $this->registerVn($request);
+        }
         [$account, $captcha, $password, $spread] = $request->postMore([['account', ''], ['captcha', ''], ['password', ''], ['spread', 0]], true);
         try {
             validate(RegisterValidates::class)->scene('register')->check(['account' => $account, 'captcha' => $captcha, 'password' => $password]);
@@ -231,6 +239,52 @@ class LoginController
             return app('json')->success('注册成功');
         }
         return app('json')->fail('注册失败');
+    }
+
+    /**
+     * VN: 规范化账号；已存在规范账号用规范账号，否则回落原始输入（历史用户）
+     * @param string $countryCode
+     * @param string $account
+     * @return string
+     */
+    protected function resolveVnAccount(string $countryCode, string $account): string
+    {
+        $norm = app()->make(\app\services\vn\VnSiteServices::class)->accountOf($countryCode, $account);
+        if ($norm !== '' && \app\model\user\User::where(['account' => $norm, 'is_del' => 0])->count()) {
+            return $norm;
+        }
+        return $account;
+    }
+
+    /**
+     * VN: 注册（区号+手机号+密码+昵称可选，无验证码）
+     * @param Request $request
+     * @return mixed
+     */
+    protected function registerVn(Request $request)
+    {
+        [$account, $password, $spread, $phoneCountryCode, $nickname] = $request->postMore([
+            ['account', ''], ['password', ''], ['spread', 0], ['phone_country_code', ''], ['nickname', ''],
+        ], true);
+        $password = (string)$password;
+        if (strlen(trim($password)) < 6 || strlen(trim($password)) > 32) {
+            return app('json')->fail('账号密码必须是在6到32位之间');
+        }
+        if (md5($password) == md5('123456')) return app('json')->fail('密码太过简单，请输入较为复杂的密码');
+        $norm = app()->make(\app\services\vn\VnSiteServices::class)->accountOf((string)$phoneCountryCode, (string)$account);
+        if (!preg_match('/^[0-9]{8,15}$/', $norm)) {
+            return app('json')->fail('手机号格式不正确');
+        }
+        if (!$this->services->register($norm, $password, $spread, 'h5')) {
+            return app('json')->fail('注册失败');
+        }
+        $update = ['phone_country_code' => '+' . ltrim((string)($phoneCountryCode !== '' ? $phoneCountryCode : sys_config('default_phone_country', '+84')), '+')];
+        $nickname = trim((string)$nickname);
+        if ($nickname !== '') {
+            $update['nickname'] = mb_substr($nickname, 0, 50);
+        }
+        \app\model\user\User::where('account', $norm)->update($update);
+        return app('json')->success('注册成功');
     }
 
     /**

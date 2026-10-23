@@ -624,6 +624,17 @@ export function setUser(data) {
 }
 
 /**
+ * @description VN: 重置用户密码（返回一次性初始密码）
+ * @param {Number} uid 用户ID
+ */
+export function resetUserPassword(uid) {
+  return request({
+    url: `user/user/reset_password/${uid}`,
+    method: 'post',
+  });
+}
+
+/**
  * @description 编辑用户
  * @param {Object} param data {Object} 传值参数
  */

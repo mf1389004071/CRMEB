@@ -406,6 +406,7 @@
                   <el-dropdown-item command="6">设置标签</el-dropdown-item>
                   <el-dropdown-item command="7">修改上级推广人</el-dropdown-item>
                   <el-dropdown-item command="99" v-if="scope.row.spread_uid">清除上级推广人</el-dropdown-item>
+                  <el-dropdown-item command="100">重置密码</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </template>
@@ -526,6 +527,7 @@ import {
   editOtherApi,
   giveLevelApi,
   userSetGroup,
+  resetUserPassword,
   userGroupApi,
   levelListApi,
   userSetLabelApi,
@@ -954,9 +956,26 @@ export default {
         case '8':
           this.getOtherFrom(row.uid, 'point');
           break;
+        case '100':
+          this.resetPwd(row);
+          break;
         default:
           this.del(row, '解除【 ' + this.tenText(row.nickname) + ' 】的上级推广人', index, 'tuiguang');
       }
+    },
+    // VN: 重置密码——生成 8 位随机初始密码，仅此一次展示给管理员
+    resetPwd(row) {
+      this.$confirm(`确认重置【${this.tenText(row.nickname || String(row.uid))}】的登录密码？`, '提示', { type: 'warning' })
+        .then(() => resetUserPassword(row.uid))
+        .then((res) => {
+          this.$alert(`新的初始密码：<b style="font-size:20px;letter-spacing:2px">${res.data.password}</b><br/>仅显示一次，请告知用户并建议其登录后尽快修改。`, '重置成功', {
+            dangerouslyUseHTMLString: true,
+            confirmButtonText: '我已记录',
+          });
+        })
+        .catch((err) => {
+          if (err && err.msg) this.$message.error(err.msg);
+        });
     },
     tenText(str) {
       if (str.length > 10) {

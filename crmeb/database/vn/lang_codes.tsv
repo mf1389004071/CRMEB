@@ -51,3 +51,17 @@ front	未收款	Chưa thu tiền	Not collected
 front	核销成功	Xác nhận thành công	Verified successfully
 front	请向客户收取货款，并在后台确认收款	Vui lòng thu tiền hàng từ khách và xác nhận thu tiền trên hệ thống	Please collect payment from the customer and confirm it in the backend
 front	请输入客户出示的6位核销码	Vui lòng nhập mã 6 số khách hàng cung cấp	Please enter the 6-digit code shown by the customer
+front	注册	Đăng ký	Register
+front	昵称(选填)	Biệt danh (không bắt buộc)	Nickname (optional)
+front	密码至少6位	Mật khẩu tối thiểu 6 ký tự	Password must be at least 6 characters
+front	注册成功	Đăng ký thành công	Registered successfully
+front	请输入手机号码	Vui lòng nhập số điện thoại	Please enter your phone number
+front	请联系客服重置密码	Vui lòng liên hệ CSKH để đặt lại mật khẩu	Please contact customer service to reset your password
+api	手机号已注册	Số điện thoại đã được đăng ký	Phone number already registered
+api	手机号格式不正确	Định dạng số điện thoại không đúng	Invalid phone number format
+api	账号密码必须是在6到32位之间	Mật khẩu phải từ 6 đến 32 ký tự	Password must be between 6 and 32 characters
+api	密码太过简单，请输入较为复杂的密码	Mật khẩu quá đơn giản, vui lòng nhập mật khẩu phức tạp hơn	Password is too simple, please use a stronger one
+api	账号或密码错误	Tài khoản hoặc mật khẩu không đúng	Wrong account or password
+api	请输入账号和密码	Vui lòng nhập tài khoản và mật khẩu	Please enter account and password
+api	注册失败	Đăng ký thất bại	Registration failed
+api	注册成功	Đăng ký thành công	Registered successfully

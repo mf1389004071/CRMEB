@@ -395,6 +395,12 @@
 			"root": "pages/users",
 			"name": "users",
 			"pages": [{
+					"path": "vn_login/index",
+					"style": {
+						"navigationBarTitleText": "登录"
+					}
+				},
+				{
 					"path": "contact/index",
 					"style": {
 						"navigationBarTitleText": "联系我们"

@@ -159,6 +159,13 @@ export default {
 	},
 	onLoad() {
 		let self = this;
+		// VN: 越南模式使用 vn_login 页（原登录页保留，关闭 vn_mode_enable 可恢复）
+		if (this.vnMode) {
+			uni.redirectTo({
+				url: '/pages/users/vn_login/index'
+			});
+			return;
+		}
 		uni.getSystemInfo({
 			success: (res) => {
 				if (res.platform.toLowerCase() == 'ios' && this.getSystem(res.system)) {

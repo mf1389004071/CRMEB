@@ -31,6 +31,8 @@ Route::group('user', function () {
         ]);
         //添加用户保存
         Route::post('user/save', 'v1.user.User/save_info')->option(['real_name' => '添加用户']);
+        //VN: 后台重置用户密码
+        Route::post('user/reset_password/:uid', 'v1.user.User/reset_password')->option(['real_name' => '重置用户密码']);
         //同步微信用户
         Route::get('user/syncUsers', 'v1.user.User/syncWechatUsers')->option(['real_name' => '同步微信用户']);
         //用户信息

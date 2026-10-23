@@ -318,6 +318,90 @@ SELECT v.tid, v.code, v.remarks, v.explain_, v.is_admin FROM (
   SELECT @t_vi AS tid, '请输入客户出示的6位核销码' AS code, '[待审]请输入客户出示的6位核销码' AS remarks, 'Vui lòng nhập mã 6 số khách hàng cung cấp' AS explain_, 0 AS is_admin, '请输入客户出示的6位核销码' AS zh_
   UNION ALL
   SELECT @t_en AS tid, '请输入客户出示的6位核销码' AS code, '请输入客户出示的6位核销码' AS remarks, 'Please enter the 6-digit code shown by the customer' AS explain_, 0 AS is_admin, '请输入客户出示的6位核销码' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '注册' AS code, '注册' AS remarks, '注册' AS explain_, 0 AS is_admin, '注册' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '注册' AS code, '[待审]注册' AS remarks, 'Đăng ký' AS explain_, 0 AS is_admin, '注册' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '注册' AS code, '注册' AS remarks, 'Register' AS explain_, 0 AS is_admin, '注册' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '昵称(选填)' AS code, '昵称(选填)' AS remarks, '昵称(选填)' AS explain_, 0 AS is_admin, '昵称(选填)' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '昵称(选填)' AS code, '[待审]昵称(选填)' AS remarks, 'Biệt danh (không bắt buộc)' AS explain_, 0 AS is_admin, '昵称(选填)' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '昵称(选填)' AS code, '昵称(选填)' AS remarks, 'Nickname (optional)' AS explain_, 0 AS is_admin, '昵称(选填)' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '密码至少6位' AS code, '密码至少6位' AS remarks, '密码至少6位' AS explain_, 0 AS is_admin, '密码至少6位' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '密码至少6位' AS code, '[待审]密码至少6位' AS remarks, 'Mật khẩu tối thiểu 6 ký tự' AS explain_, 0 AS is_admin, '密码至少6位' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '密码至少6位' AS code, '密码至少6位' AS remarks, 'Password must be at least 6 characters' AS explain_, 0 AS is_admin, '密码至少6位' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '注册成功' AS code, '注册成功' AS remarks, '注册成功' AS explain_, 0 AS is_admin, '注册成功' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '注册成功' AS code, '[待审]注册成功' AS remarks, 'Đăng ký thành công' AS explain_, 0 AS is_admin, '注册成功' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '注册成功' AS code, '注册成功' AS remarks, 'Registered successfully' AS explain_, 0 AS is_admin, '注册成功' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '请输入手机号码' AS code, '请输入手机号码' AS remarks, '请输入手机号码' AS explain_, 0 AS is_admin, '请输入手机号码' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '请输入手机号码' AS code, '[待审]请输入手机号码' AS remarks, 'Vui lòng nhập số điện thoại' AS explain_, 0 AS is_admin, '请输入手机号码' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '请输入手机号码' AS code, '请输入手机号码' AS remarks, 'Please enter your phone number' AS explain_, 0 AS is_admin, '请输入手机号码' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, '请联系客服重置密码' AS code, '请联系客服重置密码' AS remarks, '请联系客服重置密码' AS explain_, 0 AS is_admin, '请联系客服重置密码' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, '请联系客服重置密码' AS code, '[待审]请联系客服重置密码' AS remarks, 'Vui lòng liên hệ CSKH để đặt lại mật khẩu' AS explain_, 0 AS is_admin, '请联系客服重置密码' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, '请联系客服重置密码' AS code, '请联系客服重置密码' AS remarks, 'Please contact customer service to reset your password' AS explain_, 0 AS is_admin, '请联系客服重置密码' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_03c7e40b2a' AS code, '手机号已注册' AS remarks, '手机号已注册' AS explain_, 1 AS is_admin, '手机号已注册' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_03c7e40b2a' AS code, '[待审]手机号已注册' AS remarks, 'Số điện thoại đã được đăng ký' AS explain_, 1 AS is_admin, '手机号已注册' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_03c7e40b2a' AS code, '手机号已注册' AS remarks, 'Phone number already registered' AS explain_, 1 AS is_admin, '手机号已注册' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_19c896fe76' AS code, '手机号格式不正确' AS remarks, '手机号格式不正确' AS explain_, 1 AS is_admin, '手机号格式不正确' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_19c896fe76' AS code, '[待审]手机号格式不正确' AS remarks, 'Định dạng số điện thoại không đúng' AS explain_, 1 AS is_admin, '手机号格式不正确' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_19c896fe76' AS code, '手机号格式不正确' AS remarks, 'Invalid phone number format' AS explain_, 1 AS is_admin, '手机号格式不正确' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_94c5f74d48' AS code, '账号密码必须是在6到32位之间' AS remarks, '账号密码必须是在6到32位之间' AS explain_, 1 AS is_admin, '账号密码必须是在6到32位之间' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_94c5f74d48' AS code, '[待审]账号密码必须是在6到32位之间' AS remarks, 'Mật khẩu phải từ 6 đến 32 ký tự' AS explain_, 1 AS is_admin, '账号密码必须是在6到32位之间' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_94c5f74d48' AS code, '账号密码必须是在6到32位之间' AS remarks, 'Password must be between 6 and 32 characters' AS explain_, 1 AS is_admin, '账号密码必须是在6到32位之间' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_c6a94080fa' AS code, '密码太过简单，请输入较为复杂的密码' AS remarks, '密码太过简单，请输入较为复杂的密码' AS explain_, 1 AS is_admin, '密码太过简单，请输入较为复杂的密码' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_c6a94080fa' AS code, '[待审]密码太过简单，请输入较为复杂的密码' AS remarks, 'Mật khẩu quá đơn giản, vui lòng nhập mật khẩu phức tạp hơn' AS explain_, 1 AS is_admin, '密码太过简单，请输入较为复杂的密码' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_c6a94080fa' AS code, '密码太过简单，请输入较为复杂的密码' AS remarks, 'Password is too simple, please use a stronger one' AS explain_, 1 AS is_admin, '密码太过简单，请输入较为复杂的密码' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_14470411aa' AS code, '账号或密码错误' AS remarks, '账号或密码错误' AS explain_, 1 AS is_admin, '账号或密码错误' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_14470411aa' AS code, '[待审]账号或密码错误' AS remarks, 'Tài khoản hoặc mật khẩu không đúng' AS explain_, 1 AS is_admin, '账号或密码错误' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_14470411aa' AS code, '账号或密码错误' AS remarks, 'Wrong account or password' AS explain_, 1 AS is_admin, '账号或密码错误' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_e6c9714979' AS code, '请输入账号和密码' AS remarks, '请输入账号和密码' AS explain_, 1 AS is_admin, '请输入账号和密码' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_e6c9714979' AS code, '[待审]请输入账号和密码' AS remarks, 'Vui lòng nhập tài khoản và mật khẩu' AS explain_, 1 AS is_admin, '请输入账号和密码' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_e6c9714979' AS code, '请输入账号和密码' AS remarks, 'Please enter account and password' AS explain_, 1 AS is_admin, '请输入账号和密码' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_1c56d8c5aa' AS code, '注册失败' AS remarks, '注册失败' AS explain_, 1 AS is_admin, '注册失败' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_1c56d8c5aa' AS code, '[待审]注册失败' AS remarks, 'Đăng ký thất bại' AS explain_, 1 AS is_admin, '注册失败' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_1c56d8c5aa' AS code, '注册失败' AS remarks, 'Registration failed' AS explain_, 1 AS is_admin, '注册失败' AS zh_
+  UNION ALL
+  SELECT @t_zh AS tid, 'vn_6506a9ecaa' AS code, '注册成功' AS remarks, '注册成功' AS explain_, 1 AS is_admin, '注册成功' AS zh_
+  UNION ALL
+  SELECT @t_vi AS tid, 'vn_6506a9ecaa' AS code, '[待审]注册成功' AS remarks, 'Đăng ký thành công' AS explain_, 1 AS is_admin, '注册成功' AS zh_
+  UNION ALL
+  SELECT @t_en AS tid, 'vn_6506a9ecaa' AS code, '注册成功' AS remarks, 'Registered successfully' AS explain_, 1 AS is_admin, '注册成功' AS zh_
 ) v
 WHERE v.tid IS NOT NULL AND NOT EXISTS (SELECT 1 FROM eb_lang_code e WHERE e.type_id = v.tid AND e.code = v.code) AND NOT EXISTS (SELECT 1 FROM eb_lang_code z WHERE z.type_id = @t_zh AND z.remarks = v.zh_ AND z.code <> v.code);
 

@@ -5,7 +5,14 @@
 				<image src="../static/logo2.png" />
 			</div>
 		</div>
-		<div class="whiteBg">
+		<div class="whiteBg" v-if="vnMode">
+			<div class="title">{{$t(`找回密码`)}}</div>
+			<div style="padding: 30rpx 0; text-align: center; line-height: 1.8;">
+				{{$t(`请联系客服重置密码`)}}
+			</div>
+			<navigator hover-class="none" url="/pages/users/contact/index" class="logon" style="text-align:center;">{{$t(`联系客服`)}}</navigator>
+		</div>
+		<div class="whiteBg" v-else>
 			<div class="title">{{$t(`找回密码`)}}</div>
 			<div class="list">
 				<div class="item">

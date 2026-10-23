@@ -106,6 +106,7 @@ export const NAVIGATION_BAR_TITLE_MAP = {
   'pages/users/user_address/index': '添加地址',
   'pages/users/user_address_list/index': '地址管理',
   'pages/users/contact/index': '联系我们',
+  'pages/users/vn_login/index': '登录',
   'pages/admin/codVerify/index': '送达核销',
   'pages/users/user_bill/index': '账单明细',
   'pages/users/user_cancellation/index': '注销协议',

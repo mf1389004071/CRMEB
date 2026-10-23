@@ -41,6 +41,33 @@ class VnSiteServices extends BaseServices
     }
 
     /**
+     * 规范化登录/注册账号：区号数字 + 去前导 0 的本地号，如 +84 0912-345-678 → 84912345678
+     * 优先使用 PhoneServices（M8），不存在时按通用规则处理
+     * @param string $countryCode 如 +84 / 84，空则取 default_phone_country
+     * @param string $raw 用户输入
+     * @return string 规范化后的账号（纯数字），无法识别返回空串
+     */
+    public function accountOf(string $countryCode, string $raw): string
+    {
+        $countryCode = $countryCode !== '' ? $countryCode : (string)sys_config('default_phone_country', '+84');
+        $cls = '\\app\\services\\user\\PhoneServices';
+        if (class_exists($cls)) {
+            $n = $cls::normalize($countryCode, $raw);
+            return ltrim($n['e164'], '+');
+        }
+        $cc = preg_replace('/\D+/', '', $countryCode);
+        $num = preg_replace('/\D+/', '', $raw);
+        if ($num === '') {
+            return '';
+        }
+        // 已带区号则不重复拼接
+        if ($cc !== '' && strpos($num, $cc) === 0 && strlen($num) > strlen($cc) + 6) {
+            $num = substr($num, strlen($cc));
+        }
+        return $cc . ltrim($num, '0');
+    }
+
+    /**
      * 过滤“我的”菜单；站内客服替换为联系方式入口
      * @param array $menus
      * @return array
