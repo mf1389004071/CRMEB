@@ -1,4 +1,4 @@
-# 菜集鲜本地开发：MySQL + PHP（与 docs/本地开发环境搭建教程.md 一致）
+# 菜集鲜本地开发：MySQL + PHP（与 docs/deploy/本地开发环境搭建教程.md 一致）
 # 用法（在仓库根目录）：
 #   docker compose -f docs/docker/docker-compose.yml up -d --build
 # 停止：

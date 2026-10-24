@@ -1,0 +1,17 @@
+---
+description: docs 目录落点约定（研发/部署/Docker/专题）
+alwaysApply: true
+---
+
+# docs 文档落点
+
+新增 Markdown 文档时，若用户**未明确指定目录**，按下列约定：
+
+| 类型 | 目录 |
+|------|------|
+| 代码调整、技术方案、前后端衔接/分析、实现笔记 | `docs/研发/`（**默认**） |
+| 部署、本地环境、域名、队列/定时/长连接 | `docs/deploy/` |
+| Docker Compose / 镜像相关 | `docs/docker/` |
+| 某需求专题的需求/实现方案/设计 | 已有专题目录（如 `docs/260409-菜集鲜/`），无则先问用户 |
+
+不要把研发分析类 md 默认写到 `docs/` 根目录。目录说明见 `docs/README.md`、`docs/研发/README.md`。

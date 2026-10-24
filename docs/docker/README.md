@@ -1,6 +1,6 @@
 # 本地 Docker（cjx-mysql + cjx-php）
 
-完整步骤见 [`../本地开发环境搭建教程.md`](../本地开发环境搭建教程.md)。
+完整步骤见 [`../deploy/本地开发环境搭建教程.md`](../deploy/本地开发环境搭建教程.md)。
 
 ## 一键启停
 
@@ -21,6 +21,12 @@ docker compose -f docs/docker/docker-compose.yml down -v      # 删库数据，�
 |------|--------|------|------|
 | mysql | cjx-mysql | 33060→3306 | root/root，库 crmeb；同网络主机名 `mysql` |
 | php | cjx-php | 8089 | 挂载 `crmeb` → `/app` |
+
+**后台登录：** http://localhost:8089/admin/  
+**账号：** `admin`  
+**密码：** `crmeb.com`（基线默认；若安装/后台改过则以实际为准）
+
+登录后若提示消息队列 / 定时任务 / 长连接未开启：见 [`../deploy/消息队列定时任务与长连接说明.md`](../deploy/消息队列定时任务与长连接说明.md)。
 
 ## 数据库账号（任意来源可连）
 

@@ -29,7 +29,7 @@ php crmeb/tests/vn/lang_code_test.php
 ## 本地测试环境（docker）
 测试均直接操作测试库，**勿对生产库运行**。
 
-**从零完整教程（推荐）：** `docs/本地开发环境搭建教程.md`  
+**从零完整教程（推荐）：** `docs/deploy/本地开发环境搭建教程.md`  
 **一键编排：** `docker compose -f docs/docker/docker-compose.yml up -d --build`（见 `docs/docker/README.md`）。
 
 ```bash
