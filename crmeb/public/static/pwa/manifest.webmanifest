@@ -1,0 +1,17 @@
+{
+  "name": "Rau Củ Tươi - Chợ Online",
+  "short_name": "菜集鲜",
+  "description": "菜集鲜 · 越南生鲜货到付款 H5",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#2e9e4b",
+  "lang": "vi-VN",
+  "icons": [
+    { "src": "/static/pwa/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/static/pwa/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/static/pwa/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

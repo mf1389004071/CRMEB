@@ -77,6 +77,10 @@ class SystemMenusServices extends BaseServices
         $rules = $systemRoleServices->getRoleArray(['status' => 1, 'id' => $rouleId], 'rules');
         $rulesStr = Arr::unique($rules);
         $menusList = $this->dao->getMenusRoule(['route' => $level ? $rulesStr : '', 'is_show_path' => 1]);
+        // VN: 越南模式裁剪后台侧栏非必要菜单（关闭 vn_mode_enable 即恢复）
+        if (function_exists('vn_mode_enabled') && vn_mode_enabled()) {
+            $menusList = app()->make(\app\services\vn\VnSiteServices::class)->filterAdminMenus($menusList);
+        }
         $unique = $this->dao->getMenusUnique(['unique' => $level ? $rulesStr : '']);
         return [Arr::getMenuIviewList($this->getMenusData($menusList)), $unique];
     }

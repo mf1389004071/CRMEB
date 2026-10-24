@@ -61,6 +61,7 @@ const app = getApp();
 import dayjs from "@/plugin/dayjs/dayjs.min.js";
 import Routine from "@/libs/routine";
 import colors from "@/mixins/color";
+import { vnMixin } from "@/utils/vn.js";
 import pageFooter from "@/components/pageFooter/index.vue";
 import { getCustomer } from "@/utils/index.js";
 import editUserModal from "@/components/eidtUserModal/index.vue";
@@ -105,7 +106,7 @@ export default {
       return dayjs(value * 1000).format("YYYY-MM-DD");
     },
   },
-  mixins: [colors],
+  mixins: [colors, vnMixin],
   data() {
     return {
       currentDiyData: {},
@@ -498,7 +499,31 @@ export default {
         this.business_status = res.data.diy_data.business_status;
         let storeMenu = [];
         let myMenu = [];
+        // VN: 后端已裁剪；此处再兜底过滤营销入口（vnMode 关闭时不过滤）
+        const vnHide = this.vnMode
+          ? [
+              '/pages/annex/vip_paid/index',
+              '/pages/users/user_invoice_list/index',
+              '/pages/users/user_integral/index',
+              '/pages/users/user_coupon/index',
+              '/pages/users/user_money/index',
+              '/pages/users/user_spread_user/index',
+              '/pages/users/user_spread_code/index',
+              '/pages/users/promoter-order/index',
+              '/pages/users/user_cash/index',
+              '/pages/users/user_payment/index',
+              '/pages/users/commission_rank/index',
+              '/pages/annex/settled/index',
+              '/pages/activity/bargain/index',
+              '/pages/users/user_vip/index',
+              '/pages/users/user_get_coupon/index',
+              '/pages/extension/customer_list/chat',
+              '/pages/users/user_sgin/index',
+              '/pages/points_mall/index',
+            ]
+          : [];
         res.data.routine_my_menus.forEach((el, index, arr) => {
+          if (vnHide.indexOf(el.url) > -1) return;
           if (
             el.url == "/pages/admin/order/index" ||
             el.url == "/pages/admin/order_cancellation/index" ||

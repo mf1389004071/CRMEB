@@ -54,6 +54,11 @@ export default {
       },
       component: () => import('@/pages/setting/region/index'),
     },
+    // 兼容旧菜单 path `/setting/region`（无 /index）
+    {
+      path: 'region',
+      redirect: 'region/index',
+    },
     {
       path: 'system_role/index',
       name: `${pre}systemRole`,

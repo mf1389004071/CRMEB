@@ -3,8 +3,15 @@
 ## 执行顺序
 1. 先安装基线：`public/install/crmeb.sql`（**不要修改**该文件）。
 2. 按文件名序号依次执行本目录 `NNN_*.sql`（表前缀默认 `eb_`，如不同请整体替换）：
-   `001 → 010 → 020 → 030 → 040 → 050 → 060 → 070 → 080 → 9xx`
-3. 执行后清理缓存（后台“清除缓存”）。
+   `000 → 001 → 010 → 020 → 021 → 030 → … → 100 → 900`
+3. （可选开发演示）再执行 `demo/001_demo_data.sql`
+4. 执行后清理缓存（后台“清除缓存”或删 `runtime/cache`）。
+
+Windows / Docker 一键：
+
+```powershell
+powershell -File crmeb/database/vn/run_all.ps1
+```
 
 ```bash
 mysql -uroot -p --default-character-set=utf8mb4 your_db < crmeb/database/vn/001_lang_vi_vn.sql

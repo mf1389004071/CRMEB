@@ -1,6 +1,13 @@
 <template>
   <div>
     <el-card :bordered="false" shadow="never" class="ivu-mt" :body-style="{ padding: '16px' }">
+      <el-alert
+        class="mb10"
+        type="info"
+        :closable="false"
+        show-icon
+        title="销售区划从此页管理：首层为国家（中国 / Việt Nam）。运费模板仍用「发货设置→运费模板」的旧城市树，请勿在「城市数据」维护 VN 销售区。"
+      />
       <div class="mb10">
         <el-breadcrumb separator="/" class="crumb">
           <el-breadcrumb-item><a @click="goRoot">国家</a></el-breadcrumb-item>

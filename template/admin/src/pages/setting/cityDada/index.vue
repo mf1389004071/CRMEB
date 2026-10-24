@@ -1,12 +1,20 @@
 <template>
   <div>
     <el-card :bordered="false" shadow="never" class="ivu-mt">
+      <el-alert
+        class="mb20"
+        type="warning"
+        :closable="false"
+        show-icon
+        title="本页仅维护运费模板用的中国省市区树，不能从国家级管理销售区。菜集鲜销售区划 / 白名单 / 热门请前往：设置 → 配送区域。"
+      />
       <div class="acea-row row-between-wrapper mb20">
         <el-row>
           <el-col v-bind="grid">
             <div class="button acea-row row-middle">
               <el-button type="primary" v-db-click @click="add(0)">添加省份</el-button>
               <el-button v-db-click @click="cleanCache">清除缓存</el-button>
+              <el-button type="success" plain v-db-click @click="$router.push($routeProStr + '/setting/region/index')">去配送区域</el-button>
             </div>
           </el-col>
         </el-row>

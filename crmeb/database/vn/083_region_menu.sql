@@ -3,7 +3,7 @@
 SET NAMES utf8mb4;
 
 INSERT INTO eb_system_menus (pid, icon, menu_name, module, controller, action, api_url, methods, params, sort, is_show, is_show_path, access, menu_path, path, auth_type, header, is_header, unique_auth, is_del, mark)
-SELECT 12, '', '配送区域', 'admin', '', '', '', '', '[]', 3, 1, 1, 1, '/setting/region', '12', 1, 'setting', 0, 'admin-setting-region', 0, '菜集鲜配送区域/区划管理'
+SELECT 12, '', '配送区域', 'admin', '', '', '', '', '[]', 3, 1, 1, 1, '/setting/region/index', '12', 1, 'setting', 0, 'admin-setting-region', 0, '菜集鲜配送区域/区划管理'
 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM eb_system_menus WHERE unique_auth = 'admin-setting-region');
 
 SET @mid := (SELECT id FROM eb_system_menus WHERE unique_auth = 'admin-setting-region' LIMIT 1);
