@@ -176,7 +176,7 @@ class I18nContentServices extends BaseServices
     }
 
     /**
-     * 机翻填充（可选）：源语言取 zh-CN 译文，缺失用主表字段；结果 status=0 待审。需配置 hs_accesskey/hs_secretkey
+     * 机翻填充（可选）：源语言取 zh-CN 译文，缺失用主表字段；结果 status=0 待审。驱动见 translate_driver（默认 google_gtx）
      * @param string $type
      * @param int $id
      * @param array $fields 需要翻译的字段
@@ -184,17 +184,12 @@ class I18nContentServices extends BaseServices
      */
     public function machineFill(string $type, int $id, array $fields, array $targetLangs): void
     {
-        if (!sys_config('hs_accesskey') || !sys_config('hs_secretkey')) {
-            throw new ApiException('未配置机器翻译密钥');
-        }
+        $translator = \crmeb\utils\TranslateFactory::createForApi();
         $source = $this->sourceTexts($type, $id, $fields);
         if (!$source) {
             return;
         }
         $map = ['vi-VN' => 'vi', 'en-US' => 'en', 'zh-CN' => 'zh'];
-        $translator = \crmeb\utils\Translate::getInstance();
-        $translator->setAccessKey(sys_config('hs_accesskey'));
-        $translator->setSecretKey(sys_config('hs_secretkey'));
         $payload = [];
         foreach ($targetLangs as $lang) {
             $lang = normalize_lang_code($lang);

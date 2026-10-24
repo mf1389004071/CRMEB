@@ -16,6 +16,19 @@ $attrId = (int)Db::name('store_product_attr')->where('product_id', 883401)->valu
 $skuId = (int)Db::name('store_product_attr_value')->where(['product_id' => 883401, 'suk' => 'a'])->value('id');
 $get = function ($p) use ($B, $at) { return VnFx::http('GET', "$B/adminapi/$p", $at); };
 $post = function ($p, $d) use ($B, $at) { return VnFx::http('POST', "$B/adminapi/$p", $at, $d); };
+$setCfg = function (string $k, $v) {
+    $val = json_encode((string)$v);
+    $n = Db::name('system_config')->where('menu_name', $k)->update(['value' => $val]);
+    if (!$n && !Db::name('system_config')->where('menu_name', $k)->find()) {
+        $tab = (int)(Db::name('system_config_tab')->where('eng_title', 'online_translation')->value('id') ?: 106);
+        Db::name('system_config')->insert([
+            'menu_name' => $k, 'type' => 'text', 'input_type' => 'input', 'config_tab_id' => $tab,
+            'parameter' => '', 'upload_type' => 1, 'required' => '', 'width' => 100, 'high' => 0,
+            'value' => $val, 'info' => $k, 'desc' => '', 'sort' => 0, 'status' => 1, 'level' => 0, 'link_id' => 0, 'link_value' => 0,
+        ]);
+    }
+    \crmeb\services\CacheService::clear();
+};
 
 $r = VnFx::http('GET', "$B/adminapi/product/i18n/883401", '');
 t_assert($r['status'] != 200, 'requires admin token');
@@ -59,12 +72,14 @@ t_assert($r['status'] == 200 && in_array(883401, array_column($r['data'], 'id'),
 $r = $get('i18n/missing?type=product&lang=en-US&field=store_name');
 t_assert(!in_array(883401, array_column($r['data'], 'id'), true), 'translated product not in missing list');
 
-// 机翻：未配置密钥时给出明确错误
-Db::name('system_config')->where('menu_name', 'hs_accesskey')->update(['value' => '""']);
-\crmeb\services\CacheService::clear();
+// 机翻：volcano 驱动且未配置密钥时给出明确错误
+$setCfg('translate_driver', 'volcano');
+$setCfg('hs_accesskey', '');
+$setCfg('hs_secretkey', '');
 $at = VnFx::adminToken();
 $r = $post('i18n/product/883401/machine', ['langs' => ['en-US']]);
-t_assert($r['status'] != 200, 'machine translate without keys => error: ' . ($r['msg'] ?? ''));
+t_assert($r['status'] != 200, 'machine translate volcano without keys => error: ' . ($r['msg'] ?? ''));
+$setCfg('translate_driver', 'google_gtx');
 
 // 导出 / 导入
 $r = $get('i18n/export?type=product');

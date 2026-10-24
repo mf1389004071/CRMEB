@@ -9,7 +9,19 @@ use app\services\other\I18nContentServices;
 /** @var I18nContentServices $i18n */
 $i18n = app()->make(I18nContentServices::class);
 Db::name('i18n_content')->whereIn('entity_type', ['product', 'product_attr', 'sku', 'category', 'city'])->where('entity_id', 'in', [883001, 883002, 883101, 883102, 2999991])->delete();
-$setCfg = function (string $k, $v) { Db::name('system_config')->where('menu_name', $k)->update(['value' => json_encode((string)$v)]); \crmeb\services\CacheService::clear(); };
+$setCfg = function (string $k, $v) {
+    $val = json_encode((string)$v);
+    $n = Db::name('system_config')->where('menu_name', $k)->update(['value' => $val]);
+    if (!$n && !Db::name('system_config')->where('menu_name', $k)->find()) {
+        $tab = (int)(Db::name('system_config_tab')->where('eng_title', 'online_translation')->value('id') ?: 106);
+        Db::name('system_config')->insert([
+            'menu_name' => $k, 'type' => 'text', 'input_type' => 'input', 'config_tab_id' => $tab,
+            'parameter' => '', 'upload_type' => 1, 'required' => '', 'width' => 100, 'high' => 0,
+            'value' => $val, 'info' => $k, 'desc' => '', 'sort' => 0, 'status' => 1, 'level' => 0, 'link_id' => 0, 'link_value' => 0,
+        ]);
+    }
+    \crmeb\services\CacheService::clear();
+};
 
 $Q = VnFx::product(883001, 'Cải xanh', [['suk' => 'a,x', 'price' => 10, 'stock' => 5], ['suk' => 'b,x', 'price' => 12, 'stock' => 5]]);
 Db::name('store_product_attr')->where('product_id', 883001)->delete();
@@ -89,10 +101,12 @@ t_assert(in_array(883001, $miss, true), 'product without en store_name listed as
 $i18n->save('product', 883001, ['en-US' => ['store_name' => 'Bok choy']]);
 t_assert(!in_array(883001, $i18n->missing('product', 'en-US', 'store_name', 5000), true), 'removed from missing after translating');
 
-// 机翻：无密钥时明确报错，不写入
-Db::name('system_config')->where('menu_name', 'hs_accesskey')->update(['value' => '""']);
-\crmeb\services\CacheService::clear();
-t_assert($threw(function () use ($i18n) { $i18n->machineFill('product', 883001, ['store_name'], ['en-US']); }), 'machineFill without keys throws');
+// 机翻：volcano 驱动且无密钥时明确报错，不写入
+$setCfg('translate_driver', 'volcano');
+$setCfg('hs_accesskey', '');
+$setCfg('hs_secretkey', '');
+t_assert($threw(function () use ($i18n) { $i18n->machineFill('product', 883001, ['store_name'], ['en-US']); }), 'machineFill volcano without keys throws');
+$setCfg('translate_driver', 'google_gtx');
 
 Db::name('i18n_content')->whereIn('entity_type', ['product', 'product_attr', 'sku', 'category', 'city'])->where('entity_id', 'in', array_merge([883001, 883101, 883102, 910001, $skuId], $attrIds))->delete();
 VnFx::dropProduct(883001);

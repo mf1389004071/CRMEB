@@ -15,7 +15,7 @@ use app\jobs\TranslateJob;
 use app\services\BaseServices;
 use crmeb\exceptions\AdminException;
 use crmeb\services\CacheService;
-use crmeb\utils\Translate;
+use crmeb\utils\TranslateFactory;
 
 class LangCodeServices extends BaseServices
 {
@@ -159,12 +159,7 @@ class LangCodeServices extends BaseServices
      */
     public function langCodeTranslate(string $text = ''): array
     {
-        if (sys_config('hs_accesskey') == '' || sys_config('hs_secretkey') == '') {
-            throw new AdminException('请先配置火山翻译key');
-        }
-        $translator = Translate::getInstance();
-        $translator->setAccessKey(sys_config('hs_accesskey'));
-        $translator->setSecretKey(sys_config('hs_secretkey'));
+        $translator = TranslateFactory::create();
         /** @var LangTypeServices $langTypeServices */
         $langTypeServices = app()->make(LangTypeServices::class);
         $typeList = $langTypeServices->getColumn([['status', '=', 1], ['is_del', '=', 0]], 'language_name,file_name,id', 'id');

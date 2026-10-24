@@ -13,7 +13,7 @@ namespace app\jobs;
 use app\services\system\lang\LangCodeServices;
 use crmeb\basic\BaseJobs;
 use crmeb\traits\QueueTrait;
-use crmeb\utils\Translate;
+use crmeb\utils\TranslateFactory;
 use think\facade\Log;
 
 class TranslateJob extends BaseJobs
@@ -22,10 +22,8 @@ class TranslateJob extends BaseJobs
 
     public function doJob($data, $langType)
     {
-        $translator = Translate::getInstance();
-        $translator->setAccessKey(sys_config('hs_accesskey'));
-        $translator->setSecretKey(sys_config('hs_secretkey'));
         try {
+            $translator = TranslateFactory::create();
             $remarksData = [];
             foreach ($data as $value) {
                 $remarksData[] = $value['remarks'];
