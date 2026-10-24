@@ -29,9 +29,22 @@ php crmeb/tests/vn/lang_code_test.php
 ## 本地测试环境（docker）
 测试均直接操作测试库，**勿对生产库运行**。
 
+**从零完整教程（推荐）：** `docs/本地开发环境搭建教程.md`  
+**一键编排：** `docker compose -f docs/docker/docker-compose.yml up -d --build`（见 `docs/docker/README.md`）。
+
+```bash
+# 推荐：compose（PHP 连 mysql:3306；宿主机连 127.0.0.1:33060）
+docker compose -f docs/docker/docker-compose.yml up -d --build
+# 若客户端 1045：docker exec cjx-mysql mysql -uroot -proot -e "source /路径/grant-any-host.sql"
+# 导基线 + vn 迁移后：
+bash tests/vn/run.sh tests/vn/cod_order_test.php
+```
+
+旧版分别 `docker run`（不推荐，仅备用）：
+
 ```bash
 # 1) 测试库：mysql:8.0，导入基线并按序执行 vn 迁移（000 → 001 → 010 …）
-docker run -d --name cjx-mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=crmeb -p 33060:3306 mysql:8.0 --character-set-server=utf8mb4 --sql-mode=""
+docker run -d --name cjx-mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=crmeb -p 33060:3306 mysql:8.0 --character-set-server=utf8mb4 --default-authentication-plugin=mysql_native_password --sql-mode=""
 # 2) HTTP 服务（供 *_api_test / e2e 使用）：需 crmeb/public/install.lock（已 gitignore）
 echo 1 > crmeb/public/install.lock
 docker run -d --name cjx-php --add-host=host.docker.internal:host-gateway -p 8089:8089 -v <repo>/crmeb:/app -w /app/public   -e DATABASE_HOSTNAME=host.docker.internal -e DATABASE_HOSTPORT=33060 -e DATABASE_DATABASE=crmeb -e DATABASE_USERNAME=root -e DATABASE_PASSWORD=root -e DATABASE_CHARSET=utf8mb4   dev-php74 php -S 0.0.0.0:8089 router.php

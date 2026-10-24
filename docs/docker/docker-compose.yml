@@ -1,0 +1,91 @@
+# 菜集鲜本地开发：MySQL + PHP（与 docs/本地开发环境搭建教程.md 一致）
+# 用法（在仓库根目录）：
+#   docker compose -f docs/docker/docker-compose.yml up -d --build
+# 停止：
+#   docker compose -f docs/docker/docker-compose.yml down
+# 仅停容器保留数据卷：
+#   docker compose -f docs/docker/docker-compose.yml stop
+
+name: crmeb-cjx
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: cjx-mysql
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: crmeb
+      MYSQL_USER: crmeb
+      MYSQL_PASSWORD: root
+    ports:
+      # 宿主机客户端（Navicat / DBeaver / IDEA）：127.0.0.1:33060
+      - "33060:3306"
+    volumes:
+      - cjx_mysql_data:/var/lib/mysql
+      # 仅空数据目录首次启动时执行（已有卷不会再跑；可手动执行 mysql/grant-any-host.sql）
+      - ./mysql/init:/docker-entrypoint-initdb.d:ro
+    # Windows 绑定挂载常为 777，MySQL 会忽略 world-writable 配置文件；用 configs+mode 保证可读
+    configs:
+      - source: mysql_cjx_cnf
+        target: /etc/mysql/conf.d/cjx.cnf
+        mode: 0444
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      - --default-authentication-plugin=mysql_native_password
+      - --sql-mode=
+      - --bind-address=0.0.0.0
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+    networks:
+      - cjx_net
+
+  php:
+    image: dev-php74
+    build:
+      context: ../..
+      dockerfile: docs/docker/dev-php74.Dockerfile
+    container_name: cjx-php
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      TZ: Asia/Shanghai
+      # 同 compose 网络直连 mysql 服务名，不走宿主机映射
+      DATABASE_HOSTNAME: mysql
+      DATABASE_HOSTPORT: "3306"
+      DATABASE_DATABASE: crmeb
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+      DATABASE_CHARSET: utf8mb4
+    ports:
+      - "8089:8089"
+    volumes:
+      # 仓库 crmeb 目录 → 容器 /app
+      - ../../crmeb:/app
+    working_dir: /app/public
+    command: ["php", "-S", "0.0.0.0:8089", "router.php"]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - cjx_net
+
+networks:
+  cjx_net:
+    name: cjx_net
+    driver: bridge
+
+volumes:
+  cjx_mysql_data:
+    name: cjx_mysql_data
+
+configs:
+  mysql_cjx_cnf:
+    file: ./mysql/conf.d/cjx.cnf
