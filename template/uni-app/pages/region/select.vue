@@ -137,6 +137,8 @@
 					uni.showModal({
 						title: this.$t(`提示`),
 						content: this.$t(`切换配送区域将清空购物车，是否继续？`),
+						cancelText: this.$t(`取消`),
+						confirmText: this.$t(`确定`),
 						success: (m) => {
 							if (!m.confirm) return;
 							clearCartAll().catch(() => {}).then(() => this.done(next));

@@ -56,8 +56,6 @@ class LoginServices extends BaseServices
         if ($user) {
             if ($user->pwd !== md5((string)$password))
                 throw new ApiException('账号或密码错误');
-            if ($user->pwd === md5('123456'))
-                throw new ApiException('请修改您的初始密码，再尝试登录');
         } else {
             throw new ApiException('账号或密码错误');
         }

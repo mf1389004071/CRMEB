@@ -680,8 +680,26 @@ export default {
       let goodsIndex = [];
       let promotionIndex = [];
       let lastArr = this.objToArr(data.value);
-      // VN: 越南模式下首页不渲染的营销装修组件（关闭 vn_mode_enable 可恢复）
-      const vnHideComps = ["seckill", "bargain", "combination", "liveBroadcast", "pointsMall", "signIn", "coupon", "newVip", "promotionList"];
+      // VN: 越南模式下不渲染 DIY 搜索/分类导航/快捷菜单及营销组件（RegionBar+CategoryGrid8 已承担；关闭 vn_mode_enable 可恢复）
+      // VN: 真正渲染过滤在 pageDesign.setDiyData；此处同步，避免本地 styleConfig/标志位残留
+      const vnHideComps = [
+        "headerSerch",
+        "homeComb",
+        "menus",
+        "tabNav",
+        "seckill",
+        "bargain",
+        "combination",
+        "liveBroadcast",
+        "pointsMall",
+        "signIn",
+        "coupon",
+        "newVip",
+        "promotionList",
+        "homePaidVip",
+        "home_paid_vip",
+        "presale",
+      ];
       lastArr.forEach((item, index, arr) => {
         if (!item) return;
         if (this.vnMode && vnHideComps.indexOf(item.name) > -1) return;

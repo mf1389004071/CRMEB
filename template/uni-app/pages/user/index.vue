@@ -19,6 +19,11 @@
       <!-- #endif -->
     </view>
 
+    <!-- VN: 未登录也可切语言（设置页同样放开；此处入口更明显） -->
+    <view class="lang-bar" v-if="vnMode">
+      <LangSwitcher />
+      <view class="lang-link" @click="goLangSettings">{{ $t("语言切换") }}</view>
+    </view>
     <PageDesign
       :style="colorStyle"
       :diyData="currentDiyData"
@@ -33,7 +38,10 @@
       @changeBarg="changeBarg"
       @goDetail="goDetail"
     ></PageDesign>
-    <image :src="copyRightPic" alt="" class="support"></image>
+    <view class="copyright-wrap">
+      <image v-if="copyRightPic" :src="copyRightPic" alt="" class="support"></image>
+      <view class="copyright-text" v-if="copyRightText">{{ copyRightText }}</view>
+    </view>
     <editUserModal
       :isShow="editModal"
       @closeEdit="closeEdit"
@@ -72,6 +80,7 @@ import Loading from "@/components/Loading/index.vue";
 import { getCrmebCopyRight } from "@/api/api.js";
 import { goShopDetail } from "@/libs/order.js";
 import PageDesign from "@/subpackage/diyComponents/pageDesign.vue";
+import LangSwitcher from "@/components/LangSwitcher/index.vue";
 
 export default {
   components: {
@@ -82,6 +91,7 @@ export default {
     waterfallsFlow,
     emptyPage,
     Loading,
+    LangSwitcher,
   },
   // computed: mapGetters(['isLogin','cartNum']),
   computed: {
@@ -169,7 +179,8 @@ export default {
       member_style: 0,
       my_banner_status: 0,
       is_diy: uni.getStorageSync("is_diy"),
-      copyRightPic: require("static/images/support.png"), //版权图片
+      copyRightPic: "", // 版权图（越南站改为文案版权）
+      copyRightText: "Copyright © Alpha Fangding. All rights reserved.",
       belongIndex: 0,
       isScrolled: false,
       isFixed: false,
@@ -588,9 +599,19 @@ export default {
     },
     getCopyRight() {
       getCrmebCopyRight().then((res) => {
-        if (res.data.copyrightImage)
-          this.copyRightPic = res.data.copyrightImage;
+        const ctx = (res.data && res.data.copyrightContext) || "";
+        const img = (res.data && res.data.copyrightImage) || "";
+        // VN: 优先展示文案版权；无文案时才回落图片
+        if (ctx) {
+          this.copyRightText = ctx;
+          this.copyRightPic = "";
+        } else if (img) {
+          this.copyRightPic = img;
+        }
       });
+    },
+    goLangSettings() {
+      uni.navigateTo({ url: "/pages/users/user_info/index" });
     },
   },
 };
@@ -630,10 +651,31 @@ export default {
       z-index: 5;
     }
   }
+  .lang-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16rpx 24rpx;
+    background: #fff;
+    border-bottom: 1rpx solid #f0f0f0;
+    .lang-link {
+      font-size: 26rpx;
+      color: #2e9e4b;
+    }
+  }
+  .copyright-wrap {
+    padding: 40rpx 24rpx 20rpx;
+    text-align: center;
+  }
+  .copyright-text {
+    font-size: 22rpx;
+    color: #999;
+    line-height: 1.5;
+  }
   .support {
     width: 219rpx;
     height: 74rpx;
-    margin: 54rpx auto;
+    margin: 0 auto 16rpx;
     display: block;
   }
 }

@@ -27,7 +27,7 @@
                 v-if="newData.navStyleConfig.tabVal != 2"
                 class="txt active"
                 :style="[txtActiveColor]"
-                >{{ item.name }}</view
+                >{{ $t(item.name) }}</view
               >
             </template>
             <template v-else>
@@ -39,7 +39,7 @@
                 v-if="newData.navStyleConfig.tabVal != 2"
                 class="txt"
                 :style="[txtColor]"
-                >{{ item.name }}</view
+                >{{ $t(item.name) }}</view
               >
             </template>
             <BaseBadge

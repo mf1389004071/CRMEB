@@ -35,7 +35,7 @@
                 <view
                   class="txt"
                   :style="[index == ProductNavindex ? textColor : {}]"
-                  >{{ item.chiild[0].val }}</view
+                  >{{ item.chiild[0].val ? $t(item.chiild[0].val) : "" }}</view
                 >
                 <view
                   v-if="[1, 2].includes(dataConfig.styleConfig.tabVal)"
@@ -49,7 +49,7 @@
                   "
                   :style="[index == ProductNavindex ? decorateColor : {}]"
                 >
-                  {{ item.chiild[1].val }}
+                  {{ item.chiild[1].val ? $t(item.chiild[1].val) : "" }}
                 </view>
               </view>
             </scroll-view>

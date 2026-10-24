@@ -76,9 +76,11 @@ export default {
       return this.dataConfig.imgConfig ? this.dataConfig.imgConfig.url : "";
     },
     rightBntText() {
-      return this.dataConfig.rightBntConfig
+      // DIY 配置多为中文原文，走 $t 才能越/英化；无配置时回退默认文案
+      const raw = this.dataConfig.rightBntConfig
         ? this.dataConfig.rightBntConfig.value
-        : this.$t("立即开通");
+        : "立即开通";
+      return this.$t(raw || "立即开通");
     },
     isCustomTone() {
       return (

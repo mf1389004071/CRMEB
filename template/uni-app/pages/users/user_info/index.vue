@@ -147,10 +147,11 @@
 
 				</view>
 
-				<button class='modifyBnt bg-color' formType="submit">{{$t(`保存修改`)}}</button>
+				<button class='modifyBnt bg-color' formType="submit" v-if="isLogin">{{$t(`保存修改`)}}</button>
 				<!-- #ifdef H5 || APP-PLUS || MP -->
-				<view class="logOut cartcolor acea-row row-center-wrapper" @click="outLogin">{{$t(`退出登录`)}}</view>
+				<view class="logOut cartcolor acea-row row-center-wrapper" @click="outLogin" v-if="isLogin">{{$t(`退出登录`)}}</view>
 				<!-- #endif -->
+				<view class="logOut cartcolor acea-row row-center-wrapper" v-if="!isLogin" @click="goLogin">{{$t(`去登录`)}}</view>
 				<!-- #ifdef APP-PLUS -->
 				<app-update ref="appUpdate" :force="true" :tabbar="false" :getVer='true' @isNew="isNew"></app-update>
 				<!-- #endif -->
@@ -247,18 +248,17 @@
 			}
 		},
 		onLoad() {
+			// VN: 语言切换不依赖登录；其余账号能力仍需登录
+			this.getLangList();
 			if (this.isLogin) {
 				this.getUserInfo();
-				this.getLangList()
 				// #ifdef APP-PLUS
 				this.formatSize()
 				// 获取版本号
 				plus.runtime.getProperty(plus.runtime.appid, (inf) => {
 					this.version = inf.version;
 				});
-				// #endif 
-			} else {
-				toLogin();
+				// #endif
 			}
 		},
 		methods: {
@@ -316,20 +316,27 @@
 			},
 			bindPickerChange(e, item) {
 				this.setIndex = e.detail.value
-				Cache.set('locale', normalizeLang(this.array[this.setIndex].value))
+				const code = normalizeLang(this.array[this.setIndex].value)
+				Cache.set('locale', code)
 				getLangJson().then(res => {
 					uni.setStorageSync('localeJson', res.data);
-					this.$i18n.setLocaleMessage(this.array[this.setIndex].value, res.data[this.array[
-						this.setIndex].value]);
-					this.$nextTick(e => {
+					const pack = res.data[this.array[this.setIndex].value] || res.data[Object.keys(res.data || {})[0]];
+					if (pack) {
+						this.$i18n.setLocaleMessage(this.array[this.setIndex].value, pack);
+					}
+					this.$nextTick(() => {
 						this.$i18n.locale = this.array[this.setIndex].value;
-						// VN: 持久化到服务端并刷新页面，使文案/商品名/币种统一按新语种展示
-						if (this.vnMode) {
-							setUserLocale(normalizeLang(this.array[this.setIndex].value)).catch(() => {}).then(() => {
-								// #ifdef H5
-								window.location.reload();
-								// #endif
-							});
+						uni.removeStorageSync('LANG_VERSION');
+						// VN: 已登录才回写服务端；未登录仅本地生效
+						const done = () => {
+							// #ifdef H5
+							window.location.reload();
+							// #endif
+						};
+						if (this.isLogin) {
+							setUserLocale(code).catch(() => {}).then(done);
+						} else {
+							done();
 						}
 					})
 				})
@@ -458,6 +465,9 @@
 					});
 					toLogin();
 				}
+			},
+			goLogin() {
+				toLogin();
 			},
 			/**
 			 * 退出登录

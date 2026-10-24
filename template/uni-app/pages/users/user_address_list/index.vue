@@ -38,6 +38,7 @@
 				<view class='pictrue'>
 					<image :src="imgHost + '/statics/images/noAddress.png'"></image>
 				</view>
+				<view class='empty-tip'>{{$t(`暂无添加地址~`)}}</view>
 			</view>
 			<view style='height:120rpx;'></view>
 			<view class='footer acea-row row-between-wrapper'>
@@ -483,5 +484,12 @@
 
 	.address-management .footer .addressBnt.wxbnt {
 		background-color: #FE960F;
+	}
+
+	.noCommodity .empty-tip {
+		text-align: center;
+		font-size: 26rpx;
+		color: #999;
+		padding: 16rpx 30rpx 30rpx;
 	}
 </style>

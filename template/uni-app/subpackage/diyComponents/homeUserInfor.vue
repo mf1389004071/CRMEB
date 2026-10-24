@@ -171,14 +171,14 @@
                       <view
                         class="label line1"
                         :style="{ color: dataTitleColor }"
-                        >{{ item.name }}</view
+                        >{{ $t(item.name) }}</view
                       >
                     </template>
                     <template v-else>
                       <view
                         class="label line1"
                         :style="{ color: dataTitleColor }"
-                        >{{ item.name }}</view
+                        >{{ $t(item.name) }}</view
                       >
                       <view
                         class="num line1"
@@ -327,14 +327,14 @@
                     <view
                       class="label line1"
                       :style="{ color: dataTitleColor }"
-                      >{{ item.name }}</view
+                      >{{ $t(item.name) }}</view
                     >
                   </template>
                   <template v-else>
                     <view
                       class="label line1"
                       :style="{ color: dataTitleColor }"
-                      >{{ item.name }}</view
+                      >{{ $t(item.name) }}</view
                     >
                     <view class="num line1" :style="{ color: dataNumColor }">{{
                       item.val
@@ -400,14 +400,14 @@
                   <view
                     class="label line1"
                     :style="{ color: dataTitleColor }"
-                    >{{ item.name }}</view
+                    >{{ $t(item.name) }}</view
                   >
                 </template>
                 <template v-else>
                   <view
                     class="label line1"
                     :style="{ color: dataTitleColor }"
-                    >{{ item.name }}</view
+                    >{{ $t(item.name) }}</view
                   >
                   <view class="num line1" :style="{ color: dataNumColor }">{{
                     item.val
@@ -444,7 +444,7 @@
           </view>
         </template>
 
-        <template v-if="memberStyleConfig == 0 && memberList.length">
+        <template v-if="!vnMode && memberStyleConfig == 0 && memberList.length">
           <view class="member-style-1" :style="[cardStyle, memberTopStyle]">
             <view
               class="item"
@@ -467,7 +467,7 @@
           </view>
         </template>
 
-        <template v-if="memberStyleConfig == 1">
+        <template v-if="!vnMode && memberStyleConfig == 1">
           <view
             class="member-style-2"
             :style="[cardStyle, memberTopStyle]"
@@ -541,7 +541,7 @@
           </view>
         </template>
 
-        <template v-if="memberStyleConfig == 2">
+        <template v-if="!vnMode && memberStyleConfig == 2">
           <view class="member-style-3" :style="[cardStyle, memberTopStyle]">
             <view class="content-wrapper" :style="[ms3ContainerStyle]">
               <view class="desc line1" :style="{ color: ms3TitleColor }">{{
@@ -557,7 +557,7 @@
           </view>
         </template>
 
-        <template v-if="memberStyleConfig == 3">
+        <template v-if="!vnMode && memberStyleConfig == 3">
           <view class="member-style-4" :style="[cardStyle, memberTopStyle]">
             <view class="left-box">
               <view class="label">{{$t('可提现(元)')}}</view>
@@ -578,9 +578,11 @@
 <script>
 import commonWrapper from "./commonWrapper.vue";
 import { mapGetters } from "vuex";
+import { vnMixin } from "@/utils/vn.js";
 
 export default {
   components: { commonWrapper },
+  mixins: [vnMixin],
   name: "homeMember",
   props: {
     dataConfig: {
@@ -694,10 +696,24 @@ export default {
       );
     },
     memberList() {
-      return (
+      const list =
         (this.dataConfig.memberConfig && this.dataConfig.memberConfig.list) ||
-        []
-      );
+        [];
+      if (!this.vnMode) return list;
+      const hide = [
+        "/pages/annex/vip_paid/index",
+        "/pages/points_mall/index",
+        "/pages/users/user_get_coupon/index",
+        "/pages/users/user_integral/index",
+        "/pages/users/user_coupon/index",
+      ];
+      return list.filter((it) => {
+        const url =
+          (it.info && it.info[2] && it.info[2].value) ||
+          (it.info && it.info[1] && it.info[1].value) ||
+          "";
+        return hide.indexOf(url) < 0;
+      });
     },
     rightEntryList() {
       return (
@@ -935,10 +951,10 @@ export default {
       );
     },
     ms2TitleText() {
-      return (
+      const v =
         (this.dataConfig.ms2TitleText && this.dataConfig.ms2TitleText.value) ||
-        ""
-      );
+        "";
+      return v ? this.$t(v) : "";
     },
     ms2TitleColor() {
       return this.dataConfig.ms2TitleColor &&
@@ -954,10 +970,10 @@ export default {
       );
     },
     ms2IntroText() {
-      return (
+      const v =
         (this.dataConfig.ms2IntroText && this.dataConfig.ms2IntroText.value) ||
-        ""
-      );
+        "";
+      return v ? this.$t(v) : "";
     },
     ms2IntroColor() {
       return this.dataConfig.ms2IntroColor &&
@@ -987,11 +1003,11 @@ export default {
       );
     },
     ms2ExplainText() {
-      return (
+      const v =
         (this.dataConfig.ms2ExplainText &&
           this.dataConfig.ms2ExplainText.value) ||
-        ""
-      );
+        "";
+      return v ? this.$t(v) : "";
     },
     ms2ExplainColor() {
       return this.dataConfig.ms2ExplainColor &&
@@ -1001,11 +1017,11 @@ export default {
         : "";
     },
     ms2ButtonText() {
-      return (
+      const v =
         (this.dataConfig.ms2ButtonText &&
           this.dataConfig.ms2ButtonText.value) ||
-        ""
-      );
+        "";
+      return v ? this.$t(v) : "";
     },
     ms2ButtonLink() {
       return (
@@ -1029,10 +1045,10 @@ export default {
         : "";
     },
     ms3TitleText() {
-      return (
+      const v =
         (this.dataConfig.ms3TitleText && this.dataConfig.ms3TitleText.value) ||
-        ""
-      );
+        "";
+      return v ? this.$t(v) : "";
     },
     ms3TitleColor() {
       return this.dataConfig.ms3TitleColor &&
@@ -1042,11 +1058,11 @@ export default {
         : "";
     },
     ms3ButtonText() {
-      return (
+      const v =
         (this.dataConfig.ms3ButtonText &&
           this.dataConfig.ms3ButtonText.value) ||
-        ""
-      );
+        "";
+      return v ? this.$t(v) : "";
     },
     ms3ButtonColor() {
       return this.dataConfig.ms3ButtonColor &&
@@ -1108,7 +1124,18 @@ export default {
     },
     getInfo(item, index) {
       if (!item || !item.info || !item.info[index]) return "";
-      return item.info[index].value || "";
+      const v = item.info[index].value || "";
+      // 链接不走 $t；展示文案走语言包
+      if (
+        index >= 2 ||
+        (typeof v === "string" &&
+          (v.indexOf("/pages/") === 0 ||
+            v.indexOf("http://") === 0 ||
+            v.indexOf("https://") === 0))
+      ) {
+        return v;
+      }
+      return v ? this.$t(v) : "";
     },
     getDataValue(key) {
       if (!this.isLogin) return 0;
@@ -1127,10 +1154,7 @@ export default {
       return 0;
     },
     goUserInfo() {
-      if (!this.isLogin) {
-        this.$emit("changeLogin");
-        return;
-      }
+      // VN: 设置页含语言切换，未登录也允许进入
       uni.navigateTo({ url: "/pages/users/user_info/index" });
     },
     handleDataNavigation(item) {
@@ -1167,7 +1191,11 @@ export default {
     },
     goLink(url) {
       if (!url) return;
-      if (!this.isLogin) {
+      // VN: 设置页含语言切换，未登录也允许进入
+      const allowGuest =
+        typeof url === "string" &&
+        url.indexOf("/pages/users/user_info/") === 0;
+      if (!this.isLogin && !allowGuest) {
         this.$emit("changeLogin");
         return;
       }

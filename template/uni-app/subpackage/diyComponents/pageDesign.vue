@@ -552,7 +552,28 @@ export default {
       this.footerConfigData = null;
       if (data.value) {
         let lastArr = this.objToArr(data.value);
+        // VN: 首页已有 RegionBar(搜索)+CategoryGrid8，隐藏 DIY 搜索/分类导航/快捷菜单及营销组件
+        const vnHideComps = [
+          "headerSerch",
+          "homeComb",
+          "menus",
+          "tabNav",
+          "seckill",
+          "bargain",
+          "combination",
+          "liveBroadcast",
+          "pointsMall",
+          "signIn",
+          "coupon",
+          "newVip",
+          "promotionList",
+          "homePaidVip",
+          "home_paid_vip",
+          "presale",
+        ];
         lastArr.forEach((item) => {
+          if (!item) return;
+          if (this.vnMode && vnHideComps.indexOf(item.name) > -1) return;
           if (item.name == "pageFoot" && !this.microPage) {
             this.footerConfigData = item;
           }

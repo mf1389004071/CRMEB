@@ -12,7 +12,7 @@
           v-if="headerType == 0"
           :style="[titleTextStyle]"
         >
-          {{ headerText }}
+          {{ headerText ? $t(headerText) : "" }}
         </view>
         <view class="title-img" v-else :style="[titleImgBoxStyle]">
           <image
@@ -139,7 +139,7 @@
                       v-if="checkboxInfo.includes(3)"
                       :style="[uniStyle]"
                       >{{ $t(`已售`) }}{{ item.sales
-                      }}{{ item.unit_name }}</text
+                      }}{{ item.unit_name ? $t(item.unit_name) : "" }}</text
                     >
                     <text
                       class="fs-22 text--w111-999 pl-16"
@@ -304,7 +304,7 @@
                         v-if="checkboxInfo.includes(3)"
                         :style="[uniStyle]"
                         >{{ $t(`已售`) }}{{ item.sales
-                        }}{{ item.unit_name }}</text
+                        }}{{ item.unit_name ? $t(item.unit_name) : "" }}</text
                       >
                       <view
                         @tap.stop="addCartChange(item, index)"
@@ -457,7 +457,7 @@
                         v-if="checkboxInfo.includes(3)"
                         :style="[uniStyle]"
                         >{{ $t(`已售`) }}{{ item.sales
-                        }}{{ item.unit_name }}</text
+                        }}{{ item.unit_name ? $t(item.unit_name) : "" }}</text
                       >
                       <view
                         @tap.stop="addCartChange(item, index)"
@@ -717,7 +717,7 @@
                       v-if="checkboxInfo.includes(3)"
                       :style="[uniStyle]"
                       >{{ $t(`已售`) }}{{ item.sales
-                      }}{{ item.unit_name }}</text
+                      }}{{ item.unit_name ? $t(item.unit_name) : "" }}</text
                     >
                     <text
                       class="fs-22 text--w111-999 pl-16"

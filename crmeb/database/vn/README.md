@@ -58,7 +58,15 @@ docker run -d --name cjx-php --add-host=host.docker.internal:host-gateway -p 808
 # 3) 运行测试（在 crmeb 目录）：
 bash tests/vn/run.sh tests/vn/cod_order_test.php
 ```
-新增词条或配置后需清缓存：`rm -rf crmeb/runtime/cache`。词条维护：编辑 `lang_codes.tsv` 后运行 `python scripts/vn_lang_codes_to_sql.py` 生成 `900_lang_codes.sql`。
+新增词条或配置后需清缓存：`rm -rf crmeb/runtime/cache`，并删 `eb_cache` 中 `lang_version` / `api_lang_*`（或后台「清除缓存」），以便 `lang_version` 变新、H5 重新拉语言包。
+
+词条维护：
+- 业务新增：编辑 `lang_codes.tsv` 后运行 `python scripts/vn_lang_codes_to_sql.py` 生成 `900_lang_codes.sql`。
+- 对齐 uni-app `$t` 缺口：`python scripts/i18n_extract_uni_t_keys.py --mysql "mysql://root:root@127.0.0.1:33060/crmeb" --emit-sql crmeb/database/vn/101_uni_t_keys_fill.sql --emit-tsv-append crmeb/database/vn/lang_codes.tsv --translate-gtx`（再执行 `101_*.sql` / `102_*.sql`）。
+- 说明：DIY 装修标题、分类名、商品名等业务内容：分类走 `eb_i18n_content`（见 `103_vn_ui_i18n_fix.sql`）；DIY 文案在前端用 `$t(配置中文)` 对齐语言包。
+- 空态图文案：`105_empty_state_ui_keys.sql`（地址/收藏空态；`noAddress.png` / `noCollection.png` 已裁掉内嵌中文）。
+- 版权：`nncnL_crmeb_copyright` 默认 `Copyright © Alpha Fangding. All rights reserved.`（`103_*.sql`）。
+- 未登录切语言：设置页 `/pages/users/user_info/index` 已放开登录门禁；「我的」页顶部也有语言入口。
 
 ## 前端金额展示约定（M6-4）
 - 页面一律使用 `$money(本位币金额)` 或 `<BaseMoney :money="本位币金额">`，**不得手写 ￥/千分位**；

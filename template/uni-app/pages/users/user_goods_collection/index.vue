@@ -34,6 +34,7 @@
 			<view class='pictrue'>
 				<image :src="imgHost + '/statics/images/noCollection.png'"></image>
 			</view>
+			<view class='empty-tip'>{{$t(`还没有关注，赶快去关注一波吧~`)}}</view>
 			<recommend :hostProduct="hostProduct"></recommend>
 		</view>
 		<view class='footer acea-row row-between-wrapper' v-if="checkbox_show && collectProductList.length">
@@ -353,6 +354,13 @@
 		background-color: #fff;
 		padding-top: 1rpx;
 		border-top: 0;
+	}
+
+	.noCommodity .empty-tip {
+		text-align: center;
+		font-size: 26rpx;
+		color: #999;
+		padding: 16rpx 30rpx 30rpx;
 	}
 
 	.title-admin {

@@ -73,7 +73,7 @@
                 :style="[textColor]"
                 v-if="navDisplayStyle !== 1"
               >
-                {{ item.info[0].value }}
+                {{ $t(item.info[0].value) }}
               </view>
             </view>
             <template v-else>
@@ -114,7 +114,7 @@
                   :style="[textColor]"
                   v-if="navDisplayStyle !== 1"
                 >
-                  {{ item.info[0].value }}
+                  {{ $t(item.info[0].value) }}
                 </view>
               </button>
               <!-- #endif -->
@@ -293,7 +293,7 @@
                     :class="{ 'mt-10': listStyle === 0 }"
                     :style="[textColor]"
                     v-if="navDisplayStyle !== 1"
-                    >{{ item.info[0].value }}</view
+                    >{{ $t(item.info[0].value) }}</view
                   >
                 </view>
                 <template v-else>
@@ -338,7 +338,7 @@
                       :class="{ 'mt-10': listStyle === 0 }"
                       :style="[textColor]"
                       v-if="navDisplayStyle !== 1"
-                      >{{ item.info[0].value }}</view
+                      >{{ $t(item.info[0].value) }}</view
                     >
                   </button>
                   <!-- #endif -->
@@ -368,9 +368,11 @@ import commonWrapper from "./commonWrapper.vue";
 import { getCustomer } from "@/utils/index.js";
 import { toLogin } from "@/libs/login.js";
 import { mapGetters } from "vuex";
+import { vnMixin } from "@/utils/vn.js";
 
 export default {
   components: { commonWrapper },
+  mixins: [vnMixin],
   name: "menus",
   props: {
     dataConfig: {
@@ -409,10 +411,25 @@ export default {
     menus() {
       let list = this.dataConfig.menuConfig.list || [];
       let menuList = [];
+      // VN: 隐藏营销类入口（与 VnSiteServices / permission 对齐）
+      const vnHide = this.vnMode
+        ? [
+            "/pages/activity/goods_seckill/index",
+            "/pages/activity/goods_combination/index",
+            "/pages/activity/goods_bargain/index",
+            "/pages/activity/bargain/index",
+            "/pages/activity/presell/index",
+            "/pages/points_mall/index",
+            "/pages/users/user_sgin/index",
+            "/pages/users/user_get_coupon/index",
+            "/pages/annex/vip_paid/index",
+          ]
+        : [];
       list.forEach((item) => {
-        if (item.show) {
-          menuList.push(item);
-        }
+        if (!item.show) return;
+        const url = (item.info && item.info[1] && item.info[1].value) || "";
+        if (vnHide.indexOf(url) > -1) return;
+        menuList.push(item);
       });
       return menuList;
     },

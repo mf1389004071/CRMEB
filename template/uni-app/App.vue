@@ -168,15 +168,26 @@ export default {
     applyTheme(previewThemeId);
     getLangVersion().then((res) => {
       let version = res.data.version;
+      const applyLangPack = (data) => {
+        if (!data || typeof data !== "object") return;
+        let value = Object.keys(data)[0];
+        if (!value || !data[value]) return;
+        Cache.set("locale", normalizeLang(value));
+        this.$i18n.setLocaleMessage(value, data[value]);
+        this.$i18n.locale = value;
+        uni.setStorageSync("localeJson", data);
+      };
       if (version != uni.getStorageSync("LANG_VERSION")) {
-        getLangJson().then((res) => {
-          let value = Object.keys(res.data)[0];
-          Cache.set("locale", normalizeLang(Object.keys(res.data)[0]));
-          this.$i18n.setLocaleMessage(value, res.data[value]);
-          uni.setStorageSync("localeJson", res.data);
-        });
+        // 须等语言包写入后再记版本，避免竞态导致空包却跳过拉取
+        getLangJson()
+          .then((res) => {
+            applyLangPack(res.data);
+            uni.setStorageSync("LANG_VERSION", version);
+          })
+          .catch(() => {});
+      } else {
+        applyLangPack(uni.getStorageSync("localeJson"));
       }
-      uni.setStorageSync("LANG_VERSION", version);
     });
 
     // #ifdef APP-PLUS || H5

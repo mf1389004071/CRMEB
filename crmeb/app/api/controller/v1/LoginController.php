@@ -270,7 +270,7 @@ class LoginController
         if (strlen(trim($password)) < 6 || strlen(trim($password)) > 32) {
             return app('json')->fail('账号密码必须是在6到32位之间');
         }
-        if (md5($password) == md5('123456')) return app('json')->fail('密码太过简单，请输入较为复杂的密码');
+        // VN: 仅校验长度，不拦截常见简单密码（如 123456），便于本地/业务侧注册
         $norm = app()->make(\app\services\vn\VnSiteServices::class)->accountOf((string)$phoneCountryCode, (string)$account);
         if (!check_phone_intl((string)$phoneCountryCode, (string)$account) || !preg_match('/^[0-9]{8,15}$/', $norm)) {
             return app('json')->fail('手机号格式不正确');

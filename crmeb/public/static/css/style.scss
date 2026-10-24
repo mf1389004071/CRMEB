@@ -487,13 +487,20 @@
 
 .noCommodity .pictrue {
   width: 414rpx;
-  height: 336rpx;
-  margin: 30rpx auto 30rpx auto;
+  height: 307rpx;
+  margin: 30rpx auto 0 auto;
 }
 
 .noCommodity .pictrue image {
   width: 100%;
   height: 100%;
+}
+
+.noCommodity .empty-tip {
+  text-align: center;
+  font-size: 26rpx;
+  color: #999;
+  padding: 16rpx 30rpx 30rpx;
 } // 登录、注册、忘记密码
 .register {
   background-image: linear-gradient(to bottom, #eb5447 0, #ff8e3b 100%);

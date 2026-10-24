@@ -17,6 +17,7 @@
 			<!-- 无地址 -->
 			<view class='pictrue' v-if="!is_loading && !addressList.length">
 				<image :src="imgHost + '/statics/images/noAddress.png'"></image>
+				<view class='empty-tip'>{{$t(`暂无添加地址~`)}}</view>
 			</view>
 			<view class='addressBnt bg-color' @tap='goAddressPages'>{{$t(`选择其它地址`)}}</view>
 		</view>
@@ -181,12 +182,19 @@
 
 	.address-window .pictrue {
 		width: 414rpx;
-		height: 336rpx;
+		height: auto;
 		margin: 0 auto;
+		text-align: center;
 	}
 
 	.address-window .pictrue image {
-		width: 100%;
-		height: 100%;
+		width: 414rpx;
+		height: 307rpx;
+	}
+
+	.address-window .empty-tip {
+		font-size: 26rpx;
+		color: #999;
+		padding: 16rpx 0 0;
 	}
 </style>

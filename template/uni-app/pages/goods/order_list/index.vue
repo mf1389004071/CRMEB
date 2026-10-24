@@ -5,7 +5,7 @@
 				<view class="picTxt acea-row row-between-wrapper">
 					<view class="text">
 						<view class="name">{{ $t(`订单信息`) }}</view>
-						<view><text class="mr-40">{{ $t(`消费订单`) }}：{{ orderData.order_count || 0 }} 单 </text>{{ $t(`总消费`) }}：{{ $money(orderData.sum_price || 0) }}</view>
+						<view><text class="mr-40">{{ $t(`消费订单`) }}：{{ orderData.order_count || 0 }} {{ $t(`单`) }} </text>{{ $t(`总消费`) }}：{{ $money(orderData.sum_price || 0) }}</view>
 					</view>
 					<view class="pictrue">
 						<image src="../static/orderTime.png"></image>

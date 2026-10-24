@@ -35,6 +35,7 @@
 				<view class='pictrue'>
 					<image :src="imgHost + '/statics/images/noAddress.png'"></image>
 				</view>
+				<view class='empty-tip'>{{$t(`暂无添加地址~`)}}</view>
 			</view>
 			<view style='height:120rpx;'></view>
 			<view class='footer acea-row row-between-wrapper'>

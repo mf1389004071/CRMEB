@@ -92,10 +92,7 @@
 			</view>
 		</view>
 		<view class="bottom">
-			<view class="ver" v-if="copyRight">{{ copyRight }}</view>
-			<view v-else class="ver">
-				<a href="https://www.crmeb.com">Copyright ©2024 CRMEB. All Rights</a>
-			</view>
+			<view class="ver">{{ copyRight || 'Copyright © Alpha Fangding. All rights reserved.' }}</view>
 		</view>
 		<Verify @success="success" :captchaType="captchaType" :imgSize="{ width: '330px', height: '155px' }" ref="verify"></Verify>
 	</view>
@@ -173,8 +170,11 @@ export default {
 				}
 			}
 		});
-		if (uni.getStorageSync('copyRight').copyrightContext) {
-			this.copyRight = uni.getStorageSync('copyRight').copyrightContext;
+		const cr = uni.getStorageSync('copyRight') || {};
+		if (cr.copyrightContext) {
+			this.copyRight = cr.copyrightContext;
+		} else {
+			this.copyRight = 'Copyright © Alpha Fangding. All rights reserved.';
 		}
 	},
 	mounted() {

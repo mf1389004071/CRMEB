@@ -7,13 +7,13 @@
         class="title acea-row row-middle row-between"
         :style="[titleLocation]"
       >
-        <view :style="[titleStyle]">{{ dataConfig.titleConfig.value }}</view>
+        <view :style="[titleStyle]">{{ dataConfig.titleConfig.value ? $t(dataConfig.titleConfig.value) : "" }}</view>
         <view
           class="more"
           v-if="!dataConfig.buttonConfig.tabVal"
           :style="[moreStyle]"
         >
-          {{ dataConfig.titleConfigRight.value }}
+          {{ dataConfig.titleConfigRight.value ? $t(dataConfig.titleConfigRight.value) : "" }}
           <text class="iconfont icon-ic_rightarrow"></text>
         </view>
       </view>

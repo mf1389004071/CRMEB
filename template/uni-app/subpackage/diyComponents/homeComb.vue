@@ -24,7 +24,7 @@
                 class="title skeleton-rect"
                 :style="[titleStyle]"
                 v-if="searchBox == 0"
-                >{{ titleConfig }}</view
+                >{{ titleConfig ? $t(titleConfig) : "" }}</view
               >
               <view class="logo skeleton-rect" v-if="searchBox == 1">
                 <image :src="logoUpImg" mode="heightFix"></image>
@@ -51,7 +51,7 @@
                       <swiper-item catchtouchmove="catchTouchMove">
                         <view class="acea-row row-between-wrapper">
                           <view class="text acea-row row-between-wrapper">
-                            <view class="newsTitle line1">{{ item.val }}</view>
+                            <view class="newsTitle line1">{{ item.val ? $t(item.val) : "" }}</view>
                           </view>
                         </view>
                       </swiper-item>
@@ -67,7 +67,7 @@
                 class="skeleton-rect input"
                 :style="[inputStyle]"
               >
-                {{ dataConfig.inputConfig.value }}
+                {{ dataConfig.inputConfig.value ? $t(dataConfig.inputConfig.value) : "" }}
                 <text class="iconfont icon-ic_search"></text>
               </navigator>
             </view>
@@ -94,7 +94,7 @@
                 :data-index="index"
                 @click.stop="changeTab(item, index)"
               >
-                {{ item.text.val }}
+                {{ item.text.val ? $t(item.text.val) : "" }}
               </view>
             </scroll-view>
           </view>
@@ -121,7 +121,7 @@
               :key="index"
               :id="'ids' + index"
             >
-              {{ item.text.val }}
+              {{ item.text.val ? $t(item.text.val) : "" }}
             </view>
           </view>
         </view>
