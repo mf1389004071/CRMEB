@@ -177,5 +177,5 @@ function Test-ZipPackage {
 }
 
 function Get-PackDateStamp {
-    Get-Date -Format 'yyMMdd'
+    Get-Date -Format 'yyMMdd-HHmmss'
 }
