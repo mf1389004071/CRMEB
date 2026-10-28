@@ -1,7 +1,10 @@
 -- 菜集鲜开发环境演示数据（非生产）。幂等可重复执行。
 -- 依赖：已执行 database/vn/000～100 迁移；021 区划种子；现有商品 id 1～4。
+-- 编码：必须用 utf8mb4 客户端执行（见 run_all.ps1 / --default-character-set=utf8mb4）。
+--       若用 latin1/gbk 导入，中文与越文声调会落成字面量「?」，且不可逆。
 -- 回滚提示：DELETE FROM eb_store_product_region_price WHERE product_id IN (1,2,3,4);
 --           DELETE FROM eb_i18n_content WHERE entity_type='product' AND entity_id IN (1,2,3,4);
+--           DELETE FROM eb_i18n_content WHERE entity_type='city' AND entity_id IN (910001,910002,900002) AND field='name' AND lang='zh-CN';
 --           DELETE FROM eb_system_group_data WHERE gid=(SELECT id FROM eb_system_group WHERE config_name='vn_contact');
 SET NAMES utf8mb4;
 
@@ -167,13 +170,11 @@ INSERT INTO eb_i18n_content (entity_type, entity_id, field, lang, value, status,
 ('product', 4, 'store_name', 'en-US', 'White shrimp (demo)', 1, @now, @now),
 ('product', 4, 'store_name', 'vi-VN', 'Tôm thẻ (demo)', 1, @now, @now);
 
--- 区划名中文演示
-INSERT INTO eb_i18n_content (entity_type, entity_id, field, lang, value, status, add_time, update_time)
-SELECT 'city', 910001, 'name', 'zh-CN', '河内', 1, @now, @now FROM DUAL
-WHERE NOT EXISTS (SELECT 1 FROM eb_i18n_content WHERE entity_type='city' AND entity_id=910001 AND field='name' AND lang='zh-CN');
-INSERT INTO eb_i18n_content (entity_type, entity_id, field, lang, value, status, add_time, update_time)
-SELECT 'city', 910002, 'name', 'zh-CN', '胡志明市', 1, @now, @now FROM DUAL
-WHERE NOT EXISTS (SELECT 1 FROM eb_i18n_content WHERE entity_type='city' AND entity_id=910002 AND field='name' AND lang='zh-CN');
-INSERT INTO eb_i18n_content (entity_type, entity_id, field, lang, value, status, add_time, update_time)
-SELECT 'city', 900002, 'name', 'zh-CN', '越南', 1, @now, @now FROM DUAL
-WHERE NOT EXISTS (SELECT 1 FROM eb_i18n_content WHERE entity_type='city' AND entity_id=900002 AND field='name' AND lang='zh-CN');
+-- 区划名中文演示（DELETE+INSERT，可覆盖历史错误编码写入的「?」）
+DELETE FROM eb_i18n_content
+WHERE entity_type = 'city' AND field = 'name' AND lang = 'zh-CN'
+  AND entity_id IN (910001, 910002, 900002);
+INSERT INTO eb_i18n_content (entity_type, entity_id, field, lang, value, status, add_time, update_time) VALUES
+('city', 910001, 'name', 'zh-CN', '河内', 1, @now, @now),
+('city', 910002, 'name', 'zh-CN', '胡志明市', 1, @now, @now),
+('city', 900002, 'name', 'zh-CN', '越南', 1, @now, @now);

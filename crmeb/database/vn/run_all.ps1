@@ -21,8 +21,15 @@ foreach ($f in $files) {
 $demo = Join-Path $Root 'demo\001_demo_data.sql'
 if (Test-Path $demo) {
   Write-Host ">> demo/001_demo_data.sql"
+  # 必须 UTF8 读文件 + utf8mb4 客户端；否则中/越文会落成字面量「?」
   Get-Content -Raw -Encoding UTF8 $demo | docker exec -i $Container mysql "-u${User}" "-p${Pass}" --default-character-set=utf8mb4 $Db
   if ($LASTEXITCODE -ne 0) { throw "Failed: demo" }
+  $chk = docker exec $Container mysql "-u${User}" "-p${Pass}" --default-character-set=utf8mb4 -N $Db -e "SELECT COUNT(*) FROM eb_store_product WHERE id IN (1,2,3,4) AND store_name LIKE '%?%'; SELECT COUNT(*) FROM eb_i18n_content WHERE entity_type='product' AND entity_id IN (1,2,3,4) AND value LIKE '%?%';"
+  if ($LASTEXITCODE -ne 0) { throw "Failed: demo charset check" }
+  $nums = @($chk -split '\s+' | Where-Object { $_ -match '^\d+$' })
+  if (($nums | Measure-Object -Sum).Sum -gt 0) {
+    throw "demo 导入后仍含「?」，请确认客户端为 utf8mb4 且脚本以 UTF-8 读取（当前坏行: $($nums -join ','))"
+  }
 }
 
 Write-Host "OK all SQL applied"

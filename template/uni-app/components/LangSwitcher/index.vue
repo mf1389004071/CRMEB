@@ -1,15 +1,21 @@
 <template>
-  <view class="lang-switcher" :class="{ compact: compact }" @click.stop>
+  <view
+    class="lang-switcher"
+    :class="{ compact: compact, 'icon-only': iconOnly }"
+    @click.stop
+  >
     <picker
       :range="options"
       range-key="name"
       :value="index"
       @change="onChange"
     >
-      <view class="trigger">
-        <text class="iconfont icon-ic_earth" v-if="showIcon"></text>
-        <text class="label">{{ currentName }}</text>
-        <text class="iconfont icon-xiangyou arrow"></text>
+      <view class="trigger" :class="{ 'trigger-icon': iconOnly }">
+        <!-- iconfont 无 earth 字形；顶栏纯图标用 emoji，与 RegionBar ☎ 风格一致 -->
+        <text class="emoji-lang" v-if="iconOnly">🌐</text>
+        <text class="iconfont icon-ic_earth" v-else-if="showIcon"></text>
+        <text class="label" v-if="!iconOnly">{{ currentName }}</text>
+        <text class="iconfont icon-xiangyou arrow" v-if="!iconOnly"></text>
       </view>
     </picker>
   </view>
@@ -30,6 +36,8 @@ export default {
   props: {
     compact: { type: Boolean, default: false },
     showIcon: { type: Boolean, default: true },
+    /** 首页顶栏等场景：仅地球图标，点击仍弹出语言 picker */
+    iconOnly: { type: Boolean, default: false },
   },
   computed: {
     ...mapGetters(["isLogin"]),
@@ -118,6 +126,15 @@ export default {
   &.compact .trigger {
     padding: 4rpx 12rpx;
     font-size: 24rpx;
+  }
+  &.icon-only .trigger-icon {
+    padding: 0 8rpx;
+    background: transparent;
+    gap: 0;
+    .emoji-lang {
+      font-size: 40rpx;
+      line-height: 1;
+    }
   }
 }
 </style>

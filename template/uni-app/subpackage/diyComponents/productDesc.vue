@@ -42,13 +42,17 @@ export default {
   },
   computed: {
     titleShow() {
-      return this.dataConfig.isShow?.tabVal == 0;
+      const show = this.dataConfig && this.dataConfig.isShow;
+      return show && show.tabVal == 0;
     },
     titleStyle() {
+      const dc = this.dataConfig || {};
+      const colorArr = dc.textColor && dc.textColor.color;
+      const colorItem = colorArr && colorArr[0] && colorArr[0].item;
       return {
-        color: this.dataConfig.textColor?.color?.[0]?.item || "#333",
-        fontSize: (this.dataConfig.fontSize?.val || 16) * 2 + "rpx",
-        textAlign: this.dataConfig.textPosition?.val || "left",
+        color: colorItem || "#333",
+        fontSize: ((dc.fontSize && dc.fontSize.val) || 16) * 2 + "rpx",
+        textAlign: (dc.textPosition && dc.textPosition.val) || "left",
       };
     },
   },

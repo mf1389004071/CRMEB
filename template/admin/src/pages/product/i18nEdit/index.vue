@@ -9,6 +9,14 @@
         class="mb10"
         :title="'主表字段保存站点默认语言（' + data.default_lang + '）内容；这里为各语言译文。留空=该语言不单独设置，前台按“当前语言 → 回落语言 → 主表”显示。机翻内容为“待审”状态，审核保存后转为已审核。'"
       />
+      <el-alert
+        v-if="corruptHint"
+        type="warning"
+        :closable="false"
+        show-icon
+        class="mb10"
+        :title="corruptHint"
+      />
       <div class="mb10">
         <el-button size="small" @click="machine" v-if="type !== 'city'">用中文机翻填充越/英（待审）</el-button>
         <el-button size="small" type="primary" @click="save">保存全部译文</el-button>
@@ -90,6 +98,23 @@ export default {
     },
     backUrl() {
       return this.type === 'product' ? this.$routeProStr + '/product/product_list' : this.type === 'category' ? this.$routeProStr + '/product/product_classify' : this.$routeProStr + '/setting/region/index';
+    },
+    /** 历史 SQL 非 utf8mb4 导入会把多字节字符写成「?」；在此提示，避免误以为切换逻辑坏了 */
+    corruptHint() {
+      const hits = [];
+      const look = (label, val) => {
+        const s = val == null ? '' : String(val);
+        if (!s) return;
+        if (/^\?+$/.test(s) || (s.length >= 4 && (s.match(/\?/g) || []).length >= Math.ceil(s.length / 2))) {
+          hits.push(label);
+        }
+      };
+      Object.keys(this.data.original || {}).forEach((f) => look('主表.' + f, this.data.original[f]));
+      Object.keys(this.form || {}).forEach((l) => {
+        Object.keys(this.form[l] || {}).forEach((f) => look(l + '.' + f, this.form[l][f]));
+      });
+      if (!hits.length) return '';
+      return '检测到疑似编码损坏字段（含大量「?」）：' + hits.slice(0, 8).join('、') + '。请用 utf8mb4 重新保存译文，或重跑 demo/迁移 SQL；勿直接机翻坏掉的中文源。';
     },
   },
   created() {

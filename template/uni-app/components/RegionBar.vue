@@ -11,7 +11,11 @@
 				</view>
 				<text class="arrow">›</text>
 			</view>
-			<view class="contact" @click="goContact">☎</view>
+			<view class="right-actions">
+				<view class="contact" @click="goContact">☎</view>
+				<!-- VN: 首页顶栏最右语言切换（与「我的」页 LangSwitcher 同源） -->
+				<LangSwitcher icon-only />
+			</view>
 		</view>
 		<!-- 中间：搜索 -->
 		<view class="search" @click="goSearch">
@@ -24,9 +28,13 @@
 <script>
 	import { getRegion, regionFullName } from '@/utils/region.js';
 	import { getAddressDefault } from '@/api/user.js';
+	import LangSwitcher from '@/components/LangSwitcher/index.vue';
 
 	export default {
 		name: 'RegionBar',
+		components: {
+			LangSwitcher
+		},
 		data() {
 			return {
 				label: '',
@@ -122,9 +130,16 @@
 			margin: 0 10rpx;
 		}
 
+		.right-actions {
+			display: flex;
+			align-items: center;
+			flex-shrink: 0;
+			margin-left: 8rpx;
+		}
+
 		.contact {
 			font-size: 40rpx;
-			padding: 0 12rpx;
+			padding: 0 8rpx 0 12rpx;
 		}
 
 		.search {

@@ -328,7 +328,7 @@ export default {
         }));
     },
     customImageStyle() {
-      const fillet = this.bottomConfig?.fillet;
+      const fillet = this.bottomConfig && this.bottomConfig.fillet;
       if (!fillet) return { width: "40rpx", height: "40rpx" };
       let radius;
       if (fillet.type) {
@@ -346,12 +346,16 @@ export default {
     customIconStyle() {
       const config = this.bottomConfig;
       if (!config) return {};
-      const color = config.iconColor?.color?.[0]?.item || "#333";
-      const size = config.iconSize?.val || 20;
-      const rotate = config.iconRotate?.val || 0;
-      const padding = config.padding?.val || 0;
+      const colorArr = config.iconColor && config.iconColor.color;
+      const color =
+        (colorArr && colorArr[0] && colorArr[0].item) || "#333";
+      const size = (config.iconSize && config.iconSize.val) || 20;
+      const rotate = (config.iconRotate && config.iconRotate.val) || 0;
+      const padding = (config.padding && config.padding.val) || 0;
       const shadow =
-        config.shadow?.tabVal === 1 ? "0px 2px 4px rgba(0,0,0,0.2)" : "none";
+        config.shadow && config.shadow.tabVal === 1
+          ? "0px 2px 4px rgba(0,0,0,0.2)"
+          : "none";
       return {
         color: color,
         fontSize: `${size}px`,

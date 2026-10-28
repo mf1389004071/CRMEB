@@ -7,6 +7,10 @@
 3. （可选开发演示）再执行 `demo/001_demo_data.sql`
 4. 执行后清理缓存（后台“清除缓存”或删 `runtime/cache`）。
 
+**编码（必读）**：所有 SQL 必须用 **utf8mb4** 客户端导入（`--default-character-set=utf8mb4`，脚本内 `SET NAMES utf8mb4`）。  
+PowerShell 管道导入时还需 `Get-Content -Encoding UTF8`（`run_all.ps1` 已处理）。若用默认 ANSI/latin1 导入，中文与越文声调会在入库时被替换成字面量 `?`（不可逆），表现就是「切中文商品名全是问号」——多语配置行还在，只是 `value` 已坏。  
+推荐一律走下面一键脚本，避免手工 `source` 漏 charset。
+
 Windows / Docker 一键：
 
 ```powershell
