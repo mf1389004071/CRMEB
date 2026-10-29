@@ -23,6 +23,11 @@
           <el-form-item label="配送区域ID：">
             <el-input clearable v-model="where.region_id" placeholder="区域 city_id" class="form_content_width" />
           </el-form-item>
+          <el-form-item label="提货仓：">
+            <el-select v-model="where.warehouse_id" clearable filterable placeholder="全部仓库" style="width: 180px">
+              <el-option v-for="w in warehouseOptions" :key="w.id" :label="w.name" :value="w.id" />
+            </el-select>
+          </el-form-item>
           <el-form-item label="收款：">
             <el-select v-model="where.paid" clearable placeholder="全部" style="width: 110px">
               <el-option label="已收款" value="1" />
@@ -31,6 +36,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" v-db-click @click="search">查询</el-button>
+            <el-button v-db-click @click="quickMyWh">本仓今日待提货</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -71,7 +77,13 @@
             <div v-for="(g, i) in scope.row.goods" :key="i">{{ g.name }} <span class="gray">{{ g.suk }}</span> ×{{ g.num }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="区域" min-width="130" prop="region_name" />
+        <el-table-column label="区域" min-width="120" prop="region_name" />
+        <el-table-column label="提货仓" min-width="140">
+          <template slot-scope="scope">
+            <div>{{ scope.row.warehouse_name || '-' }}</div>
+            <div class="gray" v-if="scope.row.warehouse_address">{{ scope.row.warehouse_address }}</div>
+          </template>
+        </el-table-column>
         <el-table-column label="应收/实收" min-width="120">
           <template slot-scope="scope">
             <div>应收 {{ scope.row.cod_receivable }}</div>
@@ -182,6 +194,7 @@
 import { mapState } from 'vuex';
 import { isSoundOn, setSoundOn } from '@/libs/codNotifier';
 import { orderBlacklistList, orderBlacklistAdd, orderBlacklistDel, codList, codConfirm, codDelivering, codDelivered, codVerify, codCollect, codCancel, codCallMark, codAudit } from '@/api/cod';
+import { warehouseOptions } from '@/api/warehouse';
 
 export default {
   name: 'codList',
@@ -191,19 +204,20 @@ export default {
       tabs: [
         { name: 'pending', label: '待确认', count: 'pending', filter: { fulfil_status: 0 } },
         { name: 'stockup', label: '备货中', count: 'stockup', filter: { fulfil_status: 1 } },
-        { name: 'delivering', label: '发货中', count: 'delivering', filter: { fulfil_status: 2 } },
-        { name: 'delivered', label: '已送达', count: 'delivered', filter: { fulfil_status: 3 } },
+        { name: 'delivering', label: '待提货', count: 'delivering', filter: { fulfil_status: 2 } },
+        { name: 'delivered', label: '已提货', count: 'delivered', filter: { fulfil_status: 3 } },
         { name: 'uncollected', label: '待收款', count: 'uncollected', filter: { fulfil_status: 3, paid: 0 } },
         { name: 'all', label: '全部', count: 'all', filter: {} },
       ],
       counts: {},
       soundOn: isSoundOn(),
-      where: { fulfil_status: '', region_id: '', date_start: '', date_end: '', keyword: '', paid: '', page: 1, limit: 20 },
+      where: { fulfil_status: '', region_id: '', warehouse_id: '', date_start: '', date_end: '', keyword: '', paid: '', page: 1, limit: 20 },
       timeVal: [],
       list: [],
       total: 0,
       loading: false,
       selection: [],
+      warehouseOptions: [],
       cur: {},
       form: { delivery_name: '', delivery_id: '', code: '', received: '', remark: '', reason: '' },
       deliveringDlg: false,
@@ -227,9 +241,35 @@ export default {
     },
   },
   created() {
+    this.loadWarehouses();
     this.getList();
   },
   methods: {
+    loadWarehouses() {
+      warehouseOptions()
+        .then((res) => {
+          this.warehouseOptions = res.data || [];
+        })
+        .catch(() => {
+          this.warehouseOptions = [];
+        });
+    },
+    quickMyWh() {
+      if (!this.where.warehouse_id && this.warehouseOptions.length) {
+        this.where.warehouse_id = this.warehouseOptions[0].id;
+      }
+      if (!this.where.warehouse_id) return this.$message.warning('请先选择提货仓');
+      const d = new Date();
+      const p = (n) => (n < 10 ? '0' + n : n);
+      const today = `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+      this.timeVal = [today, today];
+      this.where.date_start = today;
+      this.where.date_end = today;
+      this.tab = 'delivering';
+      this.where.fulfil_status = 2;
+      this.where.paid = '';
+      this.search();
+    },
     onTimeChange(v) {
       this.timeVal = v || [];
       this.where.date_start = this.timeVal[0] || '';
@@ -267,12 +307,16 @@ export default {
       if (!this.selection.length) return;
       const ids = this.selection.map((r) => r.id).join(',');
       if (this.selection.length > 100) return this.$message.warning('一次最多打印100单');
-      this.$router.push({ name: 'order_codPrint', query: { ids, mode: mode === 'pick' ? 'pick' : 'notes' } });
+      const q = { ids, mode: mode === 'pick' ? 'pick' : 'notes' };
+      if (this.where.warehouse_id) q.warehouse_id = this.where.warehouse_id;
+      this.$router.push({ name: 'order_codPrint', query: q });
     },
     printToday() {
       const d = new Date();
       const p = (n) => (n < 10 ? '0' + n : n);
-      this.$router.push({ name: 'order_codPrint', query: { date: `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}` } });
+      const q = { date: `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}` };
+      if (this.where.warehouse_id) q.warehouse_id = this.where.warehouse_id;
+      this.$router.push({ name: 'order_codPrint', query: q });
     },
     onSelect(rows) {
       this.selection = rows;
@@ -280,7 +324,7 @@ export default {
     fulfilText(row) {
       if (row.is_cancel) return '已取消';
       if (row.status === 3) return '已完成';
-      return ['待确认', '备货中', '发货中', '已送达'][row.fulfil_status] || '-';
+      return ['待确认', '备货中', '待提货', '已提货'][row.fulfil_status] || '-';
     },
     fulfilType(row) {
       if (row.is_cancel) return 'info';

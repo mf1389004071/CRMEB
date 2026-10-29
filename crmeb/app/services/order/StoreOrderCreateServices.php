@@ -184,6 +184,7 @@ class StoreOrderCreateServices extends BaseServices
         $wechatServices = app()->make(WechatUserServices::class);
         /** @var UserAddressServices $addressServices */
         $addressServices = app()->make(UserAddressServices::class);
+        $warehouseSnap = [];
         if ($is_gift == 0) {
             if ($shippingType == 1 && $virtual_type == 0) {
                 if (!$addressId) {
@@ -195,6 +196,12 @@ class StoreOrderCreateServices extends BaseServices
                 // VN: 收货地址必须落在当前配送区域内；订单手机号带区号（E.164）
                 if (region_pricing_active() && !app()->make(\app\services\vn\RegionServices::class)->addressInRegion((int)$addressInfo['city_id'], current_region_id())) {
                     throw new ApiException('收货地址不在当前配送区域');
+                }
+                // VN: 提货仓匹配（价格仍走区域价；仓仅履约）
+                if (vn_mode_enabled()) {
+                    $pickWhId = (int)(request()->param('warehouse_id', 0));
+                    $warehouseSnap = app()->make(\app\services\vn\WarehouseMatchServices::class)
+                        ->assertAndSnapshot((int)$addressInfo['city_id'], $pickWhId);
                 }
                 if (vn_mode_enabled() && !empty($addressInfo['phone_country_code'])) {
                     $addressInfo['phone'] = $addressInfo['phone_country_code'] . $addressInfo['phone'];
@@ -294,6 +301,9 @@ class StoreOrderCreateServices extends BaseServices
             'staff_id' => $userInfo['staff_id'],
             // VN: 下单区域（区域价订单；回退库存时据此定位区域库存行）
             'region_id' => region_pricing_active() ? current_region_id() : 0,
+            'warehouse_id' => (int)($warehouseSnap['warehouse_id'] ?? 0),
+            'warehouse_name' => (string)($warehouseSnap['warehouse_name'] ?? ''),
+            'warehouse_address' => (string)($warehouseSnap['warehouse_address'] ?? ''),
         ];
 
         if ($shippingType == 2) {

@@ -67,6 +67,24 @@
 				<view class='line'>
 					<image src='/static/images/line.jpg'></image>
 				</view>
+				<!-- VN: 提货仓库（按收货地址匹配，可改选） -->
+				<view class="wrapper" v-if="vnMode && shippingType == 0 && warehouseList.length">
+					<view class="item acea-row row-between-wrapper">
+						<view>{{$t(`提货仓库`)}}</view>
+						<picker :range="warehouseList" range-key="name" @change="onWarehousePick">
+							<view class="discount">
+								{{ selectedWarehouseName || $t(`请选择`) }}
+								<text class="iconfont icon-jiantou"></text>
+							</view>
+						</picker>
+					</view>
+					<view class="item" v-if="selectedWarehouseAddress" style="color:#888;font-size:24rpx;">
+						{{ selectedWarehouseAddress }}
+					</view>
+				</view>
+				<view class="wrapper" v-else-if="vnMode && shippingType == 0 && addressInfo.city_id && !warehouseList.length">
+					<view class="item" style="color:#e93323;">{{$t(`当前地址暂无可用提货仓`)}}</view>
+				</view>
 			</view>
 			<view v-if="giftData" class="gift-box">
 				<view class="acea-row row-middle user-msg">
@@ -424,6 +442,8 @@
 					address: false
 				}, //地址组件
 				addressInfo: {}, //地址信息
+				warehouseList: [],
+				warehouseId: 0,
 				pinkId: 0, //拼团id
 				addressId: 0, //地址id
 				couponId: 0, //优惠券id
@@ -492,7 +512,18 @@
 				giftData: null
 			};
 		},
-		computed: mapGetters(['isLogin']),
+		computed: {
+			...mapGetters(['isLogin']),
+			selectedWarehouseName() {
+				const w = (this.warehouseList || []).find((x) => x.id === this.warehouseId);
+				return w ? w.name : '';
+			},
+			selectedWarehouseAddress() {
+				const w = (this.warehouseList || []).find((x) => x.id === this.warehouseId);
+				if (!w) return '';
+				return ((w.address || '') + ' ' + (w.detailed_address || '')).trim();
+			},
+		},
 		// watch: {
 		// 	startDate() {
 		// 		return this.getDate('start');
@@ -984,6 +1015,7 @@
 					that.$set(that, 'store_self_mention', res.data.store_self_mention);
 					that.$set(that, 'virtual_type', res.data.virtual_type || 0);
 					that.$set(that, 'integral_open', res.data.integral_open);
+					that.applyWarehouseMatch(res.data.warehouse_match);
 					uni.hideLoading()
 					//微信支付是否开启
 					that.cartArr[0].payStatus = res.data.pay_weixin_open || 0
@@ -1183,12 +1215,30 @@
 			clickTextArea() {
 				this.$refs.textarea.focus()
 			},
+			applyWarehouseMatch(match) {
+				const m = match || { default_id: 0, list: [] };
+				this.warehouseList = m.list || [];
+				if (this.warehouseList.length) {
+					const keep = this.warehouseList.find((w) => w.id === this.warehouseId);
+					this.warehouseId = keep ? keep.id : (m.default_id || this.warehouseList[0].id);
+				} else {
+					this.warehouseId = 0;
+				}
+			},
+			onWarehousePick(e) {
+				const i = Number(e.detail.value);
+				const w = this.warehouseList[i];
+				if (w) this.warehouseId = w.id;
+			},
 			SubOrder(e) {
 				let that = this,
 					data = {};
 				if (!that.addressId && !that.shippingType && !that.virtual_type && !that.is_gift) return that.$util.Tips({
 					title: that.$t(`请选择收货地址`)
 				});
+				if (that.vnMode && !that.shippingType && !that.warehouseId) {
+					return that.$util.Tips({ title: that.$t(`当前地址暂无可用提货仓`) });
+				}
 				if (that.shippingType == 1) {
 					if (that.contacts == "" || that.contactsTel == "") {
 						return that.$util.Tips({
@@ -1272,6 +1322,7 @@
 					seckill_id: that.seckillId,
 					mark: that.mark,
 					store_id: that.system_store ? that.system_store.id : 0,
+					warehouse_id: that.vnMode ? that.warehouseId : 0,
 					'from': that.from,
 					shipping_type: that.$util.$h.Add(that.shippingType, 1),
 					'new': that.news,

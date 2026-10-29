@@ -28,8 +28,8 @@ class CodPrintServices extends BaseServices
     const MAX_IDS = 100;
 
     /**
-     * 解析订单范围：ids（逗号分隔，最多 100）或 date(+region_id) —— date 取当日未取消、未送达的到付单
-     * @param array $params ids、date、region_id
+     * 解析订单范围：ids（逗号分隔，最多 100）或 date(+region_id/+warehouse_id) —— date 取当日未取消、未送达的到付单
+     * @param array $params ids、date、region_id、warehouse_id
      * @return array 订单 id 列表
      */
     public function resolveOrderIds(array $params): array
@@ -42,7 +42,11 @@ class CodPrintServices extends BaseServices
                 throw new ApiException('一次最多处理100个订单');
             }
             if ($ids) {
-                $ids = StoreOrder::where('is_cod', 1)->where('is_del', 0)->whereIn('id', $ids)->column('id');
+                $q = StoreOrder::where('is_cod', 1)->where('is_del', 0)->whereIn('id', $ids);
+                if (!empty($params['warehouse_id'])) {
+                    $q->where('warehouse_id', (int)$params['warehouse_id']);
+                }
+                $ids = $q->column('id');
             }
         } elseif (!empty($params['date'])) {
             $start = strtotime($params['date'] . ' 00:00:00');
@@ -50,6 +54,9 @@ class CodPrintServices extends BaseServices
                 ->where('add_time', 'between', [$start, $start + 86399]);
             if (!empty($params['region_id'])) {
                 $query->where('region_id', (int)$params['region_id']);
+            }
+            if (!empty($params['warehouse_id'])) {
+                $query->where('warehouse_id', (int)$params['warehouse_id']);
             }
             $ids = $query->limit(self::MAX_IDS)->column('id');
         }
@@ -116,6 +123,9 @@ class CodPrintServices extends BaseServices
                 'user_phone'        => $o['user_phone'],
                 'user_address'      => $o['user_address'],
                 'region_name'       => $regionNames[$o['region_id']] ?? '',
+                'warehouse_id'      => (int)($o['warehouse_id'] ?? 0),
+                'warehouse_name'    => (string)($o['warehouse_name'] ?? ''),
+                'warehouse_address' => (string)($o['warehouse_address'] ?? ''),
                 'add_time'          => date('Y-m-d H:i', (int)$o['add_time']),
                 'mark'              => (string)$o['mark'],
                 'need_call_confirm' => (int)$o['need_call_confirm'],

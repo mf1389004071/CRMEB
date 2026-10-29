@@ -53,6 +53,7 @@ class CodOrder extends AuthController
         $where = $this->request->getMore([
             ['fulfil_status', ''],
             ['region_id', 0],
+            ['warehouse_id', 0],
             ['date_start', ''],
             ['date_end', ''],
             ['keyword', ''],
@@ -160,15 +161,16 @@ class CodOrder extends AuthController
      */
     public function print_data()
     {
-        [$ids, $date, $regionId, $lang] = $this->request->getMore([
+        [$ids, $date, $regionId, $warehouseId, $lang] = $this->request->getMore([
             ['ids', ''],
             ['date', ''],
             ['region_id', 0],
+            ['warehouse_id', 0],
             ['lang', 'vi-VN'],
         ], true);
         /** @var CodPrintServices $print */
         $print = app()->make(CodPrintServices::class);
-        $oids = $print->resolveOrderIds(['ids' => $ids, 'date' => $date, 'region_id' => $regionId]);
+        $oids = $print->resolveOrderIds(['ids' => $ids, 'date' => $date, 'region_id' => $regionId, 'warehouse_id' => $warehouseId]);
         $data = $print->printData($oids, (string)$lang);
         $audit = app()->make(OrderAuditServices::class);
         $operator = $this->operator();
@@ -183,15 +185,16 @@ class CodOrder extends AuthController
      */
     public function pick_summary()
     {
-        [$ids, $date, $regionId, $lang] = $this->request->getMore([
+        [$ids, $date, $regionId, $warehouseId, $lang] = $this->request->getMore([
             ['ids', ''],
             ['date', ''],
             ['region_id', 0],
+            ['warehouse_id', 0],
             ['lang', 'vi-VN'],
         ], true);
         /** @var CodPrintServices $print */
         $print = app()->make(CodPrintServices::class);
-        $oids = $print->resolveOrderIds(['ids' => $ids, 'date' => $date, 'region_id' => $regionId]);
+        $oids = $print->resolveOrderIds(['ids' => $ids, 'date' => $date, 'region_id' => $regionId, 'warehouse_id' => $warehouseId]);
         return app('json')->success(['order_count' => count($oids), 'list' => $print->pickSummary($oids, (string)$lang)]);
     }
 
@@ -200,16 +203,17 @@ class CodOrder extends AuthController
      */
     public function export()
     {
-        [$type, $ids, $date, $regionId, $lang] = $this->request->getMore([
+        [$type, $ids, $date, $regionId, $warehouseId, $lang] = $this->request->getMore([
             ['type', 'orders'],
             ['ids', ''],
             ['date', ''],
             ['region_id', 0],
+            ['warehouse_id', 0],
             ['lang', 'vi-VN'],
         ], true);
         /** @var CodPrintServices $print */
         $print = app()->make(CodPrintServices::class);
-        $oids = $print->resolveOrderIds(['ids' => $ids, 'date' => $date, 'region_id' => $regionId]);
+        $oids = $print->resolveOrderIds(['ids' => $ids, 'date' => $date, 'region_id' => $regionId, 'warehouse_id' => $warehouseId]);
         return app('json')->success(['url' => $print->export((string)$type, $oids, (string)$lang)]);
     }
 

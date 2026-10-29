@@ -18,10 +18,14 @@
       <template v-if="mode === 'notes'">
         <div class="page" v-for="n in notes" :key="n.id">
           <div class="head">
-            <div class="title">{{ lang === 'zh-CN' ? '配送单' : lang === 'both' ? 'PHIẾU GIAO HÀNG / 配送单' : 'PHIẾU GIAO HÀNG' }}</div>
+            <div class="title">{{ lang === 'zh-CN' ? '提货单' : lang === 'both' ? 'PHIẾU NHẬN HÀNG / 提货单' : 'PHIẾU NHẬN HÀNG' }}</div>
             <div class="oid">{{ n.order_id }}</div>
           </div>
           <table class="info">
+            <tr>
+              <td class="k">{{ L('Kho nhận hàng', '提货仓') }}</td>
+              <td colspan="3">{{ n.warehouse_name || '-' }} <span v-if="n.warehouse_address">（{{ n.warehouse_address }}）</span></td>
+            </tr>
             <tr>
               <td class="k">{{ L('Người nhận', '收货人') }}</td>
               <td>{{ n.real_name }}</td>
@@ -155,8 +159,8 @@ export default {
   },
   computed: {
     q() {
-      const { ids, date, region_id } = this.$route.query; // mode 仅用于前端展示
-      return { ids, date, region_id };
+      const { ids, date, region_id, warehouse_id } = this.$route.query; // mode 仅用于前端展示
+      return { ids, date, region_id, warehouse_id };
     },
   },
   created() {

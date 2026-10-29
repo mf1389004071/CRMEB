@@ -340,6 +340,9 @@ class CodOrderServices extends BaseServices
                 'need_call_confirm' => (int)$r['need_call_confirm'],
                 'region_id'         => (int)$r['region_id'],
                 'region_name'       => $regionNames[$r['region_id']] ?? '',
+                'warehouse_id'      => (int)($r['warehouse_id'] ?? 0),
+                'warehouse_name'    => (string)($r['warehouse_name'] ?? ''),
+                'warehouse_address' => (string)($r['warehouse_address'] ?? ''),
                 'client_ip'         => (string)($r['client_ip'] ?? ''),
                 'delivery_name'     => $r['delivery_name'],
                 'delivery_id'       => $r['delivery_id'],
@@ -392,9 +395,10 @@ class CodOrderServices extends BaseServices
             $list[] = [
                 'id'          => (int)$r['id'],
                 'order_id'    => $r['order_id'],
-                'region_name' => $regionNames[$r['region_id']] ?? '',
-                'pay_price'   => $r['pay_price'],
-                'add_time'    => date('Y-m-d H:i:s', (int)$r['add_time']),
+                'region_name'    => $regionNames[$r['region_id']] ?? '',
+                'warehouse_name' => (string)($r['warehouse_name'] ?? ''),
+                'pay_price'      => $r['pay_price'],
+                'add_time'       => date('Y-m-d H:i:s', (int)$r['add_time']),
             ];
         }
         $max = $rows ? (int)end($rows)['id'] : $sinceId;
@@ -420,6 +424,9 @@ class CodOrderServices extends BaseServices
         }
         if (!empty($where['region_id'])) {
             $query->where('region_id', (int)$where['region_id']);
+        }
+        if (!empty($where['warehouse_id'])) {
+            $query->where('warehouse_id', (int)$where['warehouse_id']);
         }
         if (isset($where['paid']) && $where['paid'] !== '') {
             $query->where('paid', (int)$where['paid']);

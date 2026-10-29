@@ -1788,6 +1788,13 @@ HTML;
 
         //自动领取优惠券
         app()->make(StoreCouponUserServices::class)->autoReceiveCoupon($user['uid'], $cartGroup);
+
+        // VN: 确认单附带提货仓匹配结果（按收货地址）
+        $data['warehouse_match'] = ['default_id' => 0, 'list' => [], 'match_city_id' => 0];
+        if (function_exists('vn_mode_enabled') && vn_mode_enabled() && !empty($addr['city_id'])) {
+            $data['warehouse_match'] = app()->make(\app\services\vn\WarehouseMatchServices::class)
+                ->match((int)$addr['city_id'], true);
+        }
         return $data;
     }
 

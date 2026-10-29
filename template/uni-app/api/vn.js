@@ -66,6 +66,13 @@ export function phoneCountries() {
 	});
 }
 
+/** 按地址 city_id 匹配提货仓 */
+export function warehouseMatch(data) {
+	return request.get("warehouse/match", data, {
+		noAuth: true
+	});
+}
+
 /** 保存用户语种（登录后同步到服务端） */
 export function setUserLocale(locale) {
 	return request.post("user/locale", {
