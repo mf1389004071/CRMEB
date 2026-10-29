@@ -14,13 +14,12 @@ import { getCookies, removeCookies } from '@/libs/util';
 import { Local } from '@/utils/storage';
 import Setting from '@/setting';
 import router from '@/router';
+import { resolveAdminLocale } from '@/utils/lang.js';
 
-/** 管理端界面语 → 接口 Cb-lang（与 getLang/current_lang_code 约定一致） */
+/** 管理端界面语直接作为 Cb-lang（与移动端/后端 zh-CN|vi-VN|en-US 一致） */
 function resolveAdminCbLang() {
   try {
-    const locale = (Local.get('themeConfigPrev') || {}).globalI18n || 'zh-cn';
-    const map = { 'zh-cn': 'zh-CN', 'zh-tw': 'zh-CN', en: 'en-US' };
-    return map[locale] || 'zh-CN';
+    return resolveAdminLocale((Local.get('themeConfigPrev') || {}).globalI18n);
   } catch (e) {
     return 'zh-CN';
   }

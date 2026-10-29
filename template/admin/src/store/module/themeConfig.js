@@ -98,8 +98,8 @@ const themeConfigModule = {
       globalViceTitle: '',
       // 网站描述（登录页顶部文字）
       globalViceDes: 'vue2',
-      // 默认初始语言，可选值"<zh-cn|en|zh-tw>"，默认 zh-cn
-      globalI18n: 'zh-cn',
+      // 默认初始语言，与移动端/后端一致：zh-CN | vi-VN | en-US
+      globalI18n: 'zh-CN',
       // 默认全局组件大小，可选值"<|medium|small|mini>"，默认 ''
       globalComponentSize: '',
     },

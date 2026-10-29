@@ -244,6 +244,7 @@
 import ClipboardJS from 'clipboard';
 import { Local } from '@/utils/storage.js';
 import { useChangeColor } from '@/utils/theme.js';
+import { resolveAdminLocale } from '@/utils/lang.js';
 import config from '../../../../package.json';
 import { themeList } from './theme';
 export default {
@@ -470,8 +471,10 @@ export default {
         if (this.$store.state.themeConfig.themeConfig.isInvert) this.onAddFilterChange('invert');
         // 深色模式
         if (this.$store.state.themeConfig.themeConfig.isIsDark) this.onAddDarkChange();
-        // 语言国际化
-        if (Local.get('themeConfigPrev')) this.$i18n.locale = Local.get('themeConfigPrev').globalI18n;
+        // 语言国际化（归一为 zh-CN / vi-VN / en-US）
+        if (Local.get('themeConfigPrev')) {
+          this.$i18n.locale = resolveAdminLocale(Local.get('themeConfigPrev').globalI18n);
+        }
       });
     },
     // 存储布局配置

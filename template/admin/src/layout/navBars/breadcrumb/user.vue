@@ -38,6 +38,22 @@
     <div class="layout-navbars-breadcrumb-user-icon mr10" v-db-click @click="openMobelPage">
       <i title="商城页面" class="el-icon-mobile-phone"></i>
     </div>
+    <el-dropdown :show-timeout="70" class="mr10" @command="onLanguageChange">
+      <span class="layout-navbars-breadcrumb-user-link" :title="$t('message.user.title1')">
+        {{ currentLangLabel }}
+        <i class="el-icon-arrow-down el-icon--right"></i>
+      </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item
+          v-for="item in langOptions"
+          :key="item.value"
+          :command="item.value"
+          :disabled="disabledI18n === item.value"
+        >
+          {{ item.label }}
+        </el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
     <el-dropdown :show-timeout="70" @command="onDropdownCommand">
       <span class="layout-navbars-breadcrumb-user-link">
         <img :src="getUserInfos.head_pic" class="layout-navbars-breadcrumb-user-link-photo mr5" />
@@ -61,6 +77,7 @@ import screenfull from 'screenfull';
 import { AccountLogout } from '@/api/account';
 import { removeCookies } from '@/libs/util';
 import { Session, Local } from '@/utils/storage.js';
+import { ADMIN_LANGS, resolveAdminLocale } from '@/utils/lang.js';
 import UserNews from '@/layout/navBars/breadcrumb/userNews.vue';
 import Search from '@/layout/navBars/breadcrumb/search.vue';
 export default {
@@ -70,15 +87,20 @@ export default {
     return {
       isScreenfull: false,
       isShowUserNewsPopover: false,
-      disabledI18n: 'zh-cn',
+      disabledI18n: 'zh-CN',
       disabledSize: '',
       isDot: false,
+      langOptions: ADMIN_LANGS,
     };
   },
   computed: {
     // 获取用户信息
     getUserInfos() {
       return this.$store.state.userInfo.userInfo;
+    },
+    currentLangLabel() {
+      const cur = this.langOptions.find((i) => i.value === this.disabledI18n);
+      return cur ? cur.label : this.disabledI18n;
     },
     // 设置弹性盒子布局 flex
     layoutUserFlexNum() {
@@ -93,6 +115,8 @@ export default {
     if (Local.get('themeConfigPrev')) {
       this.initI18n();
       this.initComponentSize();
+    } else {
+      this.disabledI18n = resolveAdminLocale(this.$store.state.themeConfig.themeConfig.globalI18n);
     }
   },
   methods: {
@@ -154,27 +178,21 @@ export default {
       this.initComponentSize();
       window.location.reload();
     },
-    // 语言切换
+    // 语言切换（值：zh-CN | vi-VN | en-US，与移动端 Cb-lang 一致）
     onLanguageChange(lang) {
+      const code = resolveAdminLocale(lang);
+      if (code === this.disabledI18n) return;
       Local.remove('themeConfigPrev');
-      this.$store.state.themeConfig.themeConfig.globalI18n = lang;
+      this.$store.state.themeConfig.themeConfig.globalI18n = code;
       Local.set('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
-      this.$i18n.locale = lang;
-      this.initI18n();
+      this.$i18n.locale = code;
+      this.disabledI18n = code;
+      window.location.reload();
     },
     // 初始化言语国际化
     initI18n() {
-      switch (Local.get('themeConfigPrev').globalI18n) {
-        case 'zh-cn':
-          this.disabledI18n = 'zh-cn';
-          break;
-        case 'en':
-          this.disabledI18n = 'en';
-          break;
-        case 'zh-tw':
-          this.disabledI18n = 'zh-tw';
-          break;
-      }
+      const prev = Local.get('themeConfigPrev') || {};
+      this.disabledI18n = resolveAdminLocale(prev.globalI18n);
     },
     // 初始化全局组件大小
     initComponentSize() {

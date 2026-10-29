@@ -13,6 +13,7 @@ import Setings from '@/layout/navBars/breadcrumb/setings.vue';
 import Upgrade from '@/layout/upgrade/index.vue';
 import setting from './setting';
 import { Local } from '@/utils/storage.js';
+import { resolveAdminLocale } from '@/utils/lang.js';
 import config from '../package.json';
 
 export default {
@@ -62,7 +63,12 @@ export default {
     // 获取缓存中的布局配置
     getLayoutThemeConfig() {
       if (Local.get('themeConfigPrev')) {
-        this.$store.dispatch('themeConfig/setThemeConfig', Local.get('themeConfigPrev'));
+        const cfg = Local.get('themeConfigPrev');
+        // 历史 zh-cn/en/zh-tw 归一为 zh-CN/vi-VN/en-US，与移动端/后端一致
+        cfg.globalI18n = resolveAdminLocale(cfg.globalI18n);
+        this.$store.dispatch('themeConfig/setThemeConfig', cfg);
+        this.$i18n.locale = cfg.globalI18n;
+        Local.set('themeConfigPrev', cfg);
         document.documentElement.style.cssText = Local.get('themeConfigStyle');
       } else {
         Local.set('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
