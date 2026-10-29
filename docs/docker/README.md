@@ -1,4 +1,4 @@
-# 本地 Docker（cjx-mysql + cjx-php）
+# 本地 Docker（cjx-mysql + cjx-php + cjx-nginx）
 
 完整步骤见 [`../deploy/本地开发环境搭建教程.md`](../deploy/本地开发环境搭建教程.md)。
 
@@ -15,12 +15,16 @@ docker compose -f docs/docker/docker-compose.yml start
 docker compose -f docs/docker/docker-compose.yml stop
 docker compose -f docs/docker/docker-compose.yml down          # 不删数据卷
 docker compose -f docs/docker/docker-compose.yml down -v      # 删库数据，慎用
+
+# 已有旧 php -S 环境：拉代码后执行 up -d 即可切到 Nginx+FPM（详见教程 §10）
+docker compose -f docs/docker/docker-compose.yml up -d
 ```
 
 | 服务 | 容器名 | 端口 | 说明 |
 |------|--------|------|------|
 | mysql | cjx-mysql | 33060→3306 | root/root，库 crmeb；同网络主机名 `mysql` |
-| php | cjx-php | 8089 | 挂载 `crmeb` → `/app` |
+| php | cjx-php | 9000（仅容器网） | PHP-FPM + OPcache，挂载 `crmeb` → `/app` |
+| nginx | cjx-nginx | 8089→80 | 反代 FPM；勿再用旧的 `php -S` |
 
 **后台登录：** http://localhost:8089/admin/  
 **账号：** `admin`  
