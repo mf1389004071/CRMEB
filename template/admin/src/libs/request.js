@@ -11,8 +11,21 @@
 import axios from 'axios';
 import { Message } from 'element-ui';
 import { getCookies, removeCookies } from '@/libs/util';
+import { Local } from '@/utils/storage';
 import Setting from '@/setting';
 import router from '@/router';
+
+/** 管理端界面语 → 接口 Cb-lang（与 getLang/current_lang_code 约定一致） */
+function resolveAdminCbLang() {
+  try {
+    const locale = (Local.get('themeConfigPrev') || {}).globalI18n || 'zh-cn';
+    const map = { 'zh-cn': 'zh-CN', 'zh-tw': 'zh-CN', en: 'en-US' };
+    return map[locale] || 'zh-CN';
+  } catch (e) {
+    return 'zh-CN';
+  }
+}
+
 const service = axios.create({
   baseURL: Setting.apiBaseURL,
   timeout: 100000, // 请求超时时间
@@ -37,6 +50,8 @@ service.interceptors.request.use(
     if (token || kefuToken) {
       config.headers['Authori-zation'] = config.kefu ? 'Bearer ' + kefuToken : 'Bearer ' + token;
     }
+    // 与界面语言对齐，避免无头时后端回落站点默认语 vi-VN
+    config.headers['Cb-lang'] = resolveAdminCbLang();
     return config;
   },
   (error) => {
