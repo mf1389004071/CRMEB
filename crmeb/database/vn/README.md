@@ -4,7 +4,7 @@
 1. 先安装基线：`public/install/crmeb.sql`（**不要修改**该文件）。
 2. 按文件名序号依次执行本目录 `NNN_*.sql`（表前缀默认 `eb_`，如不同请整体替换）：
    `000 → 001 → 010 → 020 → 021 → 030 → … → 100 → 900`
-3. （可选开发演示）再执行 `demo/001_demo_data.sql`
+3. （可选开发演示）再执行 `demo/001_demo_data.sql`、`demo/002_warehouse_demo.sql`（提货仓多场景，依赖 `031/032`）
 4. 执行后清理缓存（后台“清除缓存”或删 `runtime/cache`）。
 
 **编码（必读）**：所有 SQL 必须用 **utf8mb4** 客户端导入（`--default-character-set=utf8mb4`，脚本内 `SET NAMES utf8mb4`）。  
