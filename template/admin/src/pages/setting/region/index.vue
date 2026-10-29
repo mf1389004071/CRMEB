@@ -56,9 +56,16 @@
         <el-table-column label="排序(大者靠前)" width="130">
           <template slot-scope="scope"><el-input-number size="mini" :controls="false" v-model="scope.row.sort" style="width: 80px" @change="() => saveSort(scope.row)" /></template>
         </el-table-column>
-        <el-table-column label="编辑" width="120">
+        <el-table-column label="默认提货仓" min-width="140">
+          <template slot-scope="scope">
+            <span v-if="scope.row.default_warehouse_name">{{ scope.row.default_warehouse_name }}</span>
+            <span v-else class="danger">未配置</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="编辑" width="200">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="openEdit(scope.row)">编辑</el-button>
+            <el-button type="text" size="small" @click="openSetWh(scope.row)">设默认仓</el-button>
             <el-button type="text" size="small" @click="$router.push({ path: $routeProStr + '/product/i18n/city/' + scope.row.city_id })">多语</el-button>
           </template>
         </el-table-column>
@@ -85,11 +92,33 @@
         <el-table-column label="原因" prop="reason" />
       </el-table>
     </el-dialog>
+
+    <el-dialog title="设默认提货仓" :visible.sync="whDlg" width="480px">
+      <p class="mb10">区划：{{ whCity.name }}（city_id={{ whCity.city_id }}）</p>
+      <p v-if="whPrev" class="mb10 gray">当前默认：{{ whPrev.name || whPrev.warehouse_id }}</p>
+      <el-form label-width="90px" size="small">
+        <el-form-item label="已关联仓">
+          <el-select v-model="whForm.warehouse_id" filterable clearable placeholder="选择仓库" style="width: 100%">
+            <el-option v-for="w in whLinked" :key="'l' + w.id" :label="(w.is_default ? '[默认] ' : '') + w.name" :value="w.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="或其它仓">
+          <el-select v-model="whForm.warehouse_id" filterable clearable placeholder="选用其它仓并建立关联" style="width: 100%">
+            <el-option v-for="w in whAll" :key="'a' + w.id" :label="w.name + (w.code ? ' (' + w.code + ')' : '')" :value="w.id" />
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <span slot="footer">
+        <el-button @click="whDlg = false">取消</el-button>
+        <el-button type="primary" @click="doSetWh(false)">保存</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { regionList, regionOpen, regionHot, regionSort, regionSave, regionImport, regionRebuildPath } from '@/api/region';
+import { warehouseForRegion, warehouseSetRegionDefault } from '@/api/warehouse';
 
 export default {
   name: 'regionManage',
@@ -105,6 +134,12 @@ export default {
       form: { city_id: 0, parent_id: 0, name: '', lng: '', lat: '', area_code: '' },
       resultDlg: false,
       result: { ok: 0, fail: [] },
+      whDlg: false,
+      whCity: {},
+      whPrev: null,
+      whLinked: [],
+      whAll: [],
+      whForm: { warehouse_id: null },
     };
   },
   created() {
@@ -201,6 +236,40 @@ export default {
     doRebuild() {
       this.run(regionRebuildPath());
     },
+    openSetWh(row) {
+      this.whCity = row;
+      this.whForm = { warehouse_id: row.default_warehouse_id || null };
+      warehouseForRegion({ city_id: row.city_id })
+        .then((res) => {
+          this.whLinked = res.data.linked || [];
+          this.whAll = res.data.all || [];
+          this.whPrev = res.data.default || null;
+          this.whDlg = true;
+        })
+        .catch((err) => this.$message.error(err.msg || '加载失败'));
+    },
+    doSetWh(force) {
+      if (!this.whForm.warehouse_id) return this.$message.warning('请选择仓库');
+      warehouseSetRegionDefault({
+        city_id: this.whCity.city_id,
+        warehouse_id: this.whForm.warehouse_id,
+        force: force ? 1 : 0,
+      })
+        .then((res) => {
+          const d = res.data || {};
+          if (d.need_confirm) {
+            const prev = d.prev_default || {};
+            this.$confirm(`当前默认：${prev.name || prev.warehouse_id}，确认覆盖？`, '覆盖确认', { type: 'warning' })
+              .then(() => this.doSetWh(true))
+              .catch(() => {});
+            return;
+          }
+          this.$message.success(res.msg || '已设置');
+          this.whDlg = false;
+          this.getList();
+        })
+        .catch((err) => this.$message.error(err.msg || '失败'));
+    },
   },
 };
 </script>
@@ -209,6 +278,9 @@ export default {
 .link {
   cursor: pointer;
   color: #409eff;
+}
+.danger {
+  color: #f56c6c;
 }
 .gray {
   color: #909399;

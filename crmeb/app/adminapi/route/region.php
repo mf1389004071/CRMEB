@@ -99,3 +99,24 @@ Route::group('product/fresh', function () {
     \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
     \app\adminapi\middleware\AdminLogMiddleware::class
 ])->option(['mark' => 'productFresh', 'mark_name' => '商品生鲜属性']);
+
+/**
+ * VN: 提货仓库
+ */
+Route::group('warehouse', function () {
+    Route::get('list', 'v1.vn.Warehouse/lst')->option(['real_name' => '仓库列表']);
+    Route::get('read', 'v1.vn.Warehouse/read')->option(['real_name' => '仓库详情']);
+    Route::post('save', 'v1.vn.Warehouse/save')->option(['real_name' => '仓库保存']);
+    Route::post('delete', 'v1.vn.Warehouse/delete')->option(['real_name' => '仓库删除']);
+    Route::post('quick_create', 'v1.vn.Warehouse/quick_create')->option(['real_name' => '快速开仓']);
+    Route::post('regions', 'v1.vn.Warehouse/regions')->option(['real_name' => '仓库关联区划']);
+    Route::post('set_region_default', 'v1.vn.Warehouse/set_region_default')->option(['real_name' => '区划设默认仓']);
+    Route::get('for_region', 'v1.vn.Warehouse/for_region')->option(['real_name' => '区划已关联仓']);
+    Route::get('health', 'v1.vn.Warehouse/health')->option(['real_name' => '仓库健康检查']);
+    Route::get('options', 'v1.vn.Warehouse/options')->option(['real_name' => '仓库下拉']);
+})->middleware([
+    \app\http\middleware\AllowOriginMiddleware::class,
+    \app\adminapi\middleware\AdminAuthTokenMiddleware::class,
+    \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
+    \app\adminapi\middleware\AdminLogMiddleware::class
+])->option(['mark' => 'warehouse', 'mark_name' => '提货仓库']);

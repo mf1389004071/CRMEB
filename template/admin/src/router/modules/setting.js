@@ -60,6 +60,19 @@ export default {
       redirect: 'region/index',
     },
     {
+      path: 'warehouse/index',
+      name: `${pre}warehouse`,
+      meta: {
+        auth: ['admin-setting-warehouse'],
+        title: '提货仓库',
+      },
+      component: () => import('@/pages/setting/warehouse/index'),
+    },
+    {
+      path: 'warehouse',
+      redirect: 'warehouse/index',
+    },
+    {
       path: 'system_role/index',
       name: `${pre}systemRole`,
       meta: {

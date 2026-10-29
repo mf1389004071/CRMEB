@@ -32,6 +32,7 @@ class I18nContentServices extends BaseServices
         'product_attr' => ['attr_name', 'attr_values'],
         'sku'          => ['suk'],
         'city'         => ['name', 'merger_name'],
+        'warehouse'    => ['name', 'address', 'detailed_address', 'introduction'],
     ];
     const LANGS = ['zh-CN', 'vi-VN', 'en-US'];
     const TTL = 600;

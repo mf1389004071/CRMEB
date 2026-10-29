@@ -74,6 +74,9 @@ const FIELD_LABELS = {
   cate_name: '分类名称',
   name: '名称',
   merger_name: '合并名称',
+  address: '地址',
+  detailed_address: '详细地址',
+  introduction: '说明',
 };
 
 export default {

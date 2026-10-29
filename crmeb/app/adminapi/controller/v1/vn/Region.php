@@ -13,6 +13,7 @@ namespace app\adminapi\controller\v1\vn;
 
 use app\adminapi\controller\AuthController;
 use app\services\vn\RegionAdminServices;
+use app\services\vn\WarehouseAdminServices;
 use think\facade\App;
 
 /**
@@ -38,7 +39,9 @@ class Region extends AuthController
         $where = $this->request->getMore([
             ['parent_id', 0], ['keyword', ''], ['country_code', ''], ['is_open', ''], ['page', 1], ['limit', 50],
         ]);
-        return app('json')->success($this->services->lst($where));
+        $data = $this->services->lst($where);
+        $data['list'] = app()->make(WarehouseAdminServices::class)->attachDefaultToCities($data['list'] ?? []);
+        return app('json')->success($data);
     }
 
     public function open()

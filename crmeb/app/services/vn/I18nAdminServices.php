@@ -26,9 +26,10 @@ class I18nAdminServices extends BaseServices
 {
     /** 实体主表与展示字段 */
     const TABLES = [
-        'product'  => ['store_product', 'id', 'store_name'],
-        'category' => ['store_category', 'id', 'cate_name'],
-        'city'     => ['system_city', 'city_id', 'name'],
+        'product'   => ['store_product', 'id', 'store_name'],
+        'category'  => ['store_category', 'id', 'cate_name'],
+        'city'      => ['system_city', 'city_id', 'name'],
+        'warehouse' => ['vn_warehouse', 'id', 'name'],
     ];
 
     /**

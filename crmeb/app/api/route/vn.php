@@ -23,6 +23,7 @@ Route::group(function () {
     Route::post('region/locate', 'v1.vn.RegionController/locate')->option(['real_name' => '经纬度定位区域']);
     Route::get('region/info', 'v1.vn.RegionController/info')->option(['real_name' => '区域校验与完整链']);
     Route::get('region/address_children', 'v1.vn.RegionController/address_children')->option(['real_name' => '地址选择子节点']);
+    Route::get('warehouse/match', 'v1.vn.WarehouseController/match')->option(['real_name' => '提货仓匹配']);
 })->middleware(\app\http\middleware\AllowOriginMiddleware::class)
     ->middleware(\app\api\middleware\StationOpenMiddleware::class)
     ->middleware(\app\api\middleware\AuthTokenMiddleware::class, false)
