@@ -86,6 +86,15 @@
                     {{ orderDatalist.orderInfo.user_address ? orderDatalist.orderInfo.user_address : '-' }}
                   </div>
                 </li>
+                <li class="item" v-if="orderDatalist.orderInfo.warehouse_id">
+                  <div>提货仓库：</div>
+                  <div class="value">
+                    {{ orderDatalist.orderInfo.warehouse_name || '-' }}
+                    <span v-if="orderDatalist.orderInfo.warehouse_address" class="gray">
+                      （{{ orderDatalist.orderInfo.warehouse_address }}）
+                    </span>
+                  </div>
+                </li>
               </ul>
             </div>
             <div class="section">

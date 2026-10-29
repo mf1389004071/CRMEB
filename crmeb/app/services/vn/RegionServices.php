@@ -95,6 +95,9 @@ class RegionServices extends BaseServices
         return $out;
     }
 
+    /** H5 切城/热门最大层级：城(0)+区/郡(1)；坊(>=2)仅作收货地址 */
+    public const SWITCH_MAX_LEVEL = 1;
+
     /**
      * 地址节点是否落在配送区域内（地址 city_id 的祖先链包含配送区域 city_id）
      */
@@ -104,6 +107,44 @@ class RegionServices extends BaseServices
             return false;
         }
         return in_array($regionId, $this->chain($addressCityId), true);
+    }
+
+    /**
+     * 下单兼容：精确落在销售区内，或与销售区同属一个城站（level=0 祖先相同）
+     * 避免兄弟坊 Cb-region 互斥；跨城仍拒绝
+     */
+    public function addressCompatibleWithRegion(int $addressCityId, int $regionId): bool
+    {
+        if ($this->addressInRegion($addressCityId, $regionId)) {
+            return true;
+        }
+        $a = $this->level0Ancestor($addressCityId);
+        $b = $this->level0Ancestor($regionId);
+        return $a > 0 && $a === $b;
+    }
+
+    /**
+     * 城站祖先 city_id（level=0）；国家根或不存在返回 0
+     */
+    public function level0Ancestor(int $cityId): int
+    {
+        $node = $this->node($cityId);
+        if (!$node) {
+            return 0;
+        }
+        if ((int)$node['level'] === 0) {
+            return (int)$node['city_id'];
+        }
+        if ((int)$node['level'] < 0) {
+            return 0;
+        }
+        foreach ($this->chain($cityId) as $id) {
+            $n = $this->node($id);
+            if ($n && (int)$n['level'] === 0) {
+                return (int)$n['city_id'];
+            }
+        }
+        return 0;
     }
 
     /**
@@ -118,7 +159,7 @@ class RegionServices extends BaseServices
     /**
      * 子节点（H5 选择列表）。parent_id<=0 返回国家层。
      * @param int $parentId
-     * @param bool $onlyOpen true=仅 is_open=1（区域选择）；false=所有 is_show=1（地址选择，M8）
+     * @param bool $onlyOpen true=仅 is_open=1（区域切城，level≤SWITCH_MAX_LEVEL）；false=地址选择全层级
      * @return array
      */
     public function children(int $parentId, bool $onlyOpen = true): array
@@ -140,19 +181,20 @@ class RegionServices extends BaseServices
         }
         $q->where('is_show', 1);
         if ($onlyOpen) {
-            $q->where('is_open', 1);
+            $q->where('is_open', 1)->where('level', '<=', self::SWITCH_MAX_LEVEL);
         }
         $rows = $q->order('sort', 'desc')->order('city_id', 'asc')->select()->toArray();
         return $this->format($rows, $onlyOpen);
     }
 
     /**
-     * 热门城市
+     * 热门城市（切城用：仅城/区，不含坊）
      */
     public function hot(): array
     {
         $rows = Db::name('system_city')->where(['is_hot' => 1, 'is_open' => 1, 'is_show' => 1])
-            ->where('level', '>=', 0)->order('sort', 'desc')->order('city_id', 'asc')->select()->toArray();
+            ->where('level', '>=', 0)->where('level', '<=', self::SWITCH_MAX_LEVEL)
+            ->order('sort', 'desc')->order('city_id', 'asc')->select()->toArray();
         return $this->format($rows, true);
     }
 
@@ -250,7 +292,8 @@ class RegionServices extends BaseServices
         $ids = array_column($rows, 'city_id');
         $q = Db::name('system_city')->whereIn('parent_id', $ids)->where('is_show', 1);
         if ($onlyOpen) {
-            $q->where('is_open', 1);
+            // 切城：仅统计城/区级子节点，区下有坊也不再展开
+            $q->where('is_open', 1)->where('level', '<=', self::SWITCH_MAX_LEVEL);
         }
         $has = $q->group('parent_id')->column('count(*) c', 'parent_id');
         $out = [];

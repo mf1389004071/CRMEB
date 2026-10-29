@@ -97,4 +97,13 @@ class Region extends AuthController
     {
         return app('json')->success(['columns' => RegionAdminServices::IMPORT_COLUMNS]);
     }
+
+    /**
+     * 按 city_id 反显祖先链与颗粒度（管理端级联选择器用）
+     */
+    public function resolve()
+    {
+        [$cityId] = $this->request->getMore([['city_id', 0]], true);
+        return app('json')->success($this->services->resolve((int)$cityId));
+    }
 }

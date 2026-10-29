@@ -298,6 +298,59 @@ class RegionAdminServices extends BaseServices
     }
 
     /**
+     * 区划颗粒度文案（管理端选择器反显/辅助记录）
+     */
+    public static function levelLabel(int $level): string
+    {
+        static $map = [
+            -1 => '国家',
+            0  => '省',
+            1  => '市/郡',
+            2  => '区县/坊',
+            3  => '更细',
+        ];
+        return $map[$level] ?? ('L' . $level);
+    }
+
+    /**
+     * 按 city_id 解析祖先链（粗→细），供级联选择器反显
+     * @return array{city_id:int,name:string,level:int,level_label:string,merger_name:string,path_ids:int[],path_names:string[]}
+     */
+    public function resolve(int $cityId): array
+    {
+        if ($cityId <= 0) {
+            throw new ApiException('参数错误');
+        }
+        $row = Db::name('system_city')->where('city_id', $cityId)->find();
+        if (!$row) {
+            throw new ApiException('区划不存在');
+        }
+        $path = trim((string)($row['path'] ?? ''), ',');
+        $pathIds = $path !== '' ? array_values(array_filter(array_map('intval', explode(',', $path)))) : [];
+        if (!$pathIds || (int)end($pathIds) !== $cityId) {
+            $pathIds = array_reverse(app()->make(RegionServices::class)->chain($cityId));
+        }
+        if (!$pathIds) {
+            $pathIds = [$cityId];
+        }
+        $nodes = Db::name('system_city')->whereIn('city_id', $pathIds)->column('name', 'city_id');
+        $pathNames = [];
+        foreach ($pathIds as $id) {
+            $pathNames[] = (string)($nodes[$id] ?? $id);
+        }
+        $level = (int)$row['level'];
+        return [
+            'city_id'     => (int)$row['city_id'],
+            'name'        => (string)$row['name'],
+            'level'       => $level,
+            'level_label' => self::levelLabel($level),
+            'merger_name' => (string)($row['merger_name'] ?? ''),
+            'path_ids'    => $pathIds,
+            'path_names'  => $pathNames,
+        ];
+    }
+
+    /**
      * 下一个可用 city_id：VN 从 910000 起；CN 取全表最大值+1（避开国家根段）
      */
     protected function nextCityId(string $country): int

@@ -19,12 +19,28 @@ t_assert(count($provinces) >= 5 && $provinces[0]['name'] === 'Hà Nội' && $pro
 t_assert($provinces[0]['has_children'] === true, 'province has_children');
 $districts = $svc->children(910001);
 t_assert(array_column($districts, 'name') === ['Ba Đình', 'Hoàn Kiếm', 'Đống Đa', 'Cầu Giấy'], 'Hà Nội districts: ' . implode('|', array_column($districts, 'name')));
+t_assert($districts[0]['has_children'] === false, 'district has_children=false for switcher (wards not switchable)');
+$wardsSwitch = $svc->children(911001);
+t_assert($wardsSwitch === [], 'switcher children of district excludes wards');
+$wardsAddr = $svc->children(911001, false);
+t_assert(count($wardsAddr) >= 1 && (int)$wardsAddr[0]['level'] === 2, 'address_children still returns wards');
 t_assert($svc->chain(911001) === [911001, 910001, 900002], 'chain nearest->root: ' . json_encode($svc->chain(911001)));
 t_assert($svc->chain(1) === [1, 900001], 'CN province chain gets country root prefix');
 t_assert($svc->chain(99999999) === [], 'unknown node => empty chain');
 t_assert($svc->isOpenId(911001) && !$svc->isOpenId(1) && !$svc->isOpenId(0), 'isOpenId');
+t_assert($svc->level0Ancestor(912001) === 910001 && $svc->level0Ancestor(912002) === 910001, 'level0Ancestor wards => Hà Nội');
+t_assert($svc->addressCompatibleWithRegion(912001, 912002) === true, 'sibling wards same city compatible');
+t_assert($svc->addressCompatibleWithRegion(912001, 910002) === false, 'Hanoi ward vs HCMC incompatible');
+t_assert($svc->addressCompatibleWithRegion(912001, 911001) === true, 'ward under district still addressInRegion');
+// 归一演示/残留：仅保留河内、胡志明为热门，便于断言
+Db::name('system_city')->where('is_hot', 1)->whereNotIn('city_id', [910001, 910002])->update(['is_hot' => 0]);
+Db::name('system_city')->whereIn('city_id', [910001, 910002])->update(['is_hot' => 1, 'is_open' => 1]);
+\app\services\vn\RegionServices::bumpVersion();
 $hot = $svc->hot();
 t_assert(array_column($hot, 'city_id') === [910001, 910002], 'hot cities: ' . json_encode(array_column($hot, 'city_id')));
+foreach ($hot as $h) {
+    t_assert((int)$h['level'] <= \app\services\vn\RegionServices::SWITCH_MAX_LEVEL, 'hot level <= switch max');
+}
 
 // ---- 定位 ----
 $r = $svc->locate(21.03, 105.85);

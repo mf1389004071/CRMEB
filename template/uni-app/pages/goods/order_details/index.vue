@@ -199,6 +199,10 @@
 							<text class="phone">{{ orderInfo.user_phone }}</text>
 						</view>
 						<view>{{ orderInfo.user_address }}</view>
+						<view class="mt-8" v-if="orderInfo.warehouse_id">
+							<view class="name">{{ $t(`提货仓库`) }}：{{ orderInfo.warehouse_name }}</view>
+							<view v-if="orderInfo.warehouse_address">{{ orderInfo.warehouse_address }}</view>
+						</view>
 					</view>
 					<view v-else class="address acea-row row-between-wrapper">
 						<view class="address-box">
@@ -379,6 +383,13 @@
 				<view class="item acea-row row-between" v-if="orderInfo.shipping_type && orderInfo.shipping_type == 1">
 					<view>{{ $t(`收货地址`) }}：</view>
 					<view class="conter">{{ orderInfo.user_address }}</view>
+				</view>
+				<view class="item acea-row row-between" v-if="orderInfo.warehouse_id">
+					<view>{{ $t(`提货仓库`) }}：</view>
+					<view class="conter">
+						{{ orderInfo.warehouse_name }}
+						<text v-if="orderInfo.warehouse_address">（{{ orderInfo.warehouse_address }}）</text>
+					</view>
 				</view>
 			</view>
 			<view v-if="orderInfo.status != 0 && (is_gift == 0 || is_gift == 1)">

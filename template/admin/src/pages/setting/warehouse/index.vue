@@ -60,7 +60,7 @@
       </div>
     </el-card>
 
-    <el-dialog :title="form.id ? '编辑仓库' : '新增仓库'" :visible.sync="dlg" width="640px" @closed="form = blank()">
+    <el-dialog :title="form.id ? '编辑仓库' : '新增仓库'" :visible.sync="dlg" width="720px" @closed="form = blank()">
       <el-form label-width="110px" size="small">
         <el-form-item label="名称" required><el-input v-model="form.name" /></el-form-item>
         <el-form-item label="编码"><el-input v-model="form.code" placeholder="可选，如 WH-HN-01" /></el-form-item>
@@ -78,14 +78,17 @@
             <el-form-item label="生效结束"><el-input v-model.number="form.effective_end" placeholder="时间戳，0不限" /></el-form-item>
           </el-collapse-item>
         </el-collapse>
-        <el-divider content-position="left">关联区划（city_id）</el-divider>
-        <div v-for="(r, i) in form.regions" :key="i" class="mb10 acea-row row-middle">
-          <el-input v-model.number="r.city_id" placeholder="city_id" style="width: 120px" />
-          <el-input-number v-model="r.sort" :min="0" size="mini" class="ml10" />
-          <el-checkbox v-model="r.is_default" :true-label="1" :false-label="0" class="ml10">默认</el-checkbox>
-          <el-button type="text" class="ml10" @click="form.regions.splice(i, 1)">移除</el-button>
+        <el-divider content-position="left">关联区划（任一级颗粒度）</el-divider>
+        <div v-for="(r, i) in form.regions" :key="'rg-' + i + '-' + (r.city_id || 0)" class="mb10 region-row">
+          <city-cascader v-model="r.city_id" width="360px" @change="(m) => onRegionMeta(r, m)" />
+          <div class="acea-row row-middle mt6">
+            <span class="gray mr8">排序</span>
+            <el-input-number v-model="r.sort" :min="0" size="mini" />
+            <el-checkbox v-model="r.is_default" :true-label="1" :false-label="0" class="ml10">该节点默认仓</el-checkbox>
+            <el-button type="text" class="ml10" @click="form.regions.splice(i, 1)">移除</el-button>
+          </div>
         </div>
-        <el-button size="mini" @click="form.regions.push({ city_id: '', sort: 0, is_default: 0 })">加关联</el-button>
+        <el-button size="mini" @click="form.regions.push({ city_id: '', sort: 0, is_default: 0, level: null })">加关联</el-button>
       </el-form>
       <span slot="footer">
         <el-button @click="dlg = false">取消</el-button>
@@ -93,13 +96,13 @@
       </span>
     </el-dialog>
 
-    <el-dialog title="快速开仓（一城一仓）" :visible.sync="quickDlg" width="480px">
+    <el-dialog title="快速开仓（一城一仓）" :visible.sync="quickDlg" width="560px">
       <el-form label-width="90px" size="small">
         <el-form-item label="仓名" required><el-input v-model="quick.name" /></el-form-item>
         <el-form-item label="地址"><el-input v-model="quick.address" /></el-form-item>
         <el-form-item label="电话"><el-input v-model="quick.phone" /></el-form-item>
-        <el-form-item label="区划city_id" required>
-          <el-input v-model.number="quick.city_id" placeholder="如河内 910001" />
+        <el-form-item label="区划" required>
+          <city-cascader v-model="quick.city_id" @change="onQuickMeta" />
         </el-form-item>
       </el-form>
       <span slot="footer">
@@ -119,6 +122,7 @@ import {
   warehouseHealth,
   warehouseRead,
 } from '@/api/warehouse';
+import CityCascader from '@/components/cityCascader/index.vue';
 
 const blank = () => ({
   id: 0,
@@ -140,6 +144,7 @@ const blank = () => ({
 
 export default {
   name: 'warehouseManage',
+  components: { CityCascader },
   data() {
     return {
       where: { keyword: '', is_enable: '', page: 1, limit: 20 },
@@ -149,7 +154,7 @@ export default {
       dlg: false,
       form: blank(),
       quickDlg: false,
-      quick: { name: '', address: '', phone: '', city_id: '' },
+      quick: { name: '', address: '', phone: '', city_id: '', level: null },
       healthTip: '',
     };
   },
@@ -202,13 +207,27 @@ export default {
           ...blank(),
           ...d,
           regions: (d.regions || []).map((r) => ({
-            city_id: r.city_id,
+            city_id: r.city_id ? Number(r.city_id) : '',
             sort: r.sort,
             is_default: r.is_default ? 1 : 0,
+            level: r.level,
+            city_name: r.city_name || r.merger_name || '',
           })),
         };
         this.dlg = true;
       });
+    },
+    onRegionMeta(row, m) {
+      if (!m) {
+        row.level = null;
+        row.city_name = '';
+        return;
+      }
+      row.level = m.level;
+      row.city_name = m.merger_name || m.name || '';
+    },
+    onQuickMeta(m) {
+      this.quick.level = m ? m.level : null;
     },
     submit() {
       const payload = { ...this.form };
@@ -235,11 +254,18 @@ export default {
         .catch(() => {});
     },
     openQuick() {
-      this.quick = { name: '', address: '', phone: '', city_id: '' };
+      this.quick = { name: '', address: '', phone: '', city_id: '', level: null };
       this.quickDlg = true;
     },
     doQuick(force) {
-      warehouseQuickCreate({ ...this.quick, force: force ? 1 : 0 })
+      if (!this.quick.city_id) return this.$message.warning('请选择区划');
+      warehouseQuickCreate({
+        name: this.quick.name,
+        address: this.quick.address,
+        phone: this.quick.phone,
+        city_id: Number(this.quick.city_id),
+        force: force ? 1 : 0,
+      })
         .then((res) => {
           const d = res.data || {};
           if (d.need_confirm) {
@@ -261,3 +287,21 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.region-row {
+  padding: 8px 10px;
+  background: #fafafa;
+  border-radius: 4px;
+}
+.mt6 {
+  margin-top: 6px;
+}
+.mr8 {
+  margin-right: 8px;
+}
+.gray {
+  color: #909399;
+  font-size: 12px;
+}
+</style>

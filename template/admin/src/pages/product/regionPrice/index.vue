@@ -11,16 +11,13 @@
         />
       </div>
       <div class="mb10 bar">
-        <el-cascader
-          ref="cascader"
-          v-model="pickPath"
-          :props="cascaderProps"
+        <city-cascader
+          v-model="pickCityId"
+          width="420px"
           placeholder="选择要设置价格的区域（国家/省/郡/坊 任一级）"
-          clearable
-          :show-all-levels="true"
-          style="width: 420px"
+          @change="onPickMeta"
         />
-        <el-button type="primary" size="small" :disabled="!pickPath.length" @click="addCity">添加该区域</el-button>
+        <el-button type="primary" size="small" :disabled="!pickCityId" @click="addCity">添加该区域</el-button>
         <el-divider direction="vertical" />
         <el-switch v-model="allowNational" :disabled="!systemAllow" active-text="允许全国价（无区域价时回落规格主价）" />
         <span class="gray" v-if="!systemAllow">（系统“允许全国价”总闸未开启，请先在 设置→越南站点 中开启）</span>
@@ -78,12 +75,12 @@
 
 <script>
 import { regionPriceGet, regionPriceSave, regionPriceTemplate, regionPriceExport, regionPriceImport } from '@/api/regionPrice';
-import { regionList } from '@/api/region';
+import CityCascader from '@/components/cityCascader/index.vue';
 
 export default {
   name: 'productRegionPrice',
+  components: { CityCascader },
   data() {
-    const self = this;
     return {
       loading: false,
       product: {},
@@ -92,22 +89,10 @@ export default {
       scope: [],
       systemAllow: false,
       allowNational: false,
-      pickPath: [],
+      pickCityId: '',
+      pickMeta: null,
       resultDlg: false,
       result: { ok: 0, fail: [] },
-      cascaderProps: {
-        lazy: true,
-        checkStrictly: true,
-        value: 'city_id',
-        label: 'name',
-        leaf: 'leaf',
-        lazyLoad(node, resolve) {
-          const pid = node.level === 0 ? 0 : node.value;
-          regionList({ parent_id: pid, limit: 500 })
-            .then((res) => resolve(res.data.list.map((c) => ({ city_id: c.city_id, name: c.name, leaf: !c.has_children, merger_name: c.merger_name }))))
-            .catch(() => resolve([]));
-        },
-      },
     };
   },
   computed: {
@@ -145,17 +130,21 @@ export default {
       const s = this.skus.find((x) => x.unique === unique);
       return s ? s.price : '';
     },
+    onPickMeta(m) {
+      this.pickMeta = m;
+    },
     addCity() {
-      const cityId = this.pickPath[this.pickPath.length - 1];
+      const cityId = Number(this.pickCityId);
+      if (!cityId) return;
       if (this.groups.find((g) => g.city_id === cityId)) return this.$message.warning('该区域已存在');
-      const nodes = this.$refs.cascader ? this.$refs.cascader.getCheckedNodes() : [];
-      const label = nodes.length ? nodes[0].pathLabels.join(',') : '区域 #' + cityId;
+      const label = (this.pickMeta && (this.pickMeta.merger_name || this.pickMeta.name)) || '区域 #' + cityId;
       this.groups.push({
         city_id: cityId,
         city_name: label,
         rows: this.skus.map((s) => ({ unique: s.unique, price: '', ot_price: '', stock: '', status: 1 })),
       });
-      this.pickPath = [];
+      this.pickCityId = '';
+      this.pickMeta = null;
     },
     removeCity(g) {
       this.groups = this.groups.filter((x) => x.city_id !== g.city_id);

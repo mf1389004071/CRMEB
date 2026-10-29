@@ -5,6 +5,11 @@ export function regionList(params) {
   return request({ url: 'region/list', method: 'get', params });
 }
 
+/** 按 city_id 反显祖先链与颗粒度 */
+export function regionResolve(params) {
+  return request({ url: 'region/resolve', method: 'get', params });
+}
+
 export function regionOpen(data) {
   return request({ url: 'region/open', method: 'post', data });
 }

@@ -15,6 +15,7 @@ use think\facade\Route;
  */
 Route::group('region', function () {
     Route::get('list', 'v1.vn.Region/lst')->option(['real_name' => '区划列表']);
+    Route::get('resolve', 'v1.vn.Region/resolve')->option(['real_name' => '区划反显解析']);
     Route::post('open', 'v1.vn.Region/open')->option(['real_name' => '区划批量开放/取消']);
     Route::post('hot', 'v1.vn.Region/hot')->option(['real_name' => '区划批量热门']);
     Route::post('sort', 'v1.vn.Region/sort')->option(['real_name' => '区划排序']);

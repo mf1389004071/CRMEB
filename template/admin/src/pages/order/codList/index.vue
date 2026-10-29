@@ -20,8 +20,8 @@
           <el-form-item label="关键字：">
             <el-input clearable v-model="where.keyword" placeholder="订单号/电话/姓名" class="form_content_width" @keyup.enter.native="search" />
           </el-form-item>
-          <el-form-item label="配送区域ID：">
-            <el-input clearable v-model="where.region_id" placeholder="区域 city_id" class="form_content_width" />
+          <el-form-item label="配送区域：">
+            <city-cascader v-model="where.region_id" width="280px" :show-meta="false" placeholder="任一级区划筛选" />
           </el-form-item>
           <el-form-item label="提货仓：">
             <el-select v-model="where.warehouse_id" clearable filterable placeholder="全部仓库" style="width: 180px">
@@ -195,9 +195,11 @@ import { mapState } from 'vuex';
 import { isSoundOn, setSoundOn } from '@/libs/codNotifier';
 import { orderBlacklistList, orderBlacklistAdd, orderBlacklistDel, codList, codConfirm, codDelivering, codDelivered, codVerify, codCollect, codCancel, codCallMark, codAudit } from '@/api/cod';
 import { warehouseOptions } from '@/api/warehouse';
+import CityCascader from '@/components/cityCascader/index.vue';
 
 export default {
   name: 'codList',
+  components: { CityCascader },
   data() {
     return {
       tab: 'all',
