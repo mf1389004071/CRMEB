@@ -185,7 +185,7 @@ class CodOrderServices extends BaseServices
         $diff = bccomp($received, $receivable, 2) !== 0;
         $remark = trim($remark);
         if ($diff && $remark === '') {
-            throw new ApiException('实收与应收不一致，请填写原因');
+            throw new ApiException('实收与应收不一致，请填写备注');
         }
         $audit = app()->make(OrderAuditServices::class);
         $res = $this->transaction(function () use ($oid, $received, $receivable, $diff, $remark, $operator, $audit) {

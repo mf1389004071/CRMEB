@@ -143,7 +143,7 @@
       <el-form label-width="90px">
         <el-form-item label="应收金额">{{ cur.cod_receivable }}</el-form-item>
         <el-form-item label="实收金额"><el-input v-model="form.received" placeholder="实收金额" /></el-form-item>
-        <el-form-item label="差异原因"><el-input v-model="form.remark" type="textarea" placeholder="实收与应收不一致时必填" /></el-form-item>
+        <el-form-item label="备注"><el-input v-model="form.remark" type="textarea" placeholder="可填写收款方式、收款人等；实收与应收不一致时必填" /></el-form-item>
       </el-form>
       <span slot="footer"><el-button @click="collectDlg = false">取消</el-button><el-button type="primary" @click="submitCollect">确认收款</el-button></span>
     </el-dialog>
