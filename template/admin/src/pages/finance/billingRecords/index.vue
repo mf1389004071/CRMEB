@@ -62,17 +62,17 @@
           </el-table-column>
           <el-table-column label="收入金额" min-width="130">
             <template slot-scope="scope">
-              <span style="color: #f5222d">￥{{ scope.row.income_price }}</span>
+              <span style="color: #f5222d">{{ $money(scope.row.income_price) }}</span>
             </template>
           </el-table-column>
           <el-table-column label="支出金额" min-width="130">
             <template slot-scope="scope">
-              <span style="color: #00c050">￥{{ scope.row.exp_price }}</span>
+              <span style="color: #00c050">{{ $money(scope.row.exp_price) }}</span>
             </template>
           </el-table-column>
           <el-table-column label="入账金额" min-width="130">
             <template slot-scope="scope">
-              <span>￥{{ scope.row.entry_price }}</span>
+              <span>{{ $money(scope.row.entry_price) }}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作" fixed="right" width="170">

@@ -187,33 +187,13 @@
                     </div>
                   </template>
                   <template v-else-if="item.slot === 'price'">
-                    <el-input-number
-                      :controls="false"
-                      v-model="oneFormBatch[0].price"
-                      :min="0"
-                      :max="9999999999"
-                      class="priceBox"
-                      clearable
-                    ></el-input-number>
+                    <MoneyInput v-model="oneFormBatch[0].price" :min="0" :max="9999999999" input-class="priceBox" :unit="false" clearable />
                   </template>
                   <template v-else-if="item.slot === 'cost'">
-                    <el-input-number
-                      :controls="false"
-                      v-model="oneFormBatch[0].cost"
-                      :min="0"
-                      :max="9999999999"
-                      class="priceBox"
-                      clearable
-                    ></el-input-number>
+                    <MoneyInput v-model="oneFormBatch[0].cost" :min="0" :max="9999999999" input-class="priceBox" :unit="false" clearable />
                   </template>
                   <template v-else-if="item.slot === 'ot_price'">
-                    <el-input-number
-                      :controls="false"
-                      v-model="oneFormBatch[0].ot_price"
-                      :min="0"
-                      class="priceBox"
-                      clearable
-                    ></el-input-number>
+                    <MoneyInput v-model="oneFormBatch[0].ot_price" :min="0" :max="9999999999" input-class="priceBox" :unit="false" clearable />
                   </template>
                   <template v-else-if="item.slot === 'stock'">
                     <el-input-number
@@ -279,31 +259,13 @@
                     </div>
                   </template>
                   <template v-if="item.slot === 'price'">
-                    <el-input-number
-                      :controls="false"
-                      v-model="manyFormValidate[scope.$index].price"
-                      :min="0"
-                      :max="9999999999"
-                      class="priceBox"
-                    ></el-input-number>
+                    <MoneyInput v-model="manyFormValidate[scope.$index].price" :min="0" :max="9999999999" input-class="priceBox" :unit="false" />
                   </template>
                   <template v-else-if="item.slot === 'cost'">
-                    <el-input-number
-                      :controls="false"
-                      v-model="manyFormValidate[scope.$index].cost"
-                      :min="0"
-                      :max="9999999999"
-                      class="priceBox"
-                    ></el-input-number>
+                    <MoneyInput v-model="manyFormValidate[scope.$index].cost" :min="0" :max="9999999999" input-class="priceBox" :unit="false" />
                   </template>
                   <template v-else-if="item.slot === 'ot_price'">
-                    <el-input-number
-                      :controls="false"
-                      v-model="manyFormValidate[scope.$index].ot_price"
-                      :min="0"
-                      :max="9999999999"
-                      class="priceBox"
-                    ></el-input-number>
+                    <MoneyInput v-model="manyFormValidate[scope.$index].ot_price" :min="0" :max="9999999999" input-class="priceBox" :unit="false" />
                   </template>
                   <template v-else-if="item.slot === 'stock'">
                     <el-input-number
@@ -421,44 +383,17 @@
       </el-col>
       <el-col :span="24">
         <el-form-item label="售价：">
-          <el-input-number
-            :controls="false"
-            v-model="oneFormValidate[0].price"
-            :min="0"
-            :precision="2"
-            :max="9999999999"
-            class="input_width input-number-unit-class"
-            :active-change="false"
-            class-unit="元"
-          ></el-input-number>
+          <MoneyInput v-model="oneFormValidate[0].price" :min="0" :max="9999999999" input-class="input_width" />
         </el-form-item>
       </el-col>
       <el-col :span="24">
         <el-form-item label="成本价：">
-          <el-input-number
-            :controls="false"
-            v-model="oneFormValidate[0].cost"
-            :min="0"
-            :max="9999999999"
-            :precision="2"
-            :active-change="false"
-            class="input_width input-number-unit-class"
-            class-unit="元"
-          ></el-input-number>
+          <MoneyInput v-model="oneFormValidate[0].cost" :min="0" :max="9999999999" input-class="input_width" />
         </el-form-item>
       </el-col>
       <el-col :span="24">
         <el-form-item label="划线价：">
-          <el-input-number
-            :controls="false"
-            v-model="oneFormValidate[0].ot_price"
-            :min="0"
-            :max="9999999999"
-            :precision="2"
-            :active-change="false"
-            class="input_width input-number-unit-class"
-            class-unit="元"
-          ></el-input-number>
+          <MoneyInput v-model="oneFormValidate[0].ot_price" :min="0" :max="9999999999" input-class="input_width" />
         </el-form-item>
       </el-col>
       <el-col :span="24">

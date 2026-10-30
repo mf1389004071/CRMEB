@@ -14,24 +14,24 @@ const api = new Function('uni', src + '\nreturn { setCurrencyConfig, setDisplayC
 let fail = 0, pass = 0;
 const eq = (a, b, name) => { if (a === b) pass++; else { fail++; console.log('FAIL', name, '=>', JSON.stringify(a), 'expected', JSON.stringify(b)); } };
 
-// 兜底配置：VND 本位
-eq(api.formatMoney(449000), '₫449.000', 'fallback VND format');
+// 兜底配置：VND 本位（千分位逗号）
+eq(api.formatMoney(449000), '₫449,000', 'fallback VND format');
 api.setCurrencyConfig({
   base: 'VND', default_display: 'VND',
   list: [
-    { code: 'VND', symbol: '₫', decimal_places: 0, thousand_sep: '.', decimal_sep: ',', rate: '1', is_base: 1 },
+    { code: 'VND', symbol: '₫', decimal_places: 0, thousand_sep: ',', decimal_sep: '.', rate: '1', is_base: 1 },
     { code: 'CNY', symbol: '¥', decimal_places: 2, thousand_sep: ',', decimal_sep: '.', rate: '0.00028', is_base: 0 },
     { code: 'USD', symbol: '$', decimal_places: 2, thousand_sep: ',', decimal_sep: '.', rate: '0.00004', is_base: 0 },
   ],
 }, false);
-eq(api.formatMoney(449000), '₫449.000', 'VND display');
-eq(api.formatMoney('1234567.5'), '₫1.234.568', 'VND rounds half up, thousands dot');
+eq(api.formatMoney(449000), '₫449,000', 'VND display');
+eq(api.formatMoney('1234567.5'), '₫1,234,568', 'VND rounds half up, thousands comma');
 eq(api.formatMoney(0), '₫0', 'zero');
-eq(api.formatMoney('-12500'), '₫-12.500', 'negative');
+eq(api.formatMoney('-12500'), '₫-12,500', 'negative');
 eq(api.formatMoney(''), '', 'empty => empty');
 eq(api.formatMoney(undefined), '', 'undefined => empty');
 eq(api.formatMoney('abc'), '', 'non numeric => empty');
-eq(api.formatMoney(449000, { symbol: false }), '449.000', 'no symbol');
+eq(api.formatMoney(449000, { symbol: false }), '449,000', 'no symbol');
 
 api.setDisplayCurrency('USD');
 eq(api.getDisplayCurrency(), 'USD', 'display switched');
@@ -45,7 +45,7 @@ const parts = api.moneyParts(449000);
 eq(parts.integer + '|' + parts.decimal + '|' + parts.decSep + '|' + parts.approx, '125|72|.|true', 'moneyParts split');
 api.setDisplayCurrency('VND');
 const p2 = api.moneyParts(449000);
-eq(p2.integer + '|' + p2.decimal + '|' + p2.approx, '449.000||false', 'VND parts: no decimals, no approx');
+eq(p2.integer + '|' + p2.decimal + '|' + p2.approx, '449,000||false', 'VND parts: no decimals, no approx');
 
 // 合计 = 本位币合计再换算
 api.setDisplayCurrency('USD');
@@ -56,12 +56,12 @@ eq(api.formatMoney(total), '≈$0.12', 'total converted once from base total');
 // 用户选择优先于服务端默认
 api.setDisplayCurrency('CNY');
 api.setCurrencyConfig({ base: 'VND', default_display: 'USD', list: [
-  { code: 'VND', symbol: '₫', decimal_places: 0, thousand_sep: '.', decimal_sep: ',', rate: '1', is_base: 1 },
+  { code: 'VND', symbol: '₫', decimal_places: 0, thousand_sep: ',', decimal_sep: '.', rate: '1', is_base: 1 },
   { code: 'USD', symbol: '$', decimal_places: 2, thousand_sep: ',', decimal_sep: '.', rate: '0.00004', is_base: 0 }] }, false);
 eq(api.getDisplayCurrency(), 'USD', 'chosen CNY no longer available => fall back to server default');
 api.setDisplayCurrency('VND');
 api.setCurrencyConfig({ base: 'VND', default_display: 'USD', list: [
-  { code: 'VND', symbol: '₫', decimal_places: 0, thousand_sep: '.', decimal_sep: ',', rate: '1', is_base: 1 },
+  { code: 'VND', symbol: '₫', decimal_places: 0, thousand_sep: ',', decimal_sep: '.', rate: '1', is_base: 1 },
   { code: 'USD', symbol: '$', decimal_places: 2, thousand_sep: ',', decimal_sep: '.', rate: '0.00004', is_base: 0 }] }, false);
 eq(api.getDisplayCurrency(), 'VND', 'explicit user choice wins over server default');
 

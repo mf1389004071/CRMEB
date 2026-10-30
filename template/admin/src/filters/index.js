@@ -118,3 +118,12 @@ export function sourceType(type) {
   };
   return typeMap[type];
 }
+
+/**
+ * 金额展示（延迟取 formatMoney，避免与 main/money 循环依赖）
+ * 用法：{{ row.pay_price | money }}
+ */
+export function money(value) {
+  // eslint-disable-next-line global-require
+  return require('@/utils/money').formatMoney(value);
+}

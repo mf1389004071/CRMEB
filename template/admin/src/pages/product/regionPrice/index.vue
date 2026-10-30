@@ -40,14 +40,18 @@
           <el-table-column label="规格" min-width="160">
             <template slot-scope="scope">{{ skuName(scope.row.unique) }}</template>
           </el-table-column>
-          <el-table-column label="主表价" width="110">
-            <template slot-scope="scope">{{ skuBase(scope.row.unique) }}</template>
+          <el-table-column label="主表价" width="130">
+            <template slot-scope="scope">{{ $money(skuBase(scope.row.unique)) }}</template>
           </el-table-column>
-          <el-table-column label="区域价*" width="150">
-            <template slot-scope="scope"><el-input v-model="scope.row.price" size="mini" placeholder="必填 >0" /></template>
+          <el-table-column label="区域价*" width="160">
+            <template slot-scope="scope">
+              <MoneyInput v-model="scope.row.price" size="mini" placeholder="必填 >0" :unit="false" />
+            </template>
           </el-table-column>
-          <el-table-column label="划线价" width="130">
-            <template slot-scope="scope"><el-input v-model="scope.row.ot_price" size="mini" placeholder="可空" /></template>
+          <el-table-column label="划线价" width="140">
+            <template slot-scope="scope">
+              <MoneyInput v-model="scope.row.ot_price" size="mini" placeholder="可空" :unit="false" />
+            </template>
           </el-table-column>
           <el-table-column label="区域库存" width="130">
             <template slot-scope="scope"><el-input v-model="scope.row.stock" size="mini" placeholder="空=沿用" /></template>
@@ -76,6 +80,7 @@
 <script>
 import { regionPriceGet, regionPriceSave, regionPriceTemplate, regionPriceExport, regionPriceImport } from '@/api/regionPrice';
 import CityCascader from '@/components/cityCascader/index.vue';
+import { parseMoneyInput } from '@/utils/money';
 
 export default {
   name: 'productRegionPrice',
@@ -154,8 +159,17 @@ export default {
       for (const g of this.groups) {
         for (const r of g.rows) {
           // 价格为空的行视为“该规格在该区域不配价”，不提交（范围内已有的会被删除）
-          if (r.price === '' || r.price === null) continue;
-          rows.push({ unique: r.unique, city_id: g.city_id, price: r.price, ot_price: r.ot_price === '' ? 0 : r.ot_price, stock: r.stock === '' ? null : r.stock, status: r.status });
+          const price = parseMoneyInput(r.price);
+          if (price === '') continue;
+          const ot = parseMoneyInput(r.ot_price);
+          rows.push({
+            unique: r.unique,
+            city_id: g.city_id,
+            price,
+            ot_price: ot === '' ? 0 : ot,
+            stock: r.stock === '' ? null : r.stock,
+            status: r.status,
+          });
         }
       }
       const scope = Array.from(new Set(this.scope.concat(this.groups.map((g) => g.city_id))));

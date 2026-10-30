@@ -17,9 +17,9 @@ t_assert(M::convert('449000', 'VND') === '449000', 'base convert is identity, no
 t_assert(M::convert('12500', 'USD') === '0.50', 'rounding to 2dp: ' . M::convert('12500', 'USD'));
 t_assert(M::convert('1', 'USD') === '0.00', 'tiny amount rounds to 0.00');
 t_assert(M::convert('-449000', 'USD') === '-17.96', 'negative amounts');
-t_assert(M::format('449000', 'VND') === '₫449.000', 'VND format: dot thousands, no decimals, no ≈: ' . M::format('449000', 'VND'));
+t_assert(M::format('449000', 'VND') === '₫449,000', 'VND format: comma thousands, no decimals, no ≈: ' . M::format('449000', 'VND'));
 t_assert(M::format('17.96', 'USD') === '≈$17.96', 'USD format with ≈: ' . M::format('17.96', 'USD'));
-t_assert(M::format('1234567.5', 'VND', false) === '1.234.568', 'half-up rounding & thousands: ' . M::format('1234567.5', 'VND', false));
+t_assert(M::format('1234567.5', 'VND', false) === '1,234,568', 'half-up rounding & thousands: ' . M::format('1234567.5', 'VND', false));
 t_assert(M::format('1234.5', 'USD', false) === '1,234.50', 'USD thousands & 2 decimals');
 
 // 合计 = 本位币合计再换算（与行价逐个换算求和不同）

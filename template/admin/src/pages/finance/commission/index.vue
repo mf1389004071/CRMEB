@@ -44,12 +44,12 @@
         </el-table-column> -->
         <el-table-column label="账户佣金" min-width="100">
           <template slot-scope="scope">
-            <span>{{ scope.row.brokerage_price }}</span>
+            <span>{{ $money(scope.row.brokerage_price) }}</span>
           </template>
         </el-table-column>
         <el-table-column label="提现佣金" min-width="100">
           <template slot-scope="scope">
-            <span>{{ scope.row.extract_price }}</span>
+            <span>{{ $money(scope.row.extract_price) }}</span>
           </template>
         </el-table-column>
       </el-table>

@@ -13,9 +13,9 @@
           </div>
           <div class="goods_info">
             <div class="number-wrapper">
-              <div class="price"><span>¥</span>{{ goodsInfo.productInfo.price }}</div>
+              <div class="price">{{ $money(goodsInfo.productInfo.price) }}</div>
               <div class="old-price" v-if="goodsInfo.productInfo.vip_price != '0.00'">
-                ¥{{ goodsInfo.productInfo.vip_price }}
+                {{ $money(goodsInfo.productInfo.vip_price) }}
               </div>
               <div v-if="goodsInfo.productInfo.vip_price != '0.00'">
                 <img src="../../../../assets/images/goods_vip.png" />
@@ -23,7 +23,7 @@
             </div>
             <div class="name">{{ goodsInfo.productInfo.store_name }}</div>
             <div class="msg">
-              <div class="item">原价:￥{{ goodsInfo.productInfo.ot_price }}</div>
+              <div class="item">原价:{{ $money(goodsInfo.productInfo.ot_price) }}</div>
               <div class="item">库存:{{ goodsInfo.productInfo.stock }}{{ goodsInfo.productInfo.unit_name }}</div>
               <div class="item">
                 销量:{{ goodsInfo.productInfo.sales + goodsInfo.productInfo.ficti

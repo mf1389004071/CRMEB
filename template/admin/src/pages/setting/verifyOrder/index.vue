@@ -99,7 +99,7 @@
                   </div>
                   <div>
                     <span>价格：</span>
-                    <span>¥{{ item.cart_info.truePrice || '--' }}</span>
+                    <span>{{ item.cart_info.truePrice != null && item.cart_info.truePrice !== '' ? $money(item.cart_info.truePrice) : '--' }}</span>
                   </div>
                   <div>
                     <span>数量：</span>

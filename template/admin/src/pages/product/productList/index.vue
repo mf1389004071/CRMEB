@@ -274,9 +274,9 @@
             <span>{{ scope.row.product_type }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="商品售价" min-width="100">
+        <el-table-column label="商品售价" min-width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.price }}</span>
+            <span>{{ $money(scope.row.price) }}</span>
           </template>
         </el-table-column>
         <el-table-column label="销量" min-width="100">

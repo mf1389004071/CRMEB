@@ -62,6 +62,11 @@ import exportExcel from '@/utils/newToExcel.js';
 import videoCloud from '@/utils/videoCloud';
 import { modalSure, HandlePrice } from '@/utils/public';
 import { authLapse } from '@/utils/authLapse';
+import formatMoney, { loadCurrencyConfig } from '@/utils/money';
+import MoneyInput from '@/components/MoneyInput/index.vue';
+// 构建戳：确保每次金额相关改动产出新 hash，避免开发环境长缓存
+const __MONEY_BUILD__ = '20261030-money-v3';
+void __MONEY_BUILD__;
 
 // 样式文件
 import './assets/fonts/font.css';
@@ -89,6 +94,7 @@ Vue.prototype.bus = new Vue();
 Vue.component('Pagination', Pagination);
 Vue.component('pagesHeader', pagesHeader);
 Vue.component('common_wrapper', common_wrapper);
+Vue.component('MoneyInput', MoneyInput);
 
 // 配置第三方库
 moment.locale('zh-cn');
@@ -165,6 +171,7 @@ Vue.prototype.$routeProStr = settings.routePre;
 Vue.prototype.$modalForm = modalForm;
 Vue.prototype.$modalSure = modalSure;
 Vue.prototype.$HandlePrice = HandlePrice;
+Vue.prototype.$money = formatMoney;
 Vue.prototype.$exportExcel = exportExcel;
 Vue.prototype.$videoCloud = videoCloud;
 Vue.prototype.$authLapse = authLapse;

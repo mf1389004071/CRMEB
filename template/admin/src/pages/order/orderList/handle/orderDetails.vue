@@ -30,11 +30,11 @@
             </li>
             <li class="item">
               <div class="title">实际支付</div>
-              <div>¥ {{ orderDatalist.orderInfo.pay_price || '0.0' }}</div>
+              <div>{{ $money(orderDatalist.orderInfo.pay_price || 0) }}</div>
             </li>
             <li class="item" v-if="orderDatalist.orderInfo.refund_status == 2">
               <div class="title">实际退款</div>
-              <div>¥ {{ orderDatalist.orderInfo.refunded_price || '0.0' }}</div>
+              <div>{{ $money(orderDatalist.orderInfo.refunded_price || 0) }}</div>
             </li>
             <li class="item">
               <div class="title">支付方式</div>
@@ -110,31 +110,31 @@
                 </li>
                 <li class="item">
                   <div>商品总价：</div>
-                  <div class="value">{{ orderDatalist.orderInfo.total_price }}</div>
+                  <div class="value">{{ $money(orderDatalist.orderInfo.total_price) }}</div>
                 </li>
                 <li class="item">
                   <div>优惠券金额：</div>
-                  <div class="value">{{ orderDatalist.orderInfo.coupon_price }}</div>
+                  <div class="value">{{ $money(orderDatalist.orderInfo.coupon_price) }}</div>
                 </li>
                 <li class="item">
                   <div>积分抵扣：</div>
-                  <div class="value">{{ orderDatalist.orderInfo.deduction_price || '0.0' }}</div>
+                  <div class="value">{{ $money(orderDatalist.orderInfo.deduction_price || 0) }}</div>
                 </li>
                 <li class="item">
                   <div>交付邮费：</div>
-                  <div class="value">{{ orderDatalist.orderInfo.pay_postage }}</div>
+                  <div class="value">{{ $money(orderDatalist.orderInfo.pay_postage) }}</div>
                 </li>
                 <li class="item">
                   <div>用户等级优惠：</div>
-                  <div class="value">{{ orderDatalist.orderInfo.levelPrice || '0.0' }}</div>
+                  <div class="value">{{ $money(orderDatalist.orderInfo.levelPrice || 0) }}</div>
                 </li>
                 <li class="item">
                   <div>付费会员优惠：</div>
-                  <div class="value">{{ orderDatalist.orderInfo.memberPrice || '0.0' }}</div>
+                  <div class="value">{{ $money(orderDatalist.orderInfo.memberPrice || 0) }}</div>
                 </li>
                 <li class="item">
                   <div>实际支付：</div>
-                  <div class="value">{{ orderDatalist.orderInfo.pay_price || '0.0' }}</div>
+                  <div class="value">{{ $money(orderDatalist.orderInfo.pay_price || 0) }}</div>
                 </li>
               </ul>
             </div>
@@ -315,11 +315,11 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column label="支付价格" min-width="90">
+              <el-table-column label="支付价格" min-width="110">
                 <template slot-scope="scope">
                   <div class="tab">
                     <div class="line1">
-                      {{ scope.row.truePrice }}
+                      {{ $money(scope.row.truePrice) }}
                     </div>
                   </div>
                 </template>

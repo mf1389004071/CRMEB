@@ -21,7 +21,9 @@
               </template>
             </el-table-column>
             <el-table-column prop="suk" label="产品规格" min-width="120" align="center"></el-table-column>
-            <el-table-column prop="price" label="售价" min-width="120" align="center"></el-table-column>
+            <el-table-column label="售价" min-width="120" align="center">
+              <template slot-scope="scope">{{ $money(scope.row.price) }}</template>
+            </el-table-column>
             <el-table-column min-width="120" align="center">
               <template slot="header" slot-scope="scope">
                 <span>一级返佣</span>
@@ -54,14 +56,18 @@
                 </el-popover>
               </template>
               <template slot-scope="scope">
+                <MoneyInput
+                  v-if="formData.is_sub == 1"
+                  v-model="scope.row.brokerage"
+                  @change="brokerageRowReplace(scope.row)"
+                />
                 <el-input
+                  v-else
                   v-model="scope.row.brokerage"
                   @change="brokerageRowReplace(scope.row)"
                   :disabled="formData.is_sub == 0"
                 >
-                  <template slot="suffix">
-                    <span>{{ formData.is_sub ? '元' : '%' }}</span>
-                  </template>
+                  <template slot="suffix"><span>%</span></template>
                 </el-input>
                 <!-- <div class="flex-x-center" v-show="formData.is_sub == 0">一级返佣：{{ (scope.row.price * store_brokerage_ratio).toFixed(2) }}</div> -->
                 <!-- <div class="flex-x-center red" v-show="formData.is_sub == 1 && scope.row.brokerage == 0">
@@ -108,15 +114,19 @@
                 </el-popover>
               </template>
               <template slot-scope="scope">
+                <MoneyInput
+                  v-if="formData.is_sub == 1"
+                  v-model="scope.row.brokerage_two"
+                  @change="brokerageTwoRowReplace(scope.row)"
+                />
                 <el-input
+                  v-else
                   type="number"
                   v-model="scope.row.brokerage_two"
                   @change="brokerageTwoRowReplace(scope.row)"
                   :disabled="formData.is_sub == 0"
                 >
-                  <template slot="suffix">
-                    <span>{{ formData.is_sub ? '元' : '%' }}</span>
-                  </template>
+                  <template slot="suffix"><span>%</span></template>
                 </el-input>
                 <!-- <div class="flex-x-center" v-show="formData.is_sub == 0">二级返佣：{{ (scope.row.price * store_brokerage_two).toFixed(2) }}</div> -->
                 <!-- <div class="flex-x-center red" v-show="formData.is_sub == 1 && scope.row.brokerage_two == 0">

@@ -65,7 +65,7 @@
         </el-table-column>
         <el-table-column label="订单金额" min-width="90">
           <template slot-scope="scope">
-            <div>¥ {{ scope.row.pay_price }}</div>
+            <div>{{ $money(scope.row.pay_price) }}</div>
           </template>
         </el-table-column>
         <el-table-column label="发票类型" min-width="130">

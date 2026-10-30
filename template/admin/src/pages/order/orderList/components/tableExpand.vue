@@ -3,7 +3,7 @@
     <el-row class="expand-row">
       <el-col :span="6">
         <span class="expand-key">商品总价：</span>
-        <span class="expand-value" v-text="row.total_price"></span>
+        <span class="expand-value">{{ $money(row.total_price) }}</span>
       </el-col>
       <el-col :span="6">
         <span class="expand-key">下单时间：</span>

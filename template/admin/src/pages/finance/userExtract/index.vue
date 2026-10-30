@@ -93,7 +93,7 @@
         </el-table-column>
         <el-table-column label="提现金额" min-width="100">
           <template slot-scope="scope">
-            <div>{{ scope.row.extract_price }}</div>
+            <div>{{ $money(scope.row.extract_price) }}</div>
           </template>
         </el-table-column>
         <el-table-column label="提现手续费" min-width="100">
@@ -103,7 +103,7 @@
         </el-table-column>
         <el-table-column label="到账金额" min-width="100">
           <template slot-scope="scope">
-            <div class="f-price">{{ scope.row.receive_price }}</div>
+            <div class="f-price">{{ $money(scope.row.receive_price) }}</div>
           </template>
         </el-table-column>
         <el-table-column label="提现方式" min-width="130">

@@ -81,7 +81,7 @@
         </el-table-column>
         <el-table-column label="支付金额" min-width="130">
           <template slot-scope="scope">
-            <span>{{ scope.row.price }}</span>
+            <span>{{ $money(scope.row.price) }}</span>
           </template>
         </el-table-column>
         <el-table-column label="是否支付" min-width="130">

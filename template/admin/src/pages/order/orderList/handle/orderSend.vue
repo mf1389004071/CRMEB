@@ -209,7 +209,7 @@
             <el-table-column label="价格" min-width="120">
               <template slot-scope="scope">
                 <div class="product-data">
-                  <div>{{ scope.row.cart_info.truePrice }}</div>
+                  <div>{{ $money(scope.row.cart_info.truePrice) }}</div>
                 </div>
               </template>
             </el-table-column>

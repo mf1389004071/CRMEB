@@ -47,8 +47,8 @@
       </el-table-column>
       <el-table-column label="交易金额" min-width="130">
         <template slot-scope="scope">
-          <div v-if="scope.row.price >= 0" class="z-price">+{{ scope.row.price }}</div>
-          <div v-if="scope.row.price < 0" class="f-price">{{ scope.row.price }}</div>
+          <div v-if="scope.row.price >= 0" class="z-price">+{{ $money(scope.row.price) }}</div>
+          <div v-if="scope.row.price < 0" class="f-price">{{ $money(scope.row.price) }}</div>
         </template>
       </el-table-column>
       <el-table-column label="交易用户" min-width="130">

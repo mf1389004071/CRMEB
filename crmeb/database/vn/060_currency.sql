@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `eb_system_exchange_rate_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='汇率修改日志';
 
 INSERT INTO eb_system_currency (code, symbol, name_zh, name_vi, name_en, decimal_places, thousand_sep, decimal_sep, rate, is_base, status, sort, update_time)
-SELECT 'VND', '₫', '越南盾', 'Đồng Việt Nam', 'Vietnamese Dong', 0, '.', ',', 1.000000, 1, 1, 100, UNIX_TIMESTAMP() FROM DUAL
+SELECT 'VND', '₫', '越南盾', 'Đồng Việt Nam', 'Vietnamese Dong', 0, ',', '.', 1.000000, 1, 1, 100, UNIX_TIMESTAMP() FROM DUAL
 WHERE NOT EXISTS (SELECT 1 FROM eb_system_currency WHERE code = 'VND');
 INSERT INTO eb_system_currency (code, symbol, name_zh, name_vi, name_en, decimal_places, thousand_sep, decimal_sep, rate, is_base, status, sort, update_time)
 SELECT 'CNY', '¥', '人民币', 'Nhân dân tệ', 'Chinese Yuan', 2, ',', '.', 0.000280, 0, 1, 90, UNIX_TIMESTAMP() FROM DUAL

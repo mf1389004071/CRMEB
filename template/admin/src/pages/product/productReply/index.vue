@@ -218,12 +218,12 @@
         </el-table-column>
         <el-table-column label="售价" min-width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.ot_price }}</span>
+            <span>{{ $money(scope.row.ot_price) }}</span>
           </template>
         </el-table-column>
         <el-table-column label="优惠价" min-width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.price }}</span>
+            <span>{{ $money(scope.row.price) }}</span>
           </template>
         </el-table-column>
       </el-table>

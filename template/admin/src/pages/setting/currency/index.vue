@@ -6,7 +6,7 @@
         :closable="false"
         show-icon
         class="mb10"
-        title="价格、订单、应付一律使用本位币；展示币种只在前台展示层按汇率换算（汇率含义：1 本位币 = rate 该币种）。订单创建时会固化币种/汇率快照，后续改汇率不影响历史订单。本位币唯一且不可删除。"
+        title="价格、订单、应付一律使用本位币；展示币种只在前台展示层按汇率换算（汇率含义：1 本位币 = rate 该币种）。订单创建时会固化币种/汇率快照，后续改汇率不影响历史订单。本位币唯一且不可删除。VND 预置千分位为逗号（如 ₫449,000），与超市小票常见写法一致；管理端展示用 $money / money 过滤器，勿手写 ¥。"
       />
       <div class="mb10">
         <el-button type="primary" size="small" @click="openAdd">新增币种</el-button>
@@ -70,6 +70,7 @@
 
 <script>
 import { currencyList, currencySave, currencyDel, currencyLogs } from '@/api/currency';
+import { loadCurrencyConfig } from '@/utils/money';
 
 const blank = () => ({ id: 0, code: '', symbol: '', name_zh: '', name_vi: '', name_en: '', decimal_places: 2, thousand_sep: ',', decimal_sep: '.', rate: '', is_base: 0, status: 1, sort: 0 });
 
@@ -108,6 +109,7 @@ export default {
           this.$message.success('保存成功');
           this.dlg = false;
           this.load();
+          loadCurrencyConfig();
         })
         .catch((err) => this.$message.error(err.msg));
     },
@@ -117,6 +119,7 @@ export default {
         .then(() => {
           this.$message.success('已删除');
           this.load();
+          loadCurrencyConfig();
         })
         .catch((err) => err && err.msg && this.$message.error(err.msg));
     },

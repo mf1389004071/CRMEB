@@ -84,10 +84,10 @@
             <div class="gray" v-if="scope.row.warehouse_address">{{ scope.row.warehouse_address }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="应收/实收" min-width="120">
+        <el-table-column label="应收/实收" min-width="150">
           <template slot-scope="scope">
-            <div>应收 {{ scope.row.cod_receivable }}</div>
-            <div class="gray">实收 {{ scope.row.paid ? scope.row.cod_received : '-' }}</div>
+            <div>应收 {{ $money(scope.row.cod_receivable, { convert: false }) }}</div>
+            <div class="gray">实收 {{ scope.row.paid ? $money(scope.row.cod_received, { convert: false }) : '-' }}</div>
           </template>
         </el-table-column>
         <el-table-column label="状态" min-width="120">
@@ -141,8 +141,8 @@
 
     <el-dialog title="确认收款" :visible.sync="collectDlg" width="460px">
       <el-form label-width="90px">
-        <el-form-item label="应收金额">{{ cur.cod_receivable }}</el-form-item>
-        <el-form-item label="实收金额"><el-input v-model="form.received" placeholder="实收金额" /></el-form-item>
+        <el-form-item label="应收金额">{{ $money(cur.cod_receivable) }}</el-form-item>
+        <el-form-item label="实收金额"><MoneyInput v-model="form.received" placeholder="实收金额" /></el-form-item>
         <el-form-item label="备注"><el-input v-model="form.remark" type="textarea" placeholder="可填写收款方式、收款人等；实收与应收不一致时必填" /></el-form-item>
       </el-form>
       <span slot="footer"><el-button @click="collectDlg = false">取消</el-button><el-button type="primary" @click="submitCollect">确认收款</el-button></span>
@@ -196,6 +196,7 @@ import { isSoundOn, setSoundOn } from '@/libs/codNotifier';
 import { orderBlacklistList, orderBlacklistAdd, orderBlacklistDel, codList, codConfirm, codDelivering, codDelivered, codVerify, codCollect, codCancel, codCallMark, codAudit } from '@/api/cod';
 import { warehouseOptions } from '@/api/warehouse';
 import CityCascader from '@/components/cityCascader/index.vue';
+import { parseMoneyInput } from '@/utils/money';
 
 export default {
   name: 'codList',
@@ -376,7 +377,9 @@ export default {
       this.collectDlg = true;
     },
     submitCollect() {
-      this.run(codCollect(this.cur.id, { received: String(this.form.received), remark: this.form.remark })).then((ok) => ok && (this.collectDlg = false));
+      const received = parseMoneyInput(this.form.received);
+      if (received === '') return this.$message.warning('请填写实收金额');
+      this.run(codCollect(this.cur.id, { received: String(received), remark: this.form.remark })).then((ok) => ok && (this.collectDlg = false));
     },
     openCancel(row) {
       this.cur = row;

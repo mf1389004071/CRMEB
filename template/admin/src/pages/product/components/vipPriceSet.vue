@@ -44,7 +44,9 @@
               </template>
             </el-table-column>
             <el-table-column prop="suk" label="产品规格" min-width="120" align="center"></el-table-column>
-            <el-table-column prop="price" label="售价" min-width="120" align="center"></el-table-column>
+            <el-table-column label="售价" min-width="120" align="center">
+              <template slot-scope="scope">{{ $money(scope.row.price) }}</template>
+            </el-table-column>
             <el-table-column min-width="140" align="center" v-if="formData.is_vip == 1">
               <template slot="header" slot-scope="scope">
                 <span>付费会员价</span>
@@ -65,10 +67,15 @@
                   </div>
                   <div class="mt10 mb10 acea-row row-middle">
                     <span class="mr5" v-show="vipSetType == 2">减</span>
-                    <el-input type="number" class="popover-input" v-model="vipSetNum">
+                    <MoneyInput
+                      v-if="vipSetType == 0"
+                      class="popover-input"
+                      v-model="vipSetNum"
+                    />
+                    <el-input v-else type="number" class="popover-input" v-model="vipSetNum">
                       <template slot="suffix">
-                        <span v-show="vipSetType == 0">元</span>
                         <span v-show="vipSetType == 1">%</span>
+                        <span v-show="vipSetType == 2"></span>
                       </template>
                     </el-input>
                     <div class="acea-row row-right row-middle ml14">
@@ -80,11 +87,7 @@
                 </el-popover>
               </template>
               <template slot-scope="scope">
-                <el-input type="number" v-model="scope.row.vip_price" @change="vipRowReplace(scope.row)">
-                  <template slot="suffix">
-                    <span>元</span>
-                  </template>
-                </el-input>
+                <MoneyInput v-model="scope.row.vip_price" @change="vipRowReplace(scope.row)" />
                 <div class="flex-x-center red" v-show="scope.row.vip_price == 0">会员价不可为0</div>
                 <div class="flex-x-center red" v-show="Number(scope.row.vip_price) > Number(scope.row.price)">
                   会员价不可大于售价

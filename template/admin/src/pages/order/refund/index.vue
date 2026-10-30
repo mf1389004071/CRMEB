@@ -102,7 +102,7 @@
                   </div>
                   <div>
                     <span>价格：</span>
-                    <span>¥{{ item.cart_info.truePrice || '--' }}</span>
+                    <span>{{ item.cart_info.truePrice != null && item.cart_info.truePrice !== '' ? $money(item.cart_info.truePrice) : '--' }}</span>
                   </div>
                   <div>
                     <span>数量：</span>
@@ -119,9 +119,9 @@
             <span class="cup hover-pimary" @click="userDetail(scope.row, '2')">{{ scope.row.nickname }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="实际支付" min-width="70">
+        <el-table-column label="实际支付" min-width="110">
           <template slot-scope="scope">
-            <span>{{ scope.row.pay_price }}</span>
+            <span>{{ $money(scope.row.pay_price) }}</span>
           </template>
         </el-table-column>
         <el-table-column label="发起退款时间" min-width="120">

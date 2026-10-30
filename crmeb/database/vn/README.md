@@ -73,6 +73,8 @@ bash tests/vn/run.sh tests/vn/cod_order_test.php
 - 未登录切语言：设置页 `/pages/users/user_info/index` 已放开登录门禁；「我的」页顶部也有语言入口。
 
 ## 前端金额展示约定（M6-4）
-- 页面一律使用 `$money(本位币金额)` 或 `<BaseMoney :money="本位币金额">`，**不得手写 ￥/千分位**；
-- 已用脚本把模板内 “`$t(\`￥\`)` + 金额” / “￥{{金额}}” 模式批量替换为 `$money(...)`；
-- 仍保留的少量纯符号位置（后台改价弹窗的单位标签、充值/线下收款页等已被越南模式关闭的页面）不影响主流程。
+- 完整说明：`docs/260409-菜集鲜/261030-币种与金额显示.md`
+- 移动端一律 `$money(本位币金额)` 或 `<BaseMoney :money="本位币金额">`，**不得手写 ￥/千分位**；
+- 管理端：`template/admin/src/utils/money.js` + `this.$money` / `money` 过滤器；默认展示本位币；
+- VND 预置千分位为 **逗号**（`₫449,000`）；已装库执行 `061_currency_vnd_thousand_comma.sql`；
+- 仍保留的少量纯符号位置（后台改价弹窗单位标签等）不影响主流程。

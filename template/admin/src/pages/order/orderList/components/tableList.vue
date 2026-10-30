@@ -77,7 +77,7 @@
                 </div>
                 <div>
                   <span>支付价格：</span>
-                  <span>¥{{ item.cart_info.truePrice || '--' }}</span>
+                  <span>{{ item.cart_info.truePrice != null && item.cart_info.truePrice !== '' ? $money(item.cart_info.truePrice) : '--' }}</span>
                 </div>
                 <div>
                   <span>购买数量：</span>
@@ -94,9 +94,9 @@
           <span class="nickname">{{ scope.row.nickname }} | {{ scope.row.uid }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="实际支付" min-width="100">
+      <el-table-column label="实际支付" min-width="120">
         <template slot-scope="scope">
-          <span>{{ scope.row.paid ? scope.row.pay_price : '未支付' }}</span>
+          <span>{{ scope.row.paid ? $money(scope.row.pay_price) : '未支付' }}</span>
         </template>
       </el-table-column>
       <el-table-column label="支付方式" min-width="100">

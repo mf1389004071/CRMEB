@@ -10,7 +10,8 @@ const state = Vue.observable({
 	list: []
 });
 
-const CFG_KEY = 'CURRENCY_CFG';
+// v2：VND 千分位改为逗号后换键，避免旧本地缓存仍用点号
+const CFG_KEY = 'CURRENCY_CFG_v2';
 const DISPLAY_KEY = 'display_currency';
 
 // 兜底配置（接口未返回前使用）：VND 本位，与后台预置一致
@@ -18,8 +19,8 @@ const FALLBACK = [{
 	code: 'VND',
 	symbol: '₫',
 	decimal_places: 0,
-	thousand_sep: '.',
-	decimal_sep: ',',
+	thousand_sep: ',',
+	decimal_sep: '.',
 	rate: '1',
 	is_base: 1
 }];
@@ -134,7 +135,7 @@ export function moneyParts(baseAmount, opts) {
 	};
 }
 
-// 格式化为字符串：formatMoney(449000) => "₫449.000"；展示币为 USD 时 => "≈$17.96"
+// 格式化为字符串：formatMoney(449000) => "₫449,000"；展示币为 USD 时 => "≈$17.96"
 export function formatMoney(baseAmount, opts) {
 	return moneyParts(baseAmount, opts).text;
 }

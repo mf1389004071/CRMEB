@@ -97,35 +97,19 @@
                 >
               </template>
               <template v-else-if="item.slot === 'brokerage'">
-                <el-input-number
-                  :controls="false"
-                  v-model="oneFormValidate[0].brokerage"
-                  :min="0"
-                  :max="9999999999"
-                  class="priceBox input-number-unit-class"
-                  class-unit="元"
-                ></el-input-number>
+                <MoneyInput v-model="oneFormValidate[0].brokerage" :min="0" :max="9999999999" input-class="priceBox" />
               </template>
               <template v-else-if="item.slot === 'brokerage_two'">
-                <el-input-number
-                  :controls="false"
-                  v-model="oneFormValidate[0].brokerage_two"
-                  :min="0"
-                  :max="9999999999"
-                  class="priceBox input-number-unit-class"
-                  class-unit="元"
-                ></el-input-number>
+                <MoneyInput v-model="oneFormValidate[0].brokerage_two" :min="0" :max="9999999999" input-class="priceBox" />
               </template>
               <template v-else-if="item.slot === 'vip_price'">
-                <el-input-number
-                  :controls="false"
+                <MoneyInput
                   v-model="oneFormValidate[0].vip_price"
                   :min="0"
                   :max="9999999999"
-                  class="priceBox input-number-unit-class"
-                  class-unit="元"
+                  input-class="priceBox"
                   @input="changeVipPrice(0, 'oneFormValidate')"
-                ></el-input-number>
+                />
               </template>
               <template v-else-if="item.slot === 'vip_proportion'">
                 <el-input-number
@@ -145,38 +129,35 @@
       <!--多规格返佣-->
       <el-form-item label="批量设置：" v-if="formValidate.spec_type === 1">
         <span v-if="formValidate.is_sub.indexOf(1) > -1">
-          <span class="brokerage">一级返佣：</span
-          ><el-input-number
-            :controls="false"
+          <span class="brokerage">一级返佣：</span>
+          <MoneyInput
+            class="columnsBox"
+            input-class="input_width"
             placeholder="请输入一级返佣"
-            class="columnsBox input_width input-number-unit-class"
-            class-unit="元"
             :value="manyBrokerage"
             @input="(val) => $emit('update:manyBrokerage', val)"
-          >
-          </el-input-number>
-          <span class="brokerage">二级返佣：</span
-          ><el-input-number
-            :controls="false"
+          />
+          <span class="brokerage">二级返佣：</span>
+          <MoneyInput
+            class="columnsBox"
+            input-class="input_width"
             placeholder="请输入二级返佣"
-            class="columnsBox input_width input-number-unit-class"
-            class-unit="元"
             :value="manyBrokerageTwo"
             @input="(val) => $emit('update:manyBrokerageTwo', val)"
-          ></el-input-number>
+          />
         </span>
         <span class="brokerage" v-if="formValidate.is_sub.indexOf(0) > -1">
-          会员价：<el-input-number
-            :controls="false"
+          会员价：
+          <MoneyInput
+            class="columnsBox"
+            input-class="input_width"
             placeholder="请输入会员价"
             :min="0"
             :max="9999999999"
-            class="columnsBox input_width input-number-unit-class"
-            class-unit="元"
             :value="manyVipPrice"
             @input="(val) => $emit('update:manyVipPrice', val)"
             @focus="$emit('update:manyVipDiscount', undefined)"
-          ></el-input-number>
+          />
         </span>
         <span class="brokerage" v-if="formValidate.is_sub.indexOf(0) > -1">
           会员折扣：<el-input-number
@@ -216,13 +197,13 @@
                 </div>
               </template>
               <template v-else-if="item.slot === 'price'">
-                <span>{{ manyFormValidate[scope.$index + 1].price }}</span>
+                <span>{{ $money(manyFormValidate[scope.$index + 1].price) }}</span>
               </template>
               <template v-else-if="item.slot === 'cost'">
-                <span>{{ manyFormValidate[scope.$index + 1].cost }}</span>
+                <span>{{ $money(manyFormValidate[scope.$index + 1].cost) }}</span>
               </template>
               <template v-else-if="item.slot === 'ot_price'">
-                <span>{{ manyFormValidate[scope.$index + 1].ot_price }}</span>
+                <span>{{ $money(manyFormValidate[scope.$index + 1].ot_price) }}</span>
               </template>
               <template v-else-if="item.slot === 'stock'">
                 <span>{{ manyFormValidate[scope.$index + 1].stock }}</span>
@@ -268,13 +249,11 @@
                 <span>{{ manyFormValidate[scope.$index + 1].volume }}</span>
               </template>
               <template v-else-if="item.slot === 'brokerage'">
-                <el-input-number
-                  :controls="false"
+                <MoneyInput
                   :value="manyFormValidate[scope.$index + 1].brokerage"
                   :min="0"
                   :max="9999999999"
-                  class="priceBox input-number-unit-class"
-                  class-unit="元"
+                  input-class="priceBox"
                   @input="
                     (val) => {
                       const newData = [...manyFormValidate];
@@ -282,16 +261,14 @@
                       $emit('update:manyFormValidate', newData);
                     }
                   "
-                ></el-input-number>
+                />
               </template>
               <template v-else-if="item.slot === 'brokerage_two'">
-                <el-input-number
-                  :controls="false"
+                <MoneyInput
                   :value="manyFormValidate[scope.$index + 1].brokerage_two"
                   :min="0"
                   :max="9999999999"
-                  class="priceBox input-number-unit-class"
-                  class-unit="元"
+                  input-class="priceBox"
                   @input="
                     (val) => {
                       const newData = [...manyFormValidate];
@@ -299,16 +276,14 @@
                       $emit('update:manyFormValidate', newData);
                     }
                   "
-                ></el-input-number>
+                />
               </template>
               <template v-else-if="item.slot === 'vip_price'">
-                <el-input-number
-                  :controls="false"
+                <MoneyInput
                   :value="manyFormValidate[scope.$index + 1].vip_price"
                   :min="0"
                   :max="9999999999"
-                  class="priceBox input-number-unit-class"
-                  class-unit="元"
+                  input-class="priceBox"
                   @input="
                     (val) => {
                       const newData = [...manyFormValidate];
@@ -317,7 +292,7 @@
                       changeVipPrice(scope.$index + 1);
                     }
                   "
-                ></el-input-number>
+                />
               </template>
               <template v-else-if="item.slot === 'vip_proportion'">
                 <el-input-number

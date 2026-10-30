@@ -14,6 +14,7 @@ import Upgrade from '@/layout/upgrade/index.vue';
 import setting from './setting';
 import { Local } from '@/utils/storage.js';
 import { resolveAdminLocale } from '@/utils/lang.js';
+import { loadCurrencyConfig } from '@/utils/money.js';
 import config from '../package.json';
 
 export default {
@@ -86,6 +87,8 @@ export default {
     this.handleMatchMedia();
     this.openSetingsDrawer();
     this.getLayoutThemeConfig();
+    // 登录后可拉到币种表；未登录失败则用兜底/缓存
+    loadCurrencyConfig();
     this.$nextTick((e) => {
       // this.getVersion();
     });

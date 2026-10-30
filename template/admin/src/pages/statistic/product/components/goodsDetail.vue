@@ -13,13 +13,13 @@
           </div>
           <div class="goods_info">
             <div class="number-wrapper">
-              <div class="price"><span>¥</span>{{ goodsInfo.productInfo.price }}</div>
-              <div class="old-price">¥{{ goodsInfo.productInfo.vip_price }}</div>
+              <div class="price">{{ $money(goodsInfo.productInfo.price) }}</div>
+              <div class="old-price">{{ $money(goodsInfo.productInfo.vip_price) }}</div>
               <div><img src="../../../../assets/images/goods_vip.png" /></div>
             </div>
             <div class="name">{{ goodsInfo.productInfo.store_name }}</div>
             <div class="msg">
-              <div class="item">原价:￥{{ goodsInfo.productInfo.ot_price }}</div>
+              <div class="item">原价:{{ $money(goodsInfo.productInfo.ot_price) }}</div>
               <div class="item">销量:{{ goodsInfo.productInfo.sales }}</div>
               <div class="item">库存:{{ goodsInfo.productInfo.stock }}</div>
             </div>

@@ -26,19 +26,23 @@
           <div class="item"><span>商品总数：</span>{{ orderDetail.orderInfo.total_num }}</div>
           <div class="item">
             <span>商品总价：</span
-            >{{ parseFloat(orderDetail.orderInfo.total_price) + parseFloat(orderDetail.orderInfo.vip_true_price || 0) }}
+            >{{
+              $money(
+                parseFloat(orderDetail.orderInfo.total_price) + parseFloat(orderDetail.orderInfo.vip_true_price || 0),
+              )
+            }}
           </div>
         </div>
         <div class="msg-item">
-          <div class="item"><span>交付邮费：</span>{{ orderDetail.orderInfo.pay_postage }}</div>
-          <div class="item"><span>优惠券金额：</span>{{ orderDetail.orderInfo.coupon_price }}</div>
+          <div class="item"><span>交付邮费：</span>{{ $money(orderDetail.orderInfo.pay_postage) }}</div>
+          <div class="item"><span>优惠券金额：</span>{{ $money(orderDetail.orderInfo.coupon_price) }}</div>
         </div>
         <div class="msg-item">
-          <div class="item"><span>会员商品优惠：</span>{{ orderDetail.orderInfo.vip_true_price || 0.0 }}</div>
-          <div class="item"><span>积分抵扣：</span>{{ orderDetail.orderInfo.deduction_price || 0.0 }}</div>
+          <div class="item"><span>会员商品优惠：</span>{{ $money(orderDetail.orderInfo.vip_true_price || 0) }}</div>
+          <div class="item"><span>积分抵扣：</span>{{ $money(orderDetail.orderInfo.deduction_price || 0) }}</div>
         </div>
         <div class="msg-item">
-          <div class="item"><span>实际支付：</span>{{ orderDetail.orderInfo.pay_price }}</div>
+          <div class="item"><span>实际支付：</span>{{ $money(orderDetail.orderInfo.pay_price) }}</div>
           <div class="item"><span>创建时间：</span>{{ orderDetail.orderInfo.add_time }}</div>
         </div>
         <div class="msg-item">
@@ -72,7 +76,7 @@
         </el-table-column>
         <el-table-column label="商品售价" min-width="160">
           <template slot-scope="scope">
-            <div>{{ scope.row.productInfo.price }}</div>
+            <div>{{ $money(scope.row.productInfo.price) }}</div>
           </template>
         </el-table-column>
         <el-table-column label="商品数量" min-width="160">

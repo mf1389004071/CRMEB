@@ -144,6 +144,7 @@
 
 <script>
 import { codPrintData, codPickSummary, codExportUrl } from '@/api/cod';
+import { getBaseCurrency } from '@/utils/money';
 
 export default {
   name: 'codPrint',
@@ -179,10 +180,9 @@ export default {
       if (this.lang === 'both') return vi + ' / ' + zh;
       return vi;
     },
+    // 主显示本位币格式（与 $money / MoneyServices 一致）
     money(v) {
-      const n = Number(v);
-      if (isNaN(n)) return v;
-      return n.toLocaleString('en-US', { maximumFractionDigits: 2 });
+      return this.$money(v, { code: getBaseCurrency() });
     },
     load() {
       this.loading = true;
