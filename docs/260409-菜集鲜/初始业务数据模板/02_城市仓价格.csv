@@ -1,0 +1,5 @@
+﻿省|Tỉnh,郡|Quận(可空),仓名|Tên kho,仓地址|Địa chỉ kho,价_POTATO,价_ONION,价_TOMATO,价_CABBAGE
+Hà Nội,,Kho Hà Nội,"123 Đường Láng, Hà Nội",45000,32000,35000,28000
+Bắc Ninh,,Kho Bắc Ninh,"45 Nguyễn Trãi, Bắc Ninh",46000,33000,36000,29000
+Thừa Thiên Huế,,Kho Huế,"12 Lê Lợi, Huế",48000,34000,37000,30000
+TP. Hồ Chí Minh,,Kho TP.HCM,"88 Nguyễn Huệ, TP.HCM",50000,36000,39000,31000
