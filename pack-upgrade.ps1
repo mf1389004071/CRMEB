@@ -64,36 +64,48 @@ $upgradeTxt = @"
   - runtime/ 可清空缓存；本包不含 runtime，勿用空目录误删线上日志策略以外的东西
 
 三、执行数据库迁移（生产库）
-在生产 MySQL 按文件名顺序执行 crmeb/database/vn/ 下 NNN_*.sql：
-  000_helpers → 001 → 010 → 020 → 021 → 030 → … → 105 → 900
+推荐用同目录 upgrade_crmeb_db.sh（先代码覆盖，再跑库脚本）。
+或手工在生产 MySQL 按文件名顺序执行 crmeb/database/vn/ 下 NNN_*.sql：
+  000_helpers → 001 → 010 → 020 → 030 → … → 105 → 900
+（生产默认跳过 021_region_seed_vn.sql 与 demo/）
 
 脚本幂等，可重复执行。生产不要跑 demo（本包已排除）。
-详见 crmeb/database/vn/README.md
+详见 crmeb/database/vn/README.md 与仓库根目录 升级规范.md
 
 示例:
   mysql -uroot -p --default-character-set=utf8mb4 你的库名 < database/vn/000_helpers.sql
 
-四、域名与静态资源
+四、品牌/业务种子 SQL（可选，不在 NNN 自动序列内）
+本包含 crmeb/database/vn/brand/（如 Kho Nguon）：
+  khonguon_brand_seed.sql
+  khonguon_cities_warehouses.sql
+  khonguon_products_categories.sql
+  khonguon_hide_like_title.sql
+upgrade_crmeb_db.sh 不会自动执行 brand/。按需手动执行，或用
+docs/260409-菜集鲜/brand/ 下 apply 脚本（生产前务必备份库）。
+
+五、域名与静态资源
 若库来自演示/本地，按 docs/deploy/站点域名与静态资源切换说明.md
 把 site_url 与 DIY/商品绝对 URL 改为正式域名。
 
-五、清缓存并重启
+六、清缓存并重启
 1. 删除 runtime/cache、runtime/temp（或后台「清除缓存」）
 2. 必要时清理 eb_cache 中 lang_version / api_lang_*
 3. 重启: PHP-FPM、消息队列、定时任务、Workerman
    见 docs/deploy/消息队列定时任务与长连接说明.md
 
-六、验收
+七、验收
 - 后台 /admin 可登录，越南站相关菜单可见
 - H5 首页区域栏/分类/多语正常（Ctrl+F5）
 - 下单 / COD / 区域价 / 语言切换抽测
 
-七、本包刻意排除
+八、本包刻意排除
 .env、runtime/、public/uploads 用户文件、public/install 安装向导、
 database/vn/demo/、tests/、backup/
 $(if ($SkipVendor) { '本包未含 vendor/，服务器需: composer install --no-dev' } else { '已含 vendor/' })
 
 不要使用官方「在线升级」覆盖本二开站点。
+保留服务器 public/mobile.html（升级脚本已 exclude，勿手工覆盖）。
 "@
 
 Set-Content -Path (Join-Path $stage 'UPGRADE.txt') -Encoding UTF8 -Value $upgradeTxt
