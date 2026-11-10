@@ -25,6 +25,12 @@ python docs/260409-菜集鲜/brand/run_apply_from_mcp.py mysql-crmeb-cjx-prod
 
 # 4) 生产清缓存 + 上传 logo（临时借用本地 admin 密码哈希，结束后自动恢复）
 python docs/260409-菜集鲜/brand/prod_clear_cache_upload_logo.py
+
+# 5) 清 demo 商品，并把猜你喜欢/主题 goodList 换成商品 5-8
+python docs/260409-菜集鲜/brand/purge_demo_replace_recommend.py
+
+# 6) 隐藏「猜你喜欢」文案，统一为可国际化「推荐」
+python docs/260409-菜集鲜/brand/replace_like_with_recommend.py
 ```
 
 同分支其他项目：复制 `crmeb/database/vn/brand/` 下 SQL，改站点名/域名/联系方式后执行即可。

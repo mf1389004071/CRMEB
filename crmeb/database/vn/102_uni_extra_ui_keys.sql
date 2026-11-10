@@ -12,11 +12,11 @@ SELECT v.tid, v.code, v.remarks, v.explain_, v.is_admin FROM (
   UNION ALL
   SELECT @t_en AS tid, '请输入搜索词' AS code, '请输入搜索词' AS remarks, 'Enter search keywords' AS explain_, 0 AS is_admin, '请输入搜索词' AS zh_
   UNION ALL
-  SELECT @t_zh AS tid, '猜你喜欢' AS code, '猜你喜欢' AS remarks, '猜你喜欢' AS explain_, 0 AS is_admin, '猜你喜欢' AS zh_
+  SELECT @t_zh AS tid, '猜你喜欢' AS code, '已隐藏，统一为推荐' AS remarks, '推荐' AS explain_, 0 AS is_admin, '猜你喜欢' AS zh_
   UNION ALL
-  SELECT @t_vi AS tid, '猜你喜欢' AS code, '[待审]猜你喜欢' AS remarks, 'Có thể bạn thích' AS explain_, 0 AS is_admin, '猜你喜欢' AS zh_
+  SELECT @t_vi AS tid, '猜你喜欢' AS code, '已隐藏，统一为推荐' AS remarks, 'Đề xuất' AS explain_, 0 AS is_admin, '猜你喜欢' AS zh_
   UNION ALL
-  SELECT @t_en AS tid, '猜你喜欢' AS code, '猜你喜欢' AS remarks, 'You may also like' AS explain_, 0 AS is_admin, '猜你喜欢' AS zh_
+  SELECT @t_en AS tid, '猜你喜欢' AS code, '已隐藏，统一为推荐' AS remarks, 'Recommended' AS explain_, 0 AS is_admin, '猜你喜欢' AS zh_
   UNION ALL
   SELECT @t_zh AS tid, '砍价中心' AS code, '砍价中心' AS remarks, '砍价中心' AS explain_, 0 AS is_admin, '砍价中心' AS zh_
   UNION ALL
@@ -101,8 +101,9 @@ WHERE v.tid IS NOT NULL AND NOT EXISTS (SELECT 1 FROM eb_lang_code e WHERE e.typ
 -- 补翻：已有越语/英语占位（等于中文）时更新 lang_explain
 UPDATE eb_lang_code c JOIN eb_lang_type t ON t.id=c.type_id AND t.file_name='vi-VN' AND t.is_del=0 SET c.lang_explain='Nhập từ khóa tìm kiếm', c.remarks='[待审]请输入搜索词' WHERE c.code='请输入搜索词' AND c.is_admin=0 AND (c.lang_explain=c.code OR c.lang_explain='请输入搜索词');
 UPDATE eb_lang_code c JOIN eb_lang_type t ON t.id=c.type_id AND t.file_name='en-US' AND t.is_del=0 SET c.lang_explain='Enter search keywords' WHERE c.code='请输入搜索词' AND c.is_admin=0 AND (c.lang_explain=c.code OR c.lang_explain='请输入搜索词');
-UPDATE eb_lang_code c JOIN eb_lang_type t ON t.id=c.type_id AND t.file_name='vi-VN' AND t.is_del=0 SET c.lang_explain='Có thể bạn thích', c.remarks='[待审]猜你喜欢' WHERE c.code='猜你喜欢' AND c.is_admin=0 AND (c.lang_explain=c.code OR c.lang_explain='猜你喜欢');
-UPDATE eb_lang_code c JOIN eb_lang_type t ON t.id=c.type_id AND t.file_name='en-US' AND t.is_del=0 SET c.lang_explain='You may also like' WHERE c.code='猜你喜欢' AND c.is_admin=0 AND (c.lang_explain=c.code OR c.lang_explain='猜你喜欢');
+UPDATE eb_lang_code c JOIN eb_lang_type t ON t.id=c.type_id AND t.file_name='vi-VN' AND t.is_del=0 SET c.lang_explain='Đề xuất', c.remarks='已隐藏，统一为推荐' WHERE c.code='猜你喜欢' AND c.is_admin=0;
+UPDATE eb_lang_code c JOIN eb_lang_type t ON t.id=c.type_id AND t.file_name='en-US' AND t.is_del=0 SET c.lang_explain='Recommended', c.remarks='已隐藏，统一为推荐' WHERE c.code='猜你喜欢' AND c.is_admin=0;
+UPDATE eb_lang_code c JOIN eb_lang_type t ON t.id=c.type_id AND t.file_name='zh-CN' AND t.is_del=0 SET c.lang_explain='推荐', c.remarks='已隐藏，统一为推荐' WHERE c.code='猜你喜欢' AND c.is_admin=0;
 UPDATE eb_lang_code c JOIN eb_lang_type t ON t.id=c.type_id AND t.file_name='vi-VN' AND t.is_del=0 SET c.lang_explain='Trung tâm mặc cả', c.remarks='[待审]砍价中心' WHERE c.code='砍价中心' AND c.is_admin=0 AND (c.lang_explain=c.code OR c.lang_explain='砍价中心');
 UPDATE eb_lang_code c JOIN eb_lang_type t ON t.id=c.type_id AND t.file_name='en-US' AND t.is_del=0 SET c.lang_explain='Bargain center' WHERE c.code='砍价中心' AND c.is_admin=0 AND (c.lang_explain=c.code OR c.lang_explain='砍价中心');
 UPDATE eb_lang_code c JOIN eb_lang_type t ON t.id=c.type_id AND t.file_name='vi-VN' AND t.is_del=0 SET c.lang_explain='Hoạt động rút thăm', c.remarks='[待审]抽奖活动' WHERE c.code='抽奖活动' AND c.is_admin=0 AND (c.lang_explain=c.code OR c.lang_explain='抽奖活动');

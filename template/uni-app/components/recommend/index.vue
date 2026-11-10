@@ -2,7 +2,7 @@
 	<view class='recommend' :style="colorStyle">
 		<view class='title acea-row row-center-wrapper'>
 			<text class='iconfont icon-zhuangshixian'></text>
-			<text class='name'>{{$t(`热门推荐`)}}</text>
+			<text class='name'>{{$t(`推荐`)}}</text>
 			<text class='iconfont icon-zhuangshixian lefticon'></text>
 		</view>
 		<view class='recommendList acea-row row-between-wrapper'>

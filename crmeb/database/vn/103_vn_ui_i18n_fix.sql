@@ -139,9 +139,9 @@ SELECT v.tid, v.code, v.remarks, v.explain_, 0 FROM (
   UNION ALL SELECT @t_zh, '鞋靴箱包', '鞋靴箱包', '鞋靴箱包'
   UNION ALL SELECT @t_vi, '鞋靴箱包', '[待审]鞋靴箱包', 'Giày dép & túi'
   UNION ALL SELECT @t_en, '鞋靴箱包', '鞋靴箱包', 'Shoes & bags'
-  UNION ALL SELECT @t_zh, '猜你喜欢', '猜你喜欢', '猜你喜欢'
-  UNION ALL SELECT @t_vi, '猜你喜欢', '[待审]猜你喜欢', 'Có thể bạn thích'
-  UNION ALL SELECT @t_en, '猜你喜欢', '猜你喜欢', 'You may like'
+  UNION ALL SELECT @t_zh, '猜你喜欢', '已隐藏，统一为推荐', '推荐'
+  UNION ALL SELECT @t_vi, '猜你喜欢', '已隐藏，统一为推荐', 'Đề xuất'
+  UNION ALL SELECT @t_en, '猜你喜欢', '已隐藏，统一为推荐', 'Recommended'
 ) v
 WHERE v.tid IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM eb_lang_code e WHERE e.type_id=v.tid AND e.code=v.code AND e.is_admin=0);
@@ -169,10 +169,28 @@ JOIN (
   SELECT '好物好价', 'Giá tốt' UNION ALL
   SELECT '爆款热卖', 'Bán chạy' UNION ALL
   SELECT '鞋靴箱包', 'Giày dép & túi' UNION ALL
-  SELECT '猜你喜欢', 'Có thể bạn thích'
+  SELECT '猜你喜欢', 'Đề xuất'
 ) m ON m.zh=c.code
-SET c.lang_explain=m.vi, c.remarks=CONCAT('[待审]', m.zh)
+SET c.lang_explain=m.vi, c.remarks=IF(m.zh='猜你喜欢','已隐藏，统一为推荐', CONCAT('[待审]', m.zh))
 WHERE c.is_admin=0;
+
+-- 猜你喜欢 → 推荐（中/英）
+UPDATE eb_lang_code c
+JOIN eb_lang_type t ON t.id=c.type_id AND t.file_name='zh-CN' AND t.is_del=0
+SET c.lang_explain='推荐', c.remarks='已隐藏，统一为推荐'
+WHERE c.code='猜你喜欢' AND c.is_admin=0;
+UPDATE eb_lang_code c
+JOIN eb_lang_type t ON t.id=c.type_id AND t.file_name='en-US' AND t.is_del=0
+SET c.lang_explain='Recommended', c.remarks='已隐藏，统一为推荐'
+WHERE c.code='猜你喜欢' AND c.is_admin=0;
+UPDATE eb_lang_code c
+JOIN eb_lang_type t ON t.id=c.type_id AND t.file_name='vi-VN' AND t.is_del=0
+SET c.lang_explain='Đề xuất'
+WHERE c.code='推荐' AND c.is_admin=0;
+UPDATE eb_lang_code c
+JOIN eb_lang_type t ON t.id=c.type_id AND t.file_name='en-US' AND t.is_del=0
+SET c.lang_explain='Recommended'
+WHERE c.code='推荐' AND c.is_admin=0;
 
 -- 清语言缓存标记：执行后删 runtime/cache 与 eb_cache lang_*
 DELETE FROM eb_cache WHERE `key` LIKE '%lang%' OR `key` LIKE 'api_lang%' OR `key`='lang_version' OR `key` LIKE '%config%';
