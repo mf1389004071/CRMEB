@@ -4,12 +4,13 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title></title>
+	<title>Loading</title>
 	<script>
 		var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
 			CSS.supports('top: constant(a)'))
 		document.write('<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' + (coverSupport ? ', viewport-fit=cover' : '') + '" />')
 	</script>
+	<link rel="stylesheet" href="/static/index.e8e070f7.css">
 	<!-- PWA（M11）：manifest + iOS 主屏幕图标/meta + 主题色 -->
 	<link rel="manifest" href="/static/pwa/manifest.webmanifest">
 	<meta name="theme-color" content="#2e9e4b">
@@ -26,7 +27,8 @@
 		<strong>Please enable JavaScript to continue.</strong>
 	</noscript>
 	<div id="app"></div>
-	<!-- built files will be auto injected -->
+	<script src="/static/js/chunk-vendors.20983eb8.js"></script>
+	<script src="/static/js/index.9b393fba.js"></script>
 	<script>
 		// 注册极简 Service Worker（仅缓存静态壳，不缓存 API）；失败不影响业务
 		if ('serviceWorker' in navigator) {
