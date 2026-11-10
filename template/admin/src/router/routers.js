@@ -45,7 +45,7 @@ const frameIn = [
   {
     path: '/',
     meta: {
-      title: 'CRMEB',
+      title: 'KHO.NGUON',
     },
     redirect: {
       name: 'home_index',
@@ -108,7 +108,7 @@ const frameIn = [
   {
     path: routePre,
     meta: {
-      title: 'CRMEB',
+      title: 'KHO.NGUON',
     },
     redirect: {
       name: 'home_index',

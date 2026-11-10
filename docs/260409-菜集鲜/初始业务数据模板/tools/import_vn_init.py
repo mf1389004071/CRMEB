@@ -338,6 +338,19 @@ def find_city_by_area(conn, area_code: str) -> Optional[int]:
     return int(row["city_id"]) if row else None
 
 
+def find_city_by_name(conn, parent_id: int, level: int, name: str) -> Optional[int]:
+    """同父同级同名优先复用旧区划，避免 VNINIT 与种子城重复。"""
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT city_id FROM eb_system_city "
+        "WHERE parent_id=%s AND level=%s AND name=%s "
+        "ORDER BY city_id ASC LIMIT 1",
+        (parent_id, level, name),
+    )
+    row = cur.fetchone()
+    return int(row["city_id"]) if row else None
+
+
 def upsert_city(
     conn,
     backup: SqlBackup,
@@ -402,11 +415,16 @@ def import_regions(
     province_ids: Dict[str, int] = {}
     next_id = next_city_id(conn, city_id_base) if not backup.dry_run else city_id_base
 
-    def alloc_id(area_code: str) -> int:
+    def resolve_city(area_code: str, parent_id: int, level: int, name: str) -> int:
+        """area_code → 同父同级同名 → 新分配。"""
         nonlocal next_id
-        existed = None if backup.dry_run else find_city_by_area(conn, area_code)
-        if existed:
-            return existed
+        if not backup.dry_run:
+            by_area = find_city_by_area(conn, area_code)
+            if by_area:
+                return by_area
+            by_name = find_city_by_name(conn, parent_id, level, name)
+            if by_name:
+                return by_name
         cid = next_id
         next_id += 1
         return cid
@@ -421,7 +439,7 @@ def import_regions(
 
         p_area = f"VNINIT:{slug_ascii(province)}"
         if province not in province_ids:
-            pid = alloc_id(p_area)
+            pid = resolve_city(p_area, VN_ROOT, 0, province)
             province_ids[province] = pid
             path_p = f",{VN_ROOT},{pid},"
             upsert_city(
@@ -442,7 +460,7 @@ def import_regions(
 
         if district:
             d_area = f"VNINIT:{slug_ascii(province)}-{slug_ascii(district)}"
-            did = alloc_id(d_area)
+            did = resolve_city(d_area, pid, 1, district)
             path_d = f",{VN_ROOT},{pid},{did},"
             upsert_city(conn, backup, did, 1, pid, district, f"{province},{district}", d_area, 1, 0, path_d)
             attach_city = did
