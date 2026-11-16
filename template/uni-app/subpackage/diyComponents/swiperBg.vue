@@ -26,7 +26,7 @@
               >
                 <image
                   :src="item.img"
-                  mode="aspectFill"
+                  mode="widthFix"
                   class="image"
                   :style="[imageStyle]"
                 ></image>
@@ -242,30 +242,36 @@ export default {
     }
   },
   mounted() {
+    // 按全部轮播图最大高度定容器，配合 widthFix，任意比例均完整显示不裁切
     if (this.imgUrls.length) {
       let that = this;
-      this.$nextTick((e) => {
-        console.log(that.setDomain(that.imgUrls[0].img), "this.dataConfig");
-        uni.getImageInfo({
-          src: that.setDomain(that.imgUrls[0].img),
-          success: (res) => {
-            console.log(res);
-            console.log(res, "res");
-            if (res && res.height > 0) {
-              let p = this.dataConfig.paddingConfig.isAll
-                ? this.dataConfig.paddingConfig.val
-                : this.dataConfig.paddingConfig.valList[1].val;
-              let height = res.height * ((750 - p * 4) / res.width);
-              console.log(height, "height");
-              that.$set(that, "imageH", height);
-            } else {
-              that.$set(that, "imageH", 375);
-            }
-          },
-          fail: function (error) {
-            console.log(error);
-            that.$set(that, "imageH", 375);
-          },
+      this.$nextTick(() => {
+        let p = this.dataConfig.paddingConfig.isAll
+          ? this.dataConfig.paddingConfig.val
+          : this.dataConfig.paddingConfig.valList[1].val;
+        let contentW = 750 - p * 4;
+        let pending = this.imgUrls.length;
+        let maxH = 0;
+        this.imgUrls.forEach((item) => {
+          uni.getImageInfo({
+            src: that.setDomain(item.img),
+            success: (res) => {
+              if (res && res.width > 0 && res.height > 0) {
+                let h = res.height * (contentW / res.width);
+                if (h > maxH) maxH = h;
+              }
+              pending--;
+              if (pending === 0) {
+                that.$set(that, "imageH", maxH > 0 ? maxH : 375);
+              }
+            },
+            fail: () => {
+              pending--;
+              if (pending === 0) {
+                that.$set(that, "imageH", maxH > 0 ? maxH : 375);
+              }
+            },
+          });
         });
       });
     }
@@ -392,7 +398,8 @@ export default {
 
     .image {
       width: 100%;
-      height: 100%;
+      height: auto;
+      display: block;
     }
 
     // 圆形指示点
