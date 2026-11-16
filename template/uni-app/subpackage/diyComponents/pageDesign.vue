@@ -552,11 +552,10 @@ export default {
       this.footerConfigData = null;
       if (data.value) {
         let lastArr = this.objToArr(data.value);
-        // VN: 首页已有 RegionBar(搜索)+CategoryGrid8，隐藏 DIY 搜索/分类导航/快捷菜单及营销组件
+        // VN: 顶栏由 RegionBar 承担，隐藏 DIY 搜索/分类导航及营销组件；导航组 menus 交回主题配置
         const vnHideComps = [
           "headerSerch",
           "homeComb",
-          "menus",
           "tabNav",
           "seckill",
           "bargain",

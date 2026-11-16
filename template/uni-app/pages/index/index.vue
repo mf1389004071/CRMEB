@@ -18,8 +18,6 @@
   >
     <!-- VN: 当前配送区域，点击进入区域选择页 -->
     <RegionBar v-if="regionPricing" />
-    <!-- VN: 8 宫格分类（图标 + 多语名称） -->
-    <CategoryGrid8 v-if="vnMode" />
     <PageDesign
       :style="colorStyle"
       :diyData="currentDiyData"
@@ -152,7 +150,6 @@ import appUpdate from "@/components/update/app-update.vue";
 import { applyTheme } from "@/utils/theme.js";
 import PageDesign from "@/subpackage/diyComponents/pageDesign.vue";
 import RegionBar from "@/components/RegionBar.vue";
-import CategoryGrid8 from "@/components/CategoryGrid8.vue";
 
 export default {
   computed: {
@@ -182,7 +179,6 @@ export default {
   mixins: [colors],
   components: {
     RegionBar,
-    CategoryGrid8,
     PageDesign,
     Loading,
     couponWindow,
@@ -680,12 +676,11 @@ export default {
       let goodsIndex = [];
       let promotionIndex = [];
       let lastArr = this.objToArr(data.value);
-      // VN: 越南模式下不渲染 DIY 搜索/分类导航/快捷菜单及营销组件（RegionBar+CategoryGrid8 已承担；关闭 vn_mode_enable 可恢复）
+      // VN: 越南模式下不渲染 DIY 搜索/分类导航及营销组件（顶栏由 RegionBar 承担；导航组 menus 交回主题配置；关闭 vn_mode_enable 可恢复）
       // VN: 真正渲染过滤在 pageDesign.setDiyData；此处同步，避免本地 styleConfig/标志位残留
       const vnHideComps = [
         "headerSerch",
         "homeComb",
-        "menus",
         "tabNav",
         "seckill",
         "bargain",
