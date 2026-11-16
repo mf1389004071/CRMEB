@@ -175,8 +175,8 @@ uni-app/
 
 ## 联系与支持
 
-- 官方文档：https://doc.crmeb.com
-- 技术社区：https://www.crmeb.com/ask
+- 官方文档：https://doc.kizerp.com
+- 技术社区：https://www.kizerp.com/ask
 - 官方 QQ 群：请参考官方网站
 
 ## 版本信息

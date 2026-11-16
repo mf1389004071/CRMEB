@@ -2,11 +2,11 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.kizerp.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
 // +----------------------------------------------------------------------
-// | Author: CRMEB Team <admin@crmeb.com>
+// | Author: CRMEB Team <admin@kizerp.com>
 // +----------------------------------------------------------------------
 
 namespace app\services\system;
@@ -32,13 +32,13 @@ use app\dao\system\upgrade\UpgradeLogDao;
  */
 class UpgradeServices extends BaseServices
 {
-    const LOGIN_URL = 'http://upgrade.crmeb.net/api/login';
-    const UPGRADE_URL = 'http://upgrade.crmeb.net/api/upgrade/list';
-    const UPGRADE_CURRENT_URL = 'http://upgrade.crmeb.net/api/upgrade/current_list';
-    const AGREEMENT_URL = 'http://upgrade.crmeb.net/api/upgrade/agreement';
-    const PACKAGE_DOWNLOAD_URL = 'http://upgrade.crmeb.net/api/upgrade/download';
-    const UPGRADE_STATUS_URL = 'http://upgrade.crmeb.net/api/upgrade/status';
-    const UPGRADE_LOG_URL = 'http://upgrade.crmeb.net/api/upgrade/log';
+    const LOGIN_URL = 'http://upgrade.kizerp.com/api/login';
+    const UPGRADE_URL = 'http://upgrade.kizerp.com/api/upgrade/list';
+    const UPGRADE_CURRENT_URL = 'http://upgrade.kizerp.com/api/upgrade/current_list';
+    const AGREEMENT_URL = 'http://upgrade.kizerp.com/api/upgrade/agreement';
+    const PACKAGE_DOWNLOAD_URL = 'http://upgrade.kizerp.com/api/upgrade/download';
+    const UPGRADE_STATUS_URL = 'http://upgrade.kizerp.com/api/upgrade/status';
+    const UPGRADE_LOG_URL = 'http://upgrade.kizerp.com/api/upgrade/log';
 
     /**
      * @var array $requestData
@@ -328,7 +328,7 @@ class UpgradeServices extends BaseServices
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);      // 跟随重定向
         curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
-        curl_setopt($ch, CURLOPT_REFERER, 'https://www.crmeb.com');
+        curl_setopt($ch, CURLOPT_REFERER, 'https://www.kizerp.com');
         if (stripos($url, "https://") !== false) {
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         }

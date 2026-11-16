@@ -53,7 +53,7 @@
 {
   "mcpServers": {
     "crmebdemo": {
-      "url": "https://v5.crmeb.net/outapi/mcp",
+      "url": "https://v5.kizerp.com/outapi/mcp",
       "headers": {
         "account": "ceshi",
         "password": "ceshiceshi",
@@ -389,7 +389,7 @@ curl -X POST "http://localhost:8011/outapi/mcp" \
   -d '{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"crmeb_product_list","arguments":{"stock_min":500}}}'
 
 # 使用演示环境测试
-curl -X POST "https://v5.crmeb.net/outapi/mcp" \
+curl -X POST "https://v5.kizerp.com/outapi/mcp" \
   -H "Content-Type: application/json" \
   -H "account: ceshi" \
   -H "password: ceshiceshi" \

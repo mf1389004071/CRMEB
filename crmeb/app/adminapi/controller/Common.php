@@ -2,11 +2,11 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.kizerp.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
 // +----------------------------------------------------------------------
-// | Author: CRMEB Team <admin@crmeb.com>
+// | Author: CRMEB Team <admin@kizerp.com>
 // +----------------------------------------------------------------------
 namespace app\adminapi\controller;
 
@@ -54,7 +54,7 @@ class Common extends AuthController
         $version = get_crmeb_version();
         $host = $this->request->host();
         // 正常域名
-        $res = HttpService::request('http://authorize.crmeb.net/api/auth_cert_query', 'post', [
+        $res = HttpService::request('http://authorize.kizerp.com/api/auth_cert_query', 'post', [
             'domain_name' => $host,
             'label' => 34,
             'version' => $version

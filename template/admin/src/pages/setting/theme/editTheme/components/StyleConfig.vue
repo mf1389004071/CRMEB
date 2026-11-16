@@ -86,7 +86,7 @@
             <span class="title">我的主题</span>
             <img
               class="title-icon"
-              src="https://www.crmeb.com/static/images/zhutishichang.png"
+              src="https://www.kizerp.com/static/images/zhutishichang.png"
               alt=""
               @click="toTheme"
             />
@@ -263,7 +263,7 @@ export default {
       this.showDetail = false;
     },
     toTheme() {
-      window.open('https://www.crmeb.com/theme?from=crmebkytheme', '_blank');
+      window.open('https://www.kizerp.com/theme?from=crmebkytheme', '_blank');
     },
     viewStyleDetail(item) {
       this.selectedStyle = item;

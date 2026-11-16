@@ -76,7 +76,7 @@ $installTxt = @"
 四、默认账号（安装向导未改时）
 后台: /admin
 账号: admin
-密码: crmeb.com
+密码: kizerp.com
 （以安装向导实际设置为准）
 
 五、本包排除

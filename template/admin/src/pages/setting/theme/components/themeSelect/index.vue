@@ -15,7 +15,7 @@
       <div class="dialog-header-tabs">
         <div class="tabs">
           <span class="title">我的主题</span>
-          <img class="theme-in" src="https://www.crmeb.com/static/images/zhutishichang.png" alt="" @click="toTheme" />
+          <img class="theme-in" src="https://www.kizerp.com/static/images/zhutishichang.png" alt="" @click="toTheme" />
         </div>
       </div>
       <i class="el-icon-close" @click="handleClose"></i>
@@ -257,7 +257,7 @@ export default {
       this.getList();
     },
     toTheme() {
-      window.open('https://www.crmeb.com/theme?from=crmebkytheme', '_blank');
+      window.open('https://www.kizerp.com/theme?from=crmebkytheme', '_blank');
     },
     handleClose() {
       this.showDetail = false;

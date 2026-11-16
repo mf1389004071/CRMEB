@@ -14,7 +14,7 @@
         <div class="left-actions">
           <el-button type="primary" @click="handleAdd">新建主题</el-button>
           <el-button @click="handleImport">导入主题</el-button>
-          <img class="theme-in" src="https://www.crmeb.com/static/images/zhutishichang.png" alt="" @click="toTheme" />
+          <img class="theme-in" src="https://www.kizerp.com/static/images/zhutishichang.png" alt="" @click="toTheme" />
         </div>
         <div class="right-actions flex">
           <el-input v-model="searchKeyword" placeholder="请输入主题名称" class="search-input m-r-10"> </el-input>
@@ -284,7 +284,7 @@ export default {
       this.selectVisible = true;
     },
     toTheme() {
-      window.open('https://www.crmeb.com/theme?from=crmebkytheme', '_blank');
+      window.open('https://www.kizerp.com/theme?from=crmebkytheme', '_blank');
     },
     handleThemeSelect(theme) {
       // 跳转新建页，使用选中主题作为模板

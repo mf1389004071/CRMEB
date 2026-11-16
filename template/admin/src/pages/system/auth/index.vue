@@ -81,9 +81,9 @@ export default {
 
   data() {
     return {
-      baseUrl: 'https://shop.crmeb.net/html/index.html',
+      baseUrl: 'https://shop.kizerp.com/html/index.html',
       iframeUrl: '',
-      captchs: 'http://authorize.crmeb.net/api/captchs/',
+      captchs: 'http://authorize.kizerp.com/api/captchs/',
       authCode: '',
       status: 1,
       dayNum: 0,
@@ -130,17 +130,17 @@ export default {
         {
           title: '温馨提示',
           message:
-            '您的【长连接】未开启，没有开启会导致系统默认客服无法使用,后台订单通知无法收到。请尽快执行命令开启！！<a href="https://doc.crmeb.com/single/v54/13667" target="_blank">点击查看开启方法</a>',
+            '您的【长连接】未开启，没有开启会导致系统默认客服无法使用,后台订单通知无法收到。请尽快执行命令开启！！<a href="https://doc.kizerp.com/single/v54/13667" target="_blank">点击查看开启方法</a>',
         },
         {
           title: '温馨提示',
           message:
-            '您的【定时任务】未开启，没有开启会导致自动收货、未支付自动取消订单、订单自动好评、拼团到期退款等任务无法正常执行。请尽快执行命令开启！！<a href="https://doc.crmeb.com/single/v54/13667" target="_blank">点击查看开启方法</a>',
+            '您的【定时任务】未开启，没有开启会导致自动收货、未支付自动取消订单、订单自动好评、拼团到期退款等任务无法正常执行。请尽快执行命令开启！！<a href="https://doc.kizerp.com/single/v54/13667" target="_blank">点击查看开启方法</a>',
         },
         {
           title: '温馨提示',
           message:
-            '您的【消息队列】未开启，没有开启会导致异步任务无法执行。请尽快执行命令开启！！<a href="https://doc.crmeb.com/single/v54/13667" target="_blank">点击查看开启方法</a>',
+            '您的【消息队列】未开启，没有开启会导致异步任务无法执行。请尽快执行命令开启！！<a href="https://doc.kizerp.com/single/v54/13667" target="_blank">点击查看开启方法</a>',
         },
       ],
     };
@@ -262,7 +262,7 @@ export default {
         });
     },
     toCrmeb() {
-      window.open('http://www.crmeb.com');
+      window.open('http://www.kizerp.com');
     },
     getProduct() {
       crmebProduct({ type: 'copyright' })

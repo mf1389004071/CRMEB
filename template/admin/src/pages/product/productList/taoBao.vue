@@ -3,7 +3,7 @@
     <div>
       <div>
         生成的商品默认是没有上架的，请手动上架商品！
-        <a href="https://doc.crmeb.com/single/v5/7785" v-if="copyConfig.copy_type == 2" target="_blank">如何配置密钥</a>
+        <a href="https://doc.kizerp.com/single/v5/7785" v-if="copyConfig.copy_type == 2" target="_blank">如何配置密钥</a>
         <span v-else
           >您当前剩余{{ copyConfig.copy_num }}条采集次数，<a class="add" v-db-click @click="mealPay('copy')"
             >增加采集次数</a

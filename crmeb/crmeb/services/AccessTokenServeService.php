@@ -2,11 +2,11 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.kizerp.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
 // +----------------------------------------------------------------------
-// | Author: CRMEB Team <admin@crmeb.com>
+// | Author: CRMEB Team <admin@kizerp.com>
 // +----------------------------------------------------------------------
 
 namespace crmeb\services;
@@ -44,13 +44,13 @@ class AccessTokenServeService extends HttpService
     /**
      * @var string
      */
-    protected $apiHost = 'https://sms.crmeb.net/api/';
+    protected $apiHost = 'https://sms.kizerp.com/api/';
 
     /**
      * 沙盒地址
      * @var string
      */
-    protected $sandBoxApi = 'https://api_v2.crmeb.net/api/';
+    protected $sandBoxApi = 'https://api_v2.kizerp.com/api/';
 
     /**
      * 沙盒模式

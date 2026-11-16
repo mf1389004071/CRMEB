@@ -1,6 +1,6 @@
 
 <div align="center" >
-    <img src="https://www.crmeb.com/static/images/dark_logo.png" />
+    <img src="https://www.kizerp.com/static/images/dark_logo.png" />
 </div>
 
 <div align="center" style="font-size: 15px;">
@@ -24,11 +24,11 @@ CRMEB高品质开源商城系统（PHP版）
 
 <div align="center">
 
-[官网](https://www.crmeb.com/?from=giteephp) |
-[在线体验](http://v5.crmeb.net/admin/) |
-[帮助文档](https://doc.crmeb.com/single_open) |
-[应用市场](https://www.crmeb.com/market?from=giteephp) |
-[技术社区](https://www.crmeb.com/ask/thread/list/147) |
+[官网](https://www.kizerp.com/?from=giteephp) |
+[在线体验](http://v5.kizerp.com/admin/) |
+[帮助文档](https://doc.kizerp.com/single_open) |
+[应用市场](https://www.kizerp.com/market?from=giteephp) |
+[技术社区](https://www.kizerp.com/ask/thread/list/147) |
 [宽屏预览](https://gitee.com/ZhongBangKeJi/CRMEB/blob/master/README.md)
 
 
@@ -63,7 +63,7 @@ CRMEB开源商城系统代码100%开源，基于 **Apache-2.0协议** 免费商�
 我们致力于打造开发者友好生态，开放源码、持续更新功能模块，并欢迎开发者提交优化建议或贡献代码。通过共享技术成果，降低行业重复造轮子成本，推动开源电商系统的可持续发展。
 
 
-🔗 <a href="https://doc.crmeb.com/single_open/open_v54/19855" target="_blank">功能列表</a> | 📩 <a href="https://gitee.com/ZhongBangKeJi/CRMEB/issues" target="_blank">提交反馈</a> | 📩 <a href="https://gitee.com/ZhongBangKeJi/CRMEB/pulls" target="_blank">提交代码</a>
+🔗 <a href="https://doc.kizerp.com/single_open/open_v54/19855" target="_blank">功能列表</a> | 📩 <a href="https://gitee.com/ZhongBangKeJi/CRMEB/issues" target="_blank">提交反馈</a> | 📩 <a href="https://gitee.com/ZhongBangKeJi/CRMEB/pulls" target="_blank">提交代码</a>
 
 
 
@@ -77,7 +77,7 @@ docker run -d --name crmeb -p 8080:80 ccr.ccs.tencentyun.com/crmebky_php/crmebky
 
 #### 访问服务
 - **网站**: http://localhost:8080 
-- **后台**: http://localhost:8080/admin （账号: admin，密码: crmeb.com）
+- **后台**: http://localhost:8080/admin （账号: admin，密码: kizerp.com）
 - **MySQL**: localhost:3306（账号: root，密码: 123456）
 - **Redis**: localhost:6379
 > 详细说明点击查看 [帮助文档](/help/docker/docker.md)。
@@ -136,17 +136,17 @@ docker run -d --name crmeb -p 8080:80 ccr.ccs.tencentyun.com/crmebky_php/crmebky
 
 ![输入图片说明](help/resource/pic/contact2.jpg)
 
-管理后台： http://v5.crmeb.net/admin
+管理后台： http://v5.kizerp.com/admin
 
-账号：demo 密码：crmeb.com
+账号：demo 密码：kizerp.com
 
-H5端：http://v5.crmeb.net/ （移动端打开）
+H5端：http://v5.kizerp.com/ （移动端打开）
 
-PC端：http://v5.crmeb.net/ （电脑端打开）
+PC端：http://v5.kizerp.com/ （电脑端打开）
 
-APP下载：http://app.crmeb.cn/bzv （苹果手机直接在APP Store里搜索CRMEB下载）
+APP下载：http://app.kizerp.com/bzv （苹果手机直接在APP Store里搜索CRMEB下载）
 
-> 听说，大神你想看看CRMEB开源项目的完整框架？<a href="https://doc.crmeb.com/single/v5/7712" target="_blank">戳这儿，轻松获取！</a>
+> 听说，大神你想看看CRMEB开源项目的完整框架？<a href="https://doc.kizerp.com/single/v5/7712" target="_blank">戳这儿，轻松获取！</a>
 
 
 
@@ -245,35 +245,35 @@ APP下载：http://app.crmeb.cn/bzv （苹果手机直接在APP Store里搜索CR
 
 ### 想要快速安装，教程来助攻！
 
-快速一键安装部署：https://doc.crmeb.com/single_open/open_v54/20366
+快速一键安装部署：https://doc.kizerp.com/single_open/open_v54/20366
 
-手动配置安装：https://doc.crmeb.com/single_open/open_v54/20389
+手动配置安装：https://doc.kizerp.com/single_open/open_v54/20389
 
-docker-compose一键部署：https://doc.crmeb.com/single_open/open_v54/20145
+docker-compose一键部署：https://doc.kizerp.com/single_open/open_v54/20145
 
-宝塔环境一键安装：https://doc.crmeb.com/single_open/open_v54/19892
+宝塔环境一键安装：https://doc.kizerp.com/single_open/open_v54/19892
 
 ### 二开支持：
-使用文档：https://doc.crmeb.com/single_open/open_v54/19849
+使用文档：https://doc.kizerp.com/single_open/open_v54/19849
 
-接口文档：https://doc.crmeb.com/single_open/open_v54/21040
+接口文档：https://doc.kizerp.com/single_open/open_v54/21040
 
-数据字典：https://doc.crmeb.com/single_open/open_v54/20136
+数据字典：https://doc.kizerp.com/single_open/open_v54/20136
 
-代码生成：https://doc.crmeb.com/single_open/open_v54/20135
+代码生成：https://doc.kizerp.com/single_open/open_v54/20135
 
-二开文档：https://doc.crmeb.com/single_open/open_v54/19851
+二开文档：https://doc.kizerp.com/single_open/open_v54/19851
 
 视频教程：https://www.bilibili.com/video/BV1kh4y1872K/
 
-技术社区：https://www.crmeb.com/ask/thread/list/147
+技术社区：https://www.kizerp.com/ask/thread/list/147
 
 ---
 
 ###  📞 CRMEB互动
 #### CRMEB开源技术交流群（扫码进群可领取开源版接口文档、产品功能清单、思维脑图！）
 ![输入图片说明](help/resource/pic/开源群php.jpg)
-#### 技术社区！找方法、提bug、看官方消息、拿活跃大奖！都在 <a href="https://www.crmeb.com/ask/?from=giteephp" target="_blank">CRMEB 技术社区</a> 应有尽有
+#### 技术社区！找方法、提bug、看官方消息、拿活跃大奖！都在 <a href="https://www.kizerp.com/ask/?from=giteephp" target="_blank">CRMEB 技术社区</a> 应有尽有
 
 
 
@@ -282,13 +282,13 @@ docker-compose一键部署：https://doc.crmeb.com/single_open/open_v54/20145
 
 ###  📕 CRMEB PRO版
 
-[![输入图片说明](help/resource/pic/PRO版2.jpg)](https://www.crmeb.com/index/pro?from=giteephp)
+[![输入图片说明](help/resource/pic/PRO版2.jpg)](https://www.kizerp.com/index/pro?from=giteephp)
 
 
 
 ###  📕 CRMEB 多商户版
 
-[![输入图片说明](help/resource/pic/duoshanghu2.jpg)](https://www.crmeb.com/index/merchant?from=giteephp)
+[![输入图片说明](help/resource/pic/duoshanghu2.jpg)](https://www.kizerp.com/index/merchant?from=giteephp)
 
 ---
 

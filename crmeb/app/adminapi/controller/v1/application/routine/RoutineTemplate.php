@@ -2,11 +2,11 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.kizerp.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
 // +----------------------------------------------------------------------
-// | Author: CRMEB Team <admin@crmeb.com>
+// | Author: CRMEB Team <admin@kizerp.com>
 // +----------------------------------------------------------------------
 namespace app\adminapi\controller\v1\application\routine;
 
@@ -108,7 +108,7 @@ class RoutineTemplate extends AuthController
     {
         $fileUrl = app()->getRootPath() . "public/statics/download/common/vendor.js";
         $string = file_get_contents($fileUrl); //加载配置文件
-        $string = str_replace('https://demo.crmeb.com', $url, $string); // 正则查找然后替换
+        $string = str_replace('https://demo.kizerp.com', $url, $string); // 正则查找然后替换
         $newFileUrl = app()->getRootPath() . "public/statics/download/common/vendor.js";
         @file_put_contents($newFileUrl, $string); // 写入配置文件
 
@@ -196,7 +196,7 @@ class RoutineTemplate extends AuthController
             } else $data['code'] = sys_config('site_url') . $imageInfo['att_dir'];
         }
         $data['appId'] = sys_config('routine_appId');
-        $data['help'] = 'https://doc.crmeb.com/web/single/crmeb_v4/978';
+        $data['help'] = 'https://doc.kizerp.com/web/single/crmeb_v4/978';
         return app('json')->success($data);
     }
 }

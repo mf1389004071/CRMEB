@@ -122,7 +122,7 @@
 
                                                                    西安众邦网络科技有限公司
                                                                 协议发布时间： 2017年08月01日
-                                                            CRMEB官方网站：https://www.crmeb.com
+                                                            CRMEB官方网站：https://www.kizerp.com
 
 </pre>
         </div>
@@ -176,7 +176,7 @@
        CCC::::::::::::C  R::::::R     R:::::R  M::::::M               M::::::M  E::::::::::::::::::::E  B::::::::::::::::B
           CCCCCCCCCCCCC  RRRRRRRR     RRRRRRR  MMMMMMMM               MMMMMMMM  EEEEEEEEEEEEEEEEEEEEEE  BBBBBBBBBBBBBBBBB
 
-  众邦科技 https://www.crmeb.com/
+  众邦科技 https://www.kizerp.com/
         `)
 </script>
 </html>

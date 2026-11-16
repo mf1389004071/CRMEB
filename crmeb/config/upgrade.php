@@ -2,11 +2,11 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.kizerp.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
 // +----------------------------------------------------------------------
-// | Author: CRMEB Team <admin@crmeb.com>
+// | Author: CRMEB Team <admin@kizerp.com>
 // +----------------------------------------------------------------------
 
 /**
@@ -48,13 +48,13 @@ return [
 
     // 远程升级服务器配置
     'remote' => [
-        'login_url' => 'https://upgrade.crmeb.net/api/login',
-        'upgrade_url' => 'https://upgrade.crmeb.net/api/upgrade/list',
-        'upgrade_current_url' => 'https://upgrade.crmeb.net/api/upgrade/current_list',
-        'agreement_url' => 'https://upgrade.crmeb.net/api/upgrade/agreement',
-        'package_download_url' => 'https://upgrade.crmeb.net/api/upgrade/download',
-        'upgrade_status_url' => 'https://upgrade.crmeb.net/api/upgrade/status',
-        'upgrade_log_url' => 'https://upgrade.crmeb.net/api/upgrade/log',
+        'login_url' => 'https://upgrade.kizerp.com/api/login',
+        'upgrade_url' => 'https://upgrade.kizerp.com/api/upgrade/list',
+        'upgrade_current_url' => 'https://upgrade.kizerp.com/api/upgrade/current_list',
+        'agreement_url' => 'https://upgrade.kizerp.com/api/upgrade/agreement',
+        'package_download_url' => 'https://upgrade.kizerp.com/api/upgrade/download',
+        'upgrade_status_url' => 'https://upgrade.kizerp.com/api/upgrade/status',
+        'upgrade_log_url' => 'https://upgrade.kizerp.com/api/upgrade/log',
     ],
 
     // 备份配置

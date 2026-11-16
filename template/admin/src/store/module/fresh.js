@@ -1,11 +1,11 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2023 https://www.kizerp.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
 // +----------------------------------------------------------------------
-// | Author: CRMEB Team <admin@crmeb.com>
+// | Author: CRMEB Team <admin@kizerp.com>
 // +----------------------------------------------------------------------
 
 /**
@@ -44,7 +44,7 @@ export default {
           max: 10,
           list: [
             {
-              img: 'http://kaifa.crmeb.net/uploads/attach/2020/03/20200319/a32307fd1043c350932a462839288d38.jpg',
+              img: 'http://kaifa.kizerp.com/uploads/attach/2020/03/20200319/a32307fd1043c350932a462839288d38.jpg',
               info: [
                 {
                   title: '标题',
@@ -61,7 +61,7 @@ export default {
               ],
             },
             {
-              img: 'http://kaifa.crmeb.net/uploads/attach/2020/03/20200319/906d46eb6f734eaf1fd820601893af0d.jpg',
+              img: 'http://kaifa.kizerp.com/uploads/attach/2020/03/20200319/906d46eb6f734eaf1fd820601893af0d.jpg',
               info: [
                 {
                   title: '标题',
@@ -120,7 +120,7 @@ export default {
           max: 20,
           list: [
             {
-              img: 'http://admin.crmeb.net/uploads/attach/2020/05/20200515/723bb4d18893a5aa6871c94d19f3bc4d.png',
+              img: 'http://admin.kizerp.com/uploads/attach/2020/05/20200515/723bb4d18893a5aa6871c94d19f3bc4d.png',
               info: [
                 {
                   title: '标题',
@@ -137,7 +137,7 @@ export default {
               ],
             },
             {
-              img: 'http://admin.crmeb.net/uploads/attach/2020/05/20200515/e908c8f088db07a0f4f6fddc2a7b96f9.png',
+              img: 'http://admin.kizerp.com/uploads/attach/2020/05/20200515/e908c8f088db07a0f4f6fddc2a7b96f9.png',
               info: [
                 {
                   title: '标题',
@@ -154,7 +154,7 @@ export default {
               ],
             },
             {
-              img: 'http://admin.crmeb.net/uploads/attach/2020/05/20200515/1a9a1189bf4a1e9970517d31bcb00bbc.png',
+              img: 'http://admin.kizerp.com/uploads/attach/2020/05/20200515/1a9a1189bf4a1e9970517d31bcb00bbc.png',
               info: [
                 {
                   title: '标题',
@@ -171,7 +171,7 @@ export default {
               ],
             },
             {
-              img: 'http://admin.crmeb.net/uploads/attach/2020/05/20200515/dded4f4779e705d54cf640826d1b5558.png',
+              img: 'http://admin.kizerp.com/uploads/attach/2020/05/20200515/dded4f4779e705d54cf640826d1b5558.png',
               info: [
                 {
                   title: '标题',
@@ -188,7 +188,7 @@ export default {
               ],
             },
             {
-              img: 'http://admin.crmeb.net/uploads/attach/2020/05/20200515/f95dd1f3f71fef869e80533df9ccb1a0.png',
+              img: 'http://admin.kizerp.com/uploads/attach/2020/05/20200515/f95dd1f3f71fef869e80533df9ccb1a0.png',
               info: [
                 {
                   title: '标题',
@@ -205,7 +205,7 @@ export default {
               ],
             },
             {
-              img: 'http://admin.crmeb.net/uploads/attach/2020/05/20200515/8bf36e0cd9f9490c1f06abcd7efe8c2d.png',
+              img: 'http://admin.kizerp.com/uploads/attach/2020/05/20200515/8bf36e0cd9f9490c1f06abcd7efe8c2d.png',
               info: [
                 {
                   title: '标题',
@@ -222,7 +222,7 @@ export default {
               ],
             },
             {
-              img: 'http://admin.crmeb.net/uploads/attach/2020/05/20200515/5cbdc6eda8c4a2c92c88abffee50d1ff.png',
+              img: 'http://admin.kizerp.com/uploads/attach/2020/05/20200515/5cbdc6eda8c4a2c92c88abffee50d1ff.png',
               info: [
                 {
                   title: '标题',
@@ -239,7 +239,7 @@ export default {
               ],
             },
             {
-              img: 'http://admin.crmeb.net/uploads/attach/2020/05/20200515/fdb67663ea188163b0ad863a05f77fbf.png',
+              img: 'http://admin.kizerp.com/uploads/attach/2020/05/20200515/fdb67663ea188163b0ad863a05f77fbf.png',
               info: [
                 {
                   title: '标题',
@@ -290,7 +290,7 @@ export default {
           max: 100,
           list: [
             {
-              img: 'http://kaifa.crmeb.net/uploads/attach/2020/03/20200319/906d46eb6f734eaf1fd820601893af0d.jpg',
+              img: 'http://kaifa.kizerp.com/uploads/attach/2020/03/20200319/906d46eb6f734eaf1fd820601893af0d.jpg',
               info: [
                 {
                   title: '标题',

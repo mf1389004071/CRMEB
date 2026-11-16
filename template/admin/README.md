@@ -288,7 +288,7 @@ $ npm run build
 
 ### 生产环境
 
-*接口请求地址 (http)或 (https)://www.crmeb.com(换成你的域名)/adminapi 非独立部署默认为空*
+*接口请求地址 (http)或 (https)://www.kizerp.com(换成你的域名)/adminapi 非独立部署默认为空*
 
 `$ VUE_APP_API_URL=''`
 

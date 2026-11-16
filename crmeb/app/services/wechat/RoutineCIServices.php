@@ -2,11 +2,11 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.kizerp.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
 // +----------------------------------------------------------------------
-// | Author: CRMEB Team <admin@crmeb.com>
+// | Author: CRMEB Team <admin@kizerp.com>
 // +----------------------------------------------------------------------
 namespace app\services\wechat;
 
@@ -444,7 +444,7 @@ class RoutineCIServices extends BaseServices
     /**
      * 替换项目代码中的 API 域名
      * 
-     * 将小程序代码中的默认 API 域名 (https://demo.crmeb.com)
+     * 将小程序代码中的默认 API 域名 (https://demo.kizerp.com)
      * 替换为当前服务器的域名，确保小程序能正确调用后端接口。
      * 
      * @param string $url 要替换成的新域名 (如 https://your-domain.com)
@@ -460,7 +460,7 @@ class RoutineCIServices extends BaseServices
         // 读取文件内容
         $string = file_get_contents($fileUrl);
         // 替换默认域名为当前服务器域名
-        $string = str_replace('https://demo.crmeb.com', $url, $string);
+        $string = str_replace('https://demo.kizerp.com', $url, $string);
         // 写回文件
         file_put_contents($fileUrl, $string);
     }

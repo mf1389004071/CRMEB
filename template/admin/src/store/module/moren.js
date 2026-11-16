@@ -1,11 +1,11 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2023 https://www.kizerp.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
 // +----------------------------------------------------------------------
-// | Author: CRMEB Team <admin@crmeb.com>
+// | Author: CRMEB Team <admin@kizerp.com>
 // +----------------------------------------------------------------------
 
 /**
@@ -2124,16 +2124,16 @@ export default {
               {
                 name: '首页',
                 imgList: [
-                  'https://qiniu.crmeb.net/attach/2021/04/9ebdf202104251644215768.png',
-                  'https://qiniu.crmeb.net/attach/2021/04/44bc420210425164421586.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/9ebdf202104251644215768.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/44bc420210425164421586.png',
                 ],
                 link: '/pages/index/index',
               },
               {
                 name: '分类',
                 imgList: [
-                  'https://qiniu.crmeb.net/attach/2021/04/b62c8202104251644218412.png',
-                  'https://qiniu.crmeb.net/attach/2021/04/9509c202104251644214836.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/b62c8202104251644218412.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/9509c202104251644214836.png',
                 ],
                 link: '/pages/goods_cate/goods_cate',
               },
@@ -2145,16 +2145,16 @@ export default {
               {
                 name: '购物车',
                 imgList: [
-                  'https://qiniu.crmeb.net/attach/2021/04/2e682202104251644216849.png',
-                  'https://qiniu.crmeb.net/attach/2021/04/6b3cb202104251644218211.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/2e682202104251644216849.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/6b3cb202104251644218211.png',
                 ],
                 link: '/pages/order_addcart/order_addcart',
               },
               {
                 name: '我的',
                 imgList: [
-                  'https://qiniu.crmeb.net/attach/2021/04/3329c20210425164421428.png',
-                  'https://qiniu.crmeb.net/attach/2021/04/031ce202104251644215432.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/3329c20210425164421428.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/031ce202104251644215432.png',
                 ],
                 link: '/pages/user/index',
               },
@@ -2171,16 +2171,16 @@ export default {
               {
                 name: '首页',
                 imgList: [
-                  'https://qiniu.crmeb.net/attach/2021/04/9ebdf202104251644215768.png',
-                  'https://qiniu.crmeb.net/attach/2021/04/44bc420210425164421586.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/9ebdf202104251644215768.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/44bc420210425164421586.png',
                 ],
                 link: '/pages/index/index',
               },
               {
                 name: '分类',
                 imgList: [
-                  'https://qiniu.crmeb.net/attach/2021/04/b62c8202104251644218412.png',
-                  'https://qiniu.crmeb.net/attach/2021/04/9509c202104251644214836.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/b62c8202104251644218412.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/9509c202104251644214836.png',
                 ],
                 link: '/pages/goods_cate/goods_cate',
               },
@@ -2192,16 +2192,16 @@ export default {
               {
                 name: '购物车',
                 imgList: [
-                  'https://qiniu.crmeb.net/attach/2021/04/2e682202104251644216849.png',
-                  'https://qiniu.crmeb.net/attach/2021/04/6b3cb202104251644218211.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/2e682202104251644216849.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/6b3cb202104251644218211.png',
                 ],
                 link: '/pages/order_addcart/order_addcart',
               },
               {
                 name: '我的',
                 imgList: [
-                  'https://qiniu.crmeb.net/attach/2021/04/3329c20210425164421428.png',
-                  'https://qiniu.crmeb.net/attach/2021/04/031ce202104251644215432.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/3329c20210425164421428.png',
+                  'https://qiniu.kizerp.com/attach/2021/04/031ce202104251644215432.png',
                 ],
                 link: '/pages/user/index',
               },

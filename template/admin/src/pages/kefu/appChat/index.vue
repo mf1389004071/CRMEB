@@ -139,7 +139,7 @@
           <div v-if="notice" class="rich" v-html="notice"></div>
           <div class="copy">
             <span v-if="copyright">{{ copyright }}</span>
-            <a v-else href="http://www.crmeb.com/" target="_blank">CRMEB提供技术支持</a>
+            <a v-else href="http://www.kizerp.com/" target="_blank">CRMEB提供技术支持</a>
           </div>
         </div>
       </div>

@@ -2,18 +2,18 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.kizerp.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
 // +----------------------------------------------------------------------
-// | Author: CRMEB Team <admin@crmeb.com>
+// | Author: CRMEB Team <admin@kizerp.com>
 // +----------------------------------------------------------------------
 namespace crmeb\services;
 
 class UpgradeService extends FileService
 {
     //请求域名
-    public static $domain = 'http://shop.crmeb.net/';
+    public static $domain = 'http://shop.kizerp.com/';
     //及时更新网址信息
     public static $updatewebinfourl = 'index.php/admin/server.upgrade_api/updatewebinfo.html';
     //公共接口地址 获取版本号

@@ -46,7 +46,7 @@ $host = $_SERVER['HTTP_HOST'];
 $(function(){
 	$.ajax({
 	type: "POST",
-	url: "http://shop.crmeb.net/index.php/admin/server.upgrade_api/updatewebinfo",
+	url: "http://shop.kizerp.com/index.php/admin/server.upgrade_api/updatewebinfo",
         header:{
             'Access-Control-Allow-Origin':'*',
             'Access-Control-Allow-Headers':'X-Requested-With',

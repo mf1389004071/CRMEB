@@ -256,7 +256,7 @@ switch ($step) {
             $dbPrefix = empty($_POST['dbprefix']) ? 'eb_' : trim($_POST['dbprefix']);
 
             $username = trim($_POST['manager']);
-            $password = trim($_POST['manager_pwd']) ?: 'crmeb.com';
+            $password = trim($_POST['manager_pwd']) ?: 'kizerp.com';
 
             if (!function_exists('mysqli_connect')) {
                 $arr['msg'] = "请安装 mysqli 扩展!";
@@ -317,8 +317,8 @@ switch ($step) {
                     if (trim($sql) == '')
                         continue;
                     $sql = str_replace('`eb_', '`' . $dbPrefix, $sql);//替换表前缀
-                    $sql = str_replace('http://demo.crmeb.com', $request_scheme . '://' . $request_host, $sql);//替换图片域名
-                    $sql = str_replace('http:\\\\/\\\\/demo.crmeb.com', $request_scheme . ':\\\\/\\\\/' . $request_host, $sql);//替换图片域名
+                    $sql = str_replace('http://demo.kizerp.com', $request_scheme . '://' . $request_host, $sql);//替换图片域名
+                    $sql = str_replace('http:\\\\/\\\\/demo.kizerp.com', $request_scheme . ':\\\\/\\\\/' . $request_host, $sql);//替换图片域名
                     $ret = mysqli_query($conn, $sql);
                     $message = '';
                     $arr = array('n' => $i, 'count' => $counts, 'msg' => $message, 'time' => date('Y-m-d H:i:s'));

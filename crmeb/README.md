@@ -19,7 +19,7 @@ docker run -d --name crmeb \
 
 ### 访问服务
 - **网站**: http://localhost:8080 
-- **后台**: http://localhost:8080/admin （账号: admin，密码: crmeb.com）
+- **后台**: http://localhost:8080/admin （账号: admin，密码: kizerp.com）
 - **MySQL**: localhost:3306（账号: root，密码: 123456）
 - **Redis**: localhost:6379
 > 详细说明请到 [帮助文档](https://gitee.com/ZhongBangKeJi/CRMEB/blob/master/help/docker/README.md) 查看。
@@ -90,7 +90,7 @@ QUEUE_NAME = xxxx #队列前缀
 
 4.后台登录：
 http://域名/admin
-默认账号：admin 密码：crmeb.com
+默认账号：admin 密码：kizerp.com
 
 
 ## 定时任务
@@ -283,7 +283,7 @@ ThinkPHP6.0遵循PSR-2命名规范和PSR-4自动加载规范，并且注意如�
 
 ## 文档
 
-[使用手册](https://doc.crmeb.com)
+[使用手册](https://doc.kizerp.com)
 [TP6开发手册](https://www.kancloud.cn/manual/thinkphp6_0/content)
 
 
@@ -296,7 +296,7 @@ ThinkPHP6.0遵循PSR-2命名规范和PSR-4自动加载规范，并且注意如�
 
 本项目包含的第三方源码和二进制文件之版权信息另行标注。
 
-版权所有Copyright © 2017-2026 by CRMEB (http://www.crmeb.com)
+版权所有Copyright © 2017-2026 by CRMEB (http://www.kizerp.com)
 
 All rights reserved。
 

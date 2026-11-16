@@ -69,7 +69,7 @@
     <div class="footer">
       <div class="pull-right" v-if="copyright">{{ copyright }}</div>
       <div class="pull-right" v-else>
-        Copyright © 2014-2025 <a href="https://www.crmeb.com" target="_blank">{{ version }}</a>
+        Copyright © 2014-2025 <a href="https://www.kizerp.com" target="_blank">{{ version }}</a>
       </div>
     </div>
   </div>
@@ -201,7 +201,7 @@ export default {
                 title: '温馨提示',
                 dangerouslyUseHTMLString: true,
                 message:
-                  '您的【消息队列】未开启，没有开启会导致异步任务无法执行。请尽快执行命令开启！！<a href="https://doc.crmeb.com/single/v54/13667" target="_blank">点击查看开启方法</a>',
+                  '您的【消息队列】未开启，没有开启会导致异步任务无法执行。请尽快执行命令开启！！<a href="https://doc.kizerp.com/single/v54/13667" target="_blank">点击查看开启方法</a>',
                 duration: 30000,
               });
             }
@@ -211,7 +211,7 @@ export default {
                   title: '温馨提示',
                   dangerouslyUseHTMLString: true,
                   message:
-                    '您的【定时任务】未开启，没有开启会导致自动收货、未支付自动取消订单、订单自动好评、拼团到期退款等任务无法正常执行。请尽快执行命令开启！！<a href="https://doc.crmeb.com/single/v54/13667" target="_blank">点击查看开启方法</a>',
+                    '您的【定时任务】未开启，没有开启会导致自动收货、未支付自动取消订单、订单自动好评、拼团到期退款等任务无法正常执行。请尽快执行命令开启！！<a href="https://doc.kizerp.com/single/v54/13667" target="_blank">点击查看开启方法</a>',
                   duration: 30000,
                 });
               }, 0);
@@ -261,7 +261,7 @@ export default {
             this.$notify.warning({
               title: '温馨提示',
               message:
-                '您的【长连接】未开启，没有开启会导致系统默认客服无法使用,后台订单通知无法收到。请尽快执行命令开启！！<a href="https://doc.crmeb.com/single/v54/13667" target="_blank">点击查看开启方法</a>',
+                '您的【长连接】未开启，没有开启会导致系统默认客服无法使用,后台订单通知无法收到。请尽快执行命令开启！！<a href="https://doc.kizerp.com/single/v54/13667" target="_blank">点击查看开启方法</a>',
               dangerouslyUseHTMLString: true,
               duration: 30000,
             });
