@@ -5,6 +5,7 @@
 | 文件 | 说明 |
 |------|------|
 | `gen_logo_assets.py` | 从 `../logo.jpg` 生成各端 logo/favicon/PWA |
+| `prod_patch_mobile_icons.py` | 生产通过 `ico_path` 覆盖根目录 `/favicon.ico` |
 | `apply_khonguon_init.py` | 对指定库执行品牌/城仓/商品清理 + 主题/我的菜单收敛 |
 | [`crmeb/database/vn/brand/khonguon_brand_seed.sql`](../../../crmeb/database/vn/brand/khonguon_brand_seed.sql) | 站点名/域名/联系/版权/vn_contact/关于我们 |
 | [`khonguon_cities_warehouses.sql`](../../../crmeb/database/vn/brand/khonguon_cities_warehouses.sql) | 15 城 + 缺仓占位 + 清化真实地址 |
@@ -26,12 +27,16 @@ python docs/260409-菜集鲜/brand/run_apply_from_mcp.py mysql-crmeb-cjx-prod
 # 4) 生产清缓存 + 上传 logo（临时借用本地 admin 密码哈希，结束后自动恢复）
 python docs/260409-菜集鲜/brand/prod_clear_cache_upload_logo.py
 
+# 4b) 生产覆盖移动端/站点根 favicon（管理端已新、H5 标签栏仍旧时）
+python docs/260409-菜集鲜/brand/prod_patch_mobile_icons.py
+
 # 5) 清 demo 商品，并把猜你喜欢/主题 goodList 换成商品 5-8
 python docs/260409-菜集鲜/brand/purge_demo_replace_recommend.py
 
 # 6) 隐藏「猜你喜欢」文案，统一为可国际化「推荐」
 python docs/260409-菜集鲜/brand/replace_like_with_recommend.py
 ```
+
 
 同分支其他项目：复制 `crmeb/database/vn/brand/` 下 SQL，改站点名/域名/联系方式后执行即可。
 

@@ -48,6 +48,8 @@ def main():
     for p in [
         ROOT / "template" / "admin" / "public" / "favicon.ico",
         ROOT / "crmeb" / "public" / "admin" / "favicon.ico",
+        # H5/站点根路径浏览器默认请求 /favicon.ico（管理端用 /admin/favicon.ico）
+        ROOT / "crmeb" / "public" / "favicon.ico",
     ]:
         p.parent.mkdir(parents=True, exist_ok=True)
         ico.save(p, format="ICO", sizes=[(32, 32)])
@@ -60,6 +62,14 @@ def main():
         save_rgb(img, d / "icon-512.png", (512, 512))
         save_rgb(img, d / "icon-512-maskable.png", (512, 512))
         save_rgb(img, d / "apple-touch-icon.png", (180, 180))
+
+    # 找回密码等页硬编码的旧 crmeb logo2
+    for p in [
+        ROOT / "template" / "uni-app" / "pages" / "users" / "static" / "logo2.png",
+        ROOT / "crmeb" / "public" / "pages" / "users" / "static" / "logo2.png",
+        ROOT / "crmeb" / "public" / "statics" / "mp_view" / "pages" / "users" / "static" / "logo2.png",
+    ]:
+        save_rgb(img, p, (192, 192))
 
     print("logo assets generated")
 

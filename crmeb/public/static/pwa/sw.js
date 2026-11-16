@@ -3,7 +3,7 @@
  * 绝不缓存 API（/api/、/adminapi/）及任何跨域请求，避免价格/库存/订单陈旧。
  * 升级：修改 VERSION 即可淘汰旧缓存。
  */
-var VERSION = 'cjx-shell-v1';
+var VERSION = 'cjx-shell-v2';
 var SHELL = ['/'];
 
 self.addEventListener('install', function (e) {
