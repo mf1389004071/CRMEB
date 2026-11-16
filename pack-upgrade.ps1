@@ -43,6 +43,7 @@ $upgradeTxt = @"
 包名: $zipName
 生成: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
 场景: 已有站点覆盖升级（例如服务器约 2026-04-19 → 本包）
+（本机如何打升级包 / H5 编译 / 踩坑表见仓库根目录 升级规范.md，不必随 zip 携带）
 
 一、升级前备份
 1. 整站代码备份（至少 crmeb/）
@@ -53,7 +54,7 @@ $upgradeTxt = @"
 【覆盖】把本包 crmeb/ 目录内容覆盖到服务器网站 crmeb/：
   - app/、crmeb/、config/、route/、upgrade/
   - database/vn/（SQL 文件供下一步执行，不会自动跑）
-  - public/admin/、public/index.html、public/mobile.html（若有）
+  - public/admin/、public/index.html
   - public/static/、public/assets/、public/pages/（若有）
   - vendor/（若本包含）、composer.json、composer.lock、.version、think 等
 
@@ -62,6 +63,7 @@ $upgradeTxt = @"
   - public/uploads/（用户上传）
   - public/install.lock
   - runtime/ 可清空缓存；本包不含 runtime，勿用空目录误删线上日志策略以外的东西
+  - public/mobile.html（PC 预览壳；升级脚本已 exclude，勿手工覆盖）
 
 三、执行数据库迁移（生产库）
 推荐用同目录 upgrade_crmeb_db.sh（先代码覆盖，再跑库脚本）。
@@ -70,7 +72,7 @@ $upgradeTxt = @"
 （生产默认跳过 021_region_seed_vn.sql 与 demo/）
 
 脚本幂等，可重复执行。生产不要跑 demo（本包已排除）。
-详见 crmeb/database/vn/README.md 与仓库根目录 升级规范.md
+详见 crmeb/database/vn/README.md
 
 示例:
   mysql -uroot -p --default-character-set=utf8mb4 你的库名 < database/vn/000_helpers.sql
@@ -91,7 +93,8 @@ docs/260409-菜集鲜/brand/ 下 apply 脚本（生产前务必备份库）。
 六、清缓存并重启
 1. 删除 runtime/cache、runtime/temp（或后台「清除缓存」）
 2. 必要时清理 eb_cache 中 lang_version / api_lang_*
-3. 重启: PHP-FPM、消息队列、定时任务、Workerman
+3. 浏览器 Ctrl+F5；启用 PWA 时必要时注销 Service Worker 再验
+4. 重启: PHP-FPM、消息队列、定时任务、Workerman
    见 docs/deploy/消息队列定时任务与长连接说明.md
 
 七、验收
