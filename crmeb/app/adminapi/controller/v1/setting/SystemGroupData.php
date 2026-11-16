@@ -115,7 +115,7 @@ class SystemGroupData extends AuthController
         }
         $this->services->checkSeckillTime($services, $gid, $params);
         $this->checkSign($services, $gid, $params);
-        $fields = json_decode($group['fields'], true) ?? [];
+        $fields = $services->decodeFields($group['fields'] ?? '');
         $value = [];
         foreach ($params as $key => $param) {
             foreach ($fields as $index => $field) {
@@ -137,7 +137,8 @@ class SystemGroupData extends AuthController
             "status" => $params["status"]
         ];
         $this->services->save($data);
-        \crmeb\services\CacheService::clear();
+        // tag clear 在 Redis 下常清不干净，组合数据改完必须全清，否则前台仍读旧值
+        \crmeb\services\CacheService::clearAll();
         return app('json')->success('添加数据成功');
     }
 
@@ -205,7 +206,7 @@ class SystemGroupData extends AuthController
             "status" => $params["status"]
         ];
         $this->services->update($id, $data);
-        \crmeb\services\CacheService::clear();
+        \crmeb\services\CacheService::clearAll();
         return app('json')->success('修改成功');
     }
 
@@ -220,7 +221,7 @@ class SystemGroupData extends AuthController
         if (!$this->services->delete($id))
             return app('json')->fail('删除失败');
         else {
-            \crmeb\services\CacheService::clear();
+            \crmeb\services\CacheService::clearAll();
             return app('json')->success('删除成功');
         }
     }
@@ -235,7 +236,7 @@ class SystemGroupData extends AuthController
     {
         if ($status == '' || $id == 0) return app('json')->fail('参数错误');
         $this->services->update($id, ['status' => $status]);
-        \crmeb\services\CacheService::clear();
+        \crmeb\services\CacheService::clearAll();
         return app('json')->success('设置成功');
     }
 

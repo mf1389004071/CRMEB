@@ -112,13 +112,17 @@ class SystemGroup extends AuthController
     public function read($id)
     {
         $info = $this->services->get($id);
-        $fields = json_decode($info['fields'], true);
+        if (!$info) {
+            return app('json')->fail('数据不存在');
+        }
+        $info = is_object($info) ? $info->toArray() : $info;
+        $fields = $this->services->decodeFields($info['fields'] ?? '');
         $type_list = [];
         foreach ($fields as $key => $v) {
-            $type_list[$key]['name']['value'] = $v['name'];
-            $type_list[$key]['title']['value'] = $v['title'];
-            $type_list[$key]['type']['value'] = $v['type'];
-            $type_list[$key]['param']['value'] = $v['param'];
+            $type_list[$key]['name']['value'] = $v['name'] ?? '';
+            $type_list[$key]['title']['value'] = $v['title'] ?? '';
+            $type_list[$key]['type']['value'] = $v['type'] ?? '';
+            $type_list[$key]['param']['value'] = $v['param'] ?? '';
         }
         $info['typelist'] = $type_list;
         unset($info['fields']);

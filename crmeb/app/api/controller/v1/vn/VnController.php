@@ -110,7 +110,8 @@ class VnController
      */
     public function contacts(Request $request)
     {
-        $list = sys_data('vn_contact') ?: [];
+        // 第 3 参 true：跳过 CacheService 永久缓存，后台改完立即对移动端生效
+        $list = \crmeb\services\GroupDataService::getData('vn_contact', 0, true) ?: [];
         $out = [];
         foreach ($list as $item) {
             if (empty($item['account']) && empty($item['qrcode_url'])) {

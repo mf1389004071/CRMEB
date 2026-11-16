@@ -86,7 +86,7 @@ class SystemGroupDataServices extends BaseServices
         $services = app()->make(SystemGroupServices::class);
         $group = $services->getOne(['id' => $gid], 'id,config_name,fields');
 
-        $header = json_decode($group['fields'], true) ?? [];
+        $header = $services->decodeFields($group['fields'] ?? '');
         $title = [];
         $param = [];
         foreach ($header as $item) {
@@ -314,7 +314,7 @@ class SystemGroupDataServices extends BaseServices
         $gid = $systemGroupServices->value(['config_name' => $config_name], 'id');
         if (!$gid) throw new AdminException('数据不存在');
         $group = $systemGroupServices->getOne(['id' => $gid], 'id,config_name,fields');
-        $fields = json_decode($group['fields'], true) ?? [];
+        $fields = $systemGroupServices->decodeFields($group['fields'] ?? '');
         $this->transaction(function () use ($gid, $params, $fields) {
             $this->delGroupDate($gid);
             $data = [];

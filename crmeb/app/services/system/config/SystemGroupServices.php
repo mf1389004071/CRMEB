@@ -95,7 +95,32 @@ class SystemGroupServices extends BaseServices
      */
     public function getValueFields(int $id)
     {
-        return json_decode($this->dao->value(['id' => $id], 'fields'), true) ?: [];
+        return $this->decodeFields($this->dao->value(['id' => $id], 'fields'));
+    }
+
+    /**
+     * 解析组合数据 fields JSON；兼容种子 SQL 把 \n 写成真实换行导致的非法 JSON
+     * @param mixed $fields
+     * @return array
+     */
+    public function decodeFields($fields): array
+    {
+        if (is_array($fields)) {
+            return $fields;
+        }
+        if (!is_string($fields) || $fields === '') {
+            return [];
+        }
+        $decoded = json_decode($fields, true);
+        if (is_array($decoded)) {
+            return $decoded;
+        }
+        // 仅修复字符串字面量内部的真实换行，避免破坏合法 JSON 空白
+        $repaired = preg_replace_callback('/"(?:\\\\.|[^"\\\\])*"/s', function ($m) {
+            return str_replace(["\r\n", "\r", "\n"], '\n', $m[0]);
+        }, $fields);
+        $decoded = json_decode($repaired, true);
+        return is_array($decoded) ? $decoded : [];
     }
 
 }
