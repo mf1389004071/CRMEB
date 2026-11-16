@@ -1238,8 +1238,15 @@ export default {
       let limit = this.$config.LIMIT;
       let data = {};
       if (this.typeConfig == 1) {
-        this.tempArr = this.dataConfig.goodsList.list;
-        return;
+        // 指定商品：不用装修快照价，按 id 拉实时价（含区域价）
+        const ids = (this.dataConfig.goodsList.list || [])
+          .map((item) => item.id)
+          .filter(Boolean);
+        if (!ids.length) {
+          this.tempArr = [];
+          return;
+        }
+        data = { ids: ids.join(",") };
       } else if (this.typeConfig == 3) {
         data = {
           priceOrder: this.goodsSort == 2 ? "desc" : "",

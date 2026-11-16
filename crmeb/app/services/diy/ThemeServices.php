@@ -14,6 +14,8 @@ namespace app\services\diy;
 
 use app\dao\diy\ThemeDao;
 use app\services\BaseServices;
+use app\services\product\product\StoreProductServices;
+use app\services\product\RegionPriceServices;
 use crmeb\exceptions\AdminException;
 use crmeb\exceptions\ApiException;
 
@@ -150,7 +152,8 @@ class ThemeServices extends BaseServices
         if (!$info) throw new AdminException('数据不存在');
         $info = $info->toArray();
         if ($type == 'home') {
-            return json_decode($info['home_data'], true) ?? [];
+            // 主题 home_data 会快照指定商品 price；读时按 id 重查并套区域价，避免改价后首页仍显示装修时旧价
+            return $this->refreshHomeGoodsPrices(json_decode($info['home_data'], true) ?? []);
         } elseif ($type == 'category') {
             return ['status' => $info['category_data'] ?? 1];
         } elseif ($type == 'detail') {
@@ -181,6 +184,116 @@ class ThemeServices extends BaseServices
             $info['theme_data_id_title'] = $titles[$info['theme_data_id']] ?? '';
             return $info;
         }
+    }
+
+    /**
+     * 刷新首页主题中「指定商品」的实时价格（含区域价）
+     *
+     * 装修保存时会把商品 price 写入 home_data；移动端 goodList typeConfig=1 直接渲染该快照，
+     * 改价后详情（实时接口）已变、首页仍显示旧价。此处按商品 id 重查并套区域价后再返回。
+     *
+     * @param array $homeData themeInfo(home) 结构
+     * @return array
+     */
+    protected function refreshHomeGoodsPrices(array $homeData): array
+    {
+        if (empty($homeData['value']) || !is_array($homeData['value'])) {
+            return $homeData;
+        }
+        /** @var StoreProductServices $productServices */
+        $productServices = app()->make(StoreProductServices::class);
+        $field = ['id,store_name,cate_id,image,IFNULL(sales, 0) + IFNULL(ficti, 0) as sales,price,stock,activity,ot_price,spec_type,recommend_image,unit_name,is_vip,vip_price,label_list,is_fresh,origin,need_cold_chain,net_weight'];
+
+        foreach ($homeData['value'] as &$item) {
+            $name = $item['name'] ?? '';
+            if ($name === 'goodList' || $name === 'goodRecommend') {
+                $typeConfig = (int)($item['typeConfig']['activeValue'] ?? 0);
+                if ($typeConfig === 1) {
+                    $item['goodsList']['list'] = $this->loadGoodsByIds(
+                        $productServices,
+                        $this->extractGoodsIds($item['goodsList'] ?? []),
+                        $field
+                    );
+                }
+            } elseif ($name === 'promotionList' && !empty($item['tabConfig']['list']) && is_array($item['tabConfig']['list'])) {
+                foreach ($item['tabConfig']['list'] as &$tab) {
+                    // tabVal=1：手动选商品（与 DiyProServices 一致）
+                    if ((int)($tab['tabVal'] ?? 0) === 1) {
+                        $tab['goodsList']['list'] = $this->loadGoodsByIds(
+                            $productServices,
+                            $this->extractGoodsIds($tab['goodsList'] ?? []),
+                            $field
+                        );
+                    }
+                }
+                unset($tab);
+            }
+        }
+        unset($item);
+        return $homeData;
+    }
+
+    /**
+     * 从主题商品配置提取 id 列表（优先 list[].id，其次 ids）
+     * @param array $goodsList
+     * @return int[]
+     */
+    protected function extractGoodsIds(array $goodsList): array
+    {
+        $ids = [];
+        if (!empty($goodsList['list']) && is_array($goodsList['list'])) {
+            foreach ($goodsList['list'] as $g) {
+                $id = (int)($g['id'] ?? 0);
+                if ($id > 0) {
+                    $ids[] = $id;
+                }
+            }
+        }
+        if (!$ids && !empty($goodsList['ids'])) {
+            foreach ((array)$goodsList['ids'] as $id) {
+                $id = (int)$id;
+                if ($id > 0) {
+                    $ids[] = $id;
+                }
+            }
+        }
+        return array_values(array_unique($ids));
+    }
+
+    /**
+     * 按 id 顺序加载在售商品，区域模式下套区域价
+     * @param StoreProductServices $productServices
+     * @param int[] $ids
+     * @param array $field
+     * @return array
+     */
+    protected function loadGoodsByIds(StoreProductServices $productServices, array $ids, array $field): array
+    {
+        if (!$ids) {
+            return [];
+        }
+        $list = $productServices->getSearchList(['ids' => $ids, 'is_show' => 1, 'is_del' => 0], 0, 0, $field);
+        if (!is_array($list)) {
+            $list = [];
+        }
+        // getSearchList 在无排序条件时已按 ids orderField；再按原装修顺序兜底
+        $byId = [];
+        foreach ($list as $row) {
+            $byId[(int)$row['id']] = $row;
+        }
+        $ordered = [];
+        foreach ($ids as $id) {
+            if (isset($byId[$id])) {
+                $ordered[] = $byId[$id];
+            }
+        }
+        if (region_pricing_active()) {
+            $regionId = current_region_id();
+            if ($regionId > 0) {
+                $ordered = app()->make(RegionPriceServices::class)->applyToList($ordered, $regionId);
+            }
+        }
+        return $ordered;
     }
 
     /**

@@ -2975,7 +2975,16 @@ class StoreProductServices extends BaseServices
             $item['cate_name'] = $item['cateName'][0]['cate_name'];
             unset($item['cateName']);
         }
-        if ($where['ids'] == '') return $list;
+        if ($where['ids'] == '') {
+            // VN: 自定义组件按分类筛选时也套区域价
+            if (region_pricing_active()) {
+                $regionId = current_region_id();
+                if ($regionId > 0) {
+                    $list = app()->make(\app\services\product\RegionPriceServices::class)->applyToList($list, $regionId);
+                }
+            }
+            return $list;
+        }
         // 将$list转换为以id为键的数组
         $list = array_column($list, null, 'id');
         $data = [];
@@ -2983,6 +2992,13 @@ class StoreProductServices extends BaseServices
         foreach (explode(',', $where['ids']) as $id) {
             if (isset($list[$id])) {
                 $data[] = $list[$id];
+            }
+        }
+        // VN: 自定义组件指定商品套区域价
+        if (region_pricing_active()) {
+            $regionId = current_region_id();
+            if ($regionId > 0) {
+                $data = app()->make(\app\services\product\RegionPriceServices::class)->applyToList($data, $regionId);
             }
         }
         return $data;
