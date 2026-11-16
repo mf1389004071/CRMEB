@@ -141,6 +141,11 @@
 						confirmText: this.$t(`确定`),
 						success: (m) => {
 							if (!m.confirm) return;
+							// 未登录无服务端购物车；调 clear_all 会触发 toLogin
+							if (!this.$store.state.app.token) {
+								this.done(next);
+								return;
+							}
 							clearCartAll().catch(() => {}).then(() => this.done(next));
 						}
 					});

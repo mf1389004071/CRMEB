@@ -4,13 +4,12 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Loading</title>
+	<title></title>
 	<script>
 		var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
 			CSS.supports('top: constant(a)'))
 		document.write('<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' + (coverSupport ? ', viewport-fit=cover' : '') + '" />')
 	</script>
-	<link rel="stylesheet" href="/static/index.e8e070f7.css">
 	<!-- PWA（M11）：manifest + iOS 主屏幕图标/meta + 主题色 -->
 	<link rel="manifest" href="/static/pwa/manifest.webmanifest">
 	<meta name="theme-color" content="#2e9e4b">
@@ -20,6 +19,7 @@
 	<meta name="apple-mobile-web-app-title" content="KHO.NGUON">
 	<link rel="apple-touch-icon" href="/static/pwa/apple-touch-icon.png">
 	<link rel="icon" type="image/png" href="/static/pwa/icon-192.png">
+	<link rel="stylesheet" href="/static/index.e8e070f7.css">
 </head>
 
 <body>
@@ -28,7 +28,7 @@
 	</noscript>
 	<div id="app"></div>
 	<script src="/static/js/chunk-vendors.f235a1ec.js"></script>
-	<script src="/static/js/index.4e722e92.js"></script>
+	<script src="/static/js/index.d3da2a89.js"></script>
 	<script>
 		// 注册极简 Service Worker（仅缓存静态壳，不缓存 API）；失败不影响业务
 		if ('serviceWorker' in navigator) {
